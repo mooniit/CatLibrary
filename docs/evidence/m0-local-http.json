@@ -1,0 +1,7 @@
+{
+  "environment": "local Docker Supabase",
+  "time": "2026-09-17T17:22:59.3135236+08:00",
+  "checks": 7,
+  "result": "PASS",
+  "scope": "two independent HTTP sessions, own read/write, forged owner rejected, private PNG roundtrip, other-user and public download denied; NOT mobile devices or cloud"
+}
