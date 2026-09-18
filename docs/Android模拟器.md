@@ -37,3 +37,7 @@ node scripts/test-android-probe.cjs emulator-5554
 ## 已保存 APK
 
 模拟器包：output/android/cat-library-m0-x64-debug.apk。一加真机包：output/android/cat-library-m0-arm64-debug.apk。二者已构建成功；arm64 尚未安装验证。普通原型包与集成测试包不同，运行集成测试后需重新安装普通原型再执行 scripts/test-android-probe.cjs。
+
+## 整机重启补查
+
+集成测试包替换为普通包并关闭模拟器后，下一次启动曾出现应用包缺失；原因未定位，不作为应用持久化成功证据。重新安装后执行 Android 正常重启（adb reboot），系统启动完成、应用包保留、应用启动均通过，见 evidence/m0-android-reboot.json。该补查不证明主机强制关闭、写入瞬间断电或整个虚拟机存储始终可靠。当前已恢复为打开普通原型的状态。

@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-09-18T11:21:59.1663078+08:00",
+  "scope": "Android emulator normal OS reboot; not physical-device reboot or abrupt host termination",
+  "bootCompleted": "1",
+  "packageRetained": true,
+  "launch": "Status: ok",
+  "pid": "1473",
+  "limitation": "An earlier emulator host shutdown after test-package replacement was followed by a missing package. Cause not established; normal adb reboot passed after reinstall."
+}
