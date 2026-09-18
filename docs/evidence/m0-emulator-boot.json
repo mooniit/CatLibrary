@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-09-18T10:54:04.9218856+08:00",
+  "scope": "Android emulator boot only; app not installed or validated",
+  "avd": "catlibrary_m0",
+  "acceleration": "WHPX usable",
+  "device": "emulator-5554",
+  "bootCompleted": "1",
+  "androidVersion": "15",
+  "abi": "x86_64"
+}

@@ -1,0 +1,36 @@
+{
+  "scope": "Android emulator; no currency, real phone, midnight or six-hour proof",
+  "startedAt": "2026-09-18T03:09:46.614Z",
+  "device": "emulator-5554",
+  "checks": [
+    {
+      "name": "four-page native navigation",
+      "result": "pass"
+    },
+    {
+      "name": "same-process background resume",
+      "result": "pass",
+      "before": 14,
+      "after": 32,
+      "wallSeconds": 17.772
+    },
+    {
+      "name": "short lock-screen resume",
+      "result": "pass",
+      "before": 35,
+      "after": 52,
+      "wallSeconds": 17.022
+    },
+    {
+      "name": "force-stop and cold SQLite recovery",
+      "result": "pass",
+      "savedSeconds": 50,
+      "durableCheckpoint": "2026-09-18T03:11:09.856174Z",
+      "oldPid": "1824",
+      "newPid": "2349",
+      "stoppedWhileAbsent": true
+    }
+  ],
+  "android": "15",
+  "finishedAt": "2026-09-18T03:11:49.899Z"
+}
