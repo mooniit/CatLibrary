@@ -7,7 +7,8 @@ import '../../core/storage/probe_database.dart';
 import '../../core/time/study_clock.dart';
 
 class TimerProbe extends StatefulWidget {
-  const TimerProbe({super.key});
+  const TimerProbe({super.key, this.databaseFactory});
+  final ProbeDatabase Function()? databaseFactory;
   @override
   State<TimerProbe> createState() => _TimerProbeState();
 }
@@ -19,6 +20,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
   bool loading = true, busy = false, confirmed = false;
   String? error;
   String status = '等待开始';
+  AppLifecycleState? lifecycle;
   DateTime? durableAt;
   Future<void> writes = Future.value();
   @override
@@ -41,7 +43,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
   Future<void> load() async {
     try {
       if (!kIsWeb) {
-        db = ProbeDatabase();
+        db = widget.databaseFactory?.call() ?? ProbeDatabase();
         final raw = await db!.readCheckpoint();
         if (raw != null) {
           clock = StudyClock.restore(raw);
@@ -87,7 +89,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
       clock!.checkpoint(DateTime.now());
       persist();
     }
-    if (mounted) setState(() => status = '生命周期：${state.name}');
+    if (mounted) setState(() => lifecycle = state);
   }
 
   @override
@@ -185,6 +187,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
           ),
         const SizedBox(height: 20),
         Text(status),
+        if (lifecycle != null) Text('生命周期：${lifecycle!.name}'),
         if (elapsed >= const Duration(hours: 6))
           const Text('已达到单次最长计时，请休息一下吧。'),
         if (clock?.clockReversed == true) const Text('检测到系统时间回退，结果需核查。'),
