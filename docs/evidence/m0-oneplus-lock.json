@@ -1,0 +1,174 @@
+{
+  "scope": "Physical OnePlus Android 16, ten-minute lock-screen probe on USB power; no rewards",
+  "startedAt": "2026-09-18T11:05:19.208Z",
+  "device": "119bad33",
+  "checks": [],
+  "samples": [
+    {
+      "minute": 1,
+      "actualSeconds": 60.00180260000001,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 2,
+      "actualSeconds": 120.00981780000001,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 3,
+      "actualSeconds": 180.01245889999998,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 4,
+      "actualSeconds": 240.00883329999996,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 5,
+      "actualSeconds": 300.014923,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 6,
+      "actualSeconds": 360.0159266,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 7,
+      "actualSeconds": 420.00088940000006,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 8,
+      "actualSeconds": 480.0006632,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    }
+  ],
+  "model": "PJE110",
+  "android": "16",
+  "before": 14,
+  "initialPid": "11916",
+  "beforeCheckpoint": {
+    "start": "2026-09-18T11:07:43.339912Z",
+    "checkpoint": "2026-09-18T11:07:59.085695Z",
+    "running": true
+  },
+  "lockStartedAt": "2026-09-18T11:05:51.531Z",
+  "status": "stopped_at_user_request",
+  "stoppedAt": "2026-09-18T19:14:37.9262959+08:00",
+  "requestedScope": "User stopped the experiment after the seven-minute report; subsequent samples, if any, are excluded from conclusions.",
+  "acceptedSamples": [
+    {
+      "minute": 1,
+      "actualSeconds": 60.00180260000001,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 2,
+      "actualSeconds": 120.00981780000001,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 3,
+      "actualSeconds": 180.01245889999998,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 4,
+      "actualSeconds": 240.00883329999996,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 5,
+      "actualSeconds": 300.014923,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 6,
+      "actualSeconds": 360.0159266,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    },
+    {
+      "minute": 7,
+      "actualSeconds": 420.00088940000006,
+      "pid": "11916",
+      "checkpoint": {
+        "start": "2026-09-18T11:07:43.339912Z",
+        "checkpoint": "2026-09-18T11:08:09.07882Z",
+        "running": true
+      }
+    }
+  ],
+  "resumeValidated": false
+}
