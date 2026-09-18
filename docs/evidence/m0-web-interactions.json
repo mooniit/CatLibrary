@@ -1,0 +1,9 @@
+{
+  "environment": "Edge headless 390x844",
+  "checks": [
+    "reading placeholder",
+    "task board",
+    "timer start/stop/confirm without rewards"
+  ],
+  "errors": []
+}

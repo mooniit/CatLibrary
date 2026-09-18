@@ -1,0 +1,16 @@
+{
+  "builtAt": "2026-09-18T11:18:34.1148322+08:00",
+  "type": "debug prototype, no production backend configuration",
+  "artifacts": [
+    {
+      "file": "cat-library-m0-arm64-debug.apk",
+      "bytes": 115349271,
+      "sha256": "1b3459f239bcb6d8819561cf518570bde7a27f890d071738fe832da4cda36765"
+    },
+    {
+      "file": "cat-library-m0-x64-debug.apk",
+      "bytes": 76504496,
+      "sha256": "f36f7f2d404fd2b6f88d6ea2682e94bbc8c3c53e7df0f241588e73d926fa7578"
+    }
+  ]
+}
