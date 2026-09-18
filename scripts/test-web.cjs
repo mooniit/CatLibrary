@@ -1,0 +1,26 @@
+const {chromium} = require('../.tooling/browser/node_modules/playwright-core');
+let browser;
+(async () => {
+  browser = await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
+  const page = await browser.newPage({viewport:{width:390,height:844}});
+  const errors=[];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('http://127.0.0.1:4173');
+  await page.locator('flutter-view').waitFor({state:'attached',timeout:30000});
+  const semantics=page.locator('flt-semantics-placeholder');
+  if(await semantics.count()) await semantics.dispatchEvent('click');
+  await page.getByRole('tab', {name:'阅读',exact:true}).first().click({timeout:30000});
+  await page.getByText('阅读功能筹备中',{exact:true}).waitFor();
+  await page.getByRole('tab', {name:'任务板',exact:true}).first().click();
+  await page.getByRole('button',{name:/外语学习/}).waitFor();
+  await page.getByRole('tab', {name:'自习',exact:true}).first().click();
+  await page.getByRole('button',{name:'开始计时',exact:true}).click();
+  await page.waitForTimeout(2100);
+  await page.getByRole('button',{name:'结束计时',exact:true}).click();
+  await page.getByRole('button',{name:'确认探针记录',exact:true}).click();
+  await page.waitForTimeout(300);
+  if (!await page.getByRole('button',{name:'开始新记录',exact:true}).isEnabled()) throw new Error('Confirmed record did not allow the next session');
+  console.log(JSON.stringify({environment:'Edge headless 390x844',checks:['reading placeholder','task board','timer start/stop/confirm without rewards'],errors},null,2));
+  await browser.close();
+  if(errors.length) process.exitCode=1;
+})().catch(async error => { console.error(error.message); if(browser) await browser.close(); process.exitCode=1; });
