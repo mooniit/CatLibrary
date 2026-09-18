@@ -1,0 +1,6 @@
+{
+  "hostEpochSeconds": 1789729574,
+  "phoneEpochSeconds": 1789729702,
+  "approxPhoneAheadSeconds": 128,
+  "note": "Read only; no clock was changed. Host evidence timestamps and device checkpoint timestamps use different clocks."
+}

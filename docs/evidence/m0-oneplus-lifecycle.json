@@ -1,0 +1,38 @@
+{
+  "scope": "Physical Android; foreground and short background/force-stop only; no lock-screen, currency, midnight or six-hour proof",
+  "startedAt": "2026-09-18T03:59:02.270Z",
+  "device": "119bad33",
+  "checks": [
+    {
+      "name": "four-page native navigation",
+      "result": "pass"
+    },
+    {
+      "name": "foreground at least two minutes",
+      "result": "pass",
+      "before": 4,
+      "after": 151,
+      "wallSeconds": 147.023
+    },
+    {
+      "name": "same-process background resume",
+      "result": "pass",
+      "before": 154,
+      "after": 170,
+      "wallSeconds": 15.997
+    },
+    {
+      "name": "force-stop and cold SQLite recovery",
+      "result": "pass",
+      "savedSeconds": 170,
+      "durableCheckpoint": "2026-09-18T04:04:33.681955Z",
+      "oldPid": "13063",
+      "newPid": "16499",
+      "stoppedWhileAbsent": true
+    }
+  ],
+  "android": "16",
+  "model": "PJE110",
+  "emulator": false,
+  "finishedAt": "2026-09-18T04:02:58.264Z"
+}

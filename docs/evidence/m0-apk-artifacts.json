@@ -5,7 +5,9 @@
     {
       "file": "cat-library-m0-arm64-debug.apk",
       "bytes": 115349271,
-      "sha256": "1b3459f239bcb6d8819561cf518570bde7a27f890d071738fe832da4cda36765"
+      "sha256": "6edba41914eaba66fb28790d1a837bea5602d680d8ac4dc09c61169932bdd3f0",
+      "updatedAt": "2026-09-18T12:00:23.1857721+08:00",
+      "sourceCommit": "b6cd241"
     },
     {
       "file": "cat-library-m0-x64-debug.apk",
