@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/storage/probe_database.dart';
 import '../../core/time/study_clock.dart';
+import 'lock_screen_timer.dart';
 
 class TimerProbe extends StatefulWidget {
   const TimerProbe({super.key, this.databaseFactory});
@@ -19,6 +20,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
   Timer? tick;
   bool loading = true, busy = false, confirmed = false;
   String? error;
+  String? notificationMessage;
   String status = '等待开始';
   AppLifecycleState? lifecycle;
   DateTime? durableAt;
@@ -36,11 +38,13 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
           (wasRunning && !clock!.running)) {
         persist();
       }
+      if (!clock!.running) unawaited(LockScreenTimer.stop());
       if (mounted) setState(() {});
     });
   }
 
   Future<void> load() async {
+    await LockScreenTimer.stop();
     try {
       if (!kIsWeb) {
         db = widget.databaseFactory?.call() ?? ProbeDatabase();
@@ -73,6 +77,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
         }
       } catch (_) {
         current.running = false;
+        await LockScreenTimer.stop();
         if (mounted) {
           setState(() {
             error = '检查点写入失败，计时已停止。请重试保存。';
@@ -88,6 +93,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
     if (clock?.running == true) {
       clock!.checkpoint(DateTime.now());
       persist();
+      if (!clock!.running) unawaited(LockScreenTimer.stop());
     }
     if (mounted) setState(() => lifecycle = state);
   }
@@ -95,6 +101,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
   @override
   void dispose() {
     tick?.cancel();
+    unawaited(LockScreenTimer.stop());
     WidgetsBinding.instance.removeObserver(this);
     final database = db;
     writes.whenComplete(() => database?.close());
@@ -102,6 +109,9 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
   }
 
   Future<void> start() async {
+    setState(() => busy = true);
+    final allowed = await LockScreenTimer.requestPermission();
+    if (!mounted) return;
     setState(() {
       busy = true;
       confirmed = false;
@@ -109,7 +119,20 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
       status = '计时中';
     });
     await persist();
-    if (mounted) setState(() => busy = false);
+    final shown =
+        allowed &&
+        clock!.running &&
+        await LockScreenTimer.show(clock!.startedAt);
+    if (mounted) {
+      setState(() {
+        busy = false;
+        notificationMessage = !LockScreenTimer.supported
+            ? null
+            : shown
+            ? '锁屏计时通知已开启；是否展示由手机通知设置控制。'
+            : '锁屏计时通知未开启。可在系统设置中允许通知；应用内计时仍可使用。';
+      });
+    }
   }
 
   Future<void> stop() async {
@@ -117,8 +140,10 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
       busy = true;
       clock!.stop(DateTime.now());
       status = '已结束，等待核对';
+      notificationMessage = null;
     });
     await persist();
+    await LockScreenTimer.stop();
     if (mounted) setState(() => busy = false);
   }
 
@@ -187,6 +212,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
           ),
         const SizedBox(height: 20),
         Text(status),
+        if (notificationMessage != null) Text(notificationMessage!),
         if (lifecycle != null) Text('生命周期：${lifecycle!.name}'),
         if (elapsed >= const Duration(hours: 6))
           const Text('已达到单次最长计时，请休息一下吧。'),
