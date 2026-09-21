@@ -23,6 +23,6 @@
       "result": "pass"
     }
   ],
-  "visualStatus": "pending user lock-screen confirmation",
+  "visualStatus": "User confirmed lock-screen notification visible on 2026-09-21; advancing digits not separately confirmed",
   "finishedAt": "2026-09-21T04:03:07.108Z"
 }

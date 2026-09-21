@@ -41,6 +41,9 @@ class MainActivity : FlutterActivity() {
                             }
                         }
                     }
+                    "isActive" -> reply.success(
+                        getSystemService(NotificationManager::class.java).activeNotifications.any { it.id == StudyTimerService.NOTIFICATION_ID }
+                    )
                     "stop" -> {
                         stopService(Intent(this, StudyTimerService::class.java))
                         getSystemService(NotificationManager::class.java).cancel(StudyTimerService.NOTIFICATION_ID)

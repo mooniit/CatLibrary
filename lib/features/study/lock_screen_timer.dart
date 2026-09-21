@@ -7,6 +7,7 @@ class LockScreenTimer {
   static bool get supported =>
       !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
   static Future<bool> requestPermission() => _invoke('requestPermission');
+  static Future<bool> isActive() => _invoke('isActive');
   static Future<bool> show(DateTime start) =>
       _invoke('show', {'startedAt': start.millisecondsSinceEpoch});
   static Future<void> stop() async {

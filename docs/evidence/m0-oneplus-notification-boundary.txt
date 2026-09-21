@@ -1,0 +1,7 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/integration_test/lock_screen_timer_test.dart
+Running Gradle task 'assembleDebug'...                             50.5s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           5.0s
+00:00 +0: Android notification stops at an injected six-hour boundary
+00:15 +1: (tearDownAll)
+00:16 +1: All tests passed!
