@@ -4,10 +4,10 @@
   "artifacts": [
     {
       "file": "cat-library-m0-arm64-debug.apk",
-      "bytes": 115349271,
-      "sha256": "6edba41914eaba66fb28790d1a837bea5602d680d8ac4dc09c61169932bdd3f0",
-      "updatedAt": "2026-09-18T12:00:23.1857721+08:00",
-      "sourceCommit": "b6cd241"
+      "bytes": 115349348,
+      "sha256": "3574ab07c760aa93da4b4d22819316729087bc3dcdb31e23a20d763f094616f0",
+      "updatedAt": "2026-09-21T12:04:13.0261423+08:00",
+      "sourceCommit": "0a5c4ae"
     },
     {
       "file": "cat-library-m0-x64-debug.apk",

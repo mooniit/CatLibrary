@@ -1,0 +1,28 @@
+{
+  "scope": "OnePlus Android 16 native notification metadata/start-stop/force-stop checks; visible lock-screen appearance requires user confirmation",
+  "startedAt": "2026-09-21T04:02:41.254Z",
+  "device": "119bad33",
+  "checks": [
+    {
+      "name": "native system chronometer shares app session start",
+      "result": "pass",
+      "notificationId": 701,
+      "startMilliseconds": 1789963317893,
+      "publicVisibility": true
+    },
+    {
+      "name": "end removes notification and foreground service",
+      "result": "pass"
+    },
+    {
+      "name": "force-stop removes live notification",
+      "result": "pass"
+    },
+    {
+      "name": "cold recovery does not restart notification",
+      "result": "pass"
+    }
+  ],
+  "visualStatus": "pending user lock-screen confirmation",
+  "finishedAt": "2026-09-21T04:03:07.108Z"
+}

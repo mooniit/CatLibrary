@@ -1,0 +1,18 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:00 +1: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:00 +2: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:00 +3: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:00 +4: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +5: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +6: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +7: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +8: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +9: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +10: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +11: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:01 +12: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:02 +13: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +14: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +15: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +16: All tests passed!
