@@ -80,6 +80,8 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
         await LockScreenTimer.stop();
         if (mounted) {
           setState(() {
+            status = '已停止，等待核对';
+            notificationMessage = null;
             error = '检查点写入失败，计时已停止。请重试保存。';
           });
         }
@@ -126,7 +128,7 @@ class _TimerProbeState extends State<TimerProbe> with WidgetsBindingObserver {
     if (mounted) {
       setState(() {
         busy = false;
-        notificationMessage = !LockScreenTimer.supported
+        notificationMessage = error != null || !LockScreenTimer.supported
             ? null
             : shown
             ? '锁屏计时通知已开启；是否展示由手机通知设置控制。'

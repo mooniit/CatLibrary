@@ -1,0 +1,20 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/checkpoint_failure_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/checkpoint_failure_test.dart: aborted SQLite update preserves durable time after reopen
+00:00 +1: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:02 +2: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission true keeps study start and stop usable (variant: TargetPlatform.android)
+00:02 +3: D:/2DoProjects/CatLibrary/test/lock_screen_timer_test.dart: notification permission false keeps study start and stop usable (variant: TargetPlatform.android)
+00:03 +4: D:/2DoProjects/CatLibrary/test/probe_database_test.dart: SQLite transaction keeps the latest full checkpoint
+00:03 +5: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +6: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +7: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +8: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +9: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +10: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +11: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +12: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +13: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +14: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +15: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:03 +16: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:05 +17: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:05 +18: All tests passed!
