@@ -1,0 +1,7 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/integration_test/cloud_probe_test.dart
+Running Gradle task 'assembleDebug'...                            156.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.7s
+00:00 +0: target device round-trips an anonymous private probe
+00:02 +1: (tearDownAll)
+00:03 +1: All tests passed!

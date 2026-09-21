@@ -1,0 +1,12 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/integration_test/cloud_probe_test.dart
+Running Gradle task 'assembleDebug'...                             41.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...         182.7s
+Error: ADB exited with exit code -1
+
+00:00 +0 -1: loading D:/2DoProjects/CatLibrary/integration_test/cloud_probe_test.dart [E]
+  Failed to load "D:/2DoProjects/CatLibrary/integration_test/cloud_probe_test.dart": Unable to start the app on the device.
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  D:/2DoProjects/CatLibrary/integration_test/cloud_probe_test.dart: loading D:/2DoProjects/CatLibrary/integration_test/cloud_probe_test.dart
