@@ -62,7 +62,7 @@ class _PrototypeShellState extends State<PrototypeShell> {
         child: Padding(
           padding: EdgeInsets.only(bottom: 8),
           child: Text(
-            widget.wallet == null ? '交互预览 · 无真实资产' : 'M1 开发版 · 计时与领养仍为探针',
+            widget.wallet == null ? '交互预览 · 无真实资产' : 'M1 开发版 · 计时尚未入账',
             style: const TextStyle(fontSize: 12),
           ),
         ),

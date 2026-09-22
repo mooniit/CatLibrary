@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../room_layout.dart';
 import '../room/room_scene.dart';
-import '../identity/adoption_sheet.dart';
+import '../cats/cats_page.dart';
 import '../identity/identity_repository.dart';
 import '../family/family_page.dart';
 import '../../core/sync/cloud_client.dart';
@@ -21,7 +21,6 @@ class HomePageState extends State<HomePage> {
   late final scene = RoomScene(layout);
   String selected = 'chair';
   String? message;
-  final cats = <String, String>{};
   Future<bool> canLeave() async {
     if (!layout.editing) return true;
     final discard = await showDialog<bool>(
@@ -202,15 +201,18 @@ class HomePageState extends State<HomePage> {
                 label: const Text('布置猫窝'),
               ),
               OutlinedButton.icon(
-                onPressed: () => showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  showDragHandle: true,
-                  builder: (_) => AdoptionSheet(
-                    cats: cats,
-                    onAdopted: () => setState(() {}),
-                  ),
-                ),
+                onPressed: () {
+                  final wallet = widget.wallet;
+                  if (wallet == null) {
+                    info('猫咪管理', '请先连接服务并加入小屋。交互预览不会创建猫咪。');
+                  } else {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => CatsPage(ownerId: wallet.ownerId),
+                      ),
+                    );
+                  }
+                },
                 icon: const Icon(Icons.pets),
                 label: const Text('猫咪管理'),
               ),
@@ -233,7 +235,6 @@ class HomePageState extends State<HomePage> {
           subtitle: const Text('一起收藏猫咪的旅行回忆'),
           onTap: () => info('相册', '还没有旅行照片。此处是空状态原型，不生成旅行记录。'),
         ),
-        if (cats.isNotEmpty) Text('本次试领养：${cats.values.join('、')}（内存样例）'),
       ],
     ),
   );

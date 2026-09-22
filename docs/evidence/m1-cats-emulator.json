@@ -1,0 +1,8 @@
+{
+  "time": "2026-09-22T12:48:11.846Z",
+  "result": "PASS",
+  "catName": "M1Cat1259458",
+  "remainingBefore": 2,
+  "remainingAfter": 1,
+  "scope": "Android emulator using real local Supabase: enter name, adopt via UI, owner/quota displayed, close and reopen page reloads saved cat; NOT phone/iOS or cold process restart"
+}
