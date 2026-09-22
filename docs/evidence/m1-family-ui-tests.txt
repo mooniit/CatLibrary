@@ -1,0 +1,23 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/bootstrap_page_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/bootstrap_page_test.dart: automatic startup retries failure and renders server wallet
+00:03 +1: D:/2DoProjects/CatLibrary/test/bootstrap_page_test.dart: automatic startup retries failure and renders server wallet
+00:05 +2: D:/2DoProjects/CatLibrary/test/checkpoint_failure_test.dart: failed start stops visibly and retry stays pending confirmation
+00:09 +3: D:/2DoProjects/CatLibrary/test/checkpoint_failure_test.dart: failed start stops visibly and retry stays pending confirmation
+00:09 +4: D:/2DoProjects/CatLibrary/test/checkpoint_failure_test.dart: failed start stops visibly and retry stays pending confirmation
+00:09 +5: D:/2DoProjects/CatLibrary/test/checkpoint_failure_test.dart: failed start stops visibly and retry stays pending confirmation
+00:09 +6: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +7: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +8: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +9: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +10: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +11: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +12: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +13: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +14: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +15: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:10 +16: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:11 +17: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:11 +18: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:12 +19: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:13 +20: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and home entries fit a narrow phone
+00:14 +21: All tests passed!

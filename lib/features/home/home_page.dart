@@ -5,6 +5,7 @@ import '../../room_layout.dart';
 import '../room/room_scene.dart';
 import '../identity/adoption_sheet.dart';
 import '../identity/identity_repository.dart';
+import '../family/family_page.dart';
 import '../../core/sync/cloud_client.dart';
 
 class HomePage extends StatefulWidget {
@@ -98,6 +99,15 @@ class HomePageState extends State<HomePage> {
             key: const Key('wallet-balance'),
           ),
           const Text('个人钱包 · 已连接'),
+          OutlinedButton.icon(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => FamilyPage(ownerId: wallet.ownerId),
+              ),
+            ),
+            icon: const Icon(Icons.people_outline),
+            label: const Text('家庭与邀请'),
+          ),
         ] else
           const Text('钱包尚未连接 · 无真实资产'),
         const Text('场景为结构占位，风格暂不讨论'),

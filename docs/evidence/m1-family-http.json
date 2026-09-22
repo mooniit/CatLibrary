@@ -1,0 +1,5 @@
+{
+  "time": "2026-09-22T06:11:11.850Z",
+  "result": "PASS",
+  "scope": "Local HTTP with three anonymous users; create/apply/approve/reject, two simultaneous approvals admit only one, no self-approval or direct membership writes, no existing-family merge, creator-only invite and request visibility"
+}
