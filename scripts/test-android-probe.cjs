@@ -51,7 +51,7 @@ function checkpoint() {
   finally { db.close(); }
 }
 function pass(name, detail={}) { evidence.checks.push({name,result:'pass',...detail}); console.log(`PASS ${name}`); }
-(async()=>{
+if (require.main === module) (async()=>{
   assert.equal(run('shell','getprop','sys.boot_completed'),'1');
   evidence.android=run('shell','getprop','ro.build.version.release');
   evidence.model=run('shell','getprop','ro.product.model');
@@ -120,3 +120,5 @@ function pass(name, detail={}) { evidence.checks.push({name,result:'pass',...det
 })().catch(error=>{evidence.error=error.stack; process.exitCode=1; console.error(error);}).finally(()=>{
   fs.writeFileSync(path.join(root,physical ? 'docs/evidence/m0-oneplus-lifecycle.json' : 'docs/evidence/m0-android-lifecycle.json'),JSON.stringify(evidence,null,2)+'\n');
 });
+
+module.exports = {run, nodes, tap, shown, elapsed, pid, checkpoint, pause};

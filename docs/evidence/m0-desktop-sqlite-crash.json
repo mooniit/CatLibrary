@@ -1,0 +1,25 @@
+{
+  "scope": "Windows Node SQLite abrupt writer termination; no mobile, power-loss or currency proof",
+  "startedAt": "2026-09-21T11:23:29.765Z",
+  "checks": [
+    {
+      "phase": "uncommitted",
+      "result": "pass",
+      "termination": {
+        "code": null,
+        "signal": "SIGKILL"
+      },
+      "recoveredCheckpoint": "2026-09-21T15:59:30.000Z"
+    },
+    {
+      "phase": "committed",
+      "result": "pass",
+      "termination": {
+        "code": null,
+        "signal": "SIGKILL"
+      },
+      "recoveredCheckpoint": "2026-09-21T16:01:00.000Z"
+    }
+  ],
+  "finishedAt": "2026-09-21T11:23:30.015Z"
+}

@@ -1,0 +1,8 @@
+{
+  "scope": "Android emulator to local Supabase, process restart identity reuse; NOT iOS or remote cloud",
+  "startedAt": "2026-09-21T11:29:57.227Z",
+  "firstId": "00be2759-5d95-4290-a1bc-3c967054c37a",
+  "reopenedId": "00be2759-5d95-4290-a1bc-3c967054c37a",
+  "result": "pass",
+  "finishedAt": "2026-09-21T11:30:36.252Z"
+}

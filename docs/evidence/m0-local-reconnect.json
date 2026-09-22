@@ -1,0 +1,6 @@
+{
+  "checks": 3,
+  "time": "2026-09-21T19:27:28.1161632+08:00",
+  "scope": "Local Docker gateway stopped/restarted; HTTP failure observed, same session identity and row recovered; NOT free cloud suspension, mobile reconnect, token expiry or reward settlement",
+  "result": "PASS"
+}

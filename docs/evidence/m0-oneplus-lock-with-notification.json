@@ -1,0 +1,127 @@
+{
+  "scope": "OnePlus USB-powered seven-minute lock sampling with foreground notification; no deep-doze, six-hour or midnight proof",
+  "startedAt": "2026-09-21T11:26:06.331Z",
+  "device": "119bad33",
+  "pid": "32066",
+  "before": {
+    "start": "2026-09-21T11:28:18.060056Z",
+    "checkpoint": "2026-09-21T11:28:18.445946Z",
+    "running": true
+  },
+  "samples": [
+    {
+      "minute": 1,
+      "observedAt": "2026-09-21T11:27:06.780Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    },
+    {
+      "minute": 2,
+      "observedAt": "2026-09-21T11:28:07.165Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    },
+    {
+      "minute": 3,
+      "observedAt": "2026-09-21T11:29:07.552Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    },
+    {
+      "minute": 4,
+      "observedAt": "2026-09-21T11:30:07.987Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    },
+    {
+      "minute": 5,
+      "observedAt": "2026-09-21T11:31:08.356Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    },
+    {
+      "minute": 6,
+      "observedAt": "2026-09-21T11:32:08.767Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    },
+    {
+      "minute": 7,
+      "observedAt": "2026-09-21T11:33:09.152Z",
+      "pid": "32066",
+      "checkpoint": {
+        "start": "2026-09-21T11:28:18.060056Z",
+        "checkpoint": "2026-09-21T11:28:28.446177Z",
+        "running": true
+      },
+      "power": [
+        "mWakefulness=Dozing",
+        "mIsPowered=true",
+        "mStayOn=false",
+        "mIsPowered=true"
+      ]
+    }
+  ],
+  "sampledAt": "2026-09-21T11:33:09.524Z",
+  "everySampleAdvanced": false
+}

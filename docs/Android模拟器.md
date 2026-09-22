@@ -36,8 +36,14 @@ node scripts/test-android-probe.cjs emulator-5554
 
 ## 已保存 APK
 
-模拟器包：output/android/cat-library-m0-x64-debug.apk。一加真机包：output/android/cat-library-m0-arm64-debug.apk。二者已构建成功；arm64 尚未安装验证。普通原型包与集成测试包不同，运行集成测试后需重新安装普通原型再执行 scripts/test-android-probe.cjs。
+模拟器包：output/android/cat-library-m0-x64-debug.apk。一加真机包：output/android/cat-library-m0-arm64-debug.apk。二者已构建成功；arm64 已在一加完成短时生命周期、通知与本地云连接验证。普通原型包与集成测试包不同，运行集成测试后需重新安装普通原型再执行 scripts/test-android-probe.cjs。
 
 ## 整机重启补查
 
 集成测试包替换为普通包并关闭模拟器后，下一次启动曾出现应用包缺失；原因未定位，不作为应用持久化成功证据。重新安装后执行 Android 正常重启（adb reboot），系统启动完成、应用包保留、应用启动均通过，见 evidence/m0-android-reboot.json。该补查不证明主机强制关闭、写入瞬间断电或整个虚拟机存储始终可靠。当前已恢复为打开普通原型的状态。
+
+## 日常电脑调试（2026-09-21）
+
+本轮在 Android 15 模拟器启动最新源码并执行一次热重载，成功返回 Reloaded 0 libraries（701 ms）；本次无待加载代码变更，仅验证持续调试链路。日常使用 `./scripts/flutter.ps1 run -d emulator-5554`，保持终端运行，修改 Dart 页面后按 r 热重载；需要重新执行启动逻辑时按 R 热重启。原生 Android 代码、权限或构建配置变化仍需重新构建运行。
+
+普通 Dart 修改优先在电脑完成，真机锁屏/省电验证按工作包集中执行。当前无窗口模拟器适合自动化；需要可见窗口时结束该项目 AVD，再运行 `./scripts/start-emulator.ps1`。
