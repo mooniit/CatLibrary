@@ -1,0 +1,8 @@
+{
+  "file": "cat-library-m1-x64-local-debug.apk",
+  "sha256": "03512d4a88e4a3be4b39eb2914cd92355ea97eafe7b629090cc830e07d7ddfaa",
+  "sourceCommit": "18e4d45",
+  "builtAt": "2026-09-22T20:54:46.8053804+08:00",
+  "bytes": 138857979,
+  "scope": "x86_64 emulator debug APK, local Supabase public configuration; not arm64 phone or production release"
+}
