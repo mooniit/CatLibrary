@@ -1,0 +1,6 @@
+Connecting to local database...
+/2DoProjects/CatLibrary/supabase/tests/cloud_probe.test.sql .. ok
+/2DoProjects/CatLibrary/supabase/tests/identity.test.sql ..... ok
+All tests successful.
+Files=2, Tests=20,  1 wallclock secs ( 0.09 usr  0.09 sys +  0.01 cusr  0.08 csys =  0.27 CPU)
+Result: PASS

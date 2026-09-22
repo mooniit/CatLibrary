@@ -1,0 +1,18 @@
+Connecting to local database...
+/2DoProjects/CatLibrary/supabase/tests/cloud_probe.test.sql .. ok
+psql:/2DoProjects/CatLibrary/supabase/tests/identity.test.sql:6: ERROR:  function public.bootstrap_identity() does not exist
+LINE 1: select is((public.bootstrap_identity()->>'miao_coins')::int,...
+                   ^
+HINT:  No function matches the given name and argument types. You might need to add explicit type casts.
+/2DoProjects/CatLibrary/supabase/tests/identity.test.sql ..... 
+Dubious, test returned 3 (wstat 768, 0x300)
+Failed 12/12 subtests 
+
+Test Summary Report
+-------------------
+/2DoProjects/CatLibrary/supabase/tests/identity.test.sql   (Wstat: 768 (exited 3) Tests: 0 Failed: 0)
+  Non-zero exit status: 3
+  Parse errors: Bad plan.  You planned 12 tests but ran 0.
+Files=2, Tests=8,  1 wallclock secs ( 0.07 usr  0.07 sys +  0.02 cusr  0.13 csys =  0.29 CPU)
+Result: FAIL
+error running container: exit 1
