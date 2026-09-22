@@ -1,0 +1,3 @@
+Error: No server wallet displayed
+    at wallet (D:\2DoProjects\CatLibrary\scripts\test-emulator-bootstrap.cjs:18:9)
+    at async D:\2DoProjects\CatLibrary\scripts\test-emulator-bootstrap.cjs:21:16

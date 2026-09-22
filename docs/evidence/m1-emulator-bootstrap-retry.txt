@@ -1,0 +1,1 @@
+PASS automatic startup, real wallet 30/0/0, unchanged after restart

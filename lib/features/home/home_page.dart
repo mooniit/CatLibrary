@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import '../../room_layout.dart';
 import '../room/room_scene.dart';
 import '../identity/adoption_sheet.dart';
+import '../identity/identity_repository.dart';
 import '../../core/sync/cloud_client.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.onStudy});
+  const HomePage({super.key, required this.onStudy, this.wallet});
+  final IdentityWallet? wallet;
   final VoidCallback onStudy;
   @override
   State<HomePage> createState() => HomePageState();
@@ -90,7 +92,15 @@ class HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        const Text('钱包尚未连接 · 场景为结构占位，风格暂不讨论'),
+        if (widget.wallet case final wallet?) ...[
+          Text(
+            '喵喵币 ${wallet.miaoCoins} · 鹰镑 ${wallet.eaglePounds} · 宝石 ${wallet.gems}',
+            key: const Key('wallet-balance'),
+          ),
+          const Text('个人钱包 · 已连接'),
+        ] else
+          const Text('钱包尚未连接 · 无真实资产'),
+        const Text('场景为结构占位，风格暂不讨论'),
         const SizedBox(height: 12),
         AspectRatio(
           aspectRatio: 1.45,

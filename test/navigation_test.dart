@@ -10,7 +10,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    await tester.pumpWidget(const CatLibraryApp());
+    await tester.pumpWidget(const CatLibraryApp(preview: true));
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('商店'), findsOneWidget);
     expect(find.text('相册'), findsOneWidget);

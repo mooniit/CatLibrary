@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-22T06:00:54.979Z",
+  "scope": "Android emulator, real local Supabase auto-bootstrap and displayed wallet after process restart; no phone/iOS/remote cloud claim",
+  "before": [
+    30,
+    0,
+    0
+  ],
+  "after": [
+    30,
+    0,
+    0
+  ],
+  "result": "PASS"
+}

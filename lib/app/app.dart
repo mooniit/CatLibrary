@@ -1,25 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import '../features/identity/bootstrap_page.dart';
+import '../features/identity/identity_repository.dart';
 
 import '../features/home/home_page.dart';
 import '../features/study/timer_probe.dart';
 
 class CatLibraryApp extends StatelessWidget {
-  const CatLibraryApp({super.key});
+  const CatLibraryApp({super.key, this.preview = false});
+  final bool preview;
   @override
   Widget build(BuildContext context) => MaterialApp(
-    title: '喵的图书馆 · M0',
+    title: '喵的图书馆',
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       useMaterial3: true,
       colorSchemeSeed: const Color(0xff53665b),
       scaffoldBackgroundColor: const Color(0xfffafaf8),
     ),
-    home: const PrototypeShell(),
+    home: preview
+        ? const PrototypeShell()
+        : Builder(
+            builder: (context) => BootstrapPage(
+              initialize: IdentityRepository.bootstrap,
+              builder: (wallet) => PrototypeShell(wallet: wallet),
+              onPreview: kDebugMode
+                  ? () => Navigator.of(context).pushReplacement(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const PrototypeShell(),
+                      ),
+                    )
+                  : null,
+            ),
+          ),
   );
 }
 
 class PrototypeShell extends StatefulWidget {
-  const PrototypeShell({super.key});
+  const PrototypeShell({super.key, this.wallet});
+  final IdentityWallet? wallet;
   @override
   State<PrototypeShell> createState() => _PrototypeShellState();
 }
@@ -38,11 +57,14 @@ class _PrototypeShellState extends State<PrototypeShell> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: Text(['猫窝', '任务板', '阅读', '自习'][index]),
-      bottom: const PreferredSize(
+      bottom: PreferredSize(
         preferredSize: Size.fromHeight(30),
         child: Padding(
           padding: EdgeInsets.only(bottom: 8),
-          child: Text('M0 交互原型 · 占位内容 · 无真实资产', style: TextStyle(fontSize: 12)),
+          child: Text(
+            widget.wallet == null ? '交互预览 · 无真实资产' : 'M1 开发版 · 计时与领养仍为探针',
+            style: const TextStyle(fontSize: 12),
+          ),
         ),
       ),
     ),
@@ -50,7 +72,11 @@ class _PrototypeShellState extends State<PrototypeShell> {
       child: IndexedStack(
         index: index,
         children: [
-          HomePage(key: homeKey, onStudy: () => select(3)),
+          HomePage(
+            key: homeKey,
+            onStudy: () => select(3),
+            wallet: widget.wallet,
+          ),
           ListView(
             padding: const EdgeInsets.all(20),
             children: [
