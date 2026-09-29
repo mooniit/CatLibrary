@@ -139,7 +139,7 @@ class _PrototypeShellState extends State<PrototypeShell>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: index == 3 && wallet != null
+    appBar: index == 0 || (index == 3 && wallet != null)
         ? null
         : AppBar(
             title: Text(['猫窝', '任务板', '阅读', '自习'][index]),

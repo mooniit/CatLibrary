@@ -14,7 +14,10 @@ class GridPoint {
 }
 
 class RoomLayout {
-  static const defaults = {'chair': GridPoint(5, 5), 'table': GridPoint(3, 3)};
+  static const defaults = {
+    'bookshelf': GridPoint(2, 2),
+    'bed': GridPoint(7, 3),
+  };
   Map<String, GridPoint> _saved = Map.of(defaults);
   Map<String, GridPoint> _draft = Map.of(defaults);
   bool editing = false;

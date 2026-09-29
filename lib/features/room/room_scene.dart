@@ -1,59 +1,168 @@
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import '../../room_layout.dart';
 
-/// Deliberately a wireframe. No artwork or final visual direction is implied.
+typedef RoomCat = ({String name, String appearance});
+
+/// Ground anchors use a 1000 × 1250 artboard, independent of the viewport.
 class RoomScene extends FlameGame {
   RoomScene(this.layout);
   final RoomLayout layout;
+  List<RoomCat> cats = [];
+  String selected = 'bookshelf';
+  double zoom = 1;
+  Offset pan = Offset.zero;
+  ui.Image? _shell;
+  ui.Image? _objects;
+  final _paint = Paint()..filterQuality = FilterQuality.medium;
+
+  // Source rectangles in the supplied 1254 × 1254 transparent atlas.
+  static const _sprites = {
+    'bookshelf': Rect.fromLTRB(130, 10, 547, 681),
+    'bed': Rect.fromLTRB(715, 240, 1165, 614),
+    'black_short': Rect.fromLTRB(89, 682, 585, 1220),
+    'light_long': Rect.fromLTRB(715, 682, 1190, 1227),
+  };
+  static const _widths = {
+    'bookshelf': 205.0,
+    'bed': 150.0,
+    'black_short': 95.0,
+    'light_long': 90.0,
+  };
+  static const _catPositions = [
+    GridPoint(5, 6),
+    GridPoint(5, 2),
+    GridPoint(3, 4),
+    GridPoint(7, 4),
+  ];
 
   @override
-  Color backgroundColor() => const Color(0xfff0f1ed);
+  Color backgroundColor() => Colors.transparent;
 
-  Offset point(GridPoint p) =>
-      Offset(size.x / 2, 25) + RoomLayout.project(p) * (size.x / 400);
+  @override
+  Future<void> onLoad() async {
+    final loaded = await images.loadAll(['room/shell.png', 'room/objects.png']);
+    _shell = loaded[0];
+    _objects = loaded[1];
+  }
+
+  double get baseScale => math.max(size.x / 960, size.y / 1380);
+  double get displayScale => baseScale * zoom;
+  Offset get origin =>
+      Offset(
+        (size.x - 1000 * displayScale) / 2,
+        (size.y - 1250 * displayScale) / 2,
+      ) +
+      pan;
+
+  static Offset ground(GridPoint point) =>
+      Offset(500 + (point.x - point.y) * 50, 548 + (point.x + point.y) * 33);
+
+  GridPoint gridDelta(Offset delta) => RoomLayout.unproject(
+    Offset(delta.dx / (displayScale * 2.5), delta.dy / (displayScale * 3.3)),
+  );
+
+  void moveView(double nextZoom, Offset focalPoint, Offset delta) {
+    final before = displayScale;
+    final local = (focalPoint - delta - origin) / before;
+    zoom = nextZoom.clamp(0.8, 1.6);
+    final centered = Offset(
+      (size.x - 1000 * displayScale) / 2,
+      (size.y - 1250 * displayScale) / 2,
+    );
+    pan = focalPoint - local * displayScale - centered;
+    _clampPan();
+  }
+
+  void _clampPan() {
+    final limitX = math.max(48.0, (1000 * displayScale - size.x) / 2 + 64);
+    final limitY = math.max(64.0, (1250 * displayScale - size.y) / 2 + 100);
+    pan = Offset(pan.dx.clamp(-limitX, limitX), pan.dy.clamp(-limitY, limitY));
+  }
+
+  void resetView() {
+    zoom = 1;
+    pan = Offset.zero;
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    _clampPan();
+  }
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    final line = Paint()
-      ..color = const Color(0xffc1c7c1)
-      ..strokeWidth = 1;
-    for (var i = 0; i <= 9; i++) {
-      canvas.drawLine(point(GridPoint(i.toDouble(), 0)),
-          point(GridPoint(i.toDouble(), 9)), line);
-      canvas.drawLine(point(GridPoint(0, i.toDouble())),
-          point(GridPoint(9, i.toDouble())), line);
-    }
-    final entries =
-        (layout.editing ? layout.draft : layout.saved).entries.toList()..sort(
-          (a, b) => (a.value.x + a.value.y).compareTo(b.value.x + b.value.y),
+    final shell = _shell;
+    final objects = _objects;
+    if (shell == null || objects == null) return;
+    canvas.save();
+    canvas.translate(origin.dx, origin.dy);
+    canvas.scale(displayScale);
+    canvas.drawImageRect(
+      shell,
+      Rect.fromLTWH(0, 0, shell.width.toDouble(), shell.height.toDouble()),
+      const Rect.fromLTWH(0, 0, 1000, 1250),
+      _paint,
+    );
+    if (layout.editing) {
+      final gridPaint = Paint()
+        ..color = const Color(0xff6b7c90).withValues(alpha: 0.3)
+        ..strokeWidth = 1;
+      for (var i = 1; i <= 8; i++) {
+        canvas.drawLine(
+          ground(GridPoint(i.toDouble(), 1)),
+          ground(GridPoint(i.toDouble(), 8)),
+          gridPaint,
         );
-    for (final entry in entries) {
-      final p = point(entry.value);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromCenter(center: p, width: 58, height: 30),
-          const Radius.circular(4),
-        ),
-        Paint()..color = const Color(0xffd2d7d0),
-      );
-      label(canvas, entry.key == 'chair' ? '椅子占位' : '桌子占位',
-          p - const Offset(25, 8));
+        canvas.drawLine(
+          ground(GridPoint(1, i.toDouble())),
+          ground(GridPoint(8, i.toDouble())),
+          gridPaint,
+        );
+      }
     }
-    label(canvas, '黑猫占位', point(const GridPoint(7, 6)));
-    label(canvas, '浅色猫占位', point(const GridPoint(4, 8)));
-  }
-
-  void label(Canvas canvas, String text, Offset offset) {
-    final painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: const TextStyle(color: Color(0xff303a34), fontSize: 11),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    painter.paint(canvas, offset);
+    final furniture = layout.editing ? layout.draft : layout.saved;
+    final items = <({String kind, GridPoint point, bool selected})>[
+      for (final entry in furniture.entries)
+        (
+          kind: entry.key,
+          point: entry.value,
+          selected: layout.editing && entry.key == selected,
+        ),
+      for (var i = 0; i < cats.length && i < _catPositions.length; i++)
+        (kind: cats[i].appearance, point: _catPositions[i], selected: false),
+    ]..sort((a, b) => (a.point.x + a.point.y).compareTo(b.point.x + b.point.y));
+    for (final item in items) {
+      final source = _sprites[item.kind];
+      if (source == null) continue;
+      final width = _widths[item.kind]!;
+      final height = width * source.height / source.width;
+      final point = ground(item.point);
+      if (item.selected) {
+        canvas.drawOval(
+          Rect.fromCenter(center: point, width: width, height: 42),
+          Paint()..color = const Color(0xff7186a0).withValues(alpha: 0.3),
+        );
+      }
+      final anchor = item.kind == 'bookshelf' ? 0.88 : 0.94;
+      canvas.drawImageRect(
+        objects,
+        source,
+        Rect.fromLTWH(
+          point.dx - width / 2,
+          point.dy - height * anchor,
+          width,
+          height,
+        ),
+        _paint,
+      );
+    }
+    canvas.restore();
   }
 }

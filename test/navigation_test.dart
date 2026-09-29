@@ -12,8 +12,8 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const CatLibraryApp(preview: true));
     await tester.pump(const Duration(seconds: 1));
-    expect(find.text('商店'), findsOneWidget);
-    expect(find.text('相册'), findsOneWidget);
+    expect(find.byTooltip('商店'), findsOneWidget);
+    expect(find.byTooltip('相册'), findsOneWidget);
     expect(find.byTooltip('设置'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.menu_book_outlined));
     await tester.pump();
@@ -23,7 +23,7 @@ void main() {
     expect(find.text('外语学习'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.home_outlined));
     await tester.pump();
-    await tester.tap(find.text('布置猫窝'));
+    await tester.tap(find.byTooltip('布置猫窝'));
     await tester.pump();
     await tester.tap(find.byIcon(Icons.menu_book_outlined));
     await tester.pump(const Duration(milliseconds: 350));
