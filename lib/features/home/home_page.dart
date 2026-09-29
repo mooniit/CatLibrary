@@ -328,7 +328,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             Positioned(
               left: 16,
               right: 16,
-              bottom: 60,
+              bottom: constraints.maxHeight < 600 ? 60 : 110,
               child: layout.editing
                   ? ConstrainedBox(
                       constraints: BoxConstraints(
