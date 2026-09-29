@@ -87,4 +87,93 @@ void main() {
     expect(find.text('去创建或加入小屋'), findsOneWidget);
     expect(find.text('免费领养'), findsNothing);
   });
+
+  testWidgets(
+    'feeding updates the cat and personal wallet only after server reply',
+    (tester) async {
+      var fed = false;
+      var balance = 30;
+      final walletUpdates = <int>[];
+      await tester.pumpWidget(
+        MaterialApp(
+          home: CatsPage(
+            ownerId: 'A',
+            onWallet: (wallet) => walletUpdates.add(wallet.miaoCoins),
+            call: (action, args) async {
+              if (action == 'feed_cat') {
+                expect(args, {'target_cat': 'cat'});
+                fed = true;
+                balance -= 15;
+              }
+              return {
+                'family_id': 'home',
+                'remaining': 1,
+                'wallet': {
+                  'owner_id': 'A',
+                  'miao_coins': balance,
+                  'eagle_pounds': 0,
+                  'gems': 0,
+                },
+                'cats': [
+                  {
+                    'id': 'cat',
+                    'name': '煤球',
+                    'appearance': 'black_short',
+                    'owner_id': 'A',
+                    'is_mine': true,
+                    'fed_today': fed,
+                  },
+                ],
+                if (action == 'feed_cat') 'outcome': 'fed',
+              };
+            },
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('个人余额：30 喵喵币'), findsOneWidget);
+      await tester.tap(find.text('喂食 15'));
+      await tester.pumpAndSettle();
+      expect(find.text('个人余额：15 喵喵币'), findsOneWidget);
+      expect(find.textContaining('今日已喂食'), findsWidgets);
+      expect(find.text('喂食 15'), findsNothing);
+      expect(walletUpdates.last, 15);
+    },
+  );
+  testWidgets('repair state disables feeding and adoption', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: CatsPage(
+          ownerId: 'A',
+          call: (action, args) async {
+            expect(action, 'cats_state');
+            return {
+              'family_id': 'home',
+              'repairing': true,
+              'remaining': 1,
+              'cats': [
+                {
+                  'id': 'cat',
+                  'name': '煤球',
+                  'appearance': 'black_short',
+                  'owner_id': 'A',
+                  'is_mine': true,
+                  'fed_today': false,
+                },
+              ],
+            };
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('小屋修缮中'), findsOneWidget);
+    expect(
+      tester
+          .widget<FilledButton>(find.widgetWithText(FilledButton, '喂食 15'))
+          .onPressed,
+      isNull,
+    );
+    expect(find.text('免费领养'), findsNothing);
+  });
 }

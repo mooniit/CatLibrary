@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../family/family_page.dart';
+import '../identity/identity_repository.dart';
 import 'cats_repository.dart';
 
 class CatsPage extends StatefulWidget {
   const CatsPage({
     super.key,
     required this.ownerId,
+    this.onWallet,
     this.call = CatsRepository.call,
   });
   final String ownerId;
+  final ValueChanged<IdentityWallet>? onWallet;
   final Future<Map<String, dynamic>> Function(String, Map<String, dynamic>)
   call;
   @override
@@ -23,6 +26,7 @@ class _CatsPageState extends State<CatsPage> {
   Map<String, dynamic>? data;
   bool busy = true;
   String? error;
+  String? notice;
   @override
   void initState() {
     super.initState();
@@ -42,10 +46,20 @@ class _CatsPageState extends State<CatsPage> {
     setState(() {
       busy = true;
       error = null;
+      notice = null;
     });
     try {
       final result = await widget.call(action, args);
       if (!mounted) return;
+      if (result['wallet'] case final Map walletData) {
+        final wallet = IdentityWallet.fromJson(
+          Map<String, dynamic>.from(walletData),
+        );
+        if (wallet.ownerId != widget.ownerId) {
+          throw StateError('Wallet identity mismatch');
+        }
+        widget.onWallet?.call(wallet);
+      }
       final owned = (result['cats'] as List)
           .where((c) => c['is_mine'] == true)
           .map((c) => c['appearance'])
@@ -59,6 +73,11 @@ class _CatsPageState extends State<CatsPage> {
           );
         }
         if (action == 'adopt_cat') name.clear();
+        if (action == 'feed_cat') {
+          notice = result['outcome'] == 'fed'
+              ? '已支付 15 喵喵币，今天不用再为这只猫付费。'
+              : '这只猫今天已喂食，没有重复扣款。';
+        }
       });
     } catch (e) {
       const messages = {
@@ -68,11 +87,18 @@ class _CatsPageState extends State<CatsPage> {
         'Appearance already adopted': '你已领养过这种外观，请刷新后选择另一种。',
         'Adoption quota reached': '你的两只猫咪名额已用完。',
         'Invalid appearance': '请选择有效的猫咪外观。',
+        'Insufficient miao coins': '喵喵币不足 15，无法主动喂食。',
+        'Cat is outside your family': '这只猫不属于当前小屋。',
+        'Repair in progress': '小屋修缮中，暂不能领养或喂食。',
       };
       if (mounted) {
         setState(
-          () => error = e is PostgrestException
-              ? messages[e.message] ?? '领养未确认成功，请刷新或重试。'
+          () => error = e is PostgrestException && messages[e.message] != null
+              ? messages[e.message]
+              : action == 'feed_cat'
+              ? '喂食结果待确认，请刷新；当天重复请求不会重复扣款。'
+              : e is PostgrestException
+              ? '领养未确认成功，请刷新或重试。'
               : '连接失败，请重试；尚未确认领养成功。',
         );
       }
@@ -89,6 +115,7 @@ class _CatsPageState extends State<CatsPage> {
         .map((c) => c['appearance'])
         .toSet();
     final hasFamily = data?['family_id'] != null;
+    final repairing = data?['repairing'] == true;
     final remaining = (data?['remaining'] as int?) ?? 0;
     return Scaffold(
       appBar: AppBar(
@@ -109,6 +136,11 @@ class _CatsPageState extends State<CatsPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Text(error!, key: const Key('cat-error')),
+            ),
+          if (notice != null)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(notice!, key: const Key('feeding-notice')),
             ),
           if (data == null && !busy)
             FilledButton(
@@ -133,11 +165,21 @@ class _CatsPageState extends State<CatsPage> {
             ),
           ],
           if (hasFamily) ...[
+            if (repairing)
+              const Card(
+                child: ListTile(
+                  leading: Icon(Icons.handyman_outlined),
+                  title: Text('小屋修缮中'),
+                  subtitle: Text('暂不能领养或喂食；计时任务仍可继续推进修缮。'),
+                ),
+              ),
             Text(
               '家庭猫咪 ${cats.length}/4',
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             Text('本人剩余领养名额：$remaining', key: const Key('cat-quota')),
+            if (data?['wallet'] case final Map walletData)
+              Text('个人余额：${walletData['miao_coins']} 喵喵币'),
             if (cats.isEmpty)
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
@@ -149,12 +191,25 @@ class _CatsPageState extends State<CatsPage> {
                   leading: const Icon(Icons.pets_outlined),
                   title: Text(cat['name'] as String),
                   subtitle: Text(
-                    '${appearances[cat['appearance']]}\n登记主人：${cat['is_mine'] == true ? '我' : cat['owner_id']}',
+                    '${appearances[cat['appearance']]}\n登记主人：${cat['is_mine'] == true ? '我' : cat['owner_id']}'
+                    '\n${cat['fed_today'] == true ? '今日已喂食' : '今日尚未喂食'}',
                   ),
+                  trailing: cat['fed_today'] == true
+                      ? const Icon(
+                          Icons.check_circle_outline,
+                          semanticLabel: '今日已喂食',
+                        )
+                      : FilledButton(
+                          onPressed: busy || repairing
+                              ? null
+                              : () =>
+                                    act('feed_cat', {'target_cat': cat['id']}),
+                          child: const Text('喂食 15'),
+                        ),
                 ),
               ),
             const Divider(height: 32),
-            if (remaining > 0) ...[
+            if (remaining > 0 && !repairing) ...[
               Text('认识新伙伴', style: Theme.of(context).textTheme.titleLarge),
               const Text('免费领养 · 登记主人为本人'),
               const SizedBox(height: 16),
@@ -198,7 +253,7 @@ class _CatsPageState extends State<CatsPage> {
                 child: const Text('免费领养'),
               ),
               const Text('每人最多两只，同一外观只能领养一次；小屋内名字不能重复。'),
-            ] else
+            ] else if (remaining == 0)
               const Text('你的两只猫咪名额已用完。'),
             const SizedBox(height: 20),
             const Text('外观画面暂不制作，性格由你后续补充。'),

@@ -7,10 +7,13 @@ import '../../room_layout.dart';
 class RoomScene extends FlameGame {
   RoomScene(this.layout);
   final RoomLayout layout;
+
   @override
   Color backgroundColor() => const Color(0xfff0f1ed);
+
   Offset point(GridPoint p) =>
       Offset(size.x / 2, 25) + RoomLayout.project(p) * (size.x / 400);
+
   @override
   void render(Canvas canvas) {
     super.render(canvas);
@@ -18,16 +21,10 @@ class RoomScene extends FlameGame {
       ..color = const Color(0xffc1c7c1)
       ..strokeWidth = 1;
     for (var i = 0; i <= 9; i++) {
-      canvas.drawLine(
-        point(GridPoint(i.toDouble(), 0)),
-        point(GridPoint(i.toDouble(), 9)),
-        line,
-      );
-      canvas.drawLine(
-        point(GridPoint(0, i.toDouble())),
-        point(GridPoint(9, i.toDouble())),
-        line,
-      );
+      canvas.drawLine(point(GridPoint(i.toDouble(), 0)),
+          point(GridPoint(i.toDouble(), 9)), line);
+      canvas.drawLine(point(GridPoint(0, i.toDouble())),
+          point(GridPoint(9, i.toDouble())), line);
     }
     final entries =
         (layout.editing ? layout.draft : layout.saved).entries.toList()..sort(
@@ -42,11 +39,8 @@ class RoomScene extends FlameGame {
         ),
         Paint()..color = const Color(0xffd2d7d0),
       );
-      label(
-        canvas,
-        entry.key == 'chair' ? '椅子占位' : '桌子占位',
-        p - const Offset(25, 8),
-      );
+      label(canvas, entry.key == 'chair' ? '椅子占位' : '桌子占位',
+          p - const Offset(25, 8));
     }
     label(canvas, '黑猫占位', point(const GridPoint(7, 6)));
     label(canvas, '浅色猫占位', point(const GridPoint(4, 8)));

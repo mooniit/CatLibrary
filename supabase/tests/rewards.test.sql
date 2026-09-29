@@ -1,5 +1,5 @@
 begin;
-select plan(19);
+select plan(21);
 insert into auth.users(id) values ('20000000-0000-0000-0000-000000000001'),('20000000-0000-0000-0000-000000000002');
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"20000000-0000-0000-0000-000000000001","role":"authenticated"}',true);
@@ -27,6 +27,12 @@ set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"20000000-0000-0000-0000-000000000001","role":"authenticated"}',true);
 select is((public.sync_study_session('21000000-0000-0000-0000-000000000006','2026-09-03 00:00Z','2026-09-03 00:00:59Z',true)->'wallet'->>'miao_coins')::int,-20,'59 seconds no award');
 select is((public.sync_study_session('21000000-0000-0000-0000-000000000007','2026-09-03 01:00Z','2026-09-03 01:00:01Z',true)->'wallet'->>'miao_coins')::int,-18,'one more second accumulates a minute and pays debt');
+select is((public.sync_study_session('21000000-0000-0000-0000-000000000008',
+  (now() at time zone 'Asia/Shanghai')::date::timestamp at time zone 'Asia/Shanghai',
+  ((now() at time zone 'Asia/Shanghai')::date::timestamp at time zone 'Asia/Shanghai')+interval '1 minute',false)->'wallet'->>'miao_coins')::int,-18,'today checkpoint does not pay before confirmation');
+select is((public.sync_study_session('21000000-0000-0000-0000-000000000008',
+  (now() at time zone 'Asia/Shanghai')::date::timestamp at time zone 'Asia/Shanghai',
+  ((now() at time zone 'Asia/Shanghai')::date::timestamp at time zone 'Asia/Shanghai')+interval '1 minute',true)->'wallet'->>'miao_coins')::int,-16,'today confirmation pays two coins');
 reset role;
 select ok(not has_function_privilege('authenticated','public.settle_study_for_owner(uuid,timestamptz)','EXECUTE'),'client cannot choose settlement clock');
 select ok(not has_function_privilege('anon','public.sync_study_session(uuid,timestamptz,timestamptz,boolean)','EXECUTE'),'anonymous callers denied');

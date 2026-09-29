@@ -1,24 +1,62 @@
+import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
 import '../../features/study/study_session.dart';
+import '../../features/tasks/task_session.dart';
+
+class StudyPreset {
+  const StudyPreset(this.seconds, this.name);
+  final int seconds;
+  final String name;
+}
+
+class WeeklyDraft {
+  const WeeklyDraft(
+    this.offerId,
+    this.note,
+    this.photos,
+    this.mimes,
+    this.state,
+    this.confirmedAt,
+  );
+  final String offerId, note, state;
+  final List<Uint8List?> photos;
+  final List<String?> mimes;
+  final DateTime? confirmedAt;
+}
 
 /// Formal records are separate from M0's experimental checkpoint database.
 class AppDatabase extends GeneratedDatabase {
+  static final AppDatabase shared = AppDatabase();
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'cat_library'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 6;
   @override
   Iterable<TableInfo<Table, Object?>> get allTables => const [];
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => const [];
   @override
   MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (_, from, to) async {
+      if (from < 2) await _createCache();
+      if (from < 3) {
+        await customStatement(
+          'ALTER TABLE study_sessions ADD COLUMN run_id TEXT',
+        );
+        await customStatement('UPDATE study_sessions SET run_id = id');
+        await _createPresets();
+      }
+      if (from < 4) await _createTasks();
+      if (from < 5) await _createExchanges();
+      if (from < 6) await _createWeekly();
+    },
     onCreate: (_) async {
+      await _createCache();
       await customStatement('''CREATE TABLE study_sessions (
-      id TEXT PRIMARY KEY, owner_id TEXT NOT NULL,
+      id TEXT PRIMARY KEY, owner_id TEXT NOT NULL, run_id TEXT NOT NULL,
       started_ms INTEGER NOT NULL, recorded_ms INTEGER NOT NULL,
       state TEXT NOT NULL CHECK(state IN
         ('running','pendingConfirmation','queued','synced')),
@@ -31,8 +69,280 @@ class AppDatabase extends GeneratedDatabase {
       session_id TEXT PRIMARY KEY REFERENCES study_sessions(id),
       owner_id TEXT NOT NULL, created_ms INTEGER NOT NULL
     )''');
+      await _createPresets();
+      await _createTasks();
+      await _createExchanges();
+      await _createWeekly();
     },
   );
+
+  Future<void> _createCache() => customStatement(
+    'CREATE TABLE account_cache (owner_id TEXT PRIMARY KEY, payload TEXT NOT NULL)',
+  );
+
+  Future<void> _createPresets() async {
+    await customStatement('''CREATE TABLE study_presets (
+      owner_id TEXT NOT NULL, seconds INTEGER NOT NULL CHECK(seconds BETWEEN 1 AND 21599),
+      name TEXT NOT NULL, PRIMARY KEY(owner_id, seconds)
+    )''');
+    await customStatement(
+      'CREATE TABLE study_preset_owners (owner_id TEXT PRIMARY KEY)',
+    );
+  }
+
+  Future<void> _createTasks() async {
+    await customStatement('''CREATE TABLE task_sessions (
+      id TEXT PRIMARY KEY, owner_id TEXT NOT NULL,
+      activity TEXT NOT NULL CHECK(activity IN ('language','exercise')),
+      started_ms INTEGER NOT NULL, recorded_ms INTEGER NOT NULL,
+      state TEXT NOT NULL CHECK(state IN ('running','pendingPhoto','ready','synced')),
+      photo_bytes BLOB, photo_mime TEXT,
+      CHECK(recorded_ms >= started_ms AND recorded_ms - started_ms <= 21600000)
+    )''');
+    await customStatement(
+      "CREATE UNIQUE INDEX one_running_task ON task_sessions(owner_id) WHERE state = 'running'",
+    );
+  }
+
+  Future<void> _createExchanges() =>
+      customStatement('''CREATE TABLE pending_exchanges (
+    owner_id TEXT PRIMARY KEY, request_id TEXT NOT NULL UNIQUE,
+    currency TEXT NOT NULL CHECK(currency IN ('eagle','gem'))
+  )''');
+
+  Future<void> _createWeekly() async {
+    await customStatement('''CREATE TABLE weekly_offer_cache (
+      owner_id TEXT PRIMARY KEY, payload TEXT NOT NULL
+    )''');
+    await customStatement('''CREATE TABLE weekly_drafts (
+      offer_id TEXT PRIMARY KEY, owner_id TEXT NOT NULL,
+      note TEXT NOT NULL DEFAULT '', photo0 BLOB, mime0 TEXT,
+      photo1 BLOB, mime1 TEXT,
+      state TEXT NOT NULL DEFAULT 'draft' CHECK(state IN ('draft','ready','synced')),
+      confirmed_ms INTEGER
+    )''');
+  }
+
+  Future<List<Map<String, dynamic>>> weeklyOffers(String ownerId) async {
+    final row = await customSelect(
+      'SELECT payload FROM weekly_offer_cache WHERE owner_id=?',
+      variables: [Variable(ownerId)],
+    ).getSingleOrNull();
+    return row == null
+        ? []
+        : [
+            for (final item in jsonDecode(row.read<String>('payload')) as List)
+              Map<String, dynamic>.from(item as Map),
+          ];
+  }
+
+  Future<void> saveWeeklyOffers(
+    String ownerId,
+    List<Map<String, dynamic>> items,
+  ) => customStatement(
+    '''INSERT INTO weekly_offer_cache VALUES (?,?)
+      ON CONFLICT(owner_id) DO UPDATE SET payload=excluded.payload''',
+    [ownerId, jsonEncode(items)],
+  );
+
+  Future<List<WeeklyDraft>> weeklyDrafts(String ownerId) async => [
+    for (final row in await customSelect(
+      'SELECT * FROM weekly_drafts WHERE owner_id=?',
+      variables: [Variable(ownerId)],
+    ).get())
+      WeeklyDraft(
+        row.read<String>('offer_id'),
+        row.read<String>('note'),
+        [
+          row.readNullable<Uint8List>('photo0'),
+          row.readNullable<Uint8List>('photo1'),
+        ],
+        [row.readNullable<String>('mime0'), row.readNullable<String>('mime1')],
+        row.read<String>('state'),
+        switch (row.readNullable<int>('confirmed_ms')) {
+          final int value => DateTime.fromMillisecondsSinceEpoch(
+            value,
+            isUtc: true,
+          ),
+          null => null,
+        },
+      ),
+  ];
+
+  Future<void> saveWeeklyNote(
+    String ownerId,
+    String offerId,
+    String note,
+  ) async {
+    if (note.length > 100) throw ArgumentError('Weekly note is too long');
+    await customStatement(
+      '''INSERT INTO weekly_drafts(offer_id,owner_id,note)
+      VALUES (?,?,?) ON CONFLICT(offer_id) DO UPDATE SET note=excluded.note
+      WHERE weekly_drafts.owner_id=excluded.owner_id AND weekly_drafts.state='draft' ''',
+      [offerId, ownerId, note],
+    );
+  }
+
+  Future<void> saveWeeklyPhoto(
+    String ownerId,
+    String offerId,
+    int slot,
+    Uint8List bytes,
+  ) async {
+    if (slot < 0 || slot > 1 || bytes.length < 4 || bytes.length > 5242880) {
+      throw ArgumentError('Invalid weekly photo');
+    }
+    final mime = bytes[0] == 0xff && bytes[1] == 0xd8 && bytes[2] == 0xff
+        ? 'image/jpeg'
+        : bytes[0] == 0x89 &&
+              bytes[1] == 0x50 &&
+              bytes[2] == 0x4e &&
+              bytes[3] == 0x47
+        ? 'image/png'
+        : null;
+    if (mime == null) throw ArgumentError('Only JPEG or PNG are supported');
+    await customStatement(
+      'INSERT INTO weekly_drafts(offer_id,owner_id) VALUES (?,?) ON CONFLICT DO NOTHING',
+      [offerId, ownerId],
+    );
+    final count = await customUpdate(
+      'UPDATE weekly_drafts SET photo$slot=?,mime$slot=? WHERE offer_id=? AND owner_id=? AND state=\'draft\'',
+      variables: [
+        Variable(bytes),
+        Variable(mime),
+        Variable(offerId),
+        Variable(ownerId),
+      ],
+      updates: {},
+    );
+    if (count != 1) throw StateError('Weekly draft cannot be edited');
+  }
+
+  Future<void> queueWeekly(
+    String ownerId,
+    String offerId,
+    DateTime confirmedAt,
+  ) async {
+    await customStatement(
+      'INSERT INTO weekly_drafts(offer_id,owner_id) VALUES (?,?) ON CONFLICT DO NOTHING',
+      [offerId, ownerId],
+    );
+    final count = await customUpdate(
+      "UPDATE weekly_drafts SET state='ready',confirmed_ms=? WHERE offer_id=? AND owner_id=? AND state='draft'",
+      variables: [
+        Variable(confirmedAt.toUtc().millisecondsSinceEpoch),
+        Variable(offerId),
+        Variable(ownerId),
+      ],
+      updates: {},
+    );
+    if (count != 1) throw StateError('Weekly completion already queued');
+  }
+
+  Future<void> acknowledgeWeekly(
+    String ownerId,
+    String offerId,
+  ) => customStatement(
+    "UPDATE weekly_drafts SET state='synced',photo0=NULL,photo1=NULL WHERE offer_id=? AND owner_id=? AND state='ready'",
+    [offerId, ownerId],
+  );
+
+  Future<(String, String)?> pendingExchange(String ownerId) async {
+    final row = await customSelect(
+      'SELECT request_id,currency FROM pending_exchanges WHERE owner_id=?',
+      variables: [Variable(ownerId)],
+    ).getSingleOrNull();
+    return row == null
+        ? null
+        : (row.read<String>('request_id'), row.read<String>('currency'));
+  }
+
+  Future<void> queueExchange(
+    String ownerId,
+    String requestId,
+    String currency,
+  ) => customStatement('INSERT INTO pending_exchanges VALUES (?,?,?)', [
+    ownerId,
+    requestId,
+    currency,
+  ]);
+
+  Future<void> acknowledgeExchange(String ownerId, String requestId) =>
+      customStatement(
+        'DELETE FROM pending_exchanges WHERE owner_id=? AND request_id=?',
+        [ownerId, requestId],
+      );
+
+  /// Seed once per identity, so deleting the example does not recreate it.
+  Future<List<StudyPreset>> presets(String ownerId) => transaction(() async {
+    final initialized = await customSelect(
+      'SELECT 1 FROM study_preset_owners WHERE owner_id = ?',
+      variables: [Variable(ownerId)],
+    ).getSingleOrNull();
+    if (initialized == null) {
+      await customStatement('INSERT INTO study_preset_owners VALUES (?)', [
+        ownerId,
+      ]);
+      await customStatement('INSERT INTO study_presets VALUES (?, ?, ?)', [
+        ownerId,
+        2400,
+        '示例',
+      ]);
+    }
+    final rows = await customSelect(
+      'SELECT seconds, name FROM study_presets WHERE owner_id = ? ORDER BY seconds',
+      variables: [Variable(ownerId)],
+    ).get();
+    return [
+      for (final row in rows)
+        StudyPreset(row.read<int>('seconds'), row.read<String>('name')),
+    ];
+  });
+
+  Future<void> addPreset(String ownerId, int seconds, String name) async {
+    final trimmed = name.trim();
+    if (seconds < 1 ||
+        seconds > 21599 ||
+        trimmed.isEmpty ||
+        trimmed.length > 24) {
+      throw ArgumentError('Invalid study preset');
+    }
+    await presets(ownerId);
+    await customStatement(
+      'INSERT INTO study_presets VALUES (?, ?, ?) ON CONFLICT(owner_id, seconds) DO UPDATE SET name = excluded.name',
+      [ownerId, seconds, trimmed],
+    );
+  }
+
+  Future<void> deletePreset(String ownerId, int seconds) async {
+    await presets(ownerId);
+    await customStatement(
+      'DELETE FROM study_presets WHERE owner_id = ? AND seconds = ?',
+      [ownerId, seconds],
+    );
+  }
+
+  Future<Map<String, dynamic>?> accountSnapshot(String ownerId) async {
+    final row = await customSelect(
+      'SELECT payload FROM account_cache WHERE owner_id = ?',
+      variables: [Variable(ownerId)],
+    ).getSingleOrNull();
+    return row == null
+        ? null
+        : Map<String, dynamic>.from(
+            jsonDecode(row.read<String>('payload')) as Map,
+          );
+  }
+
+  Future<void> saveAccountSnapshot(String ownerId, Map<String, dynamic> value) {
+    if ((value['wallet'] as Map)['owner_id'] != ownerId) {
+      throw StateError('Cached wallet identity mismatch');
+    }
+    return customStatement(
+      'INSERT INTO account_cache VALUES (?, ?) ON CONFLICT(owner_id) DO UPDATE SET payload=excluded.payload',
+      [ownerId, jsonEncode(value)],
+    );
+  }
 
   Future<List<StudySession>> sessions(
     String ownerId,
@@ -44,6 +354,7 @@ class AppDatabase extends GeneratedDatabase {
   static StudySession _session(QueryRow row) => StudySession(
     id: row.read<String>('id'),
     ownerId: row.read<String>('owner_id'),
+    runId: row.read<String>('run_id'),
     startedAt: DateTime.fromMillisecondsSinceEpoch(
       row.read<int>('started_ms'),
       isUtc: true,
@@ -69,13 +380,30 @@ class AppDatabase extends GeneratedDatabase {
       ],
     ).getSingleOrNull();
     if (overlap != null) throw StateError('Overlapping study session');
-    await customStatement('INSERT INTO study_sessions VALUES (?, ?, ?, ?, ?)', [
-      session.id,
-      session.ownerId,
-      session.startedAt.millisecondsSinceEpoch,
-      session.recordedUntil.millisecondsSinceEpoch,
-      session.state.name,
-    ]);
+    final taskOverlap = await customSelect(
+      '''SELECT id FROM task_sessions
+      WHERE owner_id = ? AND (state = 'running' OR recorded_ms > ?) LIMIT 1''',
+      variables: [
+        Variable(session.ownerId),
+        Variable(session.startedAt.millisecondsSinceEpoch),
+      ],
+    ).getSingleOrNull();
+    if (taskOverlap != null) {
+      throw StateError('A task timer is already running');
+    }
+    await customStatement(
+      '''INSERT INTO study_sessions
+      (id, owner_id, started_ms, recorded_ms, state, run_id)
+      VALUES (?, ?, ?, ?, ?, ?)''',
+      [
+        session.id,
+        session.ownerId,
+        session.startedAt.millisecondsSinceEpoch,
+        session.recordedUntil.millisecondsSinceEpoch,
+        session.state.name,
+        session.runId,
+      ],
+    );
   });
 
   Future<void> checkpoint(StudySession session) async {
@@ -140,4 +468,160 @@ class AppDatabase extends GeneratedDatabase {
       [id, ownerId],
     );
   });
+
+  Future<List<TaskSession>> taskSessions(String ownerId) async =>
+      (await customSelect(
+            'SELECT * FROM task_sessions WHERE owner_id = ? ORDER BY started_ms, id',
+            variables: [Variable(ownerId)],
+          ).get())
+          .map(
+            (row) => TaskSession(
+              id: row.read<String>('id'),
+              ownerId: row.read<String>('owner_id'),
+              activity: TaskActivity.values.byName(
+                row.read<String>('activity'),
+              ),
+              startedAt: DateTime.fromMillisecondsSinceEpoch(
+                row.read<int>('started_ms'),
+                isUtc: true,
+              ),
+              recordedUntil: DateTime.fromMillisecondsSinceEpoch(
+                row.read<int>('recorded_ms'),
+                isUtc: true,
+              ),
+              state: TaskSessionState.values.byName(row.read<String>('state')),
+              photoBytes: row.readNullable<Uint8List>('photo_bytes'),
+              photoMime: row.readNullable<String>('photo_mime'),
+            ),
+          )
+          .toList();
+
+  Future<void> startTask(TaskSession task) => transaction(() async {
+    if (task.state != TaskSessionState.running ||
+        task.elapsed != Duration.zero) {
+      throw StateError('Task must start at zero');
+    }
+    final overlap = await customSelect(
+      '''SELECT id FROM task_sessions WHERE owner_id = ?
+      AND (state = 'running' OR recorded_ms > ?) LIMIT 1''',
+      variables: [
+        Variable(task.ownerId),
+        Variable(task.startedAt.millisecondsSinceEpoch),
+      ],
+    ).getSingleOrNull();
+    final studyOverlap = await customSelect(
+      '''SELECT id FROM study_sessions WHERE owner_id = ?
+      AND (state = 'running' OR recorded_ms > ?) LIMIT 1''',
+      variables: [
+        Variable(task.ownerId),
+        Variable(task.startedAt.millisecondsSinceEpoch),
+      ],
+    ).getSingleOrNull();
+    if (overlap != null || studyOverlap != null) {
+      throw StateError('Another timer is already running');
+    }
+    await customStatement(
+      '''INSERT INTO task_sessions(id,owner_id,activity,started_ms,recorded_ms,state)
+      VALUES (?,?,?,?,?,?)''',
+      [
+        task.id,
+        task.ownerId,
+        task.activity.name,
+        task.startedAt.millisecondsSinceEpoch,
+        task.recordedUntil.millisecondsSinceEpoch,
+        task.state.name,
+      ],
+    );
+  });
+
+  Future<void> checkpointTask(TaskSession task) async {
+    final count = await customUpdate(
+      '''UPDATE task_sessions SET recorded_ms = ?, state = ?
+      WHERE id = ? AND owner_id = ? AND started_ms = ? AND state = 'running'
+      AND recorded_ms <= ?''',
+      variables: [
+        Variable(task.recordedUntil.millisecondsSinceEpoch),
+        Variable(task.state.name),
+        Variable(task.id),
+        Variable(task.ownerId),
+        Variable(task.startedAt.millisecondsSinceEpoch),
+        Variable(task.recordedUntil.millisecondsSinceEpoch),
+      ],
+      updates: {},
+    );
+    if (count != 1) throw StateError('Task checkpoint mismatch');
+  }
+
+  Future<void> recoverTasks(
+    String ownerId,
+    StudySession? native,
+  ) => transaction(() async {
+    if (native != null && native.ownerId == ownerId) {
+      final running = (await taskSessions(ownerId))
+          .where(
+            (task) =>
+                task.id == native.id && task.state == TaskSessionState.running,
+          )
+          .firstOrNull;
+      if (running != null &&
+          running.startedAt == native.startedAt &&
+          native.recordedUntil.isAfter(running.recordedUntil)) {
+        await checkpointTask(
+          running.checkpoint(native.recordedUntil, stop: true),
+        );
+      }
+    }
+    await customStatement(
+      "UPDATE task_sessions SET state='pendingPhoto' WHERE owner_id=? AND state='running'",
+      [ownerId],
+    );
+  });
+
+  Future<void> attachTaskPhoto(
+    String ownerId,
+    String id,
+    Uint8List bytes,
+  ) async {
+    if (bytes.length > 5242880 || bytes.length < 4) {
+      throw ArgumentError('Photo must be at most 5 MiB');
+    }
+    final mime = bytes[0] == 0xff && bytes[1] == 0xd8 && bytes[2] == 0xff
+        ? 'image/jpeg'
+        : bytes[0] == 0x89 &&
+              bytes[1] == 0x50 &&
+              bytes[2] == 0x4e &&
+              bytes[3] == 0x47
+        ? 'image/png'
+        : null;
+    if (mime == null) {
+      throw ArgumentError('Only JPEG or PNG photos are supported');
+    }
+    final count = await customUpdate(
+      '''UPDATE task_sessions SET photo_bytes=?, photo_mime=?
+      WHERE id=? AND owner_id=? AND state='pendingPhoto' ''',
+      variables: [
+        Variable(bytes),
+        Variable(mime),
+        Variable(id),
+        Variable(ownerId),
+      ],
+      updates: {},
+    );
+    if (count != 1) throw StateError('Task cannot accept a photo');
+  }
+
+  Future<void> queueTask(String ownerId, String id) async {
+    final count = await customUpdate(
+      '''UPDATE task_sessions SET state='ready' WHERE id=? AND owner_id=?
+      AND state='pendingPhoto' AND photo_bytes IS NOT NULL''',
+      variables: [Variable(id), Variable(ownerId)],
+      updates: {},
+    );
+    if (count != 1) throw StateError('Select a photo before confirming');
+  }
+
+  Future<void> acknowledgeTask(String ownerId, String id) => customStatement(
+    "UPDATE task_sessions SET state='synced', photo_bytes=NULL WHERE id=? AND owner_id=? AND state='ready'",
+    [id, ownerId],
+  );
 }

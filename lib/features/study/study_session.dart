@@ -6,10 +6,13 @@ class StudySession {
     required DateTime startedAt,
     required DateTime recordedUntil,
     required this.state,
+    String? runId,
   }) : startedAt = startedAt.toUtc(),
-       recordedUntil = recordedUntil.toUtc() {
+       recordedUntil = recordedUntil.toUtc(),
+       runId = runId ?? id {
     if (id.isEmpty ||
         ownerId.isEmpty ||
+        this.runId.isEmpty ||
         this.recordedUntil.isBefore(this.startedAt) ||
         this.recordedUntil.difference(this.startedAt) > maximumDuration) {
       throw ArgumentError('Invalid study evidence');
@@ -19,6 +22,9 @@ class StudySession {
   static const maximumDuration = Duration(hours: 6);
   final String id;
   final String ownerId;
+
+  /// Several active intervals may belong to one timer after pause/resume.
+  final String runId;
   final DateTime startedAt;
   final DateTime recordedUntil;
   final StudySessionState state;
@@ -36,6 +42,7 @@ class StudySession {
     return StudySession(
       id: id,
       ownerId: ownerId,
+      runId: runId,
       startedAt: startedAt,
       recordedUntil: end,
       state: stop || !end.isBefore(limit)
@@ -47,6 +54,7 @@ class StudySession {
   StudySession recover() => StudySession(
     id: id,
     ownerId: ownerId,
+    runId: runId,
     startedAt: startedAt,
     recordedUntil: recordedUntil,
     state: state == StudySessionState.running

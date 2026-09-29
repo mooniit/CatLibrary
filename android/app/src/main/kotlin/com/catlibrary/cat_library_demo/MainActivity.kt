@@ -29,11 +29,17 @@ class MainActivity : FlutterActivity() {
                     }
                     "show" -> {
                         val start = call.argument<Number>("startedAt")?.toLong()
-                        if (start == null || start <= 0 || start > System.currentTimeMillis() || !notificationsAllowed()) {
+                        if (start == null || start <= 0 || start > System.currentTimeMillis() || (call.argument<String>("sessionId") == null && !notificationsAllowed())) {
                             reply.success(false)
                         } else {
                             try {
                                 val intent = Intent(this, StudyTimerService::class.java).putExtra("startedAt", start)
+                                    .putExtra("sessionId", call.argument<String>("sessionId"))
+                                    .putExtra("ownerId", call.argument<String>("ownerId"))
+                                    .putExtra("displayElapsedMs", call.argument<Number>("displayElapsedMs")?.toLong() ?: 0L)
+                                    .putExtra("countdownRemainingMs", call.argument<Number>("countdownRemainingMs")?.toLong() ?: -1L)
+                                    .putExtra("maximumRemainingMs", call.argument<Number>("maximumRemainingMs")?.toLong() ?: StudyTimerService.MAX_DURATION_MS)
+                                    .putExtra("title", call.argument<String>("title"))
                                 if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent) else startService(intent)
                                 reply.success(true)
                             } catch (_: RuntimeException) {
@@ -41,6 +47,7 @@ class MainActivity : FlutterActivity() {
                             }
                         }
                     }
+                    "readCheckpoint" -> reply.success(StudyCheckpointJournal.read(this))
                     "isActive" -> reply.success(
                         getSystemService(NotificationManager::class.java).activeNotifications.any { it.id == StudyTimerService.NOTIFICATION_ID }
                     )

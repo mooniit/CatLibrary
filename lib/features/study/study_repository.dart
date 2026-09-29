@@ -23,16 +23,30 @@ class StudyRepository {
     return result;
   }
 
-  Future<void> recover() => _serial(() async {
+  Future<void> recover({StudySession? durableNative}) => _serial(() async {
     active = null;
     needsRecovery = true;
+    if (durableNative != null && durableNative.ownerId == ownerId) {
+      final saved = (await records())
+          .where((s) => s.id == durableNative.id)
+          .firstOrNull;
+      if (saved != null &&
+          saved.state == StudySessionState.running &&
+          saved.startedAt.millisecondsSinceEpoch ==
+              durableNative.startedAt.millisecondsSinceEpoch &&
+          durableNative.recordedUntil.isAfter(saved.recordedUntil)) {
+        await database.checkpoint(
+          saved.checkpoint(durableNative.recordedUntil, stop: true),
+        );
+      }
+    }
     await database.recover(ownerId);
     needsRecovery = false;
   });
 
   Future<List<StudySession>> records() => database.sessions(ownerId);
 
-  Future<void> start() => _serial(() async {
+  Future<void> start({String? runId}) => _serial(() async {
     if (needsRecovery || active != null) {
       throw StateError('Study is not ready to start');
     }
@@ -40,6 +54,7 @@ class StudyRepository {
     final record = StudySession(
       id: _newId(),
       ownerId: ownerId,
+      runId: runId,
       startedAt: instant,
       recordedUntil: instant,
       state: StudySessionState.running,
@@ -49,21 +64,23 @@ class StudyRepository {
     active = record;
   });
 
-  Future<void> checkpoint({bool stop = false}) => _serial(() async {
-    if (needsRecovery) throw StateError('Recover storage before continuing');
-    final previous = active;
-    if (previous == null) return;
-    final next = previous.checkpoint(now(), stop: stop);
-    try {
-      await database.checkpoint(next);
-      active = next.state == StudySessionState.running ? next : null;
-    } catch (_) {
-      // A failed write cannot be represented as successful elapsed time.
-      active = null;
-      needsRecovery = true;
-      rethrow;
-    }
-  });
+  Future<void> checkpoint({bool stop = false, DateTime? at}) => _serial(
+    () async {
+      if (needsRecovery) throw StateError('Recover storage before continuing');
+      final previous = active;
+      if (previous == null) return;
+      final next = previous.checkpoint(at ?? now(), stop: stop);
+      try {
+        await database.checkpoint(next);
+        active = next.state == StudySessionState.running ? next : null;
+      } catch (_) {
+        // A failed write cannot be represented as successful elapsed time.
+        active = null;
+        needsRecovery = true;
+        rethrow;
+      }
+    },
+  );
 
   Future<void> confirm(String id) => _serial(() async {
     if (needsRecovery) throw StateError('Recover storage before confirming');

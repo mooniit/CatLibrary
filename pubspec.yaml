@@ -12,6 +12,8 @@ dependencies:
   drift_flutter: 0.3.1
   supabase_flutter: 2.17.2
   cupertino_icons: 1.0.8
+  image_picker: 1.2.3
+  shared_preferences: 2.5.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

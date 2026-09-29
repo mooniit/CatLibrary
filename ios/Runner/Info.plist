@@ -8,6 +8,8 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>喵的图书馆 M0</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>选择任务完成照片，供本人及同一家庭成员查看。</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

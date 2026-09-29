@@ -1,5 +1,5 @@
 begin;
-select plan(7);
+select plan(9);
 insert into auth.users(id) values('22000000-0000-0000-0000-000000000001');
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"22000000-0000-0000-0000-000000000001","role":"authenticated"}',true);
@@ -15,5 +15,8 @@ reset role;
 select public.settle_study_midnight();
 set local role authenticated;
 select is((public.study_state()->'wallet'->>'miao_coins')::int,154,'scheduled retry idempotent');
+select is((public.sync_study_session('23000000-0000-0000-0000-000000000004','2026-09-06 15:00Z','2026-09-06 21:00Z',true)->'wallet'->>'miao_coins')::int,394,'six-hour session crosses midnight with separate daily caps');
+reset role;
+select is((select schedule from cron.job where jobname='study-midnight'),'0 16 * * *','automatic job is scheduled at Beijing midnight');
 select * from finish();
 rollback;
