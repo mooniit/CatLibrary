@@ -10,10 +10,8 @@ typedef RoomCat = ({String name, String appearance});
 
 /// Ground anchors use a 1000 × 1250 artboard, independent of the viewport.
 class RoomScene extends FlameGame {
-  RoomScene(this.layout);
-  final RoomLayout layout;
+  RoomScene();
   List<RoomCat> cats = [];
-  String selected = 'bookshelf';
   double zoom = 1;
   Offset pan = Offset.zero;
   ui.Image? _shell;
@@ -62,10 +60,6 @@ class RoomScene extends FlameGame {
   static Offset ground(GridPoint point) =>
       Offset(500 + (point.x - point.y) * 50, 548 + (point.x + point.y) * 33);
 
-  GridPoint gridDelta(Offset delta) => RoomLayout.unproject(
-    Offset(delta.dx / (displayScale * 2.5), delta.dy / (displayScale * 3.3)),
-  );
-
   void moveView(double nextZoom, Offset focalPoint, Offset delta) {
     final before = displayScale;
     final local = (focalPoint - delta - origin) / before;
@@ -110,33 +104,11 @@ class RoomScene extends FlameGame {
       const Rect.fromLTWH(0, 0, 1000, 1250),
       _paint,
     );
-    if (layout.editing) {
-      final gridPaint = Paint()
-        ..color = const Color(0xff6b7c90).withValues(alpha: 0.3)
-        ..strokeWidth = 1;
-      for (var i = 1; i <= 8; i++) {
-        canvas.drawLine(
-          ground(GridPoint(i.toDouble(), 1)),
-          ground(GridPoint(i.toDouble(), 8)),
-          gridPaint,
-        );
-        canvas.drawLine(
-          ground(GridPoint(1, i.toDouble())),
-          ground(GridPoint(8, i.toDouble())),
-          gridPaint,
-        );
-      }
-    }
-    final furniture = layout.editing ? layout.draft : layout.saved;
-    final items = <({String kind, GridPoint point, bool selected})>[
-      for (final entry in furniture.entries)
-        (
-          kind: entry.key,
-          point: entry.value,
-          selected: layout.editing && entry.key == selected,
-        ),
+    final items = <({String kind, GridPoint point})>[
+      for (final entry in RoomLayout.defaults.entries)
+        (kind: entry.key, point: entry.value),
       for (var i = 0; i < cats.length && i < _catPositions.length; i++)
-        (kind: cats[i].appearance, point: _catPositions[i], selected: false),
+        (kind: cats[i].appearance, point: _catPositions[i]),
     ]..sort((a, b) => (a.point.x + a.point.y).compareTo(b.point.x + b.point.y));
     for (final item in items) {
       final source = _sprites[item.kind];
@@ -144,12 +116,6 @@ class RoomScene extends FlameGame {
       final width = _widths[item.kind]!;
       final height = width * source.height / source.width;
       final point = ground(item.point);
-      if (item.selected) {
-        canvas.drawOval(
-          Rect.fromCenter(center: point, width: width, height: 42),
-          Paint()..color = const Color(0xff7186a0).withValues(alpha: 0.3),
-        );
-      }
       final anchor = item.kind == 'bookshelf' ? 0.88 : 0.94;
       canvas.drawImageRect(
         objects,

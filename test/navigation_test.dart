@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:cat_library_demo/app/app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('four destinations and home entries fit a narrow phone', (
+  setUp(() => SharedPreferences.setMockInitialValues({}));
+  testWidgets('four destinations and collapsed home menu fit a narrow phone', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(390, 844);
@@ -12,9 +14,8 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(const CatLibraryApp(preview: true));
     await tester.pump(const Duration(seconds: 1));
-    expect(find.byTooltip('商店'), findsOneWidget);
-    expect(find.byTooltip('相册'), findsOneWidget);
-    expect(find.byTooltip('设置'), findsOneWidget);
+    expect(find.byTooltip('打开功能菜单'), findsOneWidget);
+    expect(find.byTooltip('布置猫窝'), findsNothing);
     await tester.tap(find.byIcon(Icons.menu_book_outlined));
     await tester.pump();
     expect(find.text('阅读功能筹备中'), findsOneWidget);
@@ -23,14 +24,7 @@ void main() {
     expect(find.text('外语学习'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.home_outlined));
     await tester.pump();
-    await tester.tap(find.byTooltip('布置猫窝'));
-    await tester.pump();
-    await tester.tap(find.byIcon(Icons.menu_book_outlined));
-    await tester.pump(const Duration(milliseconds: 350));
-    expect(find.text('离开布置？'), findsOneWidget);
-    await tester.tap(find.text('继续布置'));
-    await tester.pump(const Duration(milliseconds: 350));
-    expect(find.text('保存预览'), findsOneWidget);
+    expect(find.byTooltip('打开功能菜单'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
   });
