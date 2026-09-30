@@ -1,7 +1,7 @@
 name: cat_library_demo
 description: M0 interaction and feasibility probes for 喵的图书馆.
 publish_to: none
-version: 0.1.0+1
+version: 0.1.1+2
 environment:
   sdk: '>=3.11.0 <4.0.0'
 dependencies:
@@ -22,3 +22,5 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/room/

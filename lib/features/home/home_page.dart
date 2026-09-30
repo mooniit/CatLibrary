@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import '../../room_layout.dart';
-import '../cats/cats_page.dart';
-import '../family/family_page.dart';
-import '../identity/identity_repository.dart';
-import '../repair/repair_panel.dart';
 import '../room/room_scene.dart';
-import '../settings/settings_page.dart';
+import '../room/room_furniture.dart';
+import '../room/furniture_store.dart';
+import '../cats/cats_page.dart';
+import '../cats/cats_repository.dart';
+import '../identity/identity_repository.dart';
 import '../wallet/exchange_sheet.dart';
 import '../wallet/proxy_payment_notice.dart';
+import '../repair/repair_panel.dart';
+import '../settings/settings_page.dart';
+import 'home_controls.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -18,46 +22,137 @@ class HomePage extends StatefulWidget {
     this.wallet,
     this.onWallet,
     this.onThemeChanged,
+    this.loadCats,
   });
-
   final IdentityWallet? wallet;
   final VoidCallback onStudy;
   final ValueChanged<IdentityWallet>? onWallet;
   final Future<void> Function(ThemeMode)? onThemeChanged;
-
+  final Future<Map<String, dynamic>> Function()? loadCats;
   @override
   State<HomePage> createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
-  final layout = RoomLayout();
-  late final scene = RoomScene(layout);
-  String selected = 'chair';
-  String? message;
-  Offset dragOffset = Offset.zero;
+class HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  final scene = RoomScene();
+  String? catsError;
+  bool loadingCats = false;
+  bool hasFamily = false;
+  int _request = 0;
+  double _startZoom = 1;
+  int _furnitureRequest = 0;
+  bool loadingFurniture = true;
+  String? furnitureError;
+  Future<void>? _furnitureSave;
+  bool _storeOpen = false;
 
-  Future<bool> canLeave() async {
-    if (!layout.editing) return true;
-    final discard = await showDialog<bool>(
-      context: context,
-      builder: (c) => AlertDialog(
-        title: const Text('离开布置？'),
-        content: const Text('未保存的布置草稿将被放弃。'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(c, false),
-            child: const Text('继续布置'),
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    unawaited(refreshCats());
+    unawaited(loadFurniture());
+  }
+
+  @override
+  void didUpdateWidget(HomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.wallet?.ownerId != widget.wallet?.ownerId) {
+      scene.cats = [];
+      hasFamily = false;
+      scene.furnishings = const RoomFurnishings();
+      unawaited(loadFurniture());
+      unawaited(refreshCats());
+    }
+  }
+
+  Future<void> loadFurniture() async {
+    final request = ++_furnitureRequest;
+    setState(() {
+      loadingFurniture = true;
+      furnitureError = null;
+    });
+    try {
+      final room = await RoomFurnishings.load(widget.wallet?.ownerId);
+      if (mounted && request == _furnitureRequest) {
+        setState(() => scene.furnishings = room);
+      }
+    } catch (_) {
+      if (mounted && request == _furnitureRequest) {
+        setState(() => furnitureError = '家具配置未能读取，点击重试');
+      }
+    } finally {
+      if (mounted && request == _furnitureRequest) {
+        setState(() => loadingFurniture = false);
+      }
+    }
+  }
+
+  Future<void> changeFurniture(RoomFurnishings next) {
+    final ownerId = widget.wallet?.ownerId;
+    final request = _furnitureRequest;
+    return _furnitureSave = () async {
+      await next.save(ownerId);
+      if (mounted &&
+          request == _furnitureRequest &&
+          ownerId == widget.wallet?.ownerId) {
+        setState(() => scene.furnishings = next);
+      }
+    }();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) unawaited(refreshCats());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  Future<void> refreshCats() async {
+    final request = ++_request;
+    if (widget.wallet == null) {
+      scene.cats = [
+        (name: '三花猫', appearance: 'black_short'),
+        (name: '蓝眸长毛猫', appearance: 'light_long'),
+      ];
+      setState(() {
+        loadingCats = false;
+        catsError = null;
+      });
+      return;
+    }
+    setState(() {
+      loadingCats = true;
+      catsError = null;
+    });
+    try {
+      final result =
+          await (widget.loadCats?.call() ??
+                  CatsRepository.call('cats_state', const {}))
+              .timeout(const Duration(seconds: 8));
+      if (!mounted || request != _request) return;
+      final cats = [
+        for (final cat in result['cats'] as List)
+          (
+            name: cat['name'] as String,
+            appearance: cat['appearance'] as String,
           ),
-          TextButton(
-            onPressed: () => Navigator.pop(c, true),
-            child: const Text('放弃修改'),
-          ),
-        ],
-      ),
-    );
-    if (!mounted) return false;
-    if (discard == true) setState(layout.cancel);
-    return discard == true;
+      ];
+      setState(() {
+        scene.cats = cats;
+        hasFamily = result['family_id'] != null;
+      });
+    } catch (_) {
+      if (mounted && request == _request) {
+        setState(() => catsError = '猫咪暂未同步，点击重试');
+      }
+    } finally {
+      if (mounted && request == _request) setState(() => loadingCats = false);
+    }
   }
 
   void info(String title, String text) => showModalBottomSheet<void>(
@@ -80,203 +175,226 @@ class HomePageState extends State<HomePage> {
     ),
   );
 
-  void openWallet() {
+  Future<void> openStore() async {
+    if (_storeOpen) return;
+    _storeOpen = true;
+    try {
+      try {
+        await _furnitureSave;
+      } catch (_) {
+        // Legacy preferences may cache a failed write; keep the confirmed scene.
+      }
+      if (!mounted) return;
+      if (loadingFurniture || furnitureError != null) await loadFurniture();
+      if (!mounted || furnitureError != null) return;
+      final wallet = widget.wallet;
+      await showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        builder: (c) => FractionallySizedBox(
+          heightFactor: 0.88,
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 12, 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '商店',
+                          style: Theme.of(c).textTheme.headlineSmall,
+                        ),
+                      ),
+                      IconButton(
+                        tooltip: '关闭商店',
+                        onPressed: () => Navigator.pop(c),
+                        icon: const Icon(Icons.close),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FurnitureStore(
+                          initial: scene.furnishings,
+                          onChanged: changeFurniture,
+                        ),
+                        const Divider(),
+                        if (wallet != null)
+                          ExchangeSheet(
+                            wallet: wallet,
+                            onWallet: (value) => widget.onWallet?.call(value),
+                          )
+                        else
+                          const Padding(
+                            padding: EdgeInsets.all(24),
+                            child: Text('连接钱包后可兑换币种。'),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    } finally {
+      _storeOpen = false;
+    }
+  }
+
+  Future<void> openCats() async {
     final wallet = widget.wallet;
     if (wallet == null) {
-      info('个人钱包', '交互预览未连接钱包。');
+      info('猫咪管理', '请先连接服务并加入小屋。交互预览不会创建猫咪。');
       return;
     }
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (_) => ExchangeSheet(
-        wallet: wallet,
-        onWallet: (value) => widget.onWallet?.call(value),
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) =>
+            CatsPage(ownerId: wallet.ownerId, onWallet: widget.onWallet),
       ),
     );
+    if (mounted) await refreshCats();
+  }
+
+  Future<void> openSettings() async {
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => SettingsPage(
+          onThemeChanged: widget.onThemeChanged,
+          ownerId: widget.wallet?.ownerId,
+        ),
+      ),
+    );
+    if (mounted) await refreshCats();
   }
 
   @override
   Widget build(BuildContext context) {
     final wallet = widget.wallet;
-    return PopScope(
-      canPop: !layout.editing,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) canLeave();
-      },
-      child: ListView(
-        padding: const EdgeInsets.all(16),
+    return LayoutBuilder(
+      builder: (context, constraints) => Stack(
+        fit: StackFit.expand,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text('我们的书房', style: Theme.of(context).textTheme.headlineSmall),
+          const SkyBackground(),
+          GestureDetector(
+            key: const Key('room-viewport'),
+            behavior: HitTestBehavior.opaque,
+            onDoubleTap: () => setState(scene.resetView),
+            onScaleStart: (_) {
+              _startZoom = scene.zoom;
+            },
+            onScaleUpdate: (event) => setState(() {
+              scene.moveView(
+                _startZoom * event.scale,
+                event.localFocalPoint,
+                event.focalPointDelta,
+              );
+            }),
+            child: Semantics(
+              label: '小屋家具陈设，拖动查看，双指缩放，双击回到初始视角。',
+              child: GameWidget(
+                game: scene,
+                loadingBuilder: (_) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorBuilder: (_, _) =>
+                    const Center(child: Text('猫窝素材加载失败，请重新打开页面')),
               ),
-              IconButton(
-                tooltip: '设置',
-                icon: const Icon(Icons.settings_outlined),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(
-                    builder: (_) => SettingsPage(onThemeChanged: widget.onThemeChanged),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          if (wallet != null) ...[
-            TextButton(
-              key: const Key('wallet-balance'),
-              onPressed: openWallet,
-              child: Text('喵喵币 ${wallet.miaoCoins} · 鹰镑 ${wallet.eaglePounds} · 宝石 ${wallet.gems}'),
             ),
-            if (wallet.cached) const Text('离线记录中 · 钱包为上次同步余额'),
-            if (wallet.miaoCoins < 0) Text('喵喵币欠款 ${-wallet.miaoCoins}'),
+          ),
+          if (wallet != null)
             ProxyPaymentNotice(
               key: ValueKey('notice-${wallet.ownerId}'),
               ownerId: wallet.ownerId,
             ),
-            OutlinedButton.icon(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (_) => FamilyPage(ownerId: wallet.ownerId),
-                ),
-              ),
-              icon: const Icon(Icons.people_outline),
-              label: const Text('家庭与邀请'),
-            ),
-            RepairPanel(
-              key: ValueKey('repair-${wallet.ownerId}'),
-              ownerId: wallet.ownerId,
-            ),
-          ] else
-            const Text('钱包尚未连接 · 无真实资产'),
-          const Text('场景为结构占位，风格暂不讨论'),
-          const SizedBox(height: 12),
-          AspectRatio(
-            aspectRatio: 1.45,
-            child: GestureDetector(
-              onPanUpdate: layout.editing
-                  ? (event) => setState(() {
-                      final old = layout.draft[selected]!;
-                      dragOffset += event.delta;
-                      final delta = RoomLayout.unproject(
-                        dragOffset * (400 / scene.size.x),
-                      );
-                      if (delta.x.abs() >= 0.6 || delta.y.abs() >= 0.6) {
-                        layout.move(
-                          selected,
-                          GridPoint(old.x + delta.x, old.y + delta.y),
-                        );
-                        dragOffset = Offset.zero;
-                      }
-                    })
-                  : null,
-              onPanEnd: (_) => dragOffset = Offset.zero,
-              child: Semantics(
-                label: '房间线框，桌椅和两只猫的位置占位',
-                child: GameWidget(game: scene),
-              ),
+          Positioned(
+            top: 12,
+            left: 12,
+            right: 12,
+            child: HomeWallet(wallet: wallet),
+          ),
+          Positioned(
+            top: 80,
+            right: 12,
+            child: HomeMenu(
+              onCats: openCats,
+              onStore: openStore,
+              onAlbum: () => info('相册', '还没有旅行照片。'),
+              onSettings: openSettings,
             ),
           ),
-          const SizedBox(height: 8),
-          if (message != null) Text(message!, key: const Key('layout-message')),
-          if (layout.editing) ...[
-            const Text('本机交互样例：选中物件后拖动，或用箭头移动。'),
-            Wrap(
-              spacing: 8,
-              children: [
-                for (final id in ['chair', 'table'])
-                  ChoiceChip(
-                    label: Text(id == 'chair' ? '椅子' : '桌子'),
-                    selected: selected == id,
-                    onSelected: (_) => setState(() => selected = id),
-                  ),
-              ],
+          if (scene.pan.distance > 1 || scene.zoom != 1)
+            Positioned(
+              bottom: 16,
+              right: 16,
+              child: RoomActionButton(
+                label: '回到初始视角',
+                icon: Icons.center_focus_strong_outlined,
+                onPressed: () => setState(scene.resetView),
+              ),
             ),
-            Wrap(
-              children: [
-                for (final d in [
-                  const Offset(-1, 0),
-                  const Offset(1, 0),
-                  const Offset(0, -1),
-                  const Offset(0, 1),
-                ])
-                  IconButton(
-                    tooltip: '移动 ${d.dx.toInt()},${d.dy.toInt()}',
-                    onPressed: () => setState(() {
-                      final p = layout.draft[selected]!;
-                      layout.move(selected, GridPoint(p.x + d.dx, p.y + d.dy));
-                    }),
-                    icon: Icon(
-                      d.dx < 0
-                          ? Icons.arrow_back
-                          : d.dx > 0
-                          ? Icons.arrow_forward
-                          : d.dy < 0
-                          ? Icons.arrow_upward
-                          : Icons.arrow_downward,
-                    ),
-                  ),
-                FilledButton(
-                  onPressed: () => setState(() {
-                    layout.commit();
-                    message = '已保留本次预览布局（仅当前运行，无云端保存）';
-                  }),
-                  child: const Text('保存预览'),
+          Positioned(
+            top: 80,
+            left: 16,
+            right: 156,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: constraints.maxHeight * 0.35,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (wallet == null)
+                      status('交互预览 · 家具陈设', null)
+                    else if (wallet.cached)
+                      status('离线 · 钱包为上次同步余额', null),
+                    if ((wallet?.miaoCoins ?? 0) < 0)
+                      status('喵喵币欠款 ${-wallet!.miaoCoins}', null),
+                    if (loadingCats)
+                      status('正在同步猫咪…', null)
+                    else if (catsError != null)
+                      status(catsError!, refreshCats)
+                    else if (wallet != null && scene.cats.isEmpty)
+                      status(hasFamily ? '认识第一只猫咪' : '创建或加入小屋', openCats),
+                    if (furnitureError != null)
+                      status(furnitureError!, loadFurniture),
+                    if (wallet != null)
+                      RepairPanel(
+                        key: ValueKey('repair-${wallet.ownerId}'),
+                        ownerId: wallet.ownerId,
+                      ),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () => setState(layout.cancel),
-                  child: const Text('取消'),
-                ),
-              ],
+              ),
             ),
-          ] else
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                OutlinedButton.icon(
-                  onPressed: () => setState(layout.beginEditing),
-                  icon: const Icon(Icons.open_with),
-                  label: const Text('布置猫窝'),
-                ),
-                OutlinedButton.icon(
-                  onPressed: () {
-                    if (wallet == null) {
-                      info('猫咪管理', '请先连接服务并加入小屋。交互预览不会创建猫咪。');
-                    } else {
-                      Navigator.of(context).push(
-                        MaterialPageRoute<void>(
-                          builder: (_) => CatsPage(
-                            ownerId: wallet.ownerId,
-                            onWallet: widget.onWallet,
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  icon: const Icon(Icons.pets),
-                  label: const Text('猫咪管理'),
-                ),
-                OutlinedButton(onPressed: widget.onStudy, child: const Text('去自习')),
-              ],
-            ),
-          const Divider(height: 32),
-          ListTile(
-            leading: const Icon(Icons.storefront_outlined),
-            title: const Text('商店'),
-            subtitle: const Text('固定目录 · 商品与价格待定'),
-            onTap: () => info('商店', '这里将展示可购买家具。商品、币种、价格尚未确定，当前不能购买。'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.photo_library_outlined),
-            title: const Text('相册'),
-            subtitle: const Text('一起收藏猫咪的旅行回忆'),
-            onTap: () => info('相册', '还没有旅行照片。此处是空状态原型，不生成旅行记录。'),
           ),
         ],
       ),
     );
   }
+
+  Widget status(String text, VoidCallback? onTap) => Padding(
+    padding: const EdgeInsets.only(bottom: 4),
+    child: Material(
+      color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.95),
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          child: Text(text, style: const TextStyle(fontSize: 12)),
+        ),
+      ),
+    ),
+  );
 }

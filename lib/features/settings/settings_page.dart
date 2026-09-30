@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../core/sync/cloud_client.dart';
+import '../family/family_page.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key, this.onThemeChanged});
+  const SettingsPage({super.key, this.onThemeChanged, this.ownerId});
 
   final Future<void> Function(ThemeMode)? onThemeChanged;
+  final String? ownerId;
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -70,6 +72,18 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const SizedBox(height: 32),
           Divider(color: scheme.outlineVariant),
+          if (widget.ownerId != null)
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+              leading: const Icon(Icons.people_outline),
+              title: const Text('家庭与邀请'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => FamilyPage(ownerId: widget.ownerId!),
+                ),
+              ),
+            ),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 4),
             leading: const Icon(Icons.cloud_outlined),

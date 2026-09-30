@@ -1,59 +1,268 @@
+import 'dart:math' as math;
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import '../../room_layout.dart';
+import 'room_furniture.dart';
 
-/// Deliberately a wireframe. No artwork or final visual direction is implied.
+typedef RoomCat = ({String name, String appearance});
+
+/// One 1000 × 1250 artboard defines walls, floor and furniture contacts.
 class RoomScene extends FlameGame {
-  RoomScene(this.layout);
-  final RoomLayout layout;
+  RoomScene();
+  List<RoomCat> cats = [];
+  RoomFurnishings furnishings = const RoomFurnishings();
+  double zoom = 1;
+  Offset pan = Offset.zero;
+  ui.Image? _floor;
+  final _walls = <WallStyle, ui.Image>{};
+  final _furniture = <FurnitureStyle, ui.Image>{};
+  final _paint = Paint()..filterQuality = FilterQuality.high;
 
   @override
-  Color backgroundColor() => const Color(0xfff0f1ed);
+  Color backgroundColor() => Colors.transparent;
 
-  Offset point(GridPoint p) =>
-      Offset(size.x / 2, 25) + RoomLayout.project(p) * (size.x / 400);
+  @override
+  Future<void> onLoad() async {
+    _floor = await images.load('room/floor-oak.png');
+    for (final wall in WallStyle.values) {
+      _walls[wall] = await images.load(wall.asset);
+    }
+    for (final style in FurnitureStyle.values) {
+      _furniture[style] = await images.load(style.asset);
+    }
+  }
+
+  double get baseScale => math.min(size.x / 1040, size.y / 1320);
+  double get displayScale => baseScale * zoom;
+  Offset get origin =>
+      Offset(
+        (size.x - 1000 * displayScale) / 2,
+        (size.y - 1250 * displayScale) / 2,
+      ) +
+      pan;
+
+  static Offset ground(GridPoint point) => RoomLayout.ground(point);
+
+  void moveView(double nextZoom, Offset focalPoint, Offset delta) {
+    final local = (focalPoint - delta - origin) / displayScale;
+    zoom = nextZoom.clamp(0.8, 1.6);
+    final centered = Offset(
+      (size.x - 1000 * displayScale) / 2,
+      (size.y - 1250 * displayScale) / 2,
+    );
+    pan = focalPoint - local * displayScale - centered;
+    _clampPan();
+  }
+
+  void _clampPan() {
+    final limitX = math.max(48.0, (1000 * displayScale - size.x) / 2 + 64);
+    final limitY = math.max(64.0, (1250 * displayScale - size.y) / 2 + 100);
+    pan = Offset(pan.dx.clamp(-limitX, limitX), pan.dy.clamp(-limitY, limitY));
+  }
+
+  void resetView() {
+    zoom = 1;
+    pan = Offset.zero;
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    _clampPan();
+  }
+
+  static Path _polygon(List<Offset> points) => Path()..addPolygon(points, true);
+
+  void _face(Canvas canvas, List<Offset> points, Color color) {
+    final path = _polygon(points);
+    canvas.drawPath(path, Paint()..color = color);
+    canvas.drawPath(
+      path,
+      Paint()
+        ..color = const Color(0x88775a3d)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.5
+        ..strokeJoin = StrokeJoin.miter,
+    );
+  }
+
+  void _wall(Canvas canvas, ui.Image image, bool left) {
+    final end = left ? const Offset(55, 370) : const Offset(945, 370);
+    final path = _polygon([
+      const Offset(500, 70),
+      end,
+      end + const Offset(0, 490),
+      const Offset(500, 560),
+    ]);
+    const vertical = 490 / 509;
+    final horizontal = 445 / (left ? 487 : 488);
+    final shear = (300 - vertical * 307) / (left ? -487 : 488);
+    canvas.save();
+    canvas.clipPath(path);
+    canvas.transform(
+      Float64List.fromList([
+        horizontal,
+        shear,
+        0,
+        0,
+        0,
+        vertical,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        500 - horizontal * 560,
+        70 - shear * 560 - vertical * 71,
+        0,
+        1,
+      ]),
+    );
+    canvas.drawImage(image, Offset.zero, _paint);
+    canvas.restore();
+  }
+
+  void _room(Canvas canvas, ui.Image wall, ui.Image floor) {
+    final footprint = _polygon([
+      const Offset(500, 560),
+      const Offset(945, 860),
+      const Offset(500, 1160),
+      const Offset(55, 860),
+    ]);
+    canvas.drawPath(
+      footprint.shift(const Offset(0, 24)),
+      Paint()
+        ..color = const Color(0x3077593e)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 20),
+    );
+    _face(canvas, [
+      const Offset(55, 860),
+      const Offset(500, 1160),
+      const Offset(500, 1186),
+      const Offset(55, 886),
+    ], const Color(0xffad7951));
+    _face(canvas, [
+      const Offset(500, 1160),
+      const Offset(945, 860),
+      const Offset(945, 886),
+      const Offset(500, 1186),
+    ], const Color(0xff916240));
+    canvas.save();
+    canvas.clipPath(footprint);
+    canvas.transform(
+      Float64List.fromList([
+        445 / floor.width,
+        300 / floor.width,
+        0,
+        0,
+        -445 / floor.height,
+        300 / floor.height,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        500,
+        560,
+        0,
+        1,
+      ]),
+    );
+    canvas.drawImage(
+      floor,
+      Offset.zero,
+      Paint()..filterQuality = FilterQuality.medium,
+    );
+    canvas.restore();
+    _wall(canvas, wall, true);
+    _wall(canvas, wall, false);
+    // Wall thickness projects outside the interior, away from the floor.
+    _face(canvas, [
+      const Offset(500, 46),
+      const Offset(37, 358),
+      const Offset(55, 370),
+      const Offset(500, 70),
+    ], const Color(0xffefe1c5));
+    _face(canvas, [
+      const Offset(500, 46),
+      const Offset(963, 358),
+      const Offset(945, 370),
+      const Offset(500, 70),
+    ], const Color(0xfff7ebd4));
+    _face(canvas, [
+      const Offset(37, 358),
+      const Offset(55, 370),
+      const Offset(55, 860),
+      const Offset(37, 848),
+    ], const Color(0xffc9b694));
+    _face(canvas, [
+      const Offset(945, 370),
+      const Offset(963, 358),
+      const Offset(963, 848),
+      const Offset(945, 860),
+    ], const Color(0xffdbc7a4));
+    final seam = Paint()
+      ..color = const Color(0x70795f45)
+      ..strokeWidth = 1.5;
+    canvas.drawLine(const Offset(500, 70), const Offset(500, 560), seam);
+    canvas.drawLine(const Offset(55, 860), const Offset(500, 560), seam);
+    canvas.drawLine(const Offset(500, 560), const Offset(945, 860), seam);
+  }
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    final line = Paint()
-      ..color = const Color(0xffc1c7c1)
-      ..strokeWidth = 1;
-    for (var i = 0; i <= 9; i++) {
-      canvas.drawLine(point(GridPoint(i.toDouble(), 0)),
-          point(GridPoint(i.toDouble(), 9)), line);
-      canvas.drawLine(point(GridPoint(0, i.toDouble())),
-          point(GridPoint(9, i.toDouble())), line);
+    final wall = _walls[furnishings.wall];
+    final floor = _floor;
+    if (wall == null || floor == null) return;
+    canvas.save();
+    canvas.translate(origin.dx, origin.dy);
+    canvas.scale(displayScale);
+    _room(canvas, wall, floor);
+    if (furnishings.isVisible('window')) _drawFurniture(canvas, 'window');
+    final items =
+        RoomLayout.defaults.entries
+            .where((e) => e.key != 'window' && furnishings.isVisible(e.key))
+            .toList()
+          ..sort(
+            (a, b) => (a.value.x + a.value.y).compareTo(b.value.x + b.value.y),
+          );
+    // Cat data stays available; furnishing review temporarily omits cat sprites.
+    for (final item in items) {
+      _drawFurniture(canvas, item.key);
     }
-    final entries =
-        (layout.editing ? layout.draft : layout.saved).entries.toList()..sort(
-          (a, b) => (a.value.x + a.value.y).compareTo(b.value.x + b.value.y),
-        );
-    for (final entry in entries) {
-      final p = point(entry.value);
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromCenter(center: p, width: 58, height: 30),
-          const Radius.circular(4),
-        ),
-        Paint()..color = const Color(0xffd2d7d0),
-      );
-      label(canvas, entry.key == 'chair' ? '椅子占位' : '桌子占位',
-          p - const Offset(25, 8));
-    }
-    label(canvas, '黑猫占位', point(const GridPoint(7, 6)));
-    label(canvas, '浅色猫占位', point(const GridPoint(4, 8)));
+    canvas.restore();
   }
 
-  void label(Canvas canvas, String text, Offset offset) {
-    final painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: const TextStyle(color: Color(0xff303a34), fontSize: 11),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    painter.paint(canvas, offset);
+  void _drawFurniture(Canvas canvas, String kind) {
+    final style = furnishings.styleFor(kind);
+    final image = _furniture[style];
+    if (image == null) return;
+    final source = furnitureSources[style]![kind]!;
+    final geometry = furnitureGeometry[style]![kind]!;
+    final scale = furnitureWidths[kind]! / source.width;
+    final point =
+        ground(RoomLayout.defaults[kind]!) -
+        (kind == 'window' ? const Offset(0, 245) : Offset.zero);
+    for (final foot in geometry.feet) {
+      final contact = geometry.project(foot, scale, point);
+      canvas.drawOval(
+        Rect.fromCenter(
+          center: contact,
+          width: kind == 'bed' ? 55 : 18,
+          height: kind == 'bed' ? 16 : 7,
+        ),
+        Paint()
+          ..color = const Color(0x48705238)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+      );
+    }
+    geometry.draw(canvas, image, source, scale, point);
   }
 }

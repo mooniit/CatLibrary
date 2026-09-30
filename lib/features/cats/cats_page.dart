@@ -20,7 +20,7 @@ class CatsPage extends StatefulWidget {
 }
 
 class _CatsPageState extends State<CatsPage> {
-  static const appearances = {'black_short': '黑色短毛猫', 'light_long': '浅色长毛猫'};
+  static const appearances = {'black_short': '三花猫', 'light_long': '蓝眸长毛猫'};
   final name = TextEditingController();
   String appearance = 'black_short';
   Map<String, dynamic>? data;
@@ -256,7 +256,7 @@ class _CatsPageState extends State<CatsPage> {
             ] else if (remaining == 0)
               const Text('你的两只猫咪名额已用完。'),
             const SizedBox(height: 20),
-            const Text('外观画面暂不制作，性格由你后续补充。'),
+            const Text('可选三花猫或蓝眸长毛猫；猫咪性格由你后续补充。'),
           ],
         ],
       ),

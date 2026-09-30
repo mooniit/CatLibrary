@@ -11,7 +11,11 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     await tester.pumpWidget(const CatLibraryApp(preview: true));
     await tester.pump(const Duration(seconds: 1));
-    await tester.tap(find.byTooltip('设置'));
+    await tester.pump();
+    await tester.tap(find.byTooltip('打开功能菜单'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(find.text('设置'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 350));
     expect(find.text('白色简约'), findsOneWidget);
@@ -32,7 +36,11 @@ void main() {
       CatLibraryApp(preview: true, initialThemeMode: await loadAppTheme()),
     );
     await tester.pump(const Duration(seconds: 1));
-    await tester.tap(find.byTooltip('设置'));
+    await tester.pump();
+    await tester.tap(find.byTooltip('打开功能菜单'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(find.text('设置'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 350));
     expect(
