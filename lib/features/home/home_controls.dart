@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../room_layout.dart';
 import '../identity/identity_repository.dart';
 
 class RoomActionButton extends StatelessWidget {
@@ -21,18 +20,16 @@ class RoomActionButton extends StatelessWidget {
     icon: Icon(icon, size: 23),
     style: IconButton.styleFrom(
       minimumSize: const Size(48, 48),
-      backgroundColor: Theme.of(
-        context,
-      ).colorScheme.surface.withValues(alpha: 0.9),
+      backgroundColor: Theme.of(context).colorScheme.surface
+          .withValues(alpha: 0.9),
       foregroundColor: Theme.of(context).colorScheme.primary,
     ),
   );
 }
 
 class HomeWallet extends StatelessWidget {
-  const HomeWallet({super.key, required this.wallet, required this.onTap});
+  const HomeWallet({super.key, required this.wallet});
   final IdentityWallet? wallet;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -42,132 +39,257 @@ class HomeWallet extends StatelessWidget {
       ('鹰镑', Icons.payments_outlined, wallet?.eaglePounds),
       ('宝石', Icons.diamond_outlined, wallet?.gems),
     ];
-    return Material(
+    return Row(
       key: const Key('wallet-balance'),
-      color: scheme.surface.withValues(alpha: 0.94),
-      borderRadius: BorderRadius.circular(24),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(24),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-          child: Row(
-            children: [
-              for (final value in values)
-                Expanded(
-                  child: Semantics(
-                    label:
-                        '${value.$1} ${value.$3 ?? '未连接'}${(value.$3 ?? 0) < 0 ? '，欠款' : ''}',
-                    excludeSemantics: true,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Row(
-                          children: [
-                            Icon(value.$2, size: 17, color: scheme.primary),
-                            const SizedBox(width: 5),
-                            Text(
-                              value.$1,
+      children: [
+        for (var i = 0; i < values.length; i++) ...[
+          if (i > 0) const SizedBox(width: 8),
+          Expanded(
+            child: Semantics(
+              label:
+                  '${values[i].$1} ${values[i].$3 ?? '未连接'}${(values[i].$3 ?? 0) < 0 ? '，欠款' : ''}',
+              excludeSemantics: true,
+              child: Material(
+                key: Key('wallet-card-$i'),
+                color: scheme.surface.withValues(alpha: 0.96),
+                elevation: 2,
+                shadowColor: scheme.shadow.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(16),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 8,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(values[i].$2, size: 16, color: scheme.primary),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              values[i].$1,
+                              maxLines: 1,
                               style: const TextStyle(fontSize: 12),
                             ),
-                            const SizedBox(width: 6),
-                            Text(
-                              value.$3?.toString() ?? '—',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: (value.$3 ?? 0) < 0
-                                    ? scheme.error
-                                    : scheme.onSurface,
-                              ),
-                            ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 3),
+                      FittedBox(
+                        alignment: Alignment.centerLeft,
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          values[i].$3?.toString() ?? '—',
+                          style: TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.w700,
+                            color: (values[i].$3 ?? 0) < 0
+                                ? scheme.error
+                                : scheme.onSurface,
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-            ],
+              ),
+            ),
           ),
+        ],
+      ],
+    );
+  }
+}
+
+class SkyBackground extends StatelessWidget {
+  const SkyBackground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return IgnorePointer(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: dark
+                ? const [Color(0xff1c344e), Color(0xff294763)]
+                : const [Color(0xffdceffd), Color(0xffc7e6fa)],
+          ),
+        ),
+        child: CustomPaint(
+          painter: _CloudPainter(dark ? 0.13 : 0.55),
+          size: Size.infinite,
         ),
       ),
     );
   }
 }
 
-class FurnitureControls extends StatelessWidget {
-  const FurnitureControls({
-    super.key,
-    required this.layout,
-    required this.selected,
-    required this.onSelect,
-    required this.onMove,
-    required this.onSave,
-    required this.onCancel,
-  });
-  final RoomLayout layout;
-  final String selected;
-  final ValueChanged<String> onSelect;
-  final ValueChanged<Offset> onMove;
-  final VoidCallback onSave, onCancel;
+class _CloudPainter extends CustomPainter {
+  const _CloudPainter(this.opacity);
+  final double opacity;
 
   @override
-  Widget build(BuildContext context) => Material(
-    color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.96),
-    borderRadius: BorderRadius.circular(20),
-    child: Padding(
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text('选中家具后拖动，双指可缩放场景', style: TextStyle(fontSize: 12)),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            children: [
-              for (final item in const {'bookshelf': '书柜', 'bed': '猫窝'}.entries)
-                ChoiceChip(
-                  label: Text(item.value),
-                  selected: selected == item.key,
-                  onSelected: (_) => onSelect(item.key),
-                ),
-            ],
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withValues(alpha: opacity)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
+    for (final center in [
+      Offset(size.width * 0.08, size.height * 0.22),
+      Offset(size.width * 0.78, size.height * 0.14),
+      Offset(size.width * 0.98, size.height * 0.83),
+    ]) {
+      canvas.drawOval(
+        Rect.fromCenter(center: center, width: 72, height: 22),
+        paint,
+      );
+      canvas.drawOval(
+        Rect.fromCenter(
+          center: center.translate(-17, -8),
+          width: 39,
+          height: 29,
+        ),
+        paint,
+      );
+      canvas.drawOval(
+        Rect.fromCenter(
+          center: center.translate(12, -11),
+          width: 48,
+          height: 34,
+        ),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CloudPainter oldDelegate) =>
+      opacity != oldDelegate.opacity;
+}
+
+class HomeMenu extends StatefulWidget {
+  const HomeMenu({
+    super.key,
+    required this.onCats,
+    required this.onStore,
+    required this.onAlbum,
+    required this.onSettings,
+  });
+  final VoidCallback onCats, onStore, onAlbum, onSettings;
+
+  @override
+  State<HomeMenu> createState() => _HomeMenuState();
+}
+
+class _HomeMenuState extends State<HomeMenu>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 480),
+  );
+  bool open = false;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void toggle() {
+    setState(() => open = !open);
+    if (open) {
+      controller.forward();
+    } else {
+      controller.reverse();
+    }
+  }
+
+  void select(VoidCallback action) {
+    setState(() => open = false);
+    controller.reverse();
+    action();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final entries = [
+      ('猫咪管理', Icons.pets_outlined, widget.onCats),
+      ('商店', Icons.storefront_outlined, widget.onStore),
+      ('相册', Icons.photo_library_outlined, widget.onAlbum),
+      ('设置', Icons.settings_outlined, widget.onSettings),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        IconButton.filledTonal(
+          key: const Key('home-menu-toggle'),
+          tooltip: open ? '关闭功能菜单' : '打开功能菜单',
+          onPressed: toggle,
+          icon: AnimatedIcon(
+            icon: AnimatedIcons.menu_close,
+            progress: controller,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (final d in const [
-                Offset(-1, 0),
-                Offset(1, 0),
-                Offset(0, -1),
-                Offset(0, 1),
-              ])
-                IconButton(
-                  tooltip: '移动 ${d.dx.toInt()},${d.dy.toInt()}',
-                  onPressed: () => onMove(d),
-                  icon: Icon(
-                    d.dx < 0
-                        ? Icons.arrow_back
-                        : d.dx > 0
-                        ? Icons.arrow_forward
-                        : d.dy < 0
-                        ? Icons.arrow_upward
-                        : Icons.arrow_downward,
+          style: IconButton.styleFrom(
+            minimumSize: const Size(48, 48),
+            backgroundColor: scheme.surface.withValues(alpha: 0.95),
+            foregroundColor: scheme.primary,
+          ),
+        ),
+        const SizedBox(height: 8),
+        for (var i = 0; i < entries.length; i++) ...[
+          IgnorePointer(
+            ignoring: !open,
+            child: SlideTransition(
+              position: Tween(begin: const Offset(1.2, 0), end: Offset.zero)
+                  .animate(
+                    CurvedAnimation(
+                      parent: controller,
+                      curve: Interval(
+                        i * 0.13,
+                        0.58 + i * 0.13,
+                        curve: Curves.easeOutCubic,
+                      ),
+                    ),
+                  ),
+              child: FadeTransition(
+                opacity: CurvedAnimation(
+                  parent: controller,
+                  curve: Interval(i * 0.13, 0.58 + i * 0.13),
+                ),
+                child: Material(
+                  key: Key('home-menu-item-$i'),
+                  color: scheme.surface.withValues(alpha: 0.96),
+                  elevation: 3,
+                  shadowColor: scheme.shadow.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(14),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(14),
+                    onTap: () => select(entries[i].$3),
+                    child: SizedBox(
+                      width: 132,
+                      height: 46,
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 12),
+                          Icon(entries[i].$2, size: 21, color: scheme.primary),
+                          const SizedBox(width: 10),
+                          Text(entries[i].$1),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-            ],
+              ),
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(onPressed: onCancel, child: const Text('取消')),
-              const SizedBox(width: 12),
-              FilledButton(onPressed: onSave, child: const Text('保存预览')),
-            ],
-          ),
+          if (i < entries.length - 1) const SizedBox(height: 8),
         ],
-      ),
-    ),
-  );
+      ],
+    );
+  }
 }

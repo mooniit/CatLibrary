@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
 import '../features/identity/bootstrap_page.dart';
 import '../features/identity/identity_repository.dart';
 
@@ -89,7 +90,6 @@ class _PrototypeShellState extends State<PrototypeShell>
   late IdentityWallet? wallet = widget.wallet;
   Timer? walletRefresh;
   bool refreshingWallet = false;
-  final homeKey = GlobalKey<HomePageState>();
 
   @override
   void initState() {
@@ -130,12 +130,7 @@ class _PrototypeShellState extends State<PrototypeShell>
     super.dispose();
   }
 
-  Future<void> select(int next) async {
-    if (index == 0 && next != 0 && !(await homeKey.currentState!.canLeave())) {
-      return;
-    }
-    if (mounted) setState(() => index = next);
-  }
+  void select(int next) => setState(() => index = next);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -163,7 +158,6 @@ class _PrototypeShellState extends State<PrototypeShell>
         index: index,
         children: [
           HomePage(
-            key: homeKey,
             onStudy: () => select(3),
             onThemeChanged: widget.onThemeChanged,
             wallet: wallet,
