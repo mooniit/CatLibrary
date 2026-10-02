@@ -7,7 +7,7 @@ void main() {
       'window': const GridPoint(5, 0),
       'chair': const GridPoint(5.4, 2.75),
       'bookshelf': const GridPoint(0.08, 3.2),
-      'bed': const GridPoint(9.7, 2.1),
+      'bed': const GridPoint(8.1, 8.1),
       'desk': const GridPoint(5.4, 1.75),
     });
   });
