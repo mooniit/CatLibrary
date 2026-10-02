@@ -44,7 +44,7 @@ class HomeWallet extends StatelessWidget {
       key: const Key('wallet-balance'),
       children: [
         for (var i = 0; i < values.length; i++) ...[
-          if (i > 0) const SizedBox(width: 8),
+          if (i > 0) const SizedBox(width: 10),
           Expanded(
             child: Semantics(
               label:
@@ -55,37 +55,37 @@ class HomeWallet extends StatelessWidget {
                 color: scheme.surface.withValues(alpha: 0.96),
                 elevation: 2,
                 shadowColor: scheme.shadow.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(13),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 8,
+                    horizontal: 9,
+                    vertical: 6,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          Icon(values[i].$2, size: 16, color: scheme.primary),
+                          Icon(values[i].$2, size: 14, color: scheme.primary),
                           const SizedBox(width: 4),
                           Flexible(
                             child: Text(
                               values[i].$1,
                               maxLines: 1,
-                              style: const TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 11),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 3),
+                      const SizedBox(height: 2),
                       FittedBox(
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.scaleDown,
                         child: Text(
                           values[i].$3?.toString() ?? '—',
                           style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                             color: (values[i].$3 ?? 0) < 0
                                 ? scheme.error
                                 : scheme.onSurface,

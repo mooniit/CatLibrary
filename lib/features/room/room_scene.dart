@@ -20,6 +20,7 @@ class RoomScene extends FlameGame {
   ui.Image? _floor;
   final _walls = <WallStyle, ui.Image>{};
   final _furniture = <FurnitureStyle, ui.Image>{};
+  final _artworks = <ArtworkStyle, ui.Image>{};
   final _paint = Paint()..filterQuality = FilterQuality.high;
 
   @override
@@ -33,6 +34,9 @@ class RoomScene extends FlameGame {
     }
     for (final style in FurnitureStyle.values) {
       _furniture[style] = await images.load(style.asset);
+    }
+    for (final style in ArtworkStyle.values) {
+      _artworks[style] = await images.load(style.asset);
     }
   }
 
@@ -225,6 +229,7 @@ class RoomScene extends FlameGame {
     canvas.translate(origin.dx, origin.dy);
     canvas.scale(displayScale);
     _room(canvas, wall, floor);
+    if (furnishings.isVisible('painting')) _drawArtwork(canvas);
     if (furnishings.isVisible('window')) _drawFurniture(canvas, 'window');
     final items =
         RoomLayout.defaults.entries
@@ -247,9 +252,11 @@ class RoomScene extends FlameGame {
     final source = furnitureSources[style]![kind]!;
     final geometry = furnitureGeometry[style]![kind]!;
     final scale = furnitureWidths[kind]! / source.width;
-    final point =
-        ground(RoomLayout.defaults[kind]!) -
-        (kind == 'window' ? const Offset(0, 245) : Offset.zero);
+    final point = kind == 'window'
+        ? ground(RoomLayout.defaults[kind]!) -
+              const Offset(0, 245) -
+              geometry.bounds(source).center * scale
+        : ground(RoomLayout.defaults[kind]!);
     for (final foot in geometry.feet) {
       final contact = geometry.project(foot, scale, point);
       canvas.drawOval(
@@ -264,5 +271,60 @@ class RoomScene extends FlameGame {
       );
     }
     geometry.draw(canvas, image, source, scale, point);
+  }
+
+  void _drawArtwork(Canvas canvas) {
+    final image = _artworks[furnishings.artwork];
+    if (image == null) return;
+    final center = ground(RoomLayout.paintingSlot) - const Offset(0, 335);
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.transform(
+      Float64List.fromList([
+        1,
+        -RoomLayout.slope,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+      ]),
+    );
+    final fitted = applyBoxFit(
+      BoxFit.contain,
+      Size(image.width.toDouble(), image.height.toDouble()),
+      const Size(168, 190),
+    ).destination;
+    final picture = Rect.fromCenter(
+      center: Offset.zero,
+      width: fitted.width,
+      height: fitted.height,
+    );
+    final frame = picture.inflate(11);
+    canvas.drawRect(
+      frame.shift(const Offset(3, 5)),
+      Paint()
+        ..color = const Color(0x40705238)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+    );
+    canvas.drawRect(frame, Paint()..color = const Color(0xff775335));
+    canvas.drawRect(frame.deflate(3), Paint()..color = const Color(0xffb78a59));
+    canvas.drawRect(frame.deflate(7), Paint()..color = const Color(0xfff1e5ce));
+    canvas.drawImageRect(
+      image,
+      Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+      picture,
+      _paint,
+    );
+    canvas.restore();
   }
 }

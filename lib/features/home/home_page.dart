@@ -322,7 +322,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             child: HomeWallet(wallet: wallet),
           ),
           Positioned(
-            top: 80,
+            top: 68,
             right: 12,
             child: HomeMenu(
               onCats: openCats,
@@ -342,7 +342,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               ),
             ),
           Positioned(
-            top: 80,
+            top: 68,
             left: 16,
             right: 156,
             child: ConstrainedBox(
