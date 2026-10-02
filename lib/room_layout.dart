@@ -28,9 +28,10 @@ class RoomLayout {
     'window': GridPoint(5, 0),
     'chair': GridPoint(5.4, 2.75),
     'bookshelf': GridPoint(0.08, 3.2),
-    'bed': GridPoint(9.7, 2.1),
+    'bed': GridPoint(8.1, 8.1),
     'desk': GridPoint(5.4, 1.75),
   };
 
   static const paintingSlot = GridPoint(0, 6);
+  static const windowHeight = 320.0;
 }

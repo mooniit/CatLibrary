@@ -42,7 +42,7 @@ void main() {
       expect(preview.wall, WallStyle.sage);
       expect(preview.styleFor('desk'), FurnitureStyle.sage);
       expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 3.2));
-      expect(RoomLayout.defaults['bed'], const GridPoint(9.7, 2.1));
+      expect(RoomLayout.defaults['bed'], const GridPoint(8.1, 8.1));
     },
   );
 

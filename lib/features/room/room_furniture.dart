@@ -48,7 +48,7 @@ const furnitureLocations = {
   'window': '右侧墙面 · 书桌上方',
   'chair': '书桌前一格 · 面向桌面',
   'bookshelf': '左墙内侧 · 靠近墙角',
-  'bed': '右墙外侧 · 底角边缘',
+  'bed': '地板前端中央 · 留出边距',
   'desk': '右侧靠墙 · 临窗阅读',
 };
 
@@ -76,13 +76,13 @@ class FurnitureGeometry {
     this.positiveSlope,
     this.negativeSlope, [
     this.feet = const [],
-    this.excluded,
+    this.excluded = const [],
   ]);
   final Offset anchor;
   final double positiveSlope;
   final double? negativeSlope;
   final List<Offset> feet;
-  final Rect? excluded;
+  final List<Rect> excluded;
 
   double get verticalScale => negativeSlope == null
       ? 1
@@ -139,13 +139,14 @@ class FurnitureGeometry {
         1,
       ]),
     );
-    if (excluded != null) {
-      canvas.clipPath(
-        Path()
-          ..fillType = PathFillType.evenOdd
-          ..addRect(source.shift(-anchor))
-          ..addRect(excluded!.shift(-anchor)),
-      );
+    if (excluded.isNotEmpty) {
+      final clip = Path()
+        ..fillType = PathFillType.evenOdd
+        ..addRect(source.shift(-anchor));
+      for (final rect in excluded) {
+        clip.addRect(rect.shift(-anchor));
+      }
+      canvas.clipPath(clip);
     }
     canvas.drawImageRect(
       image,
@@ -184,11 +185,13 @@ const furnitureGeometry = {
   },
   FurnitureStyle.sage: {
     'window': FurnitureGeometry(Offset(491, 567), 0.526, null),
-    'chair': FurnitureGeometry(Offset(804, 598), 0.55, -0.55, [
-      Offset(677, 542),
+    'chair': FurnitureGeometry(
       Offset(804, 598),
-      Offset(924, 533),
-    ], Rect.fromLTRB(660, 577, 750, 606)),
+      0.55,
+      -0.55,
+      [Offset(677, 542), Offset(804, 598), Offset(924, 533)],
+      [Rect.fromLTRB(660, 577, 750, 606), Rect.fromLTRB(900, 577, 940, 606)],
+    ),
     'bookshelf': FurnitureGeometry(Offset(1123, 658), 0.615, -0.554, [
       Offset(1123, 658),
       Offset(1187, 694),
@@ -199,17 +202,23 @@ const furnitureGeometry = {
       Offset(280, 954),
       Offset(443, 830),
     ]),
-    'desk': FurnitureGeometry(Offset(740.5, 932.5), 0.488, -0.566, [
-      Offset(568, 861),
-      Offset(913, 1004),
-      Offset(1046, 930),
-      Offset(682, 797),
-    ], Rect.fromLTRB(787, 580, 826, 614)),
+    'desk': FurnitureGeometry(
+      Offset(740.5, 932.5),
+      0.488,
+      -0.566,
+      [
+        Offset(568, 861),
+        Offset(913, 1004),
+        Offset(1046, 930),
+        Offset(682, 797),
+      ],
+      [Rect.fromLTRB(787, 580, 826, 614)],
+    ),
   },
 };
 
 const furnitureWidths = {
-  'window': 190.0,
+  'window': 215.0,
   'chair': 125.0,
   'bookshelf': 185.0,
   'bed': 165.0,

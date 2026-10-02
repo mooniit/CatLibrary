@@ -254,7 +254,7 @@ class RoomScene extends FlameGame {
     final scale = furnitureWidths[kind]! / source.width;
     final point = kind == 'window'
         ? ground(RoomLayout.defaults[kind]!) -
-              const Offset(0, 245) -
+              const Offset(0, RoomLayout.windowHeight) -
               geometry.bounds(source).center * scale
         : ground(RoomLayout.defaults[kind]!);
     for (final foot in geometry.feet) {
