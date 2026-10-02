@@ -51,7 +51,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
           Text('给小屋添一点喜欢', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
           Text(
-            '两组风格 · 五种家具\n固定位置，自由混搭；选择自动保存到本机。',
+            '两组风格 · 五种家具 · 五幅装饰画\n固定位置，自由混搭；选择自动保存到本机。',
             style: TextStyle(color: scheme.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
@@ -103,6 +103,34 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                 ],
               ],
             ),
+          ],
+          const SizedBox(height: 16),
+          SwitchListTile.adaptive(
+            key: const Key('painting-visible'),
+            contentPadding: EdgeInsets.zero,
+            title: Text('装饰画', style: Theme.of(context).textTheme.titleMedium),
+            subtitle: Text(
+              '左墙中间偏上${room.isVisible('painting') ? '' : ' · 已隐藏'}',
+            ),
+            value: room.isVisible('painting'),
+            onChanged: saving
+                ? null
+                : (visible) => change(room.withVisibility('painting', visible)),
+          ),
+          for (var i = 0; i < ArtworkStyle.values.length; i += 2) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _artworkChoice(ArtworkStyle.values[i])),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: i + 1 < ArtworkStyle.values.length
+                      ? _artworkChoice(ArtworkStyle.values[i + 1])
+                      : const SizedBox(),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
           ],
         ],
       ),
@@ -161,6 +189,49 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                 ? (room.isVisible(kind) ? '✓ 使用中' : '已选 · 点击显示')
                 : '选用${furnitureNames[kind]}',
             textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _artworkChoice(ArtworkStyle style) {
+    final selected = room.artwork == style;
+    final scheme = Theme.of(context).colorScheme;
+    return OutlinedButton(
+      key: Key('painting-${style.name}'),
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.all(10),
+        backgroundColor: selected
+            ? scheme.primary.withValues(alpha: 0.08)
+            : scheme.surfaceContainerLow,
+        side: BorderSide(
+          color: selected ? scheme.primary : scheme.outlineVariant,
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: saving ? null : () => change(room.withArtwork(style)),
+      child: Column(
+        children: [
+          ExcludeSemantics(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: const Color(0xff775335), width: 4),
+              ),
+              child: Image.asset(
+                'assets/images/${style.asset}',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(style.label, textAlign: TextAlign.center),
+          const SizedBox(height: 4),
+          Text(
+            selected
+                ? (room.isVisible('painting') ? '✓ 使用中' : '已选 · 点击显示')
+                : '选用画作',
             style: const TextStyle(fontSize: 12),
           ),
         ],

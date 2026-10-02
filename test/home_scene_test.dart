@@ -84,8 +84,8 @@ void main() {
     await tester.dragFrom(const Offset(160, 380), const Offset(55, 40));
     await tester.pump(const Duration(milliseconds: 350));
     expect(home.scene.pan.distance, greaterThan(20));
-    expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 5.6));
-    expect(RoomLayout.defaults['bed'], const GridPoint(8.5, 4.6));
+    expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 3.2));
+    expect(RoomLayout.defaults['bed'], const GridPoint(9.7, 2.1));
     expect(
       tester.getCenter(find.byKey(const Key('wallet-card-0'))),
       cardPosition,

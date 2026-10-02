@@ -24,6 +24,18 @@ enum WallStyle {
   final String asset;
 }
 
+enum ArtworkStyle {
+  starry('爪印星夜'),
+  mona('猫娜丽莎'),
+  scream('喵的呐喊'),
+  pearl('戴珍珠耳环的猫'),
+  sunflowers('向日葵');
+
+  const ArtworkStyle(this.label);
+  final String label;
+  String get asset => 'room/painting-$name.png';
+}
+
 const furnitureNames = {
   'window': '窗户',
   'chair': '椅子',
@@ -34,9 +46,9 @@ const furnitureNames = {
 
 const furnitureLocations = {
   'window': '右侧墙面 · 书桌上方',
-  'chair': '书桌前 · 面向桌面',
-  'bookshelf': '左侧靠墙',
-  'bed': '右前方 · 远离椅子',
+  'chair': '书桌前一格 · 面向桌面',
+  'bookshelf': '左墙内侧 · 靠近墙角',
+  'bed': '右墙外侧 · 底角边缘',
   'desk': '右侧靠墙 · 临窗阅读',
 };
 
@@ -163,7 +175,7 @@ const furnitureGeometry = {
       Offset(218, 1132),
       Offset(386, 1046),
     ]),
-    'desk': FurnitureGeometry(Offset(882, 1098), 0.486, -0.556, [
+    'desk': FurnitureGeometry(Offset(601, 1102.5), 0.486, -0.556, [
       Offset(443, 1028),
       Offset(759, 1177),
       Offset(882, 1098),
@@ -187,7 +199,7 @@ const furnitureGeometry = {
       Offset(280, 954),
       Offset(443, 830),
     ]),
-    'desk': FurnitureGeometry(Offset(1046, 930), 0.488, -0.566, [
+    'desk': FurnitureGeometry(Offset(740.5, 932.5), 0.488, -0.566, [
       Offset(568, 861),
       Offset(913, 1004),
       Offset(1046, 930),
@@ -197,7 +209,7 @@ const furnitureGeometry = {
 };
 
 const furnitureWidths = {
-  'window': 230.0,
+  'window': 190.0,
   'chair': 125.0,
   'bookshelf': 185.0,
   'bed': 165.0,
@@ -209,11 +221,13 @@ class RoomFurnishings {
     this.styles = const {},
     this.hidden = const {},
     this.wall = WallStyle.cream,
+    this.artwork = ArtworkStyle.starry,
   });
 
   final Map<String, FurnitureStyle> styles;
   final Set<String> hidden;
   final WallStyle wall;
+  final ArtworkStyle artwork;
 
   FurnitureStyle styleFor(String kind) => styles[kind] ?? FurnitureStyle.cream;
   bool isVisible(String kind) => !hidden.contains(kind);
@@ -223,16 +237,29 @@ class RoomFurnishings {
         styles: {...styles, kind: style},
         hidden: {...hidden}..remove(kind),
         wall: wall,
+        artwork: artwork,
       );
 
   RoomFurnishings withVisibility(String kind, bool visible) => RoomFurnishings(
     styles: styles,
     hidden: visible ? ({...hidden}..remove(kind)) : {...hidden, kind},
     wall: wall,
+    artwork: artwork,
   );
 
-  RoomFurnishings withWall(WallStyle next) =>
-      RoomFurnishings(styles: styles, hidden: hidden, wall: next);
+  RoomFurnishings withWall(WallStyle next) => RoomFurnishings(
+    styles: styles,
+    hidden: hidden,
+    wall: next,
+    artwork: artwork,
+  );
+
+  RoomFurnishings withArtwork(ArtworkStyle next) => RoomFurnishings(
+    styles: styles,
+    hidden: {...hidden}..remove('painting'),
+    wall: wall,
+    artwork: next,
+  );
 
   static String _key(String? ownerId) =>
       'room_furniture_v1_${ownerId ?? 'preview'}';
@@ -253,8 +280,19 @@ class RoomFurnishings {
     final styles = <String, FurnitureStyle>{};
     final hidden = <String>{};
     var wall = WallStyle.cream;
+    var artwork = ArtworkStyle.starry;
     for (final value in values) {
       final parts = value.split('|');
+      if (parts.length == 3 && parts[0] == 'painting') {
+        final style = ArtworkStyle.values
+            .where((s) => s.name == parts[1])
+            .firstOrNull;
+        if (style != null && ['0', '1'].contains(parts[2])) {
+          artwork = style;
+          if (parts[2] == '0') hidden.add('painting');
+        }
+        continue;
+      }
       if (parts.length == 3 && parts[0] == 'wall') {
         wall =
             WallStyle.values.where((s) => s.name == parts[1]).firstOrNull ??
@@ -271,13 +309,19 @@ class RoomFurnishings {
       styles[parts[0]] = style;
       if (parts[2] == '0') hidden.add(parts[0]);
     }
-    return RoomFurnishings(styles: styles, hidden: hidden, wall: wall);
+    return RoomFurnishings(
+      styles: styles,
+      hidden: hidden,
+      wall: wall,
+      artwork: artwork,
+    );
   }
 
   Future<void> save(String? ownerId) async {
     final saved = await (await SharedPreferences.getInstance())
         .setStringList(_key(ownerId), [
           'wall|${wall.name}|1',
+          'painting|${artwork.name}|${isVisible('painting') ? '1' : '0'}',
           for (final kind in RoomLayout.defaults.keys)
             '$kind|${styleFor(kind).name}|${isVisible(kind) ? '1' : '0'}',
         ]);

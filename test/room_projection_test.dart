@@ -14,13 +14,25 @@ void main() {
       expect(restored.y, closeTo(slot.y, 0.00001));
     }
     expect(RoomLayout.defaults['bookshelf']!.x, lessThan(0.1));
-    expect(RoomLayout.defaults['desk']!.y, lessThan(0.1));
+    expect(RoomLayout.defaults['window'], const GridPoint(5, 0));
+    expect(RoomLayout.defaults['chair']!.x, RoomLayout.defaults['desk']!.x);
+    expect(RoomLayout.defaults['chair']!.y, RoomLayout.defaults['desk']!.y + 1);
     for (final style in FurnitureStyle.values) {
       for (final kind in RoomLayout.defaults.keys) {
         final geometry = furnitureGeometry[style]![kind]!;
         final scale =
             furnitureWidths[kind]! / furnitureSources[style]![kind]!.width;
         final origin = RoomLayout.ground(RoomLayout.defaults[kind]!);
+        if (kind == 'desk') {
+          final backFoot = RoomLayout.unproject(
+            geometry.project(geometry.feet[2], scale, origin),
+          );
+          expect(
+            backFoot.y,
+            lessThan(0.1),
+            reason: '${style.name} desk against right wall',
+          );
+        }
         for (final foot in geometry.feet) {
           expect(geometry.excluded?.contains(foot) ?? false, isFalse);
           final floorPoint = RoomLayout.unproject(

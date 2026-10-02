@@ -25,10 +25,12 @@ class RoomLayout {
   );
 
   static const defaults = {
-    'window': GridPoint(6.2, 0),
-    'chair': GridPoint(7, 6.3),
-    'bookshelf': GridPoint(0.08, 5.6),
-    'bed': GridPoint(8.5, 4.6),
-    'desk': GridPoint(6.2, 0.08),
+    'window': GridPoint(5, 0),
+    'chair': GridPoint(5.4, 2.75),
+    'bookshelf': GridPoint(0.08, 3.2),
+    'bed': GridPoint(9.7, 2.1),
+    'desk': GridPoint(5.4, 1.75),
   };
+
+  static const paintingSlot = GridPoint(0, 6);
 }

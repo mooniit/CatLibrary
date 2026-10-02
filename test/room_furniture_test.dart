@@ -41,8 +41,8 @@ void main() {
       final preview = await RoomFurnishings.load(null);
       expect(preview.wall, WallStyle.sage);
       expect(preview.styleFor('desk'), FurnitureStyle.sage);
-      expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 5.6));
-      expect(RoomLayout.defaults['bed'], const GridPoint(8.5, 4.6));
+      expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 3.2));
+      expect(RoomLayout.defaults['bed'], const GridPoint(9.7, 2.1));
     },
   );
 
@@ -82,6 +82,23 @@ void main() {
         await tester.pump(const Duration(milliseconds: 100));
         expect(key.currentState!.scene.furnishings.isVisible(kind), isFalse);
       }
+      for (final artwork in ArtworkStyle.values) {
+        final choice = find.byKey(Key('painting-${artwork.name}'));
+        await tester.ensureVisible(choice);
+        await tester.pump();
+        await tester.tap(choice);
+        await tester.pump(const Duration(milliseconds: 100));
+        expect(key.currentState!.scene.furnishings.artwork, artwork);
+      }
+      final paintingToggle = find.byKey(const Key('painting-visible'));
+      await tester.ensureVisible(paintingToggle);
+      await tester.pump();
+      await tester.tap(paintingToggle);
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(
+        key.currentState!.scene.furnishings.isVisible('painting'),
+        isFalse,
+      );
       await tester.tap(find.byTooltip('关闭商店'));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pumpWidget(const SizedBox());
@@ -94,9 +111,13 @@ void main() {
         ),
       );
       await tester.pump(const Duration(seconds: 1));
+      expect(reopened.currentState!.scene.furnishings.hidden, {
+        ...furnitureNames.keys,
+        'painting',
+      });
       expect(
-        reopened.currentState!.scene.furnishings.hidden,
-        furnitureNames.keys.toSet(),
+        reopened.currentState!.scene.furnishings.artwork,
+        ArtworkStyle.sunflowers,
       );
       expect(
         reopened.currentState!.scene.furnishings.styleFor('desk'),
@@ -104,6 +125,40 @@ void main() {
       );
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
+    },
+  );
+
+  test(
+    'artwork selection preserves other choices and loads legacy records',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'room_furniture_v1_owner-a': <String>[
+          'desk|sage|0',
+          'wall|blue|1',
+          'painting|invalid|0',
+          'painting|mona|invalid',
+        ],
+      });
+      var room = await RoomFurnishings.load('owner-a');
+      expect(room.artwork, ArtworkStyle.starry);
+      expect(room.isVisible('painting'), isTrue);
+      for (final artwork in ArtworkStyle.values) {
+        room = room.withArtwork(artwork).withVisibility('painting', false);
+        await room.save('owner-a');
+        room = await RoomFurnishings.load('owner-a');
+        expect(room.artwork, artwork);
+        expect(room.isVisible('painting'), isFalse);
+        expect(room.isVisible('desk'), isFalse);
+        expect(room.styleFor('desk'), FurnitureStyle.sage);
+        expect(room.wall, WallStyle.blue);
+        final restored = room
+            .withArtwork(artwork)
+            .withWall(WallStyle.blue)
+            .withStyle('chair', FurnitureStyle.sage)
+            .withVisibility('chair', false);
+        expect(restored.artwork, artwork);
+        expect(restored.isVisible('painting'), isTrue);
+      }
     },
   );
 
