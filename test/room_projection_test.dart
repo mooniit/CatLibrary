@@ -23,12 +23,12 @@ void main() {
     expect(RoomLayout.defaults['chair']!.y, RoomLayout.defaults['desk']!.y + 1);
     for (final style in FurnitureStyle.values) {
       for (final kind in RoomLayout.defaults.keys) {
-        final geometry = furnitureGeometry[style]![kind]!;
-        final scale =
-            furnitureWidths[kind]! / furnitureSources[style]![kind]!.width;
+        if (!stylesFor(kind).contains(style) || kind == 'rug') continue;
+        final geometry = geometryFor(kind, style);
+        final scale = furnitureScale(kind, style);
         final origin = RoomLayout.ground(RoomLayout.defaults[kind]!);
         if (kind == 'bed') {
-          final source = furnitureSources[style]![kind]!;
+          final source = sourceFor(kind, style);
           for (final corner in [
             source.topLeft,
             source.topRight,
@@ -99,6 +99,35 @@ void main() {
       }
     }
   });
+
+  test(
+    'original lunar canopy retains its outline and contacts within the floor',
+    () {
+      const style = FurnitureStyle.lunar;
+      final source = sourceFor('bed', style, covered: true);
+      final geometry = geometryFor('bed', style, covered: true);
+      final scale = furnitureScale('bed', style, covered: true);
+      final origin = RoomLayout.ground(RoomLayout.defaults['bed']!);
+      for (final point in [
+        source.topLeft,
+        source.topRight,
+        source.bottomLeft,
+        source.bottomRight,
+        ...geometry.feet,
+      ]) {
+        final projected = RoomLayout.unproject(
+          geometry.project(point, scale, origin),
+        );
+        expect(projected.x, inInclusiveRange(.2, 9.8));
+        expect(projected.y, inInclusiveRange(.2, 9.8));
+      }
+      expect(
+        furnitureAsset('bed', style, covered: true),
+        'room/lunar-bed-covered.png',
+      );
+      expect(RoomLayout.defaults['rug'], const GridPoint(5, 5));
+    },
+  );
 
   test(
     'chair crop removes neighboring desk and lamp pixels but retains its front foot',

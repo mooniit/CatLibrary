@@ -30,6 +30,8 @@ class RoomLayout {
     'bookshelf': GridPoint(0.08, 3.2),
     'bed': GridPoint(8.1, 8.1),
     'desk': GridPoint(5.4, 1.75),
+    'tree': GridPoint(2.1, 7.1),
+    'rug': GridPoint(5, 5),
   };
 
   static const paintingSlot = GridPoint(0, 6);

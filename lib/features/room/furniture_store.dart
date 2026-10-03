@@ -51,25 +51,63 @@ class _FurnitureStoreState extends State<FurnitureStore> {
           Text('给小屋添一点喜欢', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
           Text(
-            '两组风格 · 五种家具 · 五幅装饰画\n固定位置，自由混搭；选择自动保存到本机。',
+            '四组风格 · 七类家具 · 五幅装饰画\n固定位置，自由混搭；选择自动保存到本机。',
             style: TextStyle(color: scheme.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
-          Text('墙面', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              for (final wall in WallStyle.values)
-                ChoiceChip(
-                  key: Key('wall-${wall.name}'),
-                  label: Text(wall.label),
-                  selected: room.wall == wall,
-                  onSelected: saving
-                      ? null
-                      : (_) => change(room.withWall(wall)),
+              for (final style in [
+                FurnitureStyle.lunar,
+                FurnitureStyle.bauhaus,
+              ])
+                OutlinedButton(
+                  key: Key('room-set-${style.name}'),
+                  onPressed: saving ? null : () => change(room.withSet(style)),
+                  child: Text('布置${style.label}'),
                 ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: const Text('墙面与地板'),
+            subtitle: Text('${room.wall.label} · ${room.floor.label}'),
+            children: [
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final wall in WallStyle.values)
+                    ChoiceChip(
+                      key: Key('wall-${wall.name}'),
+                      label: Text(wall.label),
+                      selected: room.wall == wall,
+                      onSelected: saving
+                          ? null
+                          : (_) => change(room.withWall(wall)),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final floor in FloorStyle.values)
+                    ChoiceChip(
+                      key: Key('floor-${floor.name}'),
+                      label: Text(floor.label),
+                      selected: room.floor == floor,
+                      onSelected: saving
+                          ? null
+                          : (_) => change(room.withFloor(floor)),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 12),
             ],
           ),
           if (error != null)
@@ -94,15 +132,32 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                   ? null
                   : (visible) => change(room.withVisibility(kind, visible)),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (final style in FurnitureStyle.values) ...[
-                  if (style.index > 0) const SizedBox(width: 12),
-                  Expanded(child: _choice(kind, style)),
+            for (var i = 0; i < stylesFor(kind).length; i += 2) ...[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _choice(kind, stylesFor(kind)[i])),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: i + 1 < stylesFor(kind).length
+                        ? _choice(kind, stylesFor(kind)[i + 1])
+                        : const SizedBox(),
+                  ),
                 ],
-              ],
-            ),
+              ),
+              const SizedBox(height: 12),
+            ],
+            if (kind == 'bed' && room.styleFor(kind) == FurnitureStyle.lunar)
+              SwitchListTile.adaptive(
+                key: const Key('bed-canopy'),
+                contentPadding: EdgeInsets.zero,
+                title: const Text('月牙罩'),
+                subtitle: const Text('保留原款，也可切换开放猫窝'),
+                value: room.bedCovered,
+                onChanged: saving
+                    ? null
+                    : (value) => change(room.withBedCovered(value)),
+              ),
           ],
           const SizedBox(height: 16),
           SwitchListTile.adaptive(
@@ -160,13 +215,15 @@ class _FurnitureStoreState extends State<FurnitureStore> {
               height: 124,
               width: double.infinity,
               child: FutureBuilder<ui.Image>(
-                future: Flame.images.load(style.asset),
+                future: Flame.images.load(
+                  furnitureAsset(kind, style, covered: room.bedCovered),
+                ),
                 builder: (context, snapshot) => snapshot.hasData
                     ? CustomPaint(
                         painter: _FurniturePainter(
                           snapshot.data!,
-                          furnitureSources[style]![kind]!,
-                          furnitureGeometry[style]![kind]!,
+                          sourceFor(kind, style, covered: room.bedCovered),
+                          geometryFor(kind, style, covered: room.bedCovered),
                         ),
                       )
                     : Center(

@@ -17,24 +17,31 @@ class RoomScene extends FlameGame {
   RoomFurnishings furnishings = const RoomFurnishings();
   double zoom = 1;
   Offset pan = Offset.zero;
-  ui.Image? _floor;
+  final _floors = <FloorStyle, ui.Image>{};
   final _walls = <WallStyle, ui.Image>{};
-  final _furniture = <FurnitureStyle, ui.Image>{};
+  final _furniture = <String, ui.Image>{};
   final _artworks = <ArtworkStyle, ui.Image>{};
-  final _paint = Paint()..filterQuality = FilterQuality.high;
+  final _paint = Paint()..filterQuality = FilterQuality.medium;
 
   @override
   Color backgroundColor() => Colors.transparent;
 
   @override
   Future<void> onLoad() async {
-    _floor = await images.load('room/floor-oak.png');
+    for (final floor in FloorStyle.values) {
+      _floors[floor] = await images.load(floor.asset);
+    }
     for (final wall in WallStyle.values) {
       _walls[wall] = await images.load(wall.asset);
     }
-    for (final style in FurnitureStyle.values) {
-      _furniture[style] = await images.load(style.asset);
+    for (final kind in furnitureNames.keys) {
+      for (final style in stylesFor(kind)) {
+        final asset = furnitureAsset(kind, style);
+        _furniture[asset] = await images.load(asset);
+      }
     }
+    final covered = furnitureAsset('bed', FurnitureStyle.lunar, covered: true);
+    _furniture[covered] = await images.load(covered);
     for (final style in ArtworkStyle.values) {
       _artworks[style] = await images.load(style.asset);
     }
@@ -102,6 +109,46 @@ class RoomScene extends FlameGame {
       end + const Offset(0, 490),
       const Offset(500, 560),
     ]);
+    if (furnishings.wall == WallStyle.lunar ||
+        furnishings.wall == WallStyle.bauhaus) {
+      canvas.drawPath(path, Paint()..color = const Color(0xfff7edda));
+      canvas.save();
+      canvas.clipPath(path);
+      canvas.transform(
+        Float64List.fromList([
+          (left ? -445 : 445) / image.width,
+          300 / image.width,
+          0,
+          0,
+          0,
+          490 / image.height,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          500,
+          70,
+          0,
+          1,
+        ]),
+      );
+      canvas.drawImage(
+        image,
+        Offset.zero,
+        Paint()
+          ..filterQuality = FilterQuality.medium
+          ..color = Color.fromRGBO(
+            255,
+            255,
+            255,
+            furnishings.wall == WallStyle.bauhaus ? 0.45 : 0.8,
+          ),
+      );
+      canvas.restore();
+      return;
+    }
     const vertical = 490 / 509;
     final horizontal = 445 / (left ? 487 : 488);
     final shear = (300 - vertical * 307) / (left ? -487 : 488);
@@ -156,6 +203,7 @@ class RoomScene extends FlameGame {
       const Offset(945, 886),
       const Offset(500, 1186),
     ], const Color(0xff916240));
+    canvas.drawPath(footprint, Paint()..color = const Color(0xfff2e4c9));
     canvas.save();
     canvas.clipPath(footprint);
     canvas.transform(
@@ -181,7 +229,14 @@ class RoomScene extends FlameGame {
     canvas.drawImage(
       floor,
       Offset.zero,
-      Paint()..filterQuality = FilterQuality.medium,
+      Paint()
+        ..filterQuality = FilterQuality.medium
+        ..color = Color.fromRGBO(
+          255,
+          255,
+          255,
+          furnishings.floor == FloorStyle.bauhaus ? 0.65 : 1,
+        ),
     );
     canvas.restore();
     _wall(canvas, wall, true);
@@ -223,17 +278,23 @@ class RoomScene extends FlameGame {
   void render(Canvas canvas) {
     super.render(canvas);
     final wall = _walls[furnishings.wall];
-    final floor = _floor;
+    final floor = _floors[furnishings.floor];
     if (wall == null || floor == null) return;
     canvas.save();
     canvas.translate(origin.dx, origin.dy);
     canvas.scale(displayScale);
     _room(canvas, wall, floor);
+    if (furnishings.isVisible('rug')) _drawRug(canvas);
     if (furnishings.isVisible('painting')) _drawArtwork(canvas);
     if (furnishings.isVisible('window')) _drawFurniture(canvas, 'window');
     final items =
         RoomLayout.defaults.entries
-            .where((e) => e.key != 'window' && furnishings.isVisible(e.key))
+            .where(
+              (e) =>
+                  e.key != 'window' &&
+                  e.key != 'rug' &&
+                  furnishings.isVisible(e.key),
+            )
             .toList()
           ..sort(
             (a, b) => (a.value.x + a.value.y).compareTo(b.value.x + b.value.y),
@@ -247,11 +308,16 @@ class RoomScene extends FlameGame {
 
   void _drawFurniture(Canvas canvas, String kind) {
     final style = furnishings.styleFor(kind);
-    final image = _furniture[style];
+    final image =
+        _furniture[furnitureAsset(
+          kind,
+          style,
+          covered: furnishings.bedCovered,
+        )];
     if (image == null) return;
-    final source = furnitureSources[style]![kind]!;
-    final geometry = furnitureGeometry[style]![kind]!;
-    final scale = furnitureWidths[kind]! / source.width;
+    final source = sourceFor(kind, style, covered: furnishings.bedCovered);
+    final geometry = geometryFor(kind, style, covered: furnishings.bedCovered);
+    final scale = furnitureScale(kind, style, covered: furnishings.bedCovered);
     final point = kind == 'window'
         ? ground(RoomLayout.defaults[kind]!) -
               const Offset(0, RoomLayout.windowHeight) -
@@ -271,6 +337,45 @@ class RoomScene extends FlameGame {
       );
     }
     geometry.draw(canvas, image, source, scale, point);
+  }
+
+  void _drawRug(Canvas canvas) {
+    final style = furnishings.styleFor('rug');
+    final image = _furniture[furnitureAsset('rug', style)];
+    if (image == null) return;
+    final source = sourceFor('rug', style);
+    final center = ground(RoomLayout.defaults['rug']!);
+    final width = furnitureWidths['rug']!;
+    final depth = width * source.height / source.width;
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.transform(
+      Float64List.fromList([
+        1,
+        RoomLayout.slope,
+        0,
+        0,
+        -1,
+        RoomLayout.slope,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+      ]),
+    );
+    canvas.drawImageRect(
+      image,
+      source,
+      Rect.fromCenter(center: Offset.zero, width: width / 2, height: depth / 2),
+      _paint,
+    );
+    canvas.restore();
   }
 
   void _drawArtwork(Canvas canvas) {

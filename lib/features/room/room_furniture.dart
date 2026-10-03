@@ -7,21 +7,53 @@ import '../../room_layout.dart';
 
 enum FurnitureStyle {
   cream('原木奶油'),
-  sage('胡桃鼠尾草');
+  sage('胡桃鼠尾草'),
+  lunar('月轨阅读舱'),
+  bauhaus('包豪斯');
 
   const FurnitureStyle(this.label);
   final String label;
-  String get asset => 'room/furniture-${this == sage ? 'sage-v2' : name}.png';
 }
 
 enum WallStyle {
   cream('奶油抹灰', 'room/shell.png'),
   sage('鼠尾草护墙', 'room/shell-sage.png'),
-  blue('雾蓝壁纸', 'room/shell-blue.png');
+  blue('雾蓝壁纸', 'room/shell-blue.png'),
+  lunar('月轨星纹', 'room/lunar-wall.png'),
+  bauhaus('包豪斯几何', 'room/bauhaus-wall.png');
 
   const WallStyle(this.label, this.asset);
   final String label;
   final String asset;
+}
+
+enum FloorStyle {
+  oak('原木地板', 'room/floor-oak.png'),
+  lunar('月轨石纹', 'room/lunar-floor.png'),
+  bauhaus('包豪斯拼木', 'room/bauhaus-floor.png');
+
+  const FloorStyle(this.label, this.asset);
+  final String label;
+  final String asset;
+}
+
+List<FurnitureStyle> stylesFor(String kind) => kind == 'tree' || kind == 'rug'
+    ? const [FurnitureStyle.lunar, FurnitureStyle.bauhaus]
+    : FurnitureStyle.values;
+
+String furnitureAsset(
+  String kind,
+  FurnitureStyle style, {
+  bool covered = false,
+}) {
+  if (style == FurnitureStyle.cream) return 'room/furniture-cream.png';
+  if (style == FurnitureStyle.sage) return 'room/furniture-sage-v2.png';
+  final variant = kind == 'chair'
+      ? '-v2'
+      : kind == 'bed' && style == FurnitureStyle.lunar && covered
+      ? '-covered'
+      : '';
+  return 'room/${style.name}-$kind$variant.png';
 }
 
 enum ArtworkStyle {
@@ -42,6 +74,8 @@ const furnitureNames = {
   'bookshelf': '书柜',
   'bed': '猫窝',
   'desk': '书桌',
+  'tree': '猫爬架',
+  'rug': '地毯',
 };
 
 const furnitureLocations = {
@@ -50,6 +84,8 @@ const furnitureLocations = {
   'bookshelf': '左墙内侧 · 靠近墙角',
   'bed': '地板前端中央 · 留出边距',
   'desk': '右侧靠墙 · 临窗阅读',
+  'tree': '左墙前侧 · 独立攀爬区',
+  'rug': '地板正中 · 家具下方',
 };
 
 // Pixel measurements belong to the artwork; placement belongs to RoomLayout.
@@ -152,7 +188,7 @@ class FurnitureGeometry {
       image,
       source,
       source.shift(-anchor),
-      Paint()..filterQuality = FilterQuality.high,
+      Paint()..filterQuality = FilterQuality.medium,
     );
     canvas.restore();
   }
@@ -217,12 +253,137 @@ const furnitureGeometry = {
   },
 };
 
+// Each modern piece is a separate cutout, so adjacent atlas pixels cannot leak.
+const modernSources = {
+  FurnitureStyle.lunar: {
+    'window': Rect.fromLTRB(43, 58, 1494, 942),
+    'desk': Rect.fromLTRB(72, 19, 1338, 1100),
+    'chair': Rect.fromLTRB(135, 127, 1151, 1157),
+    'bookshelf': Rect.fromLTRB(292, 8, 1002, 1250),
+    'bed': Rect.fromLTRB(45, 271, 1225, 1106),
+    'tree': Rect.fromLTRB(214, 37, 929, 1298),
+    'rug': Rect.fromLTRB(23, 33, 1234, 1220),
+  },
+  FurnitureStyle.bauhaus: {
+    'window': Rect.fromLTRB(76, 90, 1460, 936),
+    'desk': Rect.fromLTRB(125, 73, 1175, 1208),
+    'chair': Rect.fromLTRB(155, 129, 1144, 1127),
+    'bookshelf': Rect.fromLTRB(319, 21, 935, 1227),
+    'bed': Rect.fromLTRB(83, 243, 1188, 1047),
+    'tree': Rect.fromLTRB(120, 67, 984, 1319),
+    'rug': Rect.fromLTRB(93, 94, 1443, 933),
+  },
+};
+const modernGeometry = {
+  FurnitureStyle.lunar: {
+    'window': FurnitureGeometry(Offset(768, 500), 0, null),
+    'desk': FurnitureGeometry(Offset(580, 1139.798), 0.322, -0.821, [
+      Offset(113, 794),
+      Offset(1047, 1095),
+      Offset(1299, 888),
+      Offset(347, 643),
+    ]),
+    'chair': FurnitureGeometry(Offset(639, 1145), 0.567, -0.499, [
+      Offset(214, 904),
+      Offset(639, 1145),
+      Offset(1114, 908),
+    ]),
+    'bookshelf': FurnitureGeometry(Offset(327, 1123), 0.853, -0.29255, [
+      Offset(297, 1132),
+      Offset(426, 1242),
+      Offset(990, 1077),
+    ]),
+    'bed': FurnitureGeometry(Offset(637, 1095), 0.674, -0.674, [
+      Offset(210, 935),
+      Offset(637, 1095),
+      Offset(1080, 939),
+    ]),
+    'tree': FurnitureGeometry(Offset(572, 1290), 0.674, -0.674, [
+      Offset(275, 1198),
+      Offset(572, 1290),
+      Offset(861, 1205),
+    ]),
+    'rug': FurnitureGeometry(Offset(0, 0), 0, null),
+  },
+  FurnitureStyle.bauhaus: {
+    'window': FurnitureGeometry(Offset(768, 500), 0, null),
+    'desk': FurnitureGeometry(Offset(500, 1135.612), 0.4503, -0.60, [
+      Offset(162, 899),
+      Offset(826, 1198),
+      Offset(1138, 1003),
+      Offset(408, 751),
+    ]),
+    'chair': FurnitureGeometry(Offset(704, 1113), 0.569, -0.6005, [
+      Offset(207, 830),
+      Offset(704, 1113),
+      Offset(1102, 874),
+    ]),
+    'bookshelf': FurnitureGeometry(Offset(330, 1115), 0.649, -0.345, [
+      Offset(330, 1115),
+      Offset(478, 1211),
+      Offset(916, 1060),
+    ]),
+    'bed': FurnitureGeometry(Offset(637, 1040), 0.674, -0.674, [
+      Offset(210, 855),
+      Offset(637, 1040),
+      Offset(1065, 852),
+    ]),
+    'tree': FurnitureGeometry(Offset(640, 1305), 0.54, -0.58, [
+      Offset(177, 1100),
+      Offset(640, 1305),
+      Offset(936, 1100),
+    ]),
+    'rug': FurnitureGeometry(Offset(0, 0), 0, null),
+  },
+};
+const coveredBedSource = Rect.fromLTRB(44, 80, 1230, 1205);
+const coveredBedGeometry = FurnitureGeometry(Offset(637, 1195), 0.674, -0.674, [
+  Offset(213, 1053),
+  Offset(637, 1195),
+  Offset(1068, 1056),
+]);
+
+Rect sourceFor(String kind, FurnitureStyle style, {bool covered = false}) =>
+    kind == 'bed' && style == FurnitureStyle.lunar && covered
+    ? coveredBedSource
+    : (furnitureSources[style] ?? modernSources[style])![kind]!;
+FurnitureGeometry geometryFor(
+  String kind,
+  FurnitureStyle style, {
+  bool covered = false,
+}) => kind == 'bed' && style == FurnitureStyle.lunar && covered
+    ? coveredBedGeometry
+    : (furnitureGeometry[style] ?? modernGeometry[style])![kind]!;
+
+double furnitureScale(
+  String kind,
+  FurnitureStyle style, {
+  bool covered = false,
+}) {
+  final source = sourceFor(kind, style, covered: covered);
+  final widthScale = furnitureWidths[kind]! / source.width;
+  final height = kind == 'tree'
+      ? 285.0
+      : (style == FurnitureStyle.lunar || style == FurnitureStyle.bauhaus)
+      ? switch (kind) {
+          'bookshelf' => 390.0,
+          'desk' => 300.0,
+          _ => null,
+        }
+      : null;
+  if (height == null) return widthScale;
+  final heightScale = height / geometryFor(kind, style).bounds(source).height;
+  return widthScale < heightScale ? widthScale : heightScale;
+}
+
 const furnitureWidths = {
   'window': 215.0,
   'chair': 125.0,
   'bookshelf': 185.0,
   'bed': 165.0,
   'desk': 270.0,
+  'tree': 175.0,
+  'rug': 330.0,
 };
 
 class RoomFurnishings {
@@ -230,45 +391,76 @@ class RoomFurnishings {
     this.styles = const {},
     this.hidden = const {},
     this.wall = WallStyle.cream,
+    this.floor = FloorStyle.oak,
     this.artwork = ArtworkStyle.starry,
+    this.bedCovered = false,
   });
 
   final Map<String, FurnitureStyle> styles;
   final Set<String> hidden;
   final WallStyle wall;
+  final FloorStyle floor;
   final ArtworkStyle artwork;
+  final bool bedCovered;
 
-  FurnitureStyle styleFor(String kind) => styles[kind] ?? FurnitureStyle.cream;
-  bool isVisible(String kind) => !hidden.contains(kind);
+  FurnitureStyle styleFor(String kind) => styles[kind] ?? stylesFor(kind).first;
+  // New slots stay absent in existing rooms until the user selects them.
+  bool isVisible(String kind) =>
+      !hidden.contains(kind) &&
+      (styles.containsKey(kind) || (kind != 'tree' && kind != 'rug'));
 
-  RoomFurnishings withStyle(String kind, FurnitureStyle style) =>
-      RoomFurnishings(
-        styles: {...styles, kind: style},
-        hidden: {...hidden}..remove(kind),
-        wall: wall,
-        artwork: artwork,
-      );
+  RoomFurnishings _copy({
+    Map<String, FurnitureStyle>? styles,
+    Set<String>? hidden,
+    WallStyle? wall,
+    FloorStyle? floor,
+    ArtworkStyle? artwork,
+    bool? bedCovered,
+  }) => RoomFurnishings(
+    styles: styles ?? this.styles,
+    hidden: hidden ?? this.hidden,
+    wall: wall ?? this.wall,
+    floor: floor ?? this.floor,
+    artwork: artwork ?? this.artwork,
+    bedCovered: bedCovered ?? this.bedCovered,
+  );
 
-  RoomFurnishings withVisibility(String kind, bool visible) => RoomFurnishings(
-    styles: styles,
+  RoomFurnishings withStyle(String kind, FurnitureStyle style) {
+    if (!furnitureNames.containsKey(kind) || !stylesFor(kind).contains(style)) {
+      throw ArgumentError('Unavailable furniture: $kind / $style');
+    }
+    return _copy(
+      styles: {...styles, kind: style},
+      hidden: {...hidden}..remove(kind),
+    );
+  }
+
+  RoomFurnishings withVisibility(String kind, bool visible) => _copy(
+    styles: visible && furnitureNames.containsKey(kind)
+        ? {...styles, kind: styleFor(kind)}
+        : styles,
     hidden: visible ? ({...hidden}..remove(kind)) : {...hidden, kind},
-    wall: wall,
-    artwork: artwork,
   );
 
-  RoomFurnishings withWall(WallStyle next) => RoomFurnishings(
-    styles: styles,
-    hidden: hidden,
-    wall: next,
-    artwork: artwork,
-  );
+  RoomFurnishings withWall(WallStyle next) => _copy(wall: next);
+  RoomFurnishings withFloor(FloorStyle next) => _copy(floor: next);
+  RoomFurnishings withBedCovered(bool next) => _copy(bedCovered: next);
+  RoomFurnishings withArtwork(ArtworkStyle next) =>
+      _copy(artwork: next, hidden: {...hidden}..remove('painting'));
 
-  RoomFurnishings withArtwork(ArtworkStyle next) => RoomFurnishings(
-    styles: styles,
-    hidden: {...hidden}..remove('painting'),
-    wall: wall,
-    artwork: next,
-  );
+  RoomFurnishings withSet(FurnitureStyle style) {
+    if (style != FurnitureStyle.lunar && style != FurnitureStyle.bauhaus) {
+      throw ArgumentError('Not a complete modern set: $style');
+    }
+    return _copy(
+      styles: {for (final kind in furnitureNames.keys) kind: style},
+      hidden: {...hidden}..removeAll(furnitureNames.keys),
+      wall: style == FurnitureStyle.lunar ? WallStyle.lunar : WallStyle.bauhaus,
+      floor: style == FurnitureStyle.lunar
+          ? FloorStyle.lunar
+          : FloorStyle.bauhaus,
+    );
+  }
 
   static String _key(String? ownerId) =>
       'room_furniture_v1_${ownerId ?? 'preview'}';
@@ -280,49 +472,58 @@ class RoomFurnishings {
     if (stored == null && ownerId == null) {
       return RoomFurnishings(
         styles: {
-          for (final kind in furnitureNames.keys) kind: FurnitureStyle.sage,
+          for (final kind in furnitureNames.keys)
+            if (stylesFor(kind).contains(FurnitureStyle.sage))
+              kind: FurnitureStyle.sage,
         },
         wall: WallStyle.sage,
       );
     }
-    final values = stored ?? [];
     final styles = <String, FurnitureStyle>{};
     final hidden = <String>{};
     var wall = WallStyle.cream;
+    var floor = FloorStyle.oak;
     var artwork = ArtworkStyle.starry;
-    for (final value in values) {
+    var bedCovered = false;
+    for (final value in stored ?? <String>[]) {
       final parts = value.split('|');
-      if (parts.length == 3 && parts[0] == 'painting') {
-        final style = ArtworkStyle.values
-            .where((s) => s.name == parts[1])
-            .firstOrNull;
-        if (style != null && ['0', '1'].contains(parts[2])) {
-          artwork = style;
-          if (parts[2] == '0') hidden.add('painting');
-        }
-        continue;
-      }
-      if (parts.length == 3 && parts[0] == 'wall') {
+      if (parts.length != 3 || !['0', '1'].contains(parts[2])) continue;
+      final kind = parts[0];
+      if (kind == 'wall') {
         wall =
             WallStyle.values.where((s) => s.name == parts[1]).firstOrNull ??
             wall;
-        continue;
+      } else if (kind == 'floor') {
+        floor =
+            FloorStyle.values.where((s) => s.name == parts[1]).firstOrNull ??
+            floor;
+      } else if (kind == 'bed-canopy') {
+        if (parts[1] == 'covered') bedCovered = parts[2] == '1';
+      } else if (kind == 'painting') {
+        final style = ArtworkStyle.values
+            .where((s) => s.name == parts[1])
+            .firstOrNull;
+        if (style != null) {
+          artwork = style;
+          if (parts[2] == '0') hidden.add(kind);
+        }
+      } else if (furnitureNames.containsKey(kind)) {
+        final style = stylesFor(
+          kind,
+        ).where((s) => s.name == parts[1]).firstOrNull;
+        if (style != null) {
+          styles[kind] = style;
+          if (parts[2] == '0') hidden.add(kind);
+        }
       }
-      if (parts.length != 3 || !RoomLayout.defaults.containsKey(parts[0])) {
-        continue;
-      }
-      final style = FurnitureStyle.values
-          .where((s) => s.name == parts[1])
-          .firstOrNull;
-      if (style == null || !['0', '1'].contains(parts[2])) continue;
-      styles[parts[0]] = style;
-      if (parts[2] == '0') hidden.add(parts[0]);
     }
     return RoomFurnishings(
       styles: styles,
       hidden: hidden,
       wall: wall,
+      floor: floor,
       artwork: artwork,
+      bedCovered: bedCovered,
     );
   }
 
@@ -330,8 +531,10 @@ class RoomFurnishings {
     final saved = await (await SharedPreferences.getInstance())
         .setStringList(_key(ownerId), [
           'wall|${wall.name}|1',
+          'floor|${floor.name}|1',
+          'bed-canopy|covered|${bedCovered ? '1' : '0'}',
           'painting|${artwork.name}|${isVisible('painting') ? '1' : '0'}',
-          for (final kind in RoomLayout.defaults.keys)
+          for (final kind in furnitureNames.keys)
             '$kind|${styleFor(kind).name}|${isVisible(kind) ? '1' : '0'}',
         ]);
     if (!saved) throw StateError('Furniture preferences were not saved');
