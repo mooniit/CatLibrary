@@ -1,5 +1,7 @@
 # 月轨套填入效果记录
 
+**已归档，非当前标准。** 两版整屋生成图改变了墙脚与地板比例，现已退出预览。唯一房屋标准为 [room-standard-v1](STANDARD.md)，后续仅参考这些旧稿的单品造型，不继承其房屋尺寸。以下尺寸与验证描述记录当时版本，不代表最新挂位。
+
 日期：2026-10-05。用户要求书柜高降至现高 0.75 倍，窗户稍大，并根据之前手稿查看家具填入后的整体效果。
 
 ## 精确结构调整
@@ -17,7 +19,7 @@
 使用内置 imagegen 编辑，未调用外部 API，也未改变旧手稿。新生成图均复制到本设计目录，原文件保留。
 
 - 首稿：`lunar-style-draft-v1.png`，来源 `C:/Users/26424/.codex/generated_images/01a0f0fc-2dd7-7172-b3b7-fb13e4ef7421/exec-717f42ce-fbc5-4f35-8d3d-5ef75b4a8ab5.png`。
-- 校正稿：`lunar-style-v2.png`，来源 `C:/Users/26424/.codex/generated_images/01a0f0fc-2dd7-7172-b3b7-fb13e4ef7421/exec-13bfd70f-9eed-4403-af1d-95952db53dde.png`。本版作为预览默认展示。
+- 校正稿：`lunar-style-v2.png`，来源 `C:/Users/26424/.codex/generated_images/01a0f0fc-2dd7-7172-b3b7-fb13e4ef7421/exec-13bfd70f-9eed-4403-af1d-95952db53dde.png`。曾作为效果预览展示，现已退出当前预览。
 
 ## 提示词要点
 

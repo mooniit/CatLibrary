@@ -1,4 +1,6 @@
 // Pure geometry shared by the structural preview and its tests. World floor = 1 × 1.
+import {roomStandard} from './room-standard.mjs';
+export {roomStandard};
 export function fitCalibration(data) {
   let numerator=0,denominator=0;
   for(const ref of data.references)for(const s of ref.segments){
@@ -16,13 +18,7 @@ export function fitCalibration(data) {
   return {slope,halfWidth,zScale,referenceWallPixels,referenceWallHeight:referenceWallPixels/zScale,
     elevationDegrees:elevation*180/Math.PI,azimuthDegrees:45,references};
 }
-export function camera(fit,factor=1.5) {
-  const wallPixels=fit.referenceWallPixels*factor;
-  return {origin:[540,62+wallPixels],bx:[fit.halfWidth,fit.halfWidth*fit.slope],
-    by:[-fit.halfWidth,fit.halfWidth*fit.slope],bz:[0,-fit.zScale],
-    wallHeight:fit.referenceWallHeight*factor,factor,width:1080,
-    height:Math.ceil(62+wallPixels+2*fit.halfWidth*fit.slope+56)};
-}
+export function camera() {return roomStandard.camera;}
 export function project(c,[x,y,z=0]) {
   return [c.origin[0]+x*c.bx[0]+y*c.by[0]+z*c.bz[0],
     c.origin[1]+x*c.bx[1]+y*c.by[1]+z*c.bz[1]];
@@ -55,7 +51,7 @@ export function rectCells(rect,a) {
     for(let j=Math.floor(y*a+1e-9);j<Math.ceil((y+d)*a-1e-9);j++)cells.push([i,j]);
   return cells;
 }
-export const gridSize=8,cellSize=1/gridSize;
+export const gridSize=roomStandard.gridSize,cellSize=roomStandard.floorSize/gridSize;
 export const rug={x:cellSize,y:cellSize,w:6*cellSize,d:6*cellSize,r:.02};
 // Anchors and rectangular footprints are grid coordinates; visual dimensions are world units.
 // Center the complete horizontal silhouette, not just the legs or the screen image.
@@ -71,7 +67,8 @@ export const fixtures=[
   {id:'tree',label:'猫爬架',anchor:[0,5],cols:2,rows:2,w:.17,d:.17,h:.29,facing:'x'},
   {id:'bed',label:'猫窝',anchor:[5,6],cols:2,rows:2,w:.19,d:.19,h:.085,facing:'y'}
 ].map(centerFixture);
-const windowH=1.7*cellSize,windowZ=5*cellSize-windowH/2,artH=cellSize;
+// Lower both windows and flanking artwork while retaining a small sill clearance.
+const windowH=1.7*cellSize,windowZ=3.2*cellSize,artH=cellSize;
 const artZ=windowZ+(windowH-artH)/2;
 export const slots=[
   {id:'window-left',label:'左窗',wall:'left',s:.5,z:windowZ,w:.32,h:windowH,type:'window'},

@@ -1,20 +1,19 @@
 {
-  "checkedStates": 20,
+  "standardId": "room-standard-v1",
+  "checkedFacingStates": 10,
+  "geometryFrozen": true,
   "errors": [],
   "badResponses": [],
+  "obsoleteArtLoaded": false,
+  "mobileWidths": [
+    360,
+    390
+  ],
   "mobileOverflow": false,
-  "desktopFloorWidthPreserved": true,
   "selectedGrid": 8,
   "rugFootprint": "central 6x6",
-  "furnitureCentered": true,
   "bookcaseHeightCells": 3,
-  "windowBottomCells": 4.15,
-  "wallDecorCenterCells": 5,
-  "styledPreviewLoaded": true,
-  "fit": {
-    "slope": 0.4991180528926718,
-    "elevationDegrees": 29.941667982530465,
-    "referenceWallHeight": 0.5388793856178627,
-    "maximumSampleResidual": 2.328
-  }
+  "windowBottomCells": 3.2,
+  "sillClearanceCells": 0.136,
+  "wallDecorCenterCells": 4.05
 }

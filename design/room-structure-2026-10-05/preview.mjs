@@ -1,7 +1,7 @@
-import {fitCalibration,camera,project,box,boxFaces,sortBoxes,fixtures,slots,orient,rotateMask,validCells,gridSize,cellSize,rug} from './geometry.mjs';
+import {fitCalibration,camera,project,box,boxFaces,sortBoxes,fixtures,slots,orient,rotateMask,validCells,gridSize,cellSize,rug,roomStandard} from './geometry.mjs';
 const data=await (await fetch('./calibration.json')).json(),fit=fitCalibration(data),NS='http://www.w3.org/2000/svg';
 const $=id=>document.getElementById(id);
-const state={a:gridSize,factor:1.5,mode:'fixtures',grid:true,axes:true,leftWindow:true,rightWindow:true,art:true,rug:true,selected:'bookshelf',facings:Object.fromEntries(fixtures.map(f=>[f.id,f.facing])),lFacing:'x'};
+const state={a:gridSize,mode:'fixtures',grid:true,axes:true,leftWindow:true,rightWindow:true,art:true,rug:true,selected:'bookshelf',facings:Object.fromEntries(fixtures.map(f=>[f.id,f.facing])),lFacing:'x'};
 function element(type,attrs,parent){const e=document.createElementNS(NS,type);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);parent.append(e);return e;}
 function poly(parent,c,points,fill,stroke='#75808a',width=1.5,extra={}){return element('polygon',{points:points.map(p=>project(c,p).join(',')).join(' '),fill,stroke,'stroke-width':width,'stroke-linejoin':'round',...extra},parent);}
 function line(parent,c,a,b,color='#8ba8b8',width=1.5,dash=''){const A=project(c,a),B=project(c,b);return element('line',{x1:A[0],y1:A[1],x2:B[0],y2:B[1],stroke:color,'stroke-width':width,'stroke-dasharray':dash},parent);}
@@ -9,7 +9,7 @@ function text(parent,c,p,value,color='#315f77',dx=0,dy=0){const A=project(c,p),e
 function rounded(x,y,w,d,r,z){const points=[];for(const[cx,cy,start]of[[x+w-r,y+r,-90],[x+w-r,y+d-r,0],[x+r,y+d-r,90],[x+r,y+r,180]])for(let i=0;i<=8;i++){const t=(start+i*90/8)*Math.PI/180;points.push([cx+r*Math.cos(t),cy+r*Math.sin(t),z]);}return points;}
 function paintBoxes(parent,c,parts){for(const b of sortBoxes(parts,c)){const group=element('g',{'data-piece':b.kind},parent);for(const f of boxFaces(b))poly(group,c,f.points,f.color,'#75808a',b.kind==='wall'?0:1.5);}}
 function wallPieces(c,s,enabled){
-  const t=.014,h=c.wallHeight;
+  const t=roomStandard.wallThickness,h=c.wallHeight;
   const make=(u,z,w,hh)=>s==='left'?box(-t,u,z,t,w,hh,'#eeeae0','wall'):box(u,-t,z,w,t,hh,'#eeeae0','wall');
   const slot=slots.find(p=>p.id==='window-'+s);
   if(!enabled||slot.z+slot.h>h)return[make(0,0,1,h)];
@@ -68,9 +68,9 @@ function masks(config){
   return fixtures.map(f=>orient(f,config.facings[f.id]));
 }
 function render(svg,config){
-  const c=camera(fit,config.factor);svg.setAttribute('viewBox','0 0 '+c.width+' '+c.height);svg.replaceChildren();
+  const c=camera();svg.setAttribute('viewBox','0 0 '+c.width+' '+c.height);svg.replaceChildren();
   const layer=element('g',{},svg);
-  paintBoxes(layer,c,[box(0,0,-.022,1,1,.022,'#e6e0d4','floor')]);
+  paintBoxes(layer,c,[box(0,0,-roomStandard.floorThickness,1,1,roomStandard.floorThickness,'#e6e0d4','floor')]);
   if(config.rug)poly(layer,c,rounded(rug.x,rug.y,rug.w,rug.d,rug.r,.001),'#c1cdd2','none',0,{'data-fixed-rug':'central-6x6'});
   const occupied=masks(config),selected=config.mode==='l'?'l':config.selected;
   if(config.grid){
@@ -82,7 +82,8 @@ function render(svg,config){
   }
   paintBoxes(layer,c,[...wallPieces(c,'left',config.leftWindow),...wallPieces(c,'right',config.rightWindow)]);
   // Draw only the whole wall boundaries, never seams from the aperture tessellation.
-  for(const b of[box(-.014,0,0,.014,1,c.wallHeight),box(0,-.014,0,1,.014,c.wallHeight)])
+  const t=roomStandard.wallThickness;
+  for(const b of[box(-t,0,0,t,1,c.wallHeight),box(0,-t,0,1,t,c.wallHeight)])
     for(const f of boxFaces(b))poly(layer,c,f.points,'none');
   const parts=[...wallFixtures('left',c,config.leftWindow,'window'),...wallFixtures('right',c,config.rightWindow,'window'),
     ...wallFixtures('left',c,config.art,'art'),...wallFixtures('right',c,config.art,'art')];
@@ -121,33 +122,27 @@ function renderReference(){
   $('reference-note').textContent=ref.note+' 采样线最大方向残差约 '+max.toFixed(2)+' 像素。';
 }
 function refresh(){
-  state.a=gridSize;state.factor=Number($('height').value);state.mode=$('mode').value;state.selected=$('selected').value;
+  state.a=gridSize;state.mode=$('mode').value;state.selected=$('selected').value;
   for(const[key,id]of[['grid','grid'],['axes','axes'],['leftWindow','left-window'],['rightWindow','right-window'],['art','art'],['rug','rug']])state[key]=$(id).checked;
   const result=render($('room'),state),selected=state.mode==='l'?'l':state.selected,entry=result.masks.find(p=>p.id===selected);
   $('turn').disabled=state.mode==='empty';$('selected').disabled=state.mode!=='fixtures';
   const facing=state.mode==='l'?state.lFacing:state.facings[state.selected];$('turn').textContent='切换朝向：+'+facing.toUpperCase();
   const valid=result.masks.every(e=>validCells(e.cells,state.a));
   $('status').textContent=state.mode==='empty'?'空房间 · 地板宽度保持一致':(entry?.label||'')+' · '+(entry?.cells.length||0)+' 格'+(entry?.cols?'（'+entry.cols+'×'+entry.rows+'，居中）':'')+' · 正面 +'+facing.toUpperCase()+' · '+(valid?'占地在地板内':'存在越界');
-  $('parameters').textContent='地面线斜率 ±'+fit.slope.toFixed(5)+'\n地面边线角度 ±'+(Math.atan(fit.slope)*180/Math.PI).toFixed(2)+'°\n在对称正交约束下：相机俯视约 '+fit.elevationDegrees.toFixed(2)+'°\nX = 540 + 480(x − y)\nY = O_y + '+(480*fit.slope).toFixed(3)+'(x + y) − '+fit.zScale.toFixed(3)+'z\n当前墙高 = '+result.camera.wallHeight.toFixed(4)+' L（'+(result.camera.wallHeight/cellSize).toFixed(2)+' 格）\n书柜高 3 格（原高的 0.75 倍）\n窗宽 2.56 格、高 1.7 格；下沿 4.15 格\n窗、画中心高 5 格；墙面水平中心 4 格\n地毯占中央 6×6 格，四周留一格\n视图宽 1080；高 '+result.camera.height;
-  window.roomStudy={fit,state:{...state,facings:{...state.facings}},...result,rug,slots,project:p=>project(result.camera,p)};
+  const c=result.camera,slope=c.bx[1]/c.bx[0];
+  $('parameters').textContent='标准版本 '+roomStandard.id+'\n地面线斜率 ±'+slope.toFixed(5)+'；边线 ±'+(Math.atan(slope)*180/Math.PI).toFixed(2)+'°\nX = 540 + 480(x − y)\nY = '+c.origin[1].toFixed(6)+' + '+c.bx[1].toFixed(6)+'(x + y) − '+(-c.bz[1]).toFixed(6)+'z\n墙高固定 '+c.wallHeight.toFixed(6)+' L（原图 1.5 倍）\n视图固定 1080×1073；地板宽 960\n书柜高 3 格；窗下沿 3.2 格\n窗台到书柜约 0.14 格\n窗、画中心高 4.05 格；墙面水平中心 4 格\n地毯固定中央 6×6 格';
+  window.roomStudy={fit,standard:roomStandard,state:{...state,facings:{...state.facings}},...result,rug,slots,project:p=>project(result.camera,p)};
 }
-function present(){
-  const styled=$('presentation').value==='styled';
-  for(const id of['structure-controls','room','status','structure-note'])$(id).toggleAttribute('hidden',styled);
-  $('styled-room').hidden=!styled;$('style-note').hidden=!styled;
-  $('scene-heading').textContent=styled?'月轨套 · 家具效果':'固定视角与家具占位';
-}
-$('presentation').addEventListener('change',present);
-for(const id of['height','mode','selected','grid','axes','left-window','right-window','art','rug'])$(id).addEventListener('change',refresh);
+for(const id of['mode','selected','grid','axes','left-window','right-window','art','rug'])$(id).addEventListener('change',refresh);
 $('turn').addEventListener('click',()=>{if(state.mode==='l')state.lFacing=state.lFacing==='x'?'y':'x';else state.facings[state.selected]=state.facings[state.selected]==='x'?'y':'x';refresh();});
 $('reference').addEventListener('change',renderReference);$('overlay').addEventListener('change',renderReference);
 for(const selected of['tree','desk','bed']){
   const fixture=fixtures.find(f=>f.id===selected);
   const card=document.createElement('div');card.className='compare-card';const heading=document.createElement('h3');heading.textContent=fixture.label+' · '+fixture.cols+'×'+fixture.rows;card.append(heading);
   const svg=element('svg',{class:'scene',role:'img','aria-label':fixture.label+'占格居中示例'},card);
-  render(svg,{...state,selected,axes:false,factor:1.5});
+  render(svg,{...state,selected,axes:false});
   const note=document.createElement('small');note.textContent='浅蓝 '+fixture.cells.length+' 格内居中；两个轴向的对边留白相等。';card.append(note);
   $('comparisons').append(card);
 }
 for(const s of slots){const tr=document.createElement('tr');for(const value of[s.label,s.wall==='left'?'左墙 X=0':'右墙 Y=0',(s.s/cellSize).toFixed(2),(s.z/cellSize).toFixed(2),((s.z+s.h/2)/cellSize).toFixed(2),(s.w/cellSize).toFixed(2)+' × '+(s.h/cellSize).toFixed(2)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('slot-table').append(tr);}
-refresh();renderReference();present();
+refresh();renderReference();

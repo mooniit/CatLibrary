@@ -1,0 +1,29 @@
+{
+  "id": "room-standard-v1",
+  "floorSize": 1,
+  "gridSize": 8,
+  "wallThickness": 0.014,
+  "floorThickness": 0.022,
+  "camera": {
+    "origin": [
+      540,
+      537.4716981132076
+    ],
+    "bx": [
+      480,
+      239.57666538848247
+    ],
+    "by": [
+      -480,
+      239.57666538848247
+    ],
+    "bz": [
+      0,
+      -588.2227833080509
+    ],
+    "wallHeight": 0.8083190784267942,
+    "factor": 1.5,
+    "width": 1080,
+    "height": 1073
+  }
+}
