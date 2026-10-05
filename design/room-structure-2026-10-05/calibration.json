@@ -1,0 +1,240 @@
+{
+  "version": 1,
+  "source": "user references, 2026-10-05",
+  "method": "manually sampled landmarks; weighted least-squares symmetric parallel-axis fit",
+  "pixelTolerance": 3,
+  "references": [
+    {
+      "id": "empty",
+      "label": "空房参考",
+      "path": "../../docs/plans/room-redesign-2026-10-05/reference.png",
+      "size": [
+        453,
+        393
+      ],
+      "origin": [
+        225,
+        157
+      ],
+      "halfWidth": 212,
+      "wallHeight": 140,
+      "segments": [
+        {
+          "axis": "x",
+          "a": [
+            225,
+            157
+          ],
+          "b": [
+            437,
+            263
+          ],
+          "weight": 2
+        },
+        {
+          "axis": "y",
+          "a": [
+            225,
+            157
+          ],
+          "b": [
+            13,
+            263
+          ],
+          "weight": 2
+        },
+        {
+          "axis": "x",
+          "a": [
+            225,
+            17
+          ],
+          "b": [
+            437,
+            123
+          ],
+          "weight": 1
+        },
+        {
+          "axis": "y",
+          "a": [
+            225,
+            17
+          ],
+          "b": [
+            13,
+            123
+          ],
+          "weight": 1
+        }
+      ],
+      "inferred": [
+        "front floor corner"
+      ],
+      "note": "墙地内表面手工标点；前角被底部界面遮挡，按平行关系推算。"
+    },
+    {
+      "id": "furnished",
+      "label": "陈设参考",
+      "path": "../../docs/plans/room-redesign-2026-10-05/reference-furnished.png",
+      "size": [
+        417,
+        347
+      ],
+      "origin": [
+        210,
+        145
+      ],
+      "halfWidth": 195,
+      "wallHeight": 134,
+      "segments": [
+        {
+          "axis": "x",
+          "a": [
+            210,
+            11
+          ],
+          "b": [
+            404,
+            106
+          ],
+          "weight": 1
+        },
+        {
+          "axis": "y",
+          "a": [
+            210,
+            11
+          ],
+          "b": [
+            15,
+            106
+          ],
+          "weight": 1
+        },
+        {
+          "axis": "x",
+          "a": [
+            210,
+            145
+          ],
+          "b": [
+            405,
+            241
+          ],
+          "weight": 1
+        },
+        {
+          "axis": "y",
+          "a": [
+            210,
+            145
+          ],
+          "b": [
+            15,
+            241
+          ],
+          "weight": 1
+        }
+      ],
+      "inferred": [
+        "rear floor corner under cabinet",
+        "front floor corner"
+      ],
+      "note": "家具遮住后侧地角，原点为边线延长交点初估；用柜顶与桌沿交叉检查，不用于墙高基准。"
+    },
+    {
+      "id": "editing",
+      "label": "网格参考",
+      "path": "../../docs/plans/room-redesign-2026-10-05/reference-editing.png",
+      "size": [
+        417,
+        347
+      ],
+      "origin": [
+        213,
+        132
+      ],
+      "halfWidth": 190,
+      "wallHeight": 121,
+      "segments": [
+        {
+          "axis": "x",
+          "a": [
+            213,
+            132
+          ],
+          "b": [
+            403,
+            227
+          ],
+          "weight": 8
+        },
+        {
+          "axis": "y",
+          "a": [
+            213,
+            132
+          ],
+          "b": [
+            23,
+            227
+          ],
+          "weight": 8
+        },
+        {
+          "axis": "x",
+          "a": [
+            175,
+            151
+          ],
+          "b": [
+            365,
+            246
+          ],
+          "weight": 5
+        },
+        {
+          "axis": "x",
+          "a": [
+            137,
+            170
+          ],
+          "b": [
+            327,
+            265
+          ],
+          "weight": 5
+        },
+        {
+          "axis": "y",
+          "a": [
+            365,
+            208
+          ],
+          "b": [
+            213,
+            284
+          ],
+          "weight": 5
+        },
+        {
+          "axis": "y",
+          "a": [
+            403,
+            227
+          ],
+          "b": [
+            213,
+            322
+          ],
+          "weight": 5
+        }
+      ],
+      "inferred": [
+        "covered grid intersections"
+      ],
+      "note": "重复格线提供最清楚的平行方向。原点是网格的后侧顶点，不与其他截图直接共用像素坐标。"
+    }
+  ]
+}
