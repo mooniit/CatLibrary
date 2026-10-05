@@ -20,12 +20,12 @@ details{margin-top:16px}summary{cursor:pointer}pre{font:13px/1.7 ui-monospace,mo
 </style>
 <main>
 <h1>房间结构 · 首轮验证</h1>
-<p>以新参考图校准方向。墙高增加 1.5 倍，地板宽度保持；方格密度、挂位和地毯位置在这个样例中对比。</p>
+<p>已选定 8×8 网格与 1.5 倍墙高。地毯覆盖中央 6×6 格，窗户居中升高；每件家具在自己的占格范围内居中。</p>
 <div class="board">
 <section>
 <h2>固定视角与家具占位</h2>
 <div class="controls">
-<label>网格 <select id="density"><option value="6">6 × 6</option><option value="8" selected>8 × 8</option><option value="10">10 × 10</option></select></label>
+<span>网格 8 × 8 · 已选定</span>
 <label>墙高 <select id="height"><option value="1.5" selected>参考图 × 1.5</option><option value="1">参考图原高</option></select></label>
 <label>样例 <select id="mode"><option value="fixtures">代表家具</option><option value="l">L 形占格</option><option value="empty">空房间</option></select></label>
 </div>
@@ -56,13 +56,13 @@ details{margin-top:16px}summary{cursor:pointer}pre{font:13px/1.7 ui-monospace,mo
 </section>
 </div>
 <section class="comparison">
-<h2>相同房间、相同家具尺寸 · 三档网格对比</h2>
-<p>这里只改变网格密度，家具的实际尺寸不随格子数量改变。浅蓝格表示同一件书柜需要预留的范围。</p>
+<h2>8×8 网格 · 家具占格与居中</h2>
+<p>浅蓝格为物品的完整占地区域。家具的水平外缘与矩形占地区域同心，切换朝向时也保持居中。</p>
 <div id="comparisons" class="compare-grid"></div>
 </section>
-<section style="margin-top:22px"><h2>候选固定位置</h2><p>左右窗位独立；先预留四处墙饰位。地毯位于地板内部中央区域，作为独立底层；这些位置供本轮审阅。</p>
-<div class="table-wrap"><table><thead><tr><th>位置</th><th>所属墙面</th><th>水平中心</th><th>底边高度 Z</th><th>宽 × 高</th></tr></thead><tbody id="slot-table"></tbody></table></div>
-<small>单位为房间边长 L=1。地毯候选范围：X 0.27…0.77，Y 0.28…0.80；不阻止家具放在其上。原高对比中，上部画位暂不显示。</small>
+<section style="margin-top:22px"><h2>调整后的固定位置</h2><p>两窗都位于各自墙面的水平中点；下沿高于四格书柜。每扇窗左右各一个画位，画位与窗户的中心等高。</p>
+<div class="table-wrap"><table><thead><tr><th>位置</th><th>所属墙面</th><th>水平中心（格）</th><th>底边高（格）</th><th>中心高（格）</th><th>宽 × 高（格）</th></tr></thead><tbody id="slot-table"></tbody></table></div>
+<small>一格 = L/8，竖直高度也沿用相同物理单位。地毯固定范围 X/Y 均为 1…7 格，即中央 6×6；家具可摆在其上。原高仅供比较，容不下升高后的窗、画时会恢复完整墙面。</small>
 </section>
 </main>
 <script type="module" src="preview.mjs"></script>

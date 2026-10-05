@@ -1,9 +1,15 @@
 {
-  "checkedStates": 60,
+  "checkedStates": 20,
   "errors": [],
   "badResponses": [],
   "mobileOverflow": false,
   "desktopFloorWidthPreserved": true,
+  "selectedGrid": 8,
+  "rugFootprint": "central 6x6",
+  "furnitureCentered": true,
+  "bookcaseHeightCells": 4,
+  "windowBottomCells": 4.25,
+  "wallDecorCenterCells": 5,
   "fit": {
     "slope": 0.4991180528926718,
     "elevationDegrees": 29.941667982530465,

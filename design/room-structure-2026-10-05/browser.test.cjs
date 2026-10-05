@@ -14,8 +14,7 @@ const {join}=require('node:path');
     await page.goto('http://127.0.0.1:4181/design/room-structure-2026-10-05/');
     await page.waitForFunction(()=>window.roomStudy);
     let states=0;
-    for(const a of['6','8','10']){
-      await page.locator('#density').selectOption(a);
+    for(const a of['8']){
       for(const height of['1','1.5']){
         await page.locator('#height').selectOption(height);
         for(const id of['bookshelf','desk','chair','tree','bed']){
@@ -29,13 +28,25 @@ const {join}=require('node:path');
                 const owner=s.masks.find(m=>m.id===k.kind),epsilon=1e-9;
                 return k.x<owner.x-epsilon||k.y<owner.y-epsilon||k.x+k.w>owner.x+owner.w+epsilon||k.y+k.d>owner.y+owner.d+epsilon;
               });
-              return {conflicts,escaped,masks:s.masks.map(m=>m.cells),a:s.state.a};
+              const centering=s.masks.map(m=>[m.x+m.w/2-(m.anchor[0]+m.cols/2)/8,m.y+m.d/2-(m.anchor[1]+m.rows/2)/8]);
+              return {conflicts,escaped,centering,masks:s.masks.map(m=>m.cells),a:s.state.a};
             });
             assert.deepEqual(result.conflicts,[]);assert.deepEqual(result.escaped,[]);
+            assert.equal(result.a,8);assert(result.centering.flat().every(value=>Math.abs(value)<1e-9));
             assert(result.masks.flat().every(([x,y])=>x>=0&&y>=0&&x<result.a&&y<result.a));states++;
           }
         }
       }
+    }
+    const layout=await page.evaluate(()=>{
+      const s=window.roomStudy,book=s.masks.find(m=>m.id==='bookshelf');
+      return {rug:s.rug,bookHeight:book.h,slots:s.slots};
+    });
+    assert.deepEqual([layout.rug.x,layout.rug.y,layout.rug.w,layout.rug.d],[1/8,1/8,6/8,6/8]);assert.equal(layout.bookHeight,4/8);
+    for(const wall of['left','right']){
+      const win=layout.slots.find(s=>s.wall===wall&&s.type==='window');assert.equal(win.s,.5);assert(win.z>layout.bookHeight);
+      const art=layout.slots.filter(s=>s.wall===wall&&s.type==='art');assert.equal(art.length,2);
+      for(const s of art)assert.equal(s.z+s.h/2,win.z+win.h/2);
     }
     // Real UI controls, both L directions, and the empty corner remains unoccupied.
     await page.locator('#mode').selectOption('l');
@@ -60,10 +71,12 @@ const {join}=require('node:path');
       });assert(loaded>0);
     }
     await page.locator('#overlay').uncheck();assert.equal(await page.locator('#reference-svg line').count(),0);await page.locator('#overlay').check();
-    await page.locator('#mode').selectOption('fixtures');await page.locator('#density').selectOption('8');await page.locator('#selected').selectOption('bookshelf');
+    await page.locator('#mode').selectOption('fixtures');await page.locator('#selected').selectOption('bookshelf');
     await page.locator('#height').selectOption('1');
     const low=await page.locator('#room').boundingBox();
+    assert.equal(await page.locator('#room [data-piece="sill"]').count(),0);
     await page.locator('#height').selectOption('1.5');const high=await page.locator('#room').boundingBox();
+    assert.equal(await page.locator('#room [data-piece="sill"]').count(),2);
     assert(Math.abs(low.width-high.width)<.1);assert(high.height>low.height);
     const fit=await page.evaluate(()=>window.roomStudy.fit);
     await page.screenshot({path:join(__dirname,'preview-desktop.png'),fullPage:true});
@@ -74,6 +87,7 @@ const {join}=require('node:path');
     await page.screenshot({path:join(__dirname,'preview-mobile.png'),fullPage:true});
     assert.deepEqual(errors,[]);assert.deepEqual(badResponses,[]);
     const report={checkedStates:states,errors,badResponses,mobileOverflow:overflow,desktopFloorWidthPreserved:true,
+      selectedGrid:8,rugFootprint:'central 6x6',furnitureCentered:true,bookcaseHeightCells:4,windowBottomCells:4.25,wallDecorCenterCells:5,
       fit:{slope:fit.slope,elevationDegrees:fit.elevationDegrees,referenceWallHeight:fit.referenceWallHeight,
         maximumSampleResidual:Math.max(...fit.references.flatMap(r=>r.residuals.map(e=>Math.abs(e.errorPixels))))}};
     writeFileSync(join(__dirname,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

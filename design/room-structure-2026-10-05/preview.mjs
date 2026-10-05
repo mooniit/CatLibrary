@@ -1,7 +1,7 @@
-import {fitCalibration,camera,project,box,boxFaces,sortBoxes,fixtures,slots,orient,rectCells,rotateMask,validCells} from './geometry.mjs';
+import {fitCalibration,camera,project,box,boxFaces,sortBoxes,fixtures,slots,orient,rotateMask,validCells,gridSize,cellSize,rug} from './geometry.mjs';
 const data=await (await fetch('./calibration.json')).json(),fit=fitCalibration(data),NS='http://www.w3.org/2000/svg';
 const $=id=>document.getElementById(id);
-const state={a:8,factor:1.5,mode:'fixtures',grid:true,axes:true,leftWindow:true,rightWindow:true,art:true,rug:true,selected:'bookshelf',facings:Object.fromEntries(fixtures.map(f=>[f.id,f.facing])),lFacing:'x'};
+const state={a:gridSize,factor:1.5,mode:'fixtures',grid:true,axes:true,leftWindow:true,rightWindow:true,art:true,rug:true,selected:'bookshelf',facings:Object.fromEntries(fixtures.map(f=>[f.id,f.facing])),lFacing:'x'};
 function element(type,attrs,parent){const e=document.createElementNS(NS,type);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);parent.append(e);return e;}
 function poly(parent,c,points,fill,stroke='#75808a',width=1.5,extra={}){return element('polygon',{points:points.map(p=>project(c,p).join(',')).join(' '),fill,stroke,'stroke-width':width,'stroke-linejoin':'round',...extra},parent);}
 function line(parent,c,a,b,color='#8ba8b8',width=1.5,dash=''){const A=project(c,a),B=project(c,b);return element('line',{x1:A[0],y1:A[1],x2:B[0],y2:B[1],stroke:color,'stroke-width':width,'stroke-dasharray':dash},parent);}
@@ -11,8 +11,9 @@ function paintBoxes(parent,c,parts){for(const b of sortBoxes(parts,c)){const gro
 function wallPieces(c,s,enabled){
   const t=.014,h=c.wallHeight;
   const make=(u,z,w,hh)=>s==='left'?box(-t,u,z,t,w,hh,'#eeeae0','wall'):box(u,-t,z,w,t,hh,'#eeeae0','wall');
-  if(!enabled)return[make(0,0,1,h)];
-  const slot=slots.find(p=>p.id==='window-'+s),u=slot.s-slot.w/2,z=slot.z;
+  const slot=slots.find(p=>p.id==='window-'+s);
+  if(!enabled||slot.z+slot.h>h)return[make(0,0,1,h)];
+  const u=slot.s-slot.w/2,z=slot.z;
   return[make(0,0,u,h),make(u+slot.w,0,1-u-slot.w,h),make(u,0,slot.w,z),make(u,z+slot.h,slot.w,h-z-slot.h)];
 }
 function wallFixtures(s,c,enabled,type){
@@ -64,13 +65,13 @@ function masks(config){
     const mask=config.lFacing==='x'?[[0,0],[1,0],[0,1]]:rotateMask([[0,0],[1,0],[0,1]]),anchor=Math.floor(config.a*.4);
     return[{id:'l',label:'L 形',cells:mask.map(([x,y])=>[x+anchor,y+anchor])}];
   }
-  return fixtures.map(f=>{const actual=orient(f,config.facings[f.id]);return{...actual,cells:rectCells(actual,config.a)};});
+  return fixtures.map(f=>orient(f,config.facings[f.id]));
 }
 function render(svg,config){
   const c=camera(fit,config.factor);svg.setAttribute('viewBox','0 0 '+c.width+' '+c.height);svg.replaceChildren();
   const layer=element('g',{},svg);
   paintBoxes(layer,c,[box(0,0,-.022,1,1,.022,'#e6e0d4','floor')]);
-  if(config.rug)poly(layer,c,rounded(.27,.28,.5,.52,.06,.001),'#c1cdd2','none');
+  if(config.rug)poly(layer,c,rounded(rug.x,rug.y,rug.w,rug.d,rug.r,.001),'#c1cdd2','none',0,{'data-fixed-rug':'central-6x6'});
   const occupied=masks(config),selected=config.mode==='l'?'l':config.selected;
   if(config.grid){
     for(let i=0;i<=config.a;i++){line(layer,c,[i/config.a,0,.003],[i/config.a,1,.003]);line(layer,c,[0,i/config.a,.003],[1,i/config.a,.003]);}
@@ -85,7 +86,7 @@ function render(svg,config){
     for(const f of boxFaces(b))poly(layer,c,f.points,'none');
   const parts=[...wallFixtures('left',c,config.leftWindow,'window'),...wallFixtures('right',c,config.rightWindow,'window'),
     ...wallFixtures('left',c,config.art,'art'),...wallFixtures('right',c,config.art,'art')];
-  if(config.mode==='fixtures')for(const f of fixtures)parts.push(...furnitureParts(orient(f,config.facings[f.id])));
+  if(config.mode==='fixtures')for(const f of occupied)parts.push(...furnitureParts(f));
   if(config.mode==='l')for(const[x,y]of occupied[0].cells)parts.push(box(x/config.a,y/config.a,0,1/config.a,1/config.a,.095,'#a2b7c2','l'));
   paintBoxes(layer,c,parts);
   // Occupancy contour stays visible during structural review, including under furniture.
@@ -120,25 +121,26 @@ function renderReference(){
   $('reference-note').textContent=ref.note+' 采样线最大方向残差约 '+max.toFixed(2)+' 像素。';
 }
 function refresh(){
-  state.a=Number($('density').value);state.factor=Number($('height').value);state.mode=$('mode').value;state.selected=$('selected').value;
+  state.a=gridSize;state.factor=Number($('height').value);state.mode=$('mode').value;state.selected=$('selected').value;
   for(const[key,id]of[['grid','grid'],['axes','axes'],['leftWindow','left-window'],['rightWindow','right-window'],['art','art'],['rug','rug']])state[key]=$(id).checked;
   const result=render($('room'),state),selected=state.mode==='l'?'l':state.selected,entry=result.masks.find(p=>p.id===selected);
   $('turn').disabled=state.mode==='empty';$('selected').disabled=state.mode!=='fixtures';
   const facing=state.mode==='l'?state.lFacing:state.facings[state.selected];$('turn').textContent='切换朝向：+'+facing.toUpperCase();
   const valid=result.masks.every(e=>validCells(e.cells,state.a));
-  $('status').textContent=state.mode==='empty'?'空房间 · 地板宽度保持一致':(entry?.label||'')+' · '+(entry?.cells.length||0)+' 格 · 正面 +'+facing.toUpperCase()+' · '+(valid?'占地在地板内':'存在越界');
-  $('parameters').textContent='地面线斜率 ±'+fit.slope.toFixed(5)+'\n地面边线角度 ±'+(Math.atan(fit.slope)*180/Math.PI).toFixed(2)+'°\n在对称正交约束下：相机俯视约 '+fit.elevationDegrees.toFixed(2)+'°\nX = 540 + 480(x − y)\nY = O_y + '+(480*fit.slope).toFixed(3)+'(x + y) − '+fit.zScale.toFixed(3)+'z\n参考墙高 H = '+fit.referenceWallHeight.toFixed(4)+' L\n当前墙高 = '+result.camera.wallHeight.toFixed(4)+' L\n视图宽 1080；高 '+result.camera.height;
-  window.roomStudy={fit,state:{...state,facings:{...state.facings}},...result,project:p=>project(result.camera,p)};
+  $('status').textContent=state.mode==='empty'?'空房间 · 地板宽度保持一致':(entry?.label||'')+' · '+(entry?.cells.length||0)+' 格'+(entry?.cols?'（'+entry.cols+'×'+entry.rows+'，居中）':'')+' · 正面 +'+facing.toUpperCase()+' · '+(valid?'占地在地板内':'存在越界');
+  $('parameters').textContent='地面线斜率 ±'+fit.slope.toFixed(5)+'\n地面边线角度 ±'+(Math.atan(fit.slope)*180/Math.PI).toFixed(2)+'°\n在对称正交约束下：相机俯视约 '+fit.elevationDegrees.toFixed(2)+'°\nX = 540 + 480(x − y)\nY = O_y + '+(480*fit.slope).toFixed(3)+'(x + y) − '+fit.zScale.toFixed(3)+'z\n当前墙高 = '+result.camera.wallHeight.toFixed(4)+' L（'+(result.camera.wallHeight/cellSize).toFixed(2)+' 格）\n书柜高 4 格；窗下沿 4.25 格\n窗、画中心高 5 格；墙面水平中心 4 格\n地毯占中央 6×6 格，四周留一格\n视图宽 1080；高 '+result.camera.height;
+  window.roomStudy={fit,state:{...state,facings:{...state.facings}},...result,rug,slots,project:p=>project(result.camera,p)};
 }
-for(const id of['density','height','mode','selected','grid','axes','left-window','right-window','art','rug'])$(id).addEventListener('change',refresh);
+for(const id of['height','mode','selected','grid','axes','left-window','right-window','art','rug'])$(id).addEventListener('change',refresh);
 $('turn').addEventListener('click',()=>{if(state.mode==='l')state.lFacing=state.lFacing==='x'?'y':'x';else state.facings[state.selected]=state.facings[state.selected]==='x'?'y':'x';refresh();});
 $('reference').addEventListener('change',renderReference);$('overlay').addEventListener('change',renderReference);
-for(const a of[6,8,10]){
-  const card=document.createElement('div');card.className='compare-card';const heading=document.createElement('h3');heading.textContent=a+' × '+a;card.append(heading);
-  const svg=element('svg',{class:'scene',role:'img','aria-label':a+'格结构比较'},card);
-  const config={...state,a,axes:false,factor:1.5},result=render(svg,config),count=result.masks.find(e=>e.id==='bookshelf').cells.length;
-  const note=document.createElement('small');note.textContent='同一书柜预留 '+count+' 格；地板和家具比例保持一致。';card.append(note);
+for(const selected of['tree','desk','bed']){
+  const fixture=fixtures.find(f=>f.id===selected);
+  const card=document.createElement('div');card.className='compare-card';const heading=document.createElement('h3');heading.textContent=fixture.label+' · '+fixture.cols+'×'+fixture.rows;card.append(heading);
+  const svg=element('svg',{class:'scene',role:'img','aria-label':fixture.label+'占格居中示例'},card);
+  render(svg,{...state,selected,axes:false,factor:1.5});
+  const note=document.createElement('small');note.textContent='浅蓝 '+fixture.cells.length+' 格内居中；两个轴向的对边留白相等。';card.append(note);
   $('comparisons').append(card);
 }
-for(const s of slots){const tr=document.createElement('tr');for(const value of[s.label,s.wall==='left'?'左墙 X=0':'右墙 Y=0',s.s.toFixed(2),s.z.toFixed(2),s.w.toFixed(2)+' × '+s.h.toFixed(2)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('slot-table').append(tr);}
+for(const s of slots){const tr=document.createElement('tr');for(const value of[s.label,s.wall==='left'?'左墙 X=0':'右墙 Y=0',(s.s/cellSize).toFixed(2),(s.z/cellSize).toFixed(2),((s.z+s.h/2)/cellSize).toFixed(2),(s.w/cellSize).toFixed(2)+' × '+(s.h/cellSize).toFixed(2)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('slot-table').append(tr);}
 refresh();renderReference();

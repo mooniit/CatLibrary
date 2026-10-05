@@ -55,23 +55,34 @@ export function rectCells(rect,a) {
     for(let j=Math.floor(y*a+1e-9);j<Math.ceil((y+d)*a-1e-9);j++)cells.push([i,j]);
   return cells;
 }
+export const gridSize=8,cellSize=1/gridSize;
+export const rug={x:cellSize,y:cellSize,w:6*cellSize,d:6*cellSize,r:.02};
+// Anchors and rectangular footprints are grid coordinates; visual dimensions are world units.
+// Center the complete horizontal silhouette, not just the legs or the screen image.
+export function centerFixture(f) {
+  const [gx,gy]=f.anchor,cells=[];
+  for(let x=gx;x<gx+f.cols;x++)for(let y=gy;y<gy+f.rows;y++)cells.push([x,y]);
+  return {...f,x:(gx+f.cols/2)*cellSize-f.w/2,y:(gy+f.rows/2)*cellSize-f.d/2,cells};
+}
 export const fixtures=[
-  {id:'bookshelf',label:'书柜',x:.025,y:.18,w:.12,d:.26,h:.36,facing:'x'},
-  {id:'desk',label:'书桌',x:.57,y:.22,w:.30,d:.17,h:.18,facing:'y'},
-  {id:'chair',label:'椅子',x:.66,y:.005,w:.12,d:.115,h:.20,facing:'y'},
-  {id:'tree',label:'猫爬架',x:.06,y:.63,w:.17,d:.17,h:.29,facing:'x'},
-  {id:'bed',label:'猫窝',x:.58,y:.68,w:.19,d:.19,h:.085,facing:'y'}
-];
+  {id:'bookshelf',label:'书柜',anchor:[0,1],cols:1,rows:3,w:.12,d:.26,h:4*cellSize,facing:'x'},
+  {id:'desk',label:'书桌',anchor:[4,2],cols:3,rows:2,w:.30,d:.17,h:.18,facing:'y'},
+  {id:'chair',label:'椅子',anchor:[5,1],cols:1,rows:1,w:.12,d:.115,h:.20,facing:'y'},
+  {id:'tree',label:'猫爬架',anchor:[0,5],cols:2,rows:2,w:.17,d:.17,h:.29,facing:'x'},
+  {id:'bed',label:'猫窝',anchor:[5,6],cols:2,rows:2,w:.19,d:.19,h:.085,facing:'y'}
+].map(centerFixture);
+const windowZ=4.25*cellSize,windowH=1.5*cellSize,artH=cellSize;
+const artZ=windowZ+(windowH-artH)/2;
 export const slots=[
-  {id:'window-left',label:'左窗',wall:'left',s:.59,z:.28,w:.28,h:.18,type:'window'},
-  {id:'window-right',label:'右窗',wall:'right',s:.64,z:.28,w:.28,h:.18,type:'window'},
-  {id:'art-left-back',label:'左画位 1',wall:'left',s:.23,z:.56,w:.18,h:.12,type:'art'},
-  {id:'art-left-front',label:'左画位 2',wall:'left',s:.78,z:.56,w:.18,h:.12,type:'art'},
-  {id:'art-right-back',label:'右画位 1',wall:'right',s:.25,z:.56,w:.18,h:.12,type:'art'},
-  {id:'art-right-front',label:'右画位 2',wall:'right',s:.79,z:.56,w:.18,h:.12,type:'art'}
+  {id:'window-left',label:'左窗',wall:'left',s:.5,z:windowZ,w:.28,h:windowH,type:'window'},
+  {id:'window-right',label:'右窗',wall:'right',s:.5,z:windowZ,w:.28,h:windowH,type:'window'},
+  {id:'art-left-back',label:'左墙画位 1',wall:'left',s:.18,z:artZ,w:.16,h:artH,type:'art'},
+  {id:'art-left-front',label:'左墙画位 2',wall:'left',s:.82,z:artZ,w:.16,h:artH,type:'art'},
+  {id:'art-right-back',label:'右墙画位 1',wall:'right',s:.18,z:artZ,w:.16,h:artH,type:'art'},
+  {id:'art-right-front',label:'右墙画位 2',wall:'right',s:.82,z:artZ,w:.16,h:artH,type:'art'}
 ];
 export function orient(f,facing) {
-  return facing===f.facing?{...f,facing}:{...f,w:f.d,d:f.w,facing};
+  return centerFixture(facing===f.facing?{...f,facing}:{...f,w:f.d,d:f.w,cols:f.rows,rows:f.cols,facing});
 }
 export function box(x,y,z,w,d,h,color='#e2dccf',kind='solid') {return{x,y,z,w,d,h,color,kind};}
 export function boxFaces(b) {
