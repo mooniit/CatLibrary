@@ -1,0 +1,13 @@
+{
+  "checkedStates": 60,
+  "errors": [],
+  "badResponses": [],
+  "mobileOverflow": false,
+  "desktopFloorWidthPreserved": true,
+  "fit": {
+    "slope": 0.4991180528926718,
+    "elevationDegrees": 29.941667982530465,
+    "referenceWallHeight": 0.5388793856178627,
+    "maximumSampleResidual": 2.328
+  }
+}

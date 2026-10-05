@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,"><title>房间结构 · 首轮验证</title>
+<style>
+:root{color-scheme:light;--ink:#25313b;--muted:#52616c;--line:#cdd5d9;--paper:#fff;--canvas:#f4f6f6;--accent:#315f77}
+*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}
+main{max-width:1450px;margin:auto;padding:28px}h1{font-size:26px;font-weight:600;margin:0 0 5px}h2{font-size:18px;margin:0 0 12px;font-weight:600}h3{font-size:16px;margin:0 0 8px}p{margin:0 0 16px;color:var(--muted)}a{color:var(--accent)}
+.board{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;align-items:start}
+section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px}
+.controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:0 0 14px}label{display:inline-flex;gap:7px;align-items:center}
+select,button{font:inherit;color:inherit;border:1px solid #b6c3ca;background:#fff;border-radius:6px;padding:7px 10px;min-height:40px}select{max-width:100%}button{cursor:pointer}button[aria-pressed=true]{background:#e4edf2;border-color:var(--accent)}
+input{accent-color:var(--accent);width:17px;height:17px}.scene{width:100%;display:block;background:#f6f8f8;border-radius:8px}
+.scene text{font:19px system-ui,sans-serif}.ref{max-width:550px;margin:auto;display:block;width:100%;height:auto;background:#27313b;border-radius:8px}
+small{display:block;color:var(--muted);margin-top:10px}.status{min-height:30px;padding-top:8px;color:var(--accent);font-variant-numeric:tabular-nums}
+.comparison{margin-top:22px}.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.compare-card{border:1px solid var(--line);border-radius:8px;padding:14px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:9px 12px;border-bottom:1px solid #e1e6e8;white-space:nowrap}th{font-weight:500}
+details{margin-top:16px}summary{cursor:pointer}pre{font:13px/1.7 ui-monospace,monospace;white-space:pre-wrap;padding:12px;background:#f5f7f8}
+@media(max-width:820px){main{padding:14px}.board{grid-template-columns:1fr}.compare-grid{grid-template-columns:1fr}.compare-card .scene{max-width:600px;margin:auto}section{padding:14px}}
+</style>
+<main>
+<h1>房间结构 · 首轮验证</h1>
+<p>以新参考图校准方向。墙高增加 1.5 倍，地板宽度保持；方格密度、挂位和地毯位置在这个样例中对比。</p>
+<div class="board">
+<section>
+<h2>固定视角与家具占位</h2>
+<div class="controls">
+<label>网格 <select id="density"><option value="6">6 × 6</option><option value="8" selected>8 × 8</option><option value="10">10 × 10</option></select></label>
+<label>墙高 <select id="height"><option value="1.5" selected>参考图 × 1.5</option><option value="1">参考图原高</option></select></label>
+<label>样例 <select id="mode"><option value="fixtures">代表家具</option><option value="l">L 形占格</option><option value="empty">空房间</option></select></label>
+</div>
+<div class="controls">
+<label><input id="grid" type="checkbox" checked>布置网格</label>
+<label><input id="axes" type="checkbox" checked>坐标轴</label>
+<label><input id="left-window" type="checkbox" checked>左窗</label>
+<label><input id="right-window" type="checkbox" checked>右窗</label>
+<label><input id="art" type="checkbox" checked>画位</label>
+<label><input id="rug" type="checkbox" checked>固定地毯</label>
+</div>
+<div class="controls">
+<label>物品 <select id="selected"><option value="bookshelf">书柜</option><option value="desk">书桌</option><option value="chair">椅子</option><option value="tree">猫爬架</option><option value="bed">猫窝</option></select></label>
+<button id="turn" type="button">切换朝向：+X</button>
+</div>
+<svg id="room" class="scene" role="img" aria-label="统一投影的房间结构、家具和占格"></svg>
+<div id="status" class="status" aria-live="polite"></div>
+<small>家具是体积和接触点样板；最终弧形、软包和装饰在同一坐标中细化。L 形模式只高亮实际三个格子，空缺格仍可用。结构稿尚未接入游戏存档。</small>
+</section>
+<section>
+<h2>原图叠线校准</h2>
+<div class="controls"><label>参考图 <select id="reference"><option value="empty">空房</option><option value="furnished">陈设</option><option value="editing" selected>格线</option></select></label><label><input id="overlay" type="checkbox" checked>叠线</label></div>
+<svg id="reference-svg" class="ref" role="img" aria-label="原参考图上的共同方向拟合线"></svg>
+<p id="reference-note" style="margin-top:12px"></p>
+<small>青色为拟合轴线，橙色为手工观测点；虚线表示遮挡处的推算边。三图分别标定原点和比例，共用拟合方向。</small>
+<details open><summary>当前投影参数</summary><pre id="parameters"></pre></details>
+<p><a href="calibration.json" target="_blank" rel="noopener">查看采样数据</a> · <a href="../../docs/plans/room-redesign-2026-10-05/README.md">完整实施计划</a></p>
+</section>
+</div>
+<section class="comparison">
+<h2>相同房间、相同家具尺寸 · 三档网格对比</h2>
+<p>这里只改变网格密度，家具的实际尺寸不随格子数量改变。浅蓝格表示同一件书柜需要预留的范围。</p>
+<div id="comparisons" class="compare-grid"></div>
+</section>
+<section style="margin-top:22px"><h2>候选固定位置</h2><p>左右窗位独立；先预留四处墙饰位。地毯位于地板内部中央区域，作为独立底层；这些位置供本轮审阅。</p>
+<div class="table-wrap"><table><thead><tr><th>位置</th><th>所属墙面</th><th>水平中心</th><th>底边高度 Z</th><th>宽 × 高</th></tr></thead><tbody id="slot-table"></tbody></table></div>
+<small>单位为房间边长 L=1。地毯候选范围：X 0.27…0.77，Y 0.28…0.80；不阻止家具放在其上。原高对比中，上部画位暂不显示。</small>
+</section>
+</main>
+<script type="module" src="preview.mjs"></script>
+</html>
