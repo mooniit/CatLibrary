@@ -6,7 +6,7 @@ import sys
 import math
 from PIL import Image
 
-root = Path(__file__).resolve().parent / (sys.argv[1] if len(sys.argv)>1 else 'lunar-assets')
+root = Path(__file__).resolve().parent / (sys.argv[1] if len(sys.argv)>1 else 'lunar-assets-v5')
 manifest = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
 report = []
 def convex_hull(points):
@@ -27,7 +27,7 @@ for asset in manifest['assets']:
     margins = [bbox[0], bbox[1], w - bbox[2], h - bbox[3]]
     assert min(margins) >= 3, (asset['id'], margins)
     assert image.size == tuple(asset['viewBox'][2:]), asset['id']
-    if manifest['id'] in ['lunar-content-v3','lunar-content-v4','lunar-content-v5'] and asset['id']=='window-right':
+    if asset['id']=='window-right':
         original=Image.open(root/'window-left.png').convert('RGBA')
         assert original.transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes()==image.tobytes(),('window-right','mirror mismatch')
     if asset['category']=='frame-template':
@@ -53,7 +53,7 @@ for asset in manifest['assets']:
                             queue.append(neighbor)
             components.append(size)
         assert len(components) == 1, (asset['id'], sorted(components, reverse=True))
-        if manifest['id'] in ['lunar-content-v2','lunar-content-v3','lunar-content-v4','lunar-content-v5']:
+        if manifest['id']=='lunar-content-v5':
             camera=manifest['camera'];fw,fd,fh=asset['dimensionsL'];anchor=asset['pixelGroundOrigin']
             prism=convex_hull([(anchor[0]+x*camera['bx'][0]+y*camera['by'][0],anchor[1]+x*camera['bx'][1]+y*camera['by'][1]+z*camera['bz'][1]) for x in [0,fw] for y in [0,fd] for z in [0,fh]])
             for v in range(h):
@@ -65,6 +65,6 @@ for asset in manifest['assets']:
                 assert original.transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes()==image.tobytes(),(asset['id'],'mirror mismatch')
     report.append({'id':asset['id'], 'rgba':True, 'size':[w,h], 'alphaBBox':bbox,
                    'transparentMargins':margins, 'connectedComponents':len(components) if components else None,
-                   **({'projectedEnvelopeOutsidePixels':0,'antialiasAllowancePixels':1,'mirrorPixelDifferences':0 if asset['mirrored'] else None} if asset['category']=='furniture' and manifest['id'] in ['lunar-content-v2','lunar-content-v3','lunar-content-v4','lunar-content-v5'] else {})})
+                   **({'projectedEnvelopeOutsidePixels':0,'antialiasAllowancePixels':1,'mirrorPixelDifferences':0 if asset['mirrored'] else None} if asset['category']=='furniture' and manifest['id']=='lunar-content-v5' else {})})
 (root / 'alpha-verification.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print(f'{len(report)} transparent PNGs: clear crop margins; all 10 furniture sprites connected, no detached residual pixels.')

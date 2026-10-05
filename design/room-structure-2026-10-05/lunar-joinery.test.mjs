@@ -4,7 +4,7 @@ import {camera,slots,project} from './geometry.mjs';
 import {joineryModel,mountJoinery,windowModel,windowSill} from './lunar-joinery.mjs';
 import {scene} from './lunar-art.mjs';
 import {windowViewSvg} from './lunar-window-views.mjs';
-import {frameTemplates,configureNativeJoinery,frameLayout,wallArtwork} from './lunar-templates.mjs';
+import {frameTemplates,frameLayout,wallArtwork} from './lunar-templates.mjs';
 const near=(a,b)=>assert(Math.abs(a-b)<1e-9,`${a} != ${b}`);
 
 test('all three frame casings fit the reserved sizes with real rail and relief thickness',()=>{
@@ -45,7 +45,7 @@ test('window opening, frame envelope and solid sill preserve confirmed coordinat
 });
 
 test('reusable frame body has no picture skin; only the separately contained original is an image',()=>{
-  configureNativeJoinery();const slot=slots.find(s=>s.type==='art');
+  const slot=slots.find(s=>s.type==='art');
   for(const key of Object.keys(frameTemplates)){
     const f=frameLayout(slot,key);near(f.centerZ*8,4.05);
     const empty=wallArtwork(slot,key);assert(!/<image|data:image/.test(empty));

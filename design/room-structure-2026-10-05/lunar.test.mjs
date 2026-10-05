@@ -19,7 +19,7 @@ test('complete curved meshes remain inside declared centered footprints in all 3
     }
   }
 });
-test('two furniture views are independent projections, and the open front follows +X / +Y',()=>{
+test('footprint calibration meshes follow +X / +Y and keep the bed front low',()=>{
   for(const f of fixtures){const x=assetSvg(furniture({...orient(f,'x'),x:0,y:0})),y=assetSvg(furniture({...orient(f,'y'),x:0,y:0}));assert.notEqual(x.svg,y.svg);assert(!/rotate\(|scale\(-1/.test(y.svg));}
   for(const dir of['x','y']){const a={...orient(fixtures.find(f=>f.id==='bed'),dir),x:0,y:0},m=furniture(a);
     const front=m.faces.flatMap(f=>f.points).filter(p=>p[dir==='x'?0:1]>(dir==='x'?a.w:a.d)-.001);
@@ -37,6 +37,13 @@ test('window sill uses the standard clearance; artwork image planes preserve ori
   }
 });
 test('exported sprite pixel ground anchors reconstruct exact world placement',()=>{
-  const manifest=JSON.parse(readFileSync(new URL('./lunar-assets/manifest.json',import.meta.url),'utf8'));
-  for(const a of manifest.assets.filter(a=>a.category==='furniture')){const p=project(camera(),a.worldGroundAnchor);assert.deepEqual(a.renderOrigin.map((v,i)=>v+a.pixelGroundOrigin[i]),p);assert.equal(a.worldBounds.min[2],0);}
+  const manifest=JSON.parse(readFileSync(new URL('./lunar-assets-v5/manifest.json',import.meta.url),'utf8'));
+  const catalog=JSON.parse(readFileSync(new URL('../../assets/images/room/lunar-v5/catalog.json',import.meta.url),'utf8'));
+  for(const a of manifest.assets.filter(a=>a.category==='furniture')){
+    const f=orient(fixtures.find(f=>f.id===a.id.split('-')[0]),a.id.endsWith('-x')?'x':'y');
+    assert.deepEqual(a.worldGroundAnchor,[f.x,f.y,0]);assert.deepEqual(a.dimensionsL,[f.w,f.d,f.h]);assert.deepEqual(a.cells,f.cells);
+    const p=project(camera(),a.worldGroundAnchor),rect=catalog.layers[a.id].rect;
+    for(let i=0;i<2;i++)assert(Math.abs(rect[i]+a.pixelGroundOrigin[i]-p[i])<1e-9);
+    assert.deepEqual(rect.slice(2),a.viewBox.slice(2));
+  }
 });

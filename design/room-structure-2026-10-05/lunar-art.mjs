@@ -214,7 +214,7 @@ export function wallMaterial(wall,enabled=true){
   path(m,[[0,0,H],[0,1,H]],C.edge,1.2);path(m,[[0,1,0],[0,1,H]],C.edge,1.2);
   return wall==='left'?m:transform(m,([u,v,z])=>[v,u,z],true);
 }
-export function scene({facings={},grid=false,axes=false,hidden=[],leftWindow=true,rightWindow=true,art=true,rug:hasRug=true,assets=[],assetBase='lunar-assets/',wallDecor,windowMode='day'}={}){
+export function scene({facings={},grid=false,axes=false,hidden=[],leftWindow=true,rightWindow=true,art=true,rug:hasRug=true,assets=[],assetBase='lunar-assets-v5/',wallDecor,windowMode='day'}={}){
   const staticArt=(id,fallback)=>{const a=assets.find(a=>a.id===id&&a.category!=='furniture');return a?`<image href="${assetBase+a.svg}" x="${a.viewBox[0]}" y="${a.viewBox[1]}" width="${a.viewBox[2]}" height="${a.viewBox[3]}"/>`:fallback();};
   let out=staticArt('floor',()=>renderMesh(floorAsset()));
   if(hasRug)out+=`<g data-asset="rug">${staticArt('rug',()=>renderMesh(rugAsset()))}</g>`;

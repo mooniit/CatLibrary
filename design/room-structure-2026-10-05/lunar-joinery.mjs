@@ -146,11 +146,3 @@ export function windowModel(slot=slots.find(s=>s.id==='window-left')){
   for(const p of ornament.parts){const firstFace=world.faces.length;for(const f of ornament.faces.slice(p.firstFace,p.firstFace+p.faceCount))add(f.points,f.color);world.parts.push({...p,firstFace});}
   world.sill={...windowSill,width:W};return world;
 }
-export function cornerModel(){
-  const m=fresh(),R=.009,H=camera().wallHeight,n=20,loop=[[0,0,0]];
-  for(let i=0;i<=n;i++){const t=i/n*Math.PI/2;loop.push([R*Math.cos(t),R*Math.sin(t),0]);}
-  face(m,[...loop].reverse(),C.warm);face(m,loop.map(([x,y])=>[x,y,H]),C.ivory);
-  for(let i=0;i<loop.length;i++){const j=(i+1)%loop.length;face(m,[loop[i],loop[j],[loop[j][0],loop[j][1],H],[loop[i][0],loop[i][1],H]],C.cream);}
-  m.parts.push({name:'quarter-round inner corner',faceCount:m.faces.length});m.radius=R;return m;
-}
-export function cornerSvg(){const m=cornerModel(),a=assetSvg(m);return{...a,svg:a.svg.replace(/(<svg[^>]*>)[\s\S]*(<\/svg>)/,'$1'+renderJoinery(m)+'$2')};}

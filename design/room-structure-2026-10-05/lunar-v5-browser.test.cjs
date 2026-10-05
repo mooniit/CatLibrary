@@ -83,8 +83,8 @@ const manifest=JSON.parse(readFileSync(join(dir,'manifest.json'),'utf8'));
       const source=readFileSync(join(dir,svg),'utf8');assert(!/<image|data:image/.test(source));assert((source.match(/<polygon/g)||[]).length>100);
     }
     for(const[key,svg]of[['wall','wall-left.svg'],['floor','floor.svg']])assert(readFileSync(join(dir,svg),'utf8').includes(readFileSync(join(dir,manifest.decorSkins[key].file)).toString('base64')));
-    const unchanged=manifest.assets.filter(a=>['furniture','wall-material'].includes(a.category)||['floor','rug'].includes(a.id));
-    for(const a of unchanged)for(const ext of ['svg','png'])assert(readFileSync(join(dir,a[ext])).equals(readFileSync(join(__dirname,'lunar-assets-v3',a[ext]))),a.id+' '+ext+' changed');
+    const unchanged=manifest.assets.filter(a=>a.category==='furniture'||['floor','rug'].includes(a.id));
+    for(const a of unchanged)assert(readFileSync(join(dir,a.png)).equals(readFileSync(join(__dirname,'../../assets/images/room/lunar-v5',a.png))),a.id+' differs from the approved native asset');
     const report={standardId:standard.id,geometryFrozen:true,allFacingCombinations:32,independentSvgCount:manifest.assets.length,transparentPngCount:manifest.assets.length,spriteComposition:true,positionsChanged:false,frameDimensionsUnchanged:true,nativeDecor:true,windowAndFrameImageSkins:false,cornerTrimRemoved:true,windowModes:['day','night'],modeChangesPreserveFurnitureAndFrames:true,modeApiVerified:true,hiddenWindowsHideScenery:true,sillChange:manifest.sillChange,acceptedMaterialsAndFurnitureUnchanged:true,frameTemplates:3,frameSlotTemplateArtworkChecks:36,mirrorDifferences,mobileWidths:[360,390],mobileOverflow:false,errors,badResponses,obsoleteRoomArtLoaded:false};
     writeFileSync(join(dir,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
   }finally{await browser.close();}

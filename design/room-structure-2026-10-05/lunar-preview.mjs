@@ -1,10 +1,10 @@
 import {fixtures,orient,roomStandard,slots,camera,project} from './geometry.mjs';
 import {scene,bounds,furniture,artwork} from './lunar-art.mjs';
-import {frameTemplates,frameLayout,wallArtwork,configureDecorSkins,configureNativeJoinery} from './lunar-templates.mjs';
+import {frameTemplates,frameLayout,wallArtwork,configureDecorSkins} from './lunar-templates.mjs';
 const $=id=>document.getElementById(id),defaults=Object.fromEntries(fixtures.map(f=>[f.id,f.facing]));
 const manifest=await(await fetch('./lunar-assets-v5/manifest.json')).json();
 configureDecorSkins(Object.fromEntries(Object.entries(manifest.decorSkins).map(([key,skin])=>[key,{...skin,url:'lunar-assets-v5/'+skin.file}])));
-configureNativeJoinery();
+
 const defaultFrames=()=>Object.fromEntries(slots.filter(s=>s.type==='art').map(s=>[s.id,s.id.endsWith('back')?'landscape':'portrait']));
 const defaultArt=()=>Object.fromEntries(slots.filter(s=>s.type==='art').map(s=>[s.id,s.id.endsWith('back')?'starry':'pearl']));
 const initialMode=new URLSearchParams(location.search).get('mode');
