@@ -280,6 +280,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final wallet = widget.wallet;
+    scene.night = Theme.of(context).brightness == Brightness.dark;
     return LayoutBuilder(
       builder: (context, constraints) => Stack(
         fit: StackFit.expand,

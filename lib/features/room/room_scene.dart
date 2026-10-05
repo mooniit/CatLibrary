@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../room_layout.dart';
 import 'room_furniture.dart';
+import 'lunar_room.dart';
 
 typedef RoomCat = ({String name, String appearance});
 
@@ -21,6 +22,9 @@ class RoomScene extends FlameGame {
   final _walls = <WallStyle, ui.Image>{};
   final _furniture = <String, ui.Image>{};
   final _artworks = <ArtworkStyle, ui.Image>{};
+  LunarRoom? _lunar;
+  bool night = false;
+  bool get usesLunarRoom => furnishings.usesLunarRoom;
   final _paint = Paint()..filterQuality = FilterQuality.medium;
 
   @override
@@ -45,14 +49,20 @@ class RoomScene extends FlameGame {
     for (final style in ArtworkStyle.values) {
       _artworks[style] = await images.load(style.asset);
     }
+    _lunar = await LunarRoom.load(images.load);
   }
 
-  double get baseScale => math.min(size.x / 1040, size.y / 1320);
+  Size get artboard =>
+      usesLunarRoom ? const Size(1080, 1073) : const Size(1000, 1250);
+  double get baseScale => usesLunarRoom
+      ? math.min(size.x / 1120, (size.y - 112).clamp(1, double.infinity) / 1113)
+      : math.min(size.x / 1040, size.y / 1320);
   double get displayScale => baseScale * zoom;
   Offset get origin =>
       Offset(
-        (size.x - 1000 * displayScale) / 2,
-        (size.y - 1250 * displayScale) / 2,
+        (size.x - artboard.width * displayScale) / 2,
+        (size.y - artboard.height * displayScale) / 2 +
+            (usesLunarRoom ? 48 : 0),
       ) +
       pan;
 
@@ -62,16 +72,22 @@ class RoomScene extends FlameGame {
     final local = (focalPoint - delta - origin) / displayScale;
     zoom = nextZoom.clamp(0.8, 1.6);
     final centered = Offset(
-      (size.x - 1000 * displayScale) / 2,
-      (size.y - 1250 * displayScale) / 2,
+      (size.x - artboard.width * displayScale) / 2,
+      (size.y - artboard.height * displayScale) / 2 + (usesLunarRoom ? 48 : 0),
     );
     pan = focalPoint - local * displayScale - centered;
     _clampPan();
   }
 
   void _clampPan() {
-    final limitX = math.max(48.0, (1000 * displayScale - size.x) / 2 + 64);
-    final limitY = math.max(64.0, (1250 * displayScale - size.y) / 2 + 100);
+    final limitX = math.max(
+      48.0,
+      (artboard.width * displayScale - size.x) / 2 + 64,
+    );
+    final limitY = math.max(
+      64.0,
+      (artboard.height * displayScale - size.y) / 2 + 100,
+    );
     pan = Offset(pan.dx.clamp(-limitX, limitX), pan.dy.clamp(-limitY, limitY));
   }
 
@@ -277,6 +293,23 @@ class RoomScene extends FlameGame {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+    if (usesLunarRoom && _lunar != null) {
+      canvas.save();
+      canvas.translate(origin.dx, origin.dy);
+      canvas.scale(displayScale);
+      _lunar!.render(
+        canvas,
+        furnishings,
+        night,
+        _artworks,
+        (kind, target, ground) =>
+            _drawLegacyInLunar(canvas, kind, target, ground),
+        _walls,
+        _floors,
+      );
+      canvas.restore();
+      return;
+    }
     final wall = _walls[furnishings.wall];
     final floor = _floors[furnishings.floor];
     if (wall == null || floor == null) return;
@@ -337,6 +370,41 @@ class RoomScene extends FlameGame {
       );
     }
     geometry.draw(canvas, image, source, scale, point);
+  }
+
+  void _drawLegacyInLunar(
+    Canvas canvas,
+    String kind,
+    Rect target,
+    Offset ground,
+  ) {
+    // Mixed legacy cutouts keep their existing geometry and preference keys.
+    // The approved lunar sprites always use their exact standard placement.
+    final style = furnishings.styleFor(kind);
+    final image =
+        _furniture[furnitureAsset(
+          kind,
+          style,
+          covered: furnishings.bedCovered,
+        )];
+    if (image == null) return;
+    final source = sourceFor(kind, style, covered: furnishings.bedCovered);
+    final geometry = geometryFor(kind, style, covered: furnishings.bedCovered);
+    final bounds = geometry.bounds(source);
+    final fitted = applyBoxFit(
+      BoxFit.contain,
+      bounds.size,
+      target.size,
+    ).destination;
+    final scale = fitted.width / bounds.width;
+    final destination = Alignment.bottomCenter.inscribe(fitted, target);
+    geometry.draw(
+      canvas,
+      image,
+      source,
+      scale,
+      destination.topLeft - bounds.topLeft * scale,
+    );
   }
 
   void _drawRug(Canvas canvas) {

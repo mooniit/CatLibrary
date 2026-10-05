@@ -125,7 +125,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               subtitle: Text(
-                '${furnitureLocations[kind]}${room.isVisible(kind) ? '' : ' · 已隐藏'}',
+                '${room.usesLunarRoom ? lunarFurnitureLocations[kind] : furnitureLocations[kind]}${room.isVisible(kind) ? '' : ' · 已隐藏'}',
               ),
               value: room.isVisible(kind),
               onChanged: saving
@@ -147,6 +147,35 @@ class _FurnitureStoreState extends State<FurnitureStore> {
               ),
               const SizedBox(height: 12),
             ],
+            if (room.usesLunarRoom && kind == 'window')
+              for (final side in ['left', 'right'])
+                SwitchListTile.adaptive(
+                  key: Key('window-$side-visible'),
+                  title: Text(side == 'left' ? '左墙窗户' : '右墙窗户'),
+                  value: room.isVisible('window-$side'),
+                  onChanged: saving
+                      ? null
+                      : (visible) => change(
+                          room.withVisibility('window-$side', visible),
+                        ),
+                ),
+            if (room.usesLunarRoom &&
+                room.styleFor(kind) == FurnitureStyle.lunar &&
+                ['bookshelf', 'desk', 'chair', 'tree', 'bed'].contains(kind))
+              Wrap(
+                spacing: 8,
+                children: [
+                  for (final facing in ['x', 'y'])
+                    ChoiceChip(
+                      key: Key('lunar-facing-$kind-$facing'),
+                      label: Text('正面 +${facing.toUpperCase()}'),
+                      selected: room.facingFor(kind) == facing,
+                      onSelected: saving
+                          ? null
+                          : (_) => change(room.withFacing(kind, facing)),
+                    ),
+                ],
+              ),
             if (kind == 'bed' && room.styleFor(kind) == FurnitureStyle.lunar)
               SwitchListTile.adaptive(
                 key: const Key('bed-canopy'),
@@ -160,12 +189,36 @@ class _FurnitureStoreState extends State<FurnitureStore> {
               ),
           ],
           const SizedBox(height: 16),
+          if (room.usesLunarRoom) ...[
+            Text('月轨画框', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final entry in const {
+                  'auto': '样稿搭配',
+                  'landscape': '横版',
+                  'portrait': '竖版',
+                  'square': '正方形',
+                }.entries)
+                  ChoiceChip(
+                    key: Key('lunar-frame-${entry.key}'),
+                    label: Text(entry.value),
+                    selected: room.frameTemplate == entry.key,
+                    onSelected: saving
+                        ? null
+                        : (_) => change(room.withFrameTemplate(entry.key)),
+                  ),
+              ],
+            ),
+          ],
           SwitchListTile.adaptive(
             key: const Key('painting-visible'),
             contentPadding: EdgeInsets.zero,
             title: Text('装饰画', style: Theme.of(context).textTheme.titleMedium),
             subtitle: Text(
-              '左墙中间偏上${room.isVisible('painting') ? '' : ' · 已隐藏'}',
+              '${room.usesLunarRoom ? '两堵墙 · 四个固定画位' : '左墙中间偏上'}${room.isVisible('painting') ? '' : ' · 已隐藏'}',
             ),
             value: room.isVisible('painting'),
             onChanged: saving
@@ -214,24 +267,45 @@ class _FurnitureStoreState extends State<FurnitureStore> {
             child: SizedBox(
               height: 124,
               width: double.infinity,
-              child: FutureBuilder<ui.Image>(
-                future: Flame.images.load(
-                  furnitureAsset(kind, style, covered: room.bedCovered),
-                ),
-                builder: (context, snapshot) => snapshot.hasData
-                    ? CustomPaint(
-                        painter: _FurniturePainter(
-                          snapshot.data!,
-                          sourceFor(kind, style, covered: room.bedCovered),
-                          geometryFor(kind, style, covered: room.bedCovered),
-                        ),
-                      )
-                    : Center(
-                        child: snapshot.hasError
-                            ? const Icon(Icons.broken_image_outlined)
-                            : const CircularProgressIndicator(strokeWidth: 2),
+              child:
+                  style == FurnitureStyle.lunar &&
+                      !(kind == 'bed' && room.bedCovered)
+                  ? Image.asset(
+                      'assets/images/room/lunar-v5/${kind == 'window'
+                          ? 'window-left'
+                          : kind == 'rug'
+                          ? 'rug'
+                          : '$kind-${room.facingFor(kind)}'}.png',
+                      fit: BoxFit.contain,
+                    )
+                  : FutureBuilder<ui.Image>(
+                      future: Flame.images.load(
+                        furnitureAsset(kind, style, covered: room.bedCovered),
                       ),
-              ),
+                      builder: (context, snapshot) => snapshot.hasData
+                          ? CustomPaint(
+                              painter: _FurniturePainter(
+                                snapshot.data!,
+                                sourceFor(
+                                  kind,
+                                  style,
+                                  covered: room.bedCovered,
+                                ),
+                                geometryFor(
+                                  kind,
+                                  style,
+                                  covered: room.bedCovered,
+                                ),
+                              ),
+                            )
+                          : Center(
+                              child: snapshot.hasError
+                                  ? const Icon(Icons.broken_image_outlined)
+                                  : const CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                            ),
+                    ),
             ),
           ),
           const SizedBox(height: 8),
