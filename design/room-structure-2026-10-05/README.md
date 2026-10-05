@@ -14,7 +14,7 @@ python design/room-structure-2026-10-05/serve.py
 
 ![结构样稿](structure-preview.png)
 
-当前预览仅展示这个固定结构。详见[标准说明与制作约束](STANDARD.md)、[跨工具标准数据](room-standard-v1.json)。旧整屋生成图存在比例偏移，已退出当前预览；[美术记录](STYLE.md)仅保留历史。
+当前预览仅展示这个固定结构。详见[标准说明与制作约束](STANDARD.md)、[跨工具标准数据](room-standard-v1.json)。旧整屋生成图、历史美术记录和旧截图已删除。当前原生应用接入见 [月轨说明](../../docs/plans/room-redesign-2026-10-05/NATIVE-LUNAR.md)。
 
 ## 已实现
 
@@ -69,7 +69,7 @@ node design/room-structure-2026-10-05/browser.test.cjs
 - 浏览器验证 10 个家具朝向状态及空房/L 形、各显示开关、原图切换；每一步验证相机值和桌面房屋显示尺寸不变。页面不提供其他墙高或整屋生成图，也不会加载旧效果图。
 - 360/390 px 手机宽度无横向溢出，宽高等比缩放，无浏览器或资源加载错误。
 
-结果保存在 `verification.json`；实时截图为 `preview-desktop.png`、`preview-mobile.png`、`structure-preview.png`、`structure-clean.png`。固定视觉锚点为 `room-standard-v1.png` 与 `room-standard-v1-clean.png`。旧 `styled-*` 截图仅为历史。生产 Flutter 文件和依赖未改动。
+结果保存在 `verification.json`；实时截图为 `preview-desktop.png`、`preview-mobile.png`、`structure-preview.png`、`structure-clean.png`。固定视觉锚点为 `room-standard-v1.png` 与 `room-standard-v1-clean.png`。旧 `styled-*` 截图已删除。固定标准现在由原生 Flutter 首页使用。
 
 ## 下一确认点
 

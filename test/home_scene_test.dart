@@ -2,7 +2,6 @@ import 'package:cat_library_demo/features/home/home_page.dart';
 import 'package:cat_library_demo/features/home/home_controls.dart';
 import 'package:cat_library_demo/features/identity/identity_repository.dart';
 import 'package:cat_library_demo/features/room/room_scene.dart';
-import 'package:cat_library_demo/room_layout.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -84,8 +83,6 @@ void main() {
     await tester.dragFrom(const Offset(160, 380), const Offset(55, 40));
     await tester.pump(const Duration(milliseconds: 350));
     expect(home.scene.pan.distance, greaterThan(20));
-    expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 3.2));
-    expect(RoomLayout.defaults['bed'], const GridPoint(8.1, 8.1));
     expect(
       tester.getCenter(find.byKey(const Key('wallet-card-0'))),
       cardPosition,

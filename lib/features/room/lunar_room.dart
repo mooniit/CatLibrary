@@ -224,33 +224,12 @@ class LunarRoom {
     RoomFurnishings room,
     bool night,
     Map<ArtworkStyle, ui.Image> artworks,
-    void Function(String kind, ui.Rect bounds, ui.Offset ground) legacy,
-    Map<WallStyle, ui.Image> walls,
-    Map<FloorStyle, ui.Image> floors,
   ) {
     drawLayer(canvas, 'floor');
-    if (room.floor != FloorStyle.lunar) {
-      _floorMaterial(canvas, floors[room.floor]!);
-    }
-    if (room.isVisible('rug')) {
-      if (room.styleFor('rug') == FurnitureStyle.lunar) {
-        drawLayer(canvas, 'rug');
-      } else {
-        legacy('rug', layerRect('rug'), project(.5, .5));
-      }
-    }
+    if (room.isVisible('rug')) drawLayer(canvas, 'rug');
     for (final side in ['left', 'right']) {
       final visible = windowVisible(room, side);
       drawLayer(canvas, 'wall-$side${visible ? '' : '-closed'}');
-      if (room.wall != WallStyle.lunar) {
-        _wallMaterial(
-          canvas,
-          walls[room.wall]!,
-          side,
-          visible,
-          flat: room.wall == WallStyle.bauhaus,
-        );
-      }
       final slot =
           (catalog['slots'] as List).firstWhere(
                 (s) => s['id'] == 'window-$side',
@@ -258,15 +237,7 @@ class LunarRoom {
               as Map;
       if (visible) {
         _sky(canvas, slot, night);
-        if (room.styleFor('window') == FurnitureStyle.lunar) {
-          drawLayer(canvas, 'window-$side');
-        } else {
-          legacy(
-            'window',
-            layerRect('window-$side'),
-            wallPoint(side, .5, (slot['z'] + slot['h'] / 2) as double),
-          );
-        }
+        drawLayer(canvas, 'window-$side');
       }
     }
     if (room.isVisible('painting')) {
@@ -278,10 +249,7 @@ class LunarRoom {
     }
     final fixtures =
         (catalog['fixtures'] as List)
-            .map((f) {
-              final facing = room.facings[f['id']] ?? f['defaultFacing'];
-              return f['orientations'][facing] as Map;
-            })
+            .map((f) => f['orientations'][room.facingFor(f['id'])] as Map)
             .where((f) => room.isVisible(f['id']))
             .toList()
           ..sort(
@@ -289,100 +257,7 @@ class LunarRoom {
                 .compareTo((b['x'] + b['y'] + b['w'] / 2 + b['d'] / 2) as num),
           );
     for (final f in fixtures) {
-      final id = f['id'] as String;
-      final sprite = '$id-${f['facing']}';
-      if (room.styleFor(id) == FurnitureStyle.lunar &&
-          !(id == 'bed' && room.bedCovered)) {
-        drawLayer(canvas, sprite);
-      } else {
-        legacy(id, layerRect(sprite), project(f['x'], f['y']));
-      }
+      drawLayer(canvas, "${f['id']}-${f['facing']}");
     }
-  }
-
-  void _floorMaterial(ui.Canvas canvas, ui.Image image) {
-    final a = project(0, 0), b = project(1, 0), c = project(0, 1);
-    canvas.save();
-    canvas.clipPath(ui.Path()..addPolygon([a, b, project(1, 1), c], true));
-    canvas.transform(
-      Float64List.fromList([
-        (b.dx - a.dx) / image.width,
-        (b.dy - a.dy) / image.width,
-        0,
-        0,
-        (c.dx - a.dx) / image.height,
-        (c.dy - a.dy) / image.height,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        a.dx,
-        a.dy,
-        0,
-        1,
-      ]),
-    );
-    canvas.drawImage(image, ui.Offset.zero, _paint);
-    canvas.restore();
-  }
-
-  void _wallMaterial(
-    ui.Canvas canvas,
-    ui.Image image,
-    String side,
-    bool window, {
-    required bool flat,
-  }) {
-    final h = (camera['wallHeight'] as num).toDouble();
-    final path = ui.Path()
-      ..fillType = ui.PathFillType.evenOdd
-      ..addPolygon([
-        wallPoint(side, 0, .032, 0),
-        wallPoint(side, 1, .032, 0),
-        wallPoint(side, 1, h, 0),
-        wallPoint(side, 0, h, 0),
-      ], true);
-    if (window) {
-      path.addPolygon([
-        wallPoint(side, .34, .4, 0),
-        wallPoint(side, .66, .4, 0),
-        wallPoint(side, .66, .6125, 0),
-        wallPoint(side, .34, .6125, 0),
-      ], true);
-    }
-    final a = wallPoint(side, 0, h, 0), b = wallPoint(side, 1, h, 0);
-    final horizontal = flat
-        ? (b.dx - a.dx) / image.width
-        : 480 / (side == 'left' ? 487 : 488);
-    final vertical = (project(0, 0).dy - a.dy) / (flat ? image.height : 509);
-    final shear = flat
-        ? (b.dy - a.dy) / image.width
-        : ((b.dy - a.dy) - vertical * 307) / (side == 'left' ? -487 : 488);
-    canvas.save();
-    canvas.clipPath(path);
-    canvas.transform(
-      Float64List.fromList([
-        horizontal,
-        shear,
-        0,
-        0,
-        0,
-        vertical,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        flat ? a.dx : a.dx - horizontal * 560,
-        flat ? a.dy : a.dy - shear * 560 - vertical * 71,
-        0,
-        1,
-      ]),
-    );
-    canvas.drawImage(image, ui.Offset.zero, _paint);
-    canvas.restore();
   }
 }

@@ -1,6 +1,3 @@
-import 'dart:ui' as ui;
-
-import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 
 import 'room_furniture.dart';
@@ -51,7 +48,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
           Text('给小屋添一点喜欢', style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 8),
           Text(
-            '四组风格 · 七类家具 · 五幅装饰画\n固定位置，自由混搭；选择自动保存到本机。',
+            '月轨阅读舱 · 七类家具 · 四个画位\n固定位置；选择自动保存到本机。',
             style: TextStyle(color: scheme.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
@@ -59,10 +56,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
             spacing: 8,
             runSpacing: 8,
             children: [
-              for (final style in [
-                FurnitureStyle.lunar,
-                FurnitureStyle.bauhaus,
-              ])
+              for (final style in [FurnitureStyle.lunar])
                 OutlinedButton(
                   key: Key('room-set-${style.name}'),
                   onPressed: saving ? null : () => change(room.withSet(style)),
@@ -125,7 +119,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               subtitle: Text(
-                '${room.usesLunarRoom ? lunarFurnitureLocations[kind] : furnitureLocations[kind]}${room.isVisible(kind) ? '' : ' · 已隐藏'}',
+                '${lunarFurnitureLocations[kind]}${room.isVisible(kind) ? '' : ' · 已隐藏'}',
               ),
               value: room.isVisible(kind),
               onChanged: saving
@@ -147,7 +141,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
               ),
               const SizedBox(height: 12),
             ],
-            if (room.usesLunarRoom && kind == 'window')
+            if (kind == 'window')
               for (final side in ['left', 'right'])
                 SwitchListTile.adaptive(
                   key: Key('window-$side-visible'),
@@ -159,9 +153,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                           room.withVisibility('window-$side', visible),
                         ),
                 ),
-            if (room.usesLunarRoom &&
-                room.styleFor(kind) == FurnitureStyle.lunar &&
-                ['bookshelf', 'desk', 'chair', 'tree', 'bed'].contains(kind))
+            if (['bookshelf', 'desk', 'chair', 'tree', 'bed'].contains(kind))
               Wrap(
                 spacing: 8,
                 children: [
@@ -176,20 +168,9 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                     ),
                 ],
               ),
-            if (kind == 'bed' && room.styleFor(kind) == FurnitureStyle.lunar)
-              SwitchListTile.adaptive(
-                key: const Key('bed-canopy'),
-                contentPadding: EdgeInsets.zero,
-                title: const Text('月牙罩'),
-                subtitle: const Text('保留原款，也可切换开放猫窝'),
-                value: room.bedCovered,
-                onChanged: saving
-                    ? null
-                    : (value) => change(room.withBedCovered(value)),
-              ),
           ],
           const SizedBox(height: 16),
-          if (room.usesLunarRoom) ...[
+          ...[
             Text('月轨画框', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Wrap(
@@ -218,7 +199,7 @@ class _FurnitureStoreState extends State<FurnitureStore> {
             contentPadding: EdgeInsets.zero,
             title: Text('装饰画', style: Theme.of(context).textTheme.titleMedium),
             subtitle: Text(
-              '${room.usesLunarRoom ? '两堵墙 · 四个固定画位' : '左墙中间偏上'}${room.isVisible('painting') ? '' : ' · 已隐藏'}',
+              '两堵墙 · 四个固定画位${room.isVisible('painting') ? '' : ' · 已隐藏'}',
             ),
             value: room.isVisible('painting'),
             onChanged: saving
@@ -267,45 +248,14 @@ class _FurnitureStoreState extends State<FurnitureStore> {
             child: SizedBox(
               height: 124,
               width: double.infinity,
-              child:
-                  style == FurnitureStyle.lunar &&
-                      !(kind == 'bed' && room.bedCovered)
-                  ? Image.asset(
-                      'assets/images/room/lunar-v5/${kind == 'window'
-                          ? 'window-left'
-                          : kind == 'rug'
-                          ? 'rug'
-                          : '$kind-${room.facingFor(kind)}'}.png',
-                      fit: BoxFit.contain,
-                    )
-                  : FutureBuilder<ui.Image>(
-                      future: Flame.images.load(
-                        furnitureAsset(kind, style, covered: room.bedCovered),
-                      ),
-                      builder: (context, snapshot) => snapshot.hasData
-                          ? CustomPaint(
-                              painter: _FurniturePainter(
-                                snapshot.data!,
-                                sourceFor(
-                                  kind,
-                                  style,
-                                  covered: room.bedCovered,
-                                ),
-                                geometryFor(
-                                  kind,
-                                  style,
-                                  covered: room.bedCovered,
-                                ),
-                              ),
-                            )
-                          : Center(
-                              child: snapshot.hasError
-                                  ? const Icon(Icons.broken_image_outlined)
-                                  : const CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                            ),
-                    ),
+              child: Image.asset(
+                'assets/images/room/lunar-v5/${kind == 'window'
+                    ? 'window-left'
+                    : kind == 'rug'
+                    ? 'rug'
+                    : '$kind-${room.facingFor(kind)}'}.png',
+                fit: BoxFit.contain,
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -369,32 +319,4 @@ class _FurnitureStoreState extends State<FurnitureStore> {
       ),
     );
   }
-}
-
-class _FurniturePainter extends CustomPainter {
-  const _FurniturePainter(this.image, this.source, this.geometry);
-  final ui.Image image;
-  final Rect source;
-  final FurnitureGeometry geometry;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final bounds = geometry.bounds(source);
-    final fitted = applyBoxFit(BoxFit.contain, bounds.size, size).destination;
-    final scale = fitted.width / bounds.width;
-    final target = Alignment.center.inscribe(fitted, Offset.zero & size);
-    geometry.draw(
-      canvas,
-      image,
-      source,
-      scale,
-      target.topLeft - bounds.topLeft * scale,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_FurniturePainter oldDelegate) =>
-      oldDelegate.image != image ||
-      oldDelegate.source != source ||
-      oldDelegate.geometry != geometry;
 }

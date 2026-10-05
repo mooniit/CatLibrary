@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cat_library_demo/features/room/room_furniture.dart';
 import 'package:cat_library_demo/features/room/furniture_store.dart';
 import 'package:cat_library_demo/features/home/home_page.dart';
-import 'package:cat_library_demo/room_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,10 +12,10 @@ void main() {
   setUp(() => SharedPreferences.setMockInitialValues({}));
 
   test(
-    'five fixed slots retain independent styles and visibility after reload',
+    'seven fixed pieces retain independent choices and visibility after reload',
     () async {
       expect(
-        RoomLayout.defaults.keys,
+        furnitureNames.keys,
         unorderedEquals([
           'window',
           'chair',
@@ -27,85 +26,78 @@ void main() {
           'rug',
         ]),
       );
-      var room = const RoomFurnishings(wall: WallStyle.blue);
-      for (final kind in RoomLayout.defaults.keys) {
+      var room = const RoomFurnishings(wall: WallStyle.lunar);
+      for (final kind in furnitureNames.keys) {
         room = room
-            .withStyle(
-              kind,
-              stylesFor(kind).contains(FurnitureStyle.sage)
-                  ? FurnitureStyle.sage
-                  : FurnitureStyle.lunar,
-            )
+            .withStyle(kind, FurnitureStyle.lunar)
             .withVisibility(kind, false);
       }
       await room.save('owner-a');
       final restored = await RoomFurnishings.load('owner-a');
-      expect(restored.wall, WallStyle.blue);
-      for (final kind in RoomLayout.defaults.keys) {
-        expect(
-          restored.styleFor(kind),
-          stylesFor(kind).contains(FurnitureStyle.sage)
-              ? FurnitureStyle.sage
-              : FurnitureStyle.lunar,
-        );
+      expect(restored.wall, WallStyle.lunar);
+      for (final kind in furnitureNames.keys) {
+        expect(restored.styleFor(kind), FurnitureStyle.lunar);
         expect(restored.isVisible(kind), isFalse);
       }
-      final changed = restored.withStyle('desk', FurnitureStyle.cream);
+      final changed = restored.withStyle('desk', FurnitureStyle.lunar);
       expect(changed.isVisible('desk'), isTrue);
       expect(changed.isVisible('chair'), isFalse);
-      expect(changed.styleFor('chair'), FurnitureStyle.sage);
-      expect(changed.wall, WallStyle.blue);
+      expect(changed.styleFor('chair'), FurnitureStyle.lunar);
+      expect(changed.wall, WallStyle.lunar);
       expect((await RoomFurnishings.load('owner-b')).isVisible('desk'), isTrue);
       final preview = await RoomFurnishings.load(null);
-      expect(preview.wall, WallStyle.sage);
-      expect(preview.styleFor('desk'), FurnitureStyle.sage);
-      expect(RoomLayout.defaults['bookshelf'], const GridPoint(0.08, 3.2));
-      expect(RoomLayout.defaults['bed'], const GridPoint(8.1, 8.1));
+      expect(preview.wall, WallStyle.lunar);
+      expect(preview.styleFor('desk'), FurnitureStyle.lunar);
     },
   );
 
-  test('modern sets mix independently and preserve legacy rooms', () async {
+  test('old style records cannot restore the deleted room', () async {
     SharedPreferences.setMockInitialValues({
       'room_furniture_v1_old': <String>[
         'desk|sage|0',
         'wall|blue|1',
+        'floor|oak|1',
         'tree|sage|1',
         'rug|invalid|1',
-        'floor|invalid|1',
-        'bed-canopy|covered|invalid',
+        'bed-canopy|covered|1',
+        'facing-desk|z|1',
+        'frame-template|round|1',
       ],
     });
     final old = await RoomFurnishings.load('old');
-    expect(old.floor, FloorStyle.oak);
-    expect(old.isVisible('tree'), isFalse);
-    expect(old.isVisible('rug'), isFalse);
-    expect(old.styleFor('desk'), FurnitureStyle.sage);
+    expect(old.wall, WallStyle.lunar);
+    expect(old.floor, FloorStyle.lunar);
+    expect(old.styleFor('desk'), FurnitureStyle.lunar);
     expect(old.isVisible('desk'), isFalse);
-    var room = old
+    expect(old.isVisible('tree'), isTrue);
+    expect(old.isVisible('rug'), isTrue);
+    expect(old.facingFor('desk'), 'y');
+    expect(old.frameTemplate, 'auto');
+    await old.save('old');
+    final saved = (await SharedPreferences.getInstance()).getStringList(
+      'room_furniture_v1_old',
+    )!;
+    expect(
+      saved.any(
+        (s) =>
+            s.contains('sage') ||
+            s.contains('blue') ||
+            s.contains('oak') ||
+            s.contains('canopy'),
+      ),
+      isFalse,
+    );
+    final room = old
         .withSet(FurnitureStyle.lunar)
-        .withBedCovered(true)
         .withArtwork(ArtworkStyle.pearl)
-        .withVisibility('painting', false)
-        .withStyle('chair', FurnitureStyle.bauhaus)
         .withVisibility('tree', false);
     await room.save('new');
-    room = await RoomFurnishings.load('new');
-    expect(room.wall, WallStyle.lunar);
-    expect(room.floor, FloorStyle.lunar);
-    expect(room.bedCovered, isTrue);
-    expect(room.artwork, ArtworkStyle.pearl);
-    expect(room.isVisible('painting'), isFalse);
-    expect(room.styleFor('chair'), FurnitureStyle.bauhaus);
-    expect(room.isVisible('tree'), isFalse);
-    expect(room.isVisible('rug'), isTrue);
-    expect(room.withVisibility('tree', true).isVisible('tree'), isTrue);
-    room = room.withSet(FurnitureStyle.bauhaus);
-    expect(room.floor, FloorStyle.bauhaus);
-    expect(room.wall, WallStyle.bauhaus);
-    expect(room.isVisible('tree'), isTrue);
-    expect(room.isVisible('painting'), isFalse);
+    final restored = await RoomFurnishings.load('new');
+    expect(restored.artwork, ArtworkStyle.pearl);
+    expect(restored.isVisible('desk'), isTrue);
+    expect(restored.isVisible('tree'), isFalse);
     expect(
-      () => room.withStyle('tree', FurnitureStyle.cream),
+      () => room.withStyle('unknown', FurnitureStyle.lunar),
       throwsArgumentError,
     );
   });
@@ -130,9 +122,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       for (final kind in furnitureNames.keys) {
-        final style = stylesFor(kind).contains(FurnitureStyle.sage)
-            ? FurnitureStyle.sage
-            : FurnitureStyle.lunar;
+        final style = FurnitureStyle.lunar;
         final choice = find.byKey(Key('furniture-$kind-${style.name}'));
         await tester.ensureVisible(choice);
         await tester.pump();
@@ -185,7 +175,7 @@ void main() {
       );
       expect(
         reopened.currentState!.scene.furnishings.styleFor('desk'),
-        FurnitureStyle.sage,
+        FurnitureStyle.lunar,
       );
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
@@ -213,12 +203,12 @@ void main() {
         expect(room.artwork, artwork);
         expect(room.isVisible('painting'), isFalse);
         expect(room.isVisible('desk'), isFalse);
-        expect(room.styleFor('desk'), FurnitureStyle.sage);
-        expect(room.wall, WallStyle.blue);
+        expect(room.styleFor('desk'), FurnitureStyle.lunar);
+        expect(room.wall, WallStyle.lunar);
         final restored = room
             .withArtwork(artwork)
-            .withWall(WallStyle.blue)
-            .withStyle('chair', FurnitureStyle.sage)
+            .withWall(WallStyle.lunar)
+            .withStyle('chair', FurnitureStyle.lunar)
             .withVisibility('chair', false);
         expect(restored.artwork, artwork);
         expect(restored.isVisible('painting'), isTrue);
@@ -255,13 +245,14 @@ void main() {
       await pending;
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
-      final chair = find.byKey(const Key('furniture-chair-cream'));
+      final chair = find.byKey(const Key('furniture-chair-lunar'));
       await tester.ensureVisible(chair);
       await tester.tap(chair);
       await tester.pump(const Duration(milliseconds: 100));
       final saved = await RoomFurnishings.load(null);
-      expect(saved.styleFor('window'), FurnitureStyle.cream);
-      expect(saved.styleFor('chair'), FurnitureStyle.cream);
+      expect(saved.isVisible('window-left'), isFalse);
+      expect(saved.facingFor('desk'), 'x');
+      expect(saved.styleFor('chair'), FurnitureStyle.lunar);
       await tester.tap(find.byTooltip('关闭商店'));
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pumpWidget(const SizedBox());
@@ -288,10 +279,10 @@ void main() {
       unawaited(home.openStore());
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
-      expect(home.scene.furnishings.styleFor('window'), FurnitureStyle.sage);
+      expect(home.scene.furnishings.isVisible('window'), isTrue);
       expect(
         find.descendant(
-          of: find.byKey(const Key('furniture-window-sage')),
+          of: find.byKey(const Key('furniture-window-lunar')),
           matching: find.text('✓ 使用中'),
         ),
         findsOneWidget,
@@ -312,7 +303,7 @@ void main() {
           home: Scaffold(
             body: SingleChildScrollView(
               child: FurnitureStore(
-                initial: const RoomFurnishings(),
+                initial: const RoomFurnishings(hidden: {'window'}),
                 onChanged: (_) async {
                   if (fail) throw StateError('disk full');
                 },
@@ -321,13 +312,13 @@ void main() {
           ),
         ),
       );
-      final choice = find.byKey(const Key('furniture-window-sage'));
+      final choice = find.byKey(const Key('furniture-window-lunar'));
       await tester.ensureVisible(choice);
       await tester.tap(choice);
       await tester.pump();
       expect(find.text('家具未保存，请重试'), findsOneWidget);
       expect(
-        find.descendant(of: choice, matching: find.text('选用窗户')),
+        find.descendant(of: choice, matching: find.text('已选 · 点击显示')),
         findsOneWidget,
       );
       fail = false;
@@ -346,15 +337,7 @@ void main() {
 
 class _DelayedFurnishings extends RoomFurnishings {
   _DelayedFurnishings(this.gate)
-    : super(
-        styles: {
-          for (final kind in furnitureNames.keys)
-            if (stylesFor(kind).contains(FurnitureStyle.sage))
-              kind: kind == 'window'
-                  ? FurnitureStyle.cream
-                  : FurnitureStyle.sage,
-        },
-      );
+    : super(hidden: {'window-left'}, facings: {'desk': 'x'});
   final Completer<void> gate;
 
   @override
@@ -365,8 +348,7 @@ class _DelayedFurnishings extends RoomFurnishings {
 }
 
 class _FailedCachedFurnishings extends RoomFurnishings {
-  const _FailedCachedFurnishings()
-    : super(styles: const {'window': FurnitureStyle.cream});
+  const _FailedCachedFurnishings() : super(hidden: const {'window'});
 
   @override
   Future<void> save(String? ownerId) async {

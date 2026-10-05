@@ -75,14 +75,14 @@ void main() {
       expect(restored.frameTemplate, 'square');
       expect(restored.isVisible('window-left'), isFalse);
       expect(restored.isVisible('window-right'), isTrue);
-      expect(restored.usesLunarRoom, isTrue);
+      expect(restored.wall, WallStyle.lunar);
       final other = await RoomFurnishings.load('owner-b');
-      expect(other.usesLunarRoom, isFalse);
+      expect(other.wall, WallStyle.lunar);
       expect(other.facings, isEmpty);
       expect(() => lunar.withFacing('desk', 'z'), throwsArgumentError);
       expect(() => lunar.withFrameTemplate('round'), throwsArgumentError);
       expect(
-        restored.withStyle('desk', FurnitureStyle.sage).frameTemplate,
+        restored.withStyle('desk', FurnitureStyle.lunar).frameTemplate,
         'square',
       );
     },
@@ -118,10 +118,6 @@ void main() {
             room.withFrameTemplate(template),
             night,
             artwork,
-            (_, _, _) =>
-                fail('A complete lunar set must render approved sprites'),
-            {},
-            {},
           );
           final picture = recorder.endRecording();
           final image = await picture.toImage(1080, 1073);

@@ -180,13 +180,13 @@ B_X、B_Y、B_Z 是世界单位轴在画面里的投影向量。房间、家具�
 
 | 文件 | 现状 | 计划调整 |
 |---|---|---|
-| lib/room_layout.dart | 固定 10×10、固定坡度、按类别给出默认位置 | 使用参考图校准参数，分开世界尺度、网格 A、实例位置与固定挂位 |
-| lib/features/room/room_scene.dart | Flame 渲染，房间尺寸与素材变换包含独立像素参数，支持平移缩放 | 统一投影；使用实例布局；固定视口；正确绘制深度 |
+| assets/images/room/lunar-v5/catalog.json | 唯一固定标准、双朝向占格、图层锚点及挂位 | 后续实例布置沿用同一标准 |
+| lib/features/room/room_scene.dart | 仅使用固定标准原生渲染，支持平移缩放 | 后续布置操作沿用当前视口与相机 |
 | lib/features/room/room_furniture.dart | 每类一个款式、显隐、墙地样式；本机按用户保存 | 拆清款式定义、实例位置、挂位配置与数量约束 |
 | lib/features/room/furniture_store.dart | 选款和显隐自动保存，无完整的家具购买数量模型 | 先提供已拥有数量及可摆数量接口；后续商店设计再接真实购买流程 |
 | lib/features/home/home_page.dart | 房间铺满 Stack，绑定拖动视口和双指缩放 | 按地板宽度计算房间区域高度；接入布置模式与固定相机 |
 
-现有相关测试：room_layout_test.dart、room_projection_test.dart、room_furniture_test.dart、home_scene_test.dart。
+现有相关测试：room_standard_test.dart、lunar_room_test.dart、room_furniture_test.dart、home_scene_test.dart。旧房屋坐标、素材、备用渲染、样稿及本地备份已删除；原生接入详情见 NATIVE-LUNAR.md。
 
 ### 最小数据分工
 
