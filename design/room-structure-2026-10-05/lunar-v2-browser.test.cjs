@@ -1,0 +1,69 @@
+const {chromium}=require('../../.tooling/browser/node_modules/playwright-core');
+const assert=require('node:assert/strict');
+const {readFileSync,writeFileSync}=require('node:fs');
+const {join}=require('node:path');
+const dir=join(__dirname,'lunar-assets-v2'),standard=JSON.parse(readFileSync(join(__dirname,'room-standard-v1.json'),'utf8'));
+const manifest=JSON.parse(readFileSync(join(dir,'manifest.json'),'utf8'));
+(async()=>{
+  const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
+  try{
+    const page=await browser.newPage({viewport:{width:1440,height:1200}}),errors=[],badResponses=[],requests=[];
+    page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)badResponses.push([r.url(),r.status()]);});
+    page.on('request',r=>requests.push(r.url()));
+    const base='http://127.0.0.1:4181/design/room-structure-2026-10-05/';
+    await page.goto(base+'lunar.html');await page.waitForFunction(()=>window.lunarStudy);
+    async function imagesReady(){await page.evaluate(async()=>{for(const e of document.querySelectorAll('image')){const img=new Image();img.src=e.getAttribute('href');await img.decode();}});}
+    async function validate(){const result=await page.evaluate(()=>({standard:window.lunarStudy.standard,camera:window.lunarStudy.camera,conflicts:window.lunarStudy.conflicts,fixtures:window.lunarStudy.fixtures}));
+      assert.deepEqual(result.standard,standard);assert.deepEqual(result.camera,standard.camera);assert.deepEqual(result.conflicts,[]);
+      for(const f of result.fixtures){assert(f.bounds.min[0]>=f.x-1e-9&&f.bounds.min[1]>=f.y-1e-9);assert(f.bounds.max[0]<=f.x+f.w+1e-9&&f.bounds.max[1]<=f.y+f.d+1e-9);}
+    }
+    await imagesReady();await validate();
+    const size=await page.locator('#lunar-room').boundingBox();assert(Math.abs(size.height/size.width-1073/1080)<.001);
+    // All 32 combinations through real controls, including mutually swapped rectangular masks.
+    const ids=['bookshelf','desk','chair','tree','bed'],defaults={bookshelf:'x',desk:'y',chair:'y',tree:'x',bed:'y'};
+    for(let combo=0;combo<32;combo++){
+      const current=await page.evaluate(()=>window.lunarStudy.state.facings);
+      for(const[i,id]of ids.entries()){const target=combo&(1<<i)?'x':'y';if(current[id]!==target){await page.locator('#item').selectOption(id);await page.locator('#rotate').click();}}
+      await imagesReady();await validate();
+    }
+    await page.locator('#reset').click();await imagesReady();
+    await page.locator('#lunar-room').screenshot({path:join(dir,'scene-clean.png')});
+    await page.locator('#grid').check();await page.locator('#axes').check();await validate();await page.locator('#lunar-room').screenshot({path:join(dir,'scene-grid.png')});
+    for(const id of ids){await page.locator('#item').selectOption(id);await page.locator('#hide-item').click();assert.equal(await page.locator('#lunar-room [data-asset="'+id+'"]').count(),0);await page.locator('#hide-item').click();}
+    for(const key of['leftWindow','rightWindow','art','rug']){await page.locator('#'+key).uncheck();await validate();await page.locator('#'+key).check();}
+    await page.locator('#reset').click();
+    // Every template is reusable at each fixed slot; artwork aspect stays unchanged.
+    for(const id of['art-left-back','art-left-front','art-right-back','art-right-front']){
+      await page.locator('#frame-slot').selectOption(id);
+      for(const template of['landscape','portrait','square']){
+        await page.locator('#frame-template').selectOption(template);
+        for(const kind of['starry','pearl','']){await page.locator('#frame-artwork').selectOption(kind);await imagesReady();
+          const f=await page.evaluate(id=>window.lunarStudy.frameLayouts.find(f=>f.id===id),id);
+          assert(Math.abs(f.centerZ*8-4.05)<1e-10);assert(f.w<=.20&&f.h<=.20);assert(f.s-f.w/2>=0&&f.s+f.w/2<=1);
+          const image=page.locator('#lunar-room [data-asset="'+id+'"] [data-artwork]');assert.equal(await image.count(),kind?1:0);
+          if(kind)assert(Math.abs(Number(await image.getAttribute('data-original-aspect'))-(kind==='starry'?1424/1104:1191/1320))<1e-10);
+        }
+      }
+    }
+    await page.locator('#reset').click();
+    // One combined alternate view. Never re-render the byte-exact furniture PNGs.
+    for(const id of ids){await page.locator('#item').selectOption(id);await page.locator('#rotate').click();}
+    await imagesReady();await page.locator('#lunar-room').screenshot({path:join(dir,'scene-alternate.png')});await page.locator('#reset').click();
+    const exportPage=await browser.newPage();await exportPage.goto(base+'lunar.html');await exportPage.waitForFunction(()=>window.lunarStudy);
+    const mirrorDifferences=await exportPage.evaluate(async({ids,base})=>{const result={};for(const id of ids){const buffers=[];let w,h;for(const dir of['x','y']){const img=new Image();img.src=base+'lunar-assets-v2/'+id+'-'+dir+'.png';await img.decode();w=img.width;h=img.height;const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');ctx.drawImage(img,0,0);buffers.push(ctx.getImageData(0,0,w,h).data);}let difference=0;for(let v=0;v<h;v++)for(let u=0;u<w;u++)for(let c=0;c<4;c++)if(buffers[0][(v*w+u)*4+c]!==buffers[1][(v*w+w-1-u)*4+c])difference++;result[id]=difference;}return result;},{ids,base});
+    for(const difference of Object.values(mirrorDifferences))assert.equal(difference,0);
+    // Export an audit contact sheet on pale and navy backgrounds, without modifying the assets.
+    const entries=manifest.assets.filter(a=>a.category==='furniture');
+    const sheet=await exportPage.evaluate(async({entries,base})=>{const canvas=document.createElement('canvas');canvas.width=1200;canvas.height=1100;const ctx=canvas.getContext('2d');ctx.fillStyle='#f4f1eb';ctx.fillRect(0,0,600,1100);ctx.fillStyle='#17283e';ctx.fillRect(600,0,600,1100);
+      for(let i=0;i<entries.length;i++){const a=entries[i],img=new Image();img.src=base+'lunar-assets-v2/'+a.svg;await img.decode();const scale=Math.min(250/a.viewBox[2],175/a.viewBox[3]);for(const offset of[0,600]){const x=offset+(i%2)*300,y=Math.floor(i/2)*220;ctx.fillStyle=offset?'#f4e9d3':'#293e57';ctx.font='16px sans-serif';ctx.fillText(a.label+' '+a.facing,x+20,y+22);ctx.drawImage(img,x+150-a.viewBox[2]*scale/2,y+205-a.viewBox[3]*scale,a.viewBox[2]*scale,a.viewBox[3]*scale);}}return canvas.toDataURL('image/png').split(',')[1];},{entries,base});writeFileSync(join(dir,'edge-contact-sheet.png'),Buffer.from(sheet,'base64'));
+    const frameSheet=await exportPage.evaluate(async({base})=>{const c=document.createElement('canvas');c.width=1080;c.height=440;const x=c.getContext('2d');x.fillStyle='#eeeae2';x.fillRect(0,0,c.width,c.height);for(const[i,key]of['landscape','portrait','square'].entries()){const img=new Image();img.src=base+'lunar-assets-v2/frame-'+key+'-flat.png';await img.decode();x.drawImage(img,i*360+(360-img.width)/2,70+(340-img.height)/2);x.fillStyle='#293e57';x.font='20px sans-serif';x.textAlign='center';x.fillText(['横版 · 1.6 × 1.2 格','竖版 · 1.2 × 1.6 格','正方形 · 1.4 × 1.4 格'][i],i*360+180,40);}return c.toDataURL('image/png').split(',')[1];},{base});writeFileSync(join(dir,'frame-templates-sheet.png'),Buffer.from(frameSheet,'base64'));
+    await page.screenshot({path:join(dir,'page-desktop.png'),fullPage:true});
+    for(const width of[360,390]){await page.setViewportSize({width,height:844});await imagesReady();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);const box=await page.locator('#lunar-room').boundingBox();assert(Math.abs(box.height/box.width-1073/1080)<.001);await validate();}
+    await page.screenshot({path:join(dir,'page-mobile.png'),fullPage:true});
+    assert.deepEqual(errors,[]);assert.deepEqual(badResponses,[]);
+    assert(!requests.some(url=>/lunar-style-v[12]|lunar-style-draft|lunar-room-.*study/.test(url)));
+    assert(requests.some(url=>/bookshelf-x.svg/.test(url))&&requests.some(url=>/bookshelf-y.svg/.test(url)));
+    const report={standardId:standard.id,geometryFrozen:true,allFacingCombinations:32,independentSvgCount:manifest.assets.length,transparentPngCount:manifest.assets.length,spriteComposition:true,positionsChanged:false,artSlotEnlarged:true,frameTemplates:3,frameSlotTemplateArtworkChecks:36,mirrorDifferences,mobileWidths:[360,390],mobileOverflow:false,errors,badResponses,obsoleteRoomArtLoaded:false};
+    writeFileSync(join(dir,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+  }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

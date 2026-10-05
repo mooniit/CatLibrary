@@ -1,0 +1,4 @@
+# Preserve exported asset bytes across Windows checkouts and rebuilds.
+# Verification compares accepted SVG/PNG outputs and exact mirror pixels.
+*.svg -text
+*.png -text

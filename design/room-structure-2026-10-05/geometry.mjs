@@ -68,15 +68,15 @@ export const fixtures=[
   {id:'bed',label:'猫窝',anchor:[5,6],cols:2,rows:2,w:.19,d:.19,h:.085,facing:'y'}
 ].map(centerFixture);
 // Lower both windows and flanking artwork while retaining a small sill clearance.
-const windowH=1.7*cellSize,windowZ=3.2*cellSize,artH=cellSize;
+const windowH=1.7*cellSize,windowZ=3.2*cellSize,artH=.20;
 const artZ=windowZ+(windowH-artH)/2;
 export const slots=[
   {id:'window-left',label:'左窗',wall:'left',s:.5,z:windowZ,w:.32,h:windowH,type:'window'},
   {id:'window-right',label:'右窗',wall:'right',s:.5,z:windowZ,w:.32,h:windowH,type:'window'},
-  {id:'art-left-back',label:'左墙画位 1',wall:'left',s:.18,z:artZ,w:.16,h:artH,type:'art'},
-  {id:'art-left-front',label:'左墙画位 2',wall:'left',s:.82,z:artZ,w:.16,h:artH,type:'art'},
-  {id:'art-right-back',label:'右墙画位 1',wall:'right',s:.18,z:artZ,w:.16,h:artH,type:'art'},
-  {id:'art-right-front',label:'右墙画位 2',wall:'right',s:.82,z:artZ,w:.16,h:artH,type:'art'}
+  {id:'art-left-back',label:'左墙画位 1',wall:'left',s:.18,z:artZ,w:.20,h:artH,type:'art'},
+  {id:'art-left-front',label:'左墙画位 2',wall:'left',s:.82,z:artZ,w:.20,h:artH,type:'art'},
+  {id:'art-right-back',label:'右墙画位 1',wall:'right',s:.18,z:artZ,w:.20,h:artH,type:'art'},
+  {id:'art-right-front',label:'右墙画位 2',wall:'right',s:.82,z:artZ,w:.20,h:artH,type:'art'}
 ];
 export function orient(f,facing) {
   return centerFixture(facing===f.facing?{...f,facing}:{...f,w:f.d,d:f.w,cols:f.rows,rows:f.cols,facing});

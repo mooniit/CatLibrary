@@ -1,0 +1,422 @@
+[
+  {
+    "id": "bookshelf-x",
+    "rgba": true,
+    "size": [
+      193,
+      303
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      188,
+      297
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      5,
+      6
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "bookshelf-y",
+    "rgba": true,
+    "size": [
+      193,
+      303
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      188,
+      297
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      5,
+      6
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "desk-x",
+    "rgba": true,
+    "size": [
+      224,
+      220
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      219,
+      215
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "desk-y",
+    "rgba": true,
+    "size": [
+      224,
+      220
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      219,
+      215
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "chair-x",
+    "rgba": true,
+    "size": [
+      112,
+      168
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      106,
+      163
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      6,
+      5
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "chair-y",
+    "rgba": true,
+    "size": [
+      112,
+      168
+    ],
+    "alphaBBox": [
+      6,
+      6,
+      107,
+      163
+    ],
+    "transparentMargins": [
+      6,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "tree-x",
+    "rgba": true,
+    "size": [
+      154,
+      246
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      149,
+      241
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      5,
+      5
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "tree-y",
+    "rgba": true,
+    "size": [
+      154,
+      238
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      149,
+      233
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      5,
+      5
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "bed-x",
+    "rgba": true,
+    "size": [
+      142,
+      123
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      137,
+      117
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      6
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "bed-y",
+    "rgba": true,
+    "size": [
+      142,
+      123
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      137,
+      117
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      6
+    ],
+    "connectedComponents": 1
+  },
+  {
+    "id": "window-left",
+    "rgba": true,
+    "size": [
+      198,
+      234
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      193,
+      229
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "starry-left",
+    "rgba": true,
+    "size": [
+      102,
+      130
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      97,
+      125
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      5,
+      5
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "pearl-left",
+    "rgba": true,
+    "size": [
+      80,
+      120
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      74,
+      115
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      6,
+      5
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "wall-left",
+    "rgba": true,
+    "size": [
+      502,
+      733
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      497,
+      727
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      6
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "window-right",
+    "rgba": true,
+    "size": [
+      198,
+      234
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      193,
+      229
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "starry-right",
+    "rgba": true,
+    "size": [
+      102,
+      130
+    ],
+    "alphaBBox": [
+      5,
+      5,
+      97,
+      125
+    ],
+    "transparentMargins": [
+      5,
+      5,
+      5,
+      5
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "pearl-right",
+    "rgba": true,
+    "size": [
+      80,
+      120
+    ],
+    "alphaBBox": [
+      6,
+      6,
+      75,
+      115
+    ],
+    "transparentMargins": [
+      6,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "wall-right",
+    "rgba": true,
+    "size": [
+      502,
+      733
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      497,
+      727
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      6
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "floor",
+    "rgba": true,
+    "size": [
+      972,
+      505
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      967,
+      499
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      6
+    ],
+    "connectedComponents": null
+  },
+  {
+    "id": "rug",
+    "rgba": true,
+    "size": [
+      710,
+      362
+    ],
+    "alphaBBox": [
+      5,
+      6,
+      705,
+      357
+    ],
+    "transparentMargins": [
+      5,
+      6,
+      5,
+      5
+    ],
+    "connectedComponents": null
+  }
+]

@@ -1,0 +1,112 @@
+{
+  "bed-x-source.png": {
+    "size": [
+      1347,
+      1167
+    ],
+    "alphaBBox": [
+      0,
+      21,
+      1287,
+      1127
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "highAlphaBBox": [
+      90,
+      84,
+      1274,
+      1067
+    ]
+  },
+  "bookshelf-x-source.png": {
+    "size": [
+      1001,
+      1572
+    ],
+    "alphaBBox": [
+      0,
+      0,
+      986,
+      1538
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "highAlphaBBox": [
+      36,
+      8,
+      981,
+      1532
+    ]
+  },
+  "chair-x-source.png": {
+    "size": [
+      1024,
+      1536
+    ],
+    "alphaBBox": [
+      41,
+      19,
+      993,
+      1464
+    ],
+    "alphaExtrema": [
+      0,
+      254
+    ],
+    "highAlphaBBox": [
+      53,
+      46,
+      986,
+      1460
+    ]
+  },
+  "desk-x-source.png": {
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaBBox": [
+      0,
+      19,
+      1227,
+      1212
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "highAlphaBBox": [
+      60,
+      69,
+      1215,
+      1186
+    ]
+  },
+  "tree-x-source.png": {
+    "size": [
+      992,
+      1585
+    ],
+    "alphaBBox": [
+      0,
+      27,
+      970,
+      1561
+    ],
+    "alphaExtrema": [
+      0,
+      255
+    ],
+    "highAlphaBBox": [
+      55,
+      36,
+      947,
+      1538
+    ]
+  }
+}

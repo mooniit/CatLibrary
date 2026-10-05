@@ -1,0 +1,1340 @@
+{
+  "id": "lunar-content-v2",
+  "standardId": "room-standard-v1",
+  "camera": {
+    "origin": [
+      540,
+      537.4716981132076
+    ],
+    "bx": [
+      480,
+      239.57666538848247
+    ],
+    "by": [
+      -480,
+      239.57666538848247
+    ],
+    "bz": [
+      0,
+      -588.2227833080509
+    ],
+    "wallHeight": 0.8083190784267942,
+    "factor": 1.5,
+    "width": 1080,
+    "height": 1073
+  },
+  "placementChanged": false,
+  "artSlotsChanged": {
+    "beforeCells": [
+      1.28,
+      1
+    ],
+    "afterMaxCells": [
+      1.6,
+      1.6
+    ],
+    "horizontalCentersCells": [
+      1.44,
+      6.56
+    ],
+    "centerHeightCells": 4.05
+  },
+  "secondFacingMethod": "exact horizontal pixel mirror of canonical +X, explicitly requested by user",
+  "frameTemplates": {
+    "landscape": {
+      "label": "横版",
+      "w": 0.2,
+      "h": 0.15,
+      "cells": [
+        1.6,
+        1.2
+      ]
+    },
+    "portrait": {
+      "label": "竖版",
+      "w": 0.15,
+      "h": 0.2,
+      "cells": [
+        1.2,
+        1.6
+      ]
+    },
+    "square": {
+      "label": "正方形",
+      "w": 0.175,
+      "h": 0.175,
+      "cells": [
+        1.4,
+        1.4
+      ]
+    }
+  },
+  "assets": [
+    {
+      "id": "bookshelf-x",
+      "label": "书柜",
+      "category": "furniture",
+      "svg": "bookshelf-x.svg",
+      "png": "bookshelf-x.png",
+      "viewBox": [
+        411,
+        331,
+        193,
+        303
+      ],
+      "pixelGroundOrigin": [
+        129,
+        206.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.0025000000000000022,
+        0.1825,
+        0
+      ],
+      "dimensionsL": [
+        0.12,
+        0.26,
+        0.375
+      ],
+      "dimensionsCells": [
+        0.96,
+        2.08,
+        3
+      ],
+      "gridAnchor": [
+        0,
+        1
+      ],
+      "gridSize": [
+        1,
+        3
+      ],
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "facing": "+X",
+      "canonicalSource": "bookshelf-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": false,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        36,
+        8,
+        981,
+        1532
+      ],
+      "sourceFit": [
+        5.968503937007867,
+        5,
+        181.06299212598427,
+        292
+      ],
+      "envelopeFitScale": 1,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "bookshelf-y",
+      "label": "书柜",
+      "category": "furniture",
+      "svg": "bookshelf-y.svg",
+      "png": "bookshelf-y.png",
+      "viewBox": [
+        476,
+        331,
+        193,
+        303
+      ],
+      "pixelGroundOrigin": [
+        64,
+        206.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.057499999999999996,
+        0.1275,
+        0
+      ],
+      "dimensionsL": [
+        0.26,
+        0.12,
+        0.375
+      ],
+      "dimensionsCells": [
+        2.08,
+        0.96,
+        3
+      ],
+      "gridAnchor": [
+        0,
+        1
+      ],
+      "gridSize": [
+        3,
+        1
+      ],
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "facing": "+Y",
+      "canonicalSource": "bookshelf-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": true,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        36,
+        8,
+        981,
+        1532
+      ],
+      "sourceFit": [
+        5.968503937007867,
+        5,
+        181.06299212598427,
+        292
+      ],
+      "envelopeFitScale": 1,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "desk-x",
+      "label": "书桌",
+      "category": "furniture",
+      "svg": "desk-x.svg",
+      "png": "desk-x.png",
+      "viewBox": [
+        397,
+        429,
+        224,
+        220
+      ],
+      "pixelGroundOrigin": [
+        143,
+        108.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.54,
+        0.2875,
+        0
+      ],
+      "dimensionsL": [
+        0.17,
+        0.3,
+        0.18
+      ],
+      "dimensionsCells": [
+        1.36,
+        2.4,
+        1.44
+      ],
+      "gridAnchor": [
+        4,
+        2
+      ],
+      "gridSize": [
+        2,
+        3
+      ],
+      "cells": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "facing": "+X",
+      "canonicalSource": "desk-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": false,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        60,
+        69,
+        1215,
+        1186
+      ],
+      "sourceFit": [
+        5,
+        8.040692640692669,
+        214,
+        206.95930735930733
+      ],
+      "envelopeFitScale": 1,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "desk-y",
+      "label": "书桌",
+      "category": "furniture",
+      "svg": "desk-y.svg",
+      "png": "desk-y.png",
+      "viewBox": [
+        459,
+        429,
+        224,
+        220
+      ],
+      "pixelGroundOrigin": [
+        81,
+        108.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.5375,
+        0.29,
+        0
+      ],
+      "dimensionsL": [
+        0.3,
+        0.17,
+        0.18
+      ],
+      "dimensionsCells": [
+        2.4,
+        1.36,
+        1.44
+      ],
+      "gridAnchor": [
+        4,
+        2
+      ],
+      "gridSize": [
+        3,
+        2
+      ],
+      "cells": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "facing": "+Y",
+      "canonicalSource": "desk-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": true,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        60,
+        69,
+        1215,
+        1186
+      ],
+      "sourceFit": [
+        5,
+        8.040692640692669,
+        214,
+        206.95930735930733
+      ],
+      "envelopeFitScale": 1,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "chair-x",
+      "label": "椅子",
+      "category": "furniture",
+      "svg": "chair-x.svg",
+      "png": "chair-x.png",
+      "viewBox": [
+        483,
+        425,
+        112,
+        168
+      ],
+      "pixelGroundOrigin": [
+        57,
+        112.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.63,
+        0.1275,
+        0
+      ],
+      "dimensionsL": [
+        0.115,
+        0.12,
+        0.2
+      ],
+      "dimensionsCells": [
+        0.92,
+        0.96,
+        1.6
+      ],
+      "gridAnchor": [
+        5,
+        1
+      ],
+      "gridSize": [
+        1,
+        1
+      ],
+      "cells": [
+        [
+          5,
+          1
+        ]
+      ],
+      "facing": "+X",
+      "canonicalSource": "chair-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": false,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        53,
+        46,
+        986,
+        1460
+      ],
+      "sourceFit": [
+        5,
+        9.930332261521983,
+        101,
+        153.06966773847802
+      ],
+      "envelopeFitScale": 1,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "chair-y",
+      "label": "椅子",
+      "category": "furniture",
+      "svg": "chair-y.svg",
+      "png": "chair-y.png",
+      "viewBox": [
+        485,
+        425,
+        112,
+        168
+      ],
+      "pixelGroundOrigin": [
+        55,
+        112.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.6275,
+        0.13,
+        0
+      ],
+      "dimensionsL": [
+        0.12,
+        0.115,
+        0.2
+      ],
+      "dimensionsCells": [
+        0.96,
+        0.92,
+        1.6
+      ],
+      "gridAnchor": [
+        5,
+        1
+      ],
+      "gridSize": [
+        1,
+        1
+      ],
+      "cells": [
+        [
+          5,
+          1
+        ]
+      ],
+      "facing": "+Y",
+      "canonicalSource": "chair-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": true,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        53,
+        46,
+        986,
+        1460
+      ],
+      "sourceFit": [
+        5,
+        9.930332261521983,
+        101,
+        153.06966773847802
+      ],
+      "envelopeFitScale": 1,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "tree-x",
+      "label": "猫爬架",
+      "category": "furniture",
+      "svg": "tree-x.svg",
+      "png": "tree-x.png",
+      "viewBox": [
+        463,
+        374,
+        154,
+        246
+      ],
+      "pixelGroundOrigin": [
+        77,
+        163.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.039999999999999994,
+        0.665,
+        0
+      ],
+      "dimensionsL": [
+        0.17,
+        0.17,
+        0.29
+      ],
+      "dimensionsCells": [
+        1.36,
+        1.36,
+        2.32
+      ],
+      "gridAnchor": [
+        0,
+        5
+      ],
+      "gridSize": [
+        2,
+        2
+      ],
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "facing": "+X",
+      "canonicalSource": "tree-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": false,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        55,
+        36,
+        947,
+        1538
+      ],
+      "sourceFit": [
+        8.998982127294866,
+        10.901788173228965,
+        136.00203574541027,
+        229.00791220807872
+      ],
+      "envelopeFitScale": 0.9703725093562657,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "tree-y",
+      "label": "猫爬架",
+      "category": "furniture",
+      "svg": "tree-y.svg",
+      "png": "tree-y.png",
+      "viewBox": [
+        463,
+        374,
+        154,
+        246
+      ],
+      "pixelGroundOrigin": [
+        77,
+        163.4716981132076
+      ],
+      "worldGroundAnchor": [
+        0.039999999999999994,
+        0.665,
+        0
+      ],
+      "dimensionsL": [
+        0.17,
+        0.17,
+        0.29
+      ],
+      "dimensionsCells": [
+        1.36,
+        1.36,
+        2.32
+      ],
+      "gridAnchor": [
+        0,
+        5
+      ],
+      "gridSize": [
+        2,
+        2
+      ],
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "facing": "+Y",
+      "canonicalSource": "tree-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": true,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        55,
+        36,
+        947,
+        1538
+      ],
+      "sourceFit": [
+        8.998982127294866,
+        10.901788173228965,
+        136.00203574541027,
+        229.00791220807872
+      ],
+      "envelopeFitScale": 0.9703725093562657,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "bed-x",
+      "label": "猫窝",
+      "category": "furniture",
+      "svg": "bed-x.svg",
+      "png": "bed-x.png",
+      "viewBox": [
+        469,
+        499,
+        142,
+        123
+      ],
+      "pixelGroundOrigin": [
+        71,
+        38.471698113207594
+      ],
+      "worldGroundAnchor": [
+        0.655,
+        0.78,
+        0
+      ],
+      "dimensionsL": [
+        0.19,
+        0.19,
+        0.085
+      ],
+      "dimensionsCells": [
+        1.52,
+        1.52,
+        0.68
+      ],
+      "gridAnchor": [
+        5,
+        6
+      ],
+      "gridSize": [
+        2,
+        2
+      ],
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "facing": "+X",
+      "canonicalSource": "bed-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": false,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        90,
+        84,
+        1274,
+        1067
+      ],
+      "sourceFit": [
+        10.694157523168855,
+        14.015946040207567,
+        120.61168495366229,
+        100.13622154514361
+      ],
+      "envelopeFitScale": 0.9137248860125932,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "bed-y",
+      "label": "猫窝",
+      "category": "furniture",
+      "svg": "bed-y.svg",
+      "png": "bed-y.png",
+      "viewBox": [
+        469,
+        499,
+        142,
+        123
+      ],
+      "pixelGroundOrigin": [
+        71,
+        38.471698113207594
+      ],
+      "worldGroundAnchor": [
+        0.655,
+        0.78,
+        0
+      ],
+      "dimensionsL": [
+        0.19,
+        0.19,
+        0.085
+      ],
+      "dimensionsCells": [
+        1.52,
+        1.52,
+        0.68
+      ],
+      "gridAnchor": [
+        5,
+        6
+      ],
+      "gridSize": [
+        2,
+        2
+      ],
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "facing": "+Y",
+      "canonicalSource": "bed-x-source.png",
+      "canonicalFacing": "+X",
+      "mirrored": true,
+      "mirrorPixelDifferences": 0,
+      "sourceCrop": [
+        90,
+        84,
+        1274,
+        1067
+      ],
+      "sourceFit": [
+        10.694157523168855,
+        14.015946040207567,
+        120.61168495366229,
+        100.13622154514361
+      ],
+      "envelopeFitScale": 0.9137248860125932,
+      "removedSourceComponents": 0
+    },
+    {
+      "id": "floor",
+      "category": "floor-material",
+      "svg": "floor.svg",
+      "png": "floor.png",
+      "viewBox": [
+        54,
+        531,
+        972,
+        505
+      ],
+      "dimensionsL": [
+        1,
+        1,
+        0.022
+      ],
+      "dimensionsCells": [
+        8,
+        8,
+        0.176
+      ],
+      "worldGroundAnchor": [
+        0,
+        0,
+        0
+      ],
+      "gridAnchor": [
+        0,
+        0
+      ],
+      "gridSize": [
+        8,
+        8
+      ],
+      "layer": "floor"
+    },
+    {
+      "id": "rug",
+      "category": "rug",
+      "svg": "rug.svg",
+      "png": "rug.png",
+      "viewBox": [
+        185,
+        595,
+        710,
+        362
+      ],
+      "dimensionsL": [
+        0.75,
+        0.75,
+        0.001
+      ],
+      "dimensionsCells": [
+        6,
+        6,
+        0.008
+      ],
+      "worldGroundAnchor": [
+        0.125,
+        0.125,
+        0.0008
+      ],
+      "gridAnchor": [
+        1,
+        1
+      ],
+      "gridSize": [
+        6,
+        6
+      ],
+      "movable": false,
+      "layer": "rug"
+    },
+    {
+      "id": "wall-left",
+      "category": "wall-material",
+      "svg": "wall-left.svg",
+      "png": "wall-left.png",
+      "viewBox": [
+        47,
+        52,
+        502,
+        733
+      ],
+      "wall": "left",
+      "lengthL": 1,
+      "heightL": 0.8083190784267942,
+      "thicknessL": 0.014
+    },
+    {
+      "id": "wall-right",
+      "category": "wall-material",
+      "svg": "wall-right.svg",
+      "png": "wall-right.png",
+      "viewBox": [
+        531,
+        52,
+        502,
+        733
+      ],
+      "wall": "right",
+      "lengthL": 1,
+      "heightL": 0.8083190784267942,
+      "thicknessL": 0.014
+    },
+    {
+      "id": "wall-left-closed",
+      "category": "wall-material",
+      "svg": "wall-left-closed.svg",
+      "png": "wall-left-closed.png",
+      "viewBox": [
+        47,
+        52,
+        502,
+        733
+      ],
+      "wall": "left",
+      "windowOpening": false,
+      "lengthL": 1,
+      "heightL": 0.8083190784267942,
+      "thicknessL": 0.014
+    },
+    {
+      "id": "wall-right-closed",
+      "category": "wall-material",
+      "svg": "wall-right-closed.svg",
+      "png": "wall-right-closed.png",
+      "viewBox": [
+        531,
+        52,
+        502,
+        733
+      ],
+      "wall": "right",
+      "windowOpening": false,
+      "lengthL": 1,
+      "heightL": 0.8083190784267942,
+      "thicknessL": 0.014
+    },
+    {
+      "id": "window-left",
+      "category": "window",
+      "svg": "window-left.svg",
+      "png": "window-left.png",
+      "viewBox": [
+        212,
+        251,
+        198,
+        234
+      ],
+      "wall": "left",
+      "slotId": "window-left",
+      "worldMountCenter": [
+        0,
+        0.5,
+        0.50625
+      ],
+      "depthL": 0.026,
+      "widthL": 0.32,
+      "heightL": 0.2125,
+      "dimensionsCells": [
+        2.56,
+        1.7
+      ],
+      "bottomHeightCells": 3.2,
+      "sillBottomHeightCells": 3.136
+    },
+    {
+      "id": "window-right",
+      "category": "window",
+      "svg": "window-right.svg",
+      "png": "window-right.png",
+      "viewBox": [
+        670,
+        251,
+        198,
+        234
+      ],
+      "wall": "right",
+      "mirroredFrom": "window-left",
+      "slotId": "window-right",
+      "worldMountCenter": [
+        0.5,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026,
+      "widthL": 0.32,
+      "heightL": 0.2125,
+      "dimensionsCells": [
+        2.56,
+        1.7
+      ],
+      "bottomHeightCells": 3.2,
+      "sillBottomHeightCells": 3.136
+    },
+    {
+      "id": "frame-landscape-flat",
+      "category": "frame-template",
+      "svg": "frame-landscape-flat.svg",
+      "png": "frame-landscape-flat.png",
+      "viewBox": [
+        -6,
+        -6,
+        332,
+        252
+      ],
+      "template": "landscape",
+      "label": "横版",
+      "w": 0.2,
+      "h": 0.15,
+      "cells": [
+        1.6,
+        1.2
+      ]
+    },
+    {
+      "id": "frame-landscape-left",
+      "category": "frame-template-wall",
+      "svg": "frame-landscape-left.svg",
+      "png": "frame-landscape-left.png",
+      "viewBox": [
+        397,
+        207,
+        122,
+        156
+      ],
+      "wall": "left",
+      "template": "landscape",
+      "label": "横版",
+      "w": 0.2,
+      "h": 0.15,
+      "cells": [
+        1.6,
+        1.2
+      ],
+      "slotId": "art-left-back",
+      "worldMountCenter": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "frame-landscape-right",
+      "category": "frame-template-wall",
+      "svg": "frame-landscape-right.svg",
+      "png": "frame-landscape-right.png",
+      "viewBox": [
+        561,
+        207,
+        122,
+        156
+      ],
+      "wall": "right",
+      "template": "landscape",
+      "label": "横版",
+      "w": 0.2,
+      "h": 0.15,
+      "cells": [
+        1.6,
+        1.2
+      ],
+      "slotId": "art-right-back",
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "frame-portrait-flat",
+      "category": "frame-template",
+      "svg": "frame-portrait-flat.svg",
+      "png": "frame-portrait-flat.png",
+      "viewBox": [
+        -6,
+        -6,
+        252,
+        332
+      ],
+      "template": "portrait",
+      "label": "竖版",
+      "w": 0.15,
+      "h": 0.2,
+      "cells": [
+        1.2,
+        1.6
+      ]
+    },
+    {
+      "id": "frame-portrait-left",
+      "category": "frame-template-wall",
+      "svg": "frame-portrait-left.svg",
+      "png": "frame-portrait-left.png",
+      "viewBox": [
+        409,
+        199,
+        98,
+        172
+      ],
+      "wall": "left",
+      "template": "portrait",
+      "label": "竖版",
+      "w": 0.15,
+      "h": 0.2,
+      "cells": [
+        1.2,
+        1.6
+      ],
+      "slotId": "art-left-back",
+      "worldMountCenter": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "frame-portrait-right",
+      "category": "frame-template-wall",
+      "svg": "frame-portrait-right.svg",
+      "png": "frame-portrait-right.png",
+      "viewBox": [
+        573,
+        199,
+        98,
+        172
+      ],
+      "wall": "right",
+      "template": "portrait",
+      "label": "竖版",
+      "w": 0.15,
+      "h": 0.2,
+      "cells": [
+        1.2,
+        1.6
+      ],
+      "slotId": "art-right-back",
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "frame-square-flat",
+      "category": "frame-template",
+      "svg": "frame-square-flat.svg",
+      "png": "frame-square-flat.png",
+      "viewBox": [
+        -6,
+        -6,
+        292,
+        292
+      ],
+      "template": "square",
+      "label": "正方形",
+      "w": 0.175,
+      "h": 0.175,
+      "cells": [
+        1.4,
+        1.4
+      ]
+    },
+    {
+      "id": "frame-square-left",
+      "category": "frame-template-wall",
+      "svg": "frame-square-left.svg",
+      "png": "frame-square-left.png",
+      "viewBox": [
+        403,
+        203,
+        110,
+        164
+      ],
+      "wall": "left",
+      "template": "square",
+      "label": "正方形",
+      "w": 0.175,
+      "h": 0.175,
+      "cells": [
+        1.4,
+        1.4
+      ],
+      "slotId": "art-left-back",
+      "worldMountCenter": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "frame-square-right",
+      "category": "frame-template-wall",
+      "svg": "frame-square-right.svg",
+      "png": "frame-square-right.png",
+      "viewBox": [
+        567,
+        203,
+        110,
+        164
+      ],
+      "wall": "right",
+      "template": "square",
+      "label": "正方形",
+      "w": 0.175,
+      "h": 0.175,
+      "cells": [
+        1.4,
+        1.4
+      ],
+      "slotId": "art-right-back",
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "starry-left",
+      "category": "wall-art",
+      "svg": "starry-left.svg",
+      "png": "starry-left.png",
+      "viewBox": [
+        397,
+        207,
+        122,
+        156
+      ],
+      "template": "landscape",
+      "slotId": "art-left-back",
+      "originalAspect": 1.289855072463768,
+      "fit": "contain",
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "pearl-left",
+      "category": "wall-art",
+      "svg": "pearl-left.svg",
+      "png": "pearl-left.png",
+      "viewBox": [
+        102,
+        352,
+        97,
+        173
+      ],
+      "template": "portrait",
+      "slotId": "art-left-front",
+      "originalAspect": 0.9022727272727272,
+      "fit": "contain",
+      "worldMountCenter": [
+        0.82,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "starry-right",
+      "category": "wall-art",
+      "svg": "starry-right.svg",
+      "png": "starry-right.png",
+      "viewBox": [
+        561,
+        207,
+        122,
+        156
+      ],
+      "template": "landscape",
+      "slotId": "art-right-back",
+      "originalAspect": 1.289855072463768,
+      "fit": "contain",
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    },
+    {
+      "id": "pearl-right",
+      "category": "wall-art",
+      "svg": "pearl-right.svg",
+      "png": "pearl-right.png",
+      "viewBox": [
+        881,
+        352,
+        97,
+        173
+      ],
+      "template": "portrait",
+      "slotId": "art-right-front",
+      "originalAspect": 0.9022727272727272,
+      "fit": "contain",
+      "worldMountCenter": [
+        0.82,
+        0,
+        0.50625
+      ],
+      "depthL": 0.026
+    }
+  ]
+}

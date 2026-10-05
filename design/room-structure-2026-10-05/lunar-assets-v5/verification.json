@@ -1,0 +1,50 @@
+{
+  "standardId": "room-standard-v1",
+  "geometryFrozen": true,
+  "allFacingCombinations": 32,
+  "independentSvgCount": 35,
+  "transparentPngCount": 35,
+  "spriteComposition": true,
+  "positionsChanged": false,
+  "frameDimensionsUnchanged": true,
+  "nativeDecor": true,
+  "windowAndFrameImageSkins": false,
+  "cornerTrimRemoved": true,
+  "windowModes": [
+    "day",
+    "night"
+  ],
+  "modeChangesPreserveFurnitureAndFrames": true,
+  "modeApiVerified": true,
+  "hiddenWindowsHideScenery": true,
+  "sillChange": {
+    "before": {
+      "widthL": 0.34,
+      "depthL": 0.046
+    },
+    "after": {
+      "widthL": 0.352,
+      "depthL": 0.064
+    },
+    "bottomHeightCells": 3.136
+  },
+  "acceptedMaterialsAndFurnitureUnchanged": true,
+  "frameTemplates": 3,
+  "frameSlotTemplateArtworkChecks": 36,
+  "mirrorDifferences": {
+    "bookshelf": 0,
+    "desk": 0,
+    "chair": 0,
+    "tree": 0,
+    "bed": 0,
+    "window": 0
+  },
+  "mobileWidths": [
+    360,
+    390
+  ],
+  "mobileOverflow": false,
+  "errors": [],
+  "badResponses": [],
+  "obsoleteRoomArtLoaded": false
+}
