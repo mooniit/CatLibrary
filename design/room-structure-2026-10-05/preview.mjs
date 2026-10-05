@@ -98,7 +98,7 @@ function render(svg,config){
     }
     text(layer,c,[0,0,0],'O','#315f77',9,-9);
   }
-  if(config.mode!=='empty'){
+  if(config.axes&&config.mode!=='empty'){
     const e=occupied.find(e=>e.id===selected),f=config.mode==='l'?{x:Math.floor(config.a*.4)/config.a,y:Math.floor(config.a*.4)/config.a,w:2/config.a,d:2/config.a,h:.11}:e;
     if(f){const facing=config.mode==='l'?config.lFacing:config.facings[f.id],start=[f.x+f.w/2,f.y+f.d/2,f.h+.025],end=[start[0]+(facing==='x'?.09:0),start[1]+(facing==='y'?.09:0),start[2]];line(layer,c,start,end,'#315f77',4);text(layer,c,end,'朝 +'+facing.toUpperCase(),'#315f77',3,-5);}
   }
@@ -128,9 +128,16 @@ function refresh(){
   const facing=state.mode==='l'?state.lFacing:state.facings[state.selected];$('turn').textContent='切换朝向：+'+facing.toUpperCase();
   const valid=result.masks.every(e=>validCells(e.cells,state.a));
   $('status').textContent=state.mode==='empty'?'空房间 · 地板宽度保持一致':(entry?.label||'')+' · '+(entry?.cells.length||0)+' 格'+(entry?.cols?'（'+entry.cols+'×'+entry.rows+'，居中）':'')+' · 正面 +'+facing.toUpperCase()+' · '+(valid?'占地在地板内':'存在越界');
-  $('parameters').textContent='地面线斜率 ±'+fit.slope.toFixed(5)+'\n地面边线角度 ±'+(Math.atan(fit.slope)*180/Math.PI).toFixed(2)+'°\n在对称正交约束下：相机俯视约 '+fit.elevationDegrees.toFixed(2)+'°\nX = 540 + 480(x − y)\nY = O_y + '+(480*fit.slope).toFixed(3)+'(x + y) − '+fit.zScale.toFixed(3)+'z\n当前墙高 = '+result.camera.wallHeight.toFixed(4)+' L（'+(result.camera.wallHeight/cellSize).toFixed(2)+' 格）\n书柜高 4 格；窗下沿 4.25 格\n窗、画中心高 5 格；墙面水平中心 4 格\n地毯占中央 6×6 格，四周留一格\n视图宽 1080；高 '+result.camera.height;
+  $('parameters').textContent='地面线斜率 ±'+fit.slope.toFixed(5)+'\n地面边线角度 ±'+(Math.atan(fit.slope)*180/Math.PI).toFixed(2)+'°\n在对称正交约束下：相机俯视约 '+fit.elevationDegrees.toFixed(2)+'°\nX = 540 + 480(x − y)\nY = O_y + '+(480*fit.slope).toFixed(3)+'(x + y) − '+fit.zScale.toFixed(3)+'z\n当前墙高 = '+result.camera.wallHeight.toFixed(4)+' L（'+(result.camera.wallHeight/cellSize).toFixed(2)+' 格）\n书柜高 3 格（原高的 0.75 倍）\n窗宽 2.56 格、高 1.7 格；下沿 4.15 格\n窗、画中心高 5 格；墙面水平中心 4 格\n地毯占中央 6×6 格，四周留一格\n视图宽 1080；高 '+result.camera.height;
   window.roomStudy={fit,state:{...state,facings:{...state.facings}},...result,rug,slots,project:p=>project(result.camera,p)};
 }
+function present(){
+  const styled=$('presentation').value==='styled';
+  for(const id of['structure-controls','room','status','structure-note'])$(id).toggleAttribute('hidden',styled);
+  $('styled-room').hidden=!styled;$('style-note').hidden=!styled;
+  $('scene-heading').textContent=styled?'月轨套 · 家具效果':'固定视角与家具占位';
+}
+$('presentation').addEventListener('change',present);
 for(const id of['height','mode','selected','grid','axes','left-window','right-window','art','rug'])$(id).addEventListener('change',refresh);
 $('turn').addEventListener('click',()=>{if(state.mode==='l')state.lFacing=state.lFacing==='x'?'y':'x';else state.facings[state.selected]=state.facings[state.selected]==='x'?'y':'x';refresh();});
 $('reference').addEventListener('change',renderReference);$('overlay').addEventListener('change',renderReference);
@@ -143,4 +150,4 @@ for(const selected of['tree','desk','bed']){
   $('comparisons').append(card);
 }
 for(const s of slots){const tr=document.createElement('tr');for(const value of[s.label,s.wall==='left'?'左墙 X=0':'右墙 Y=0',(s.s/cellSize).toFixed(2),(s.z/cellSize).toFixed(2),((s.z+s.h/2)/cellSize).toFixed(2),(s.w/cellSize).toFixed(2)+' × '+(s.h/cellSize).toFixed(2)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('slot-table').append(tr);}
-refresh();renderReference();
+refresh();renderReference();present();

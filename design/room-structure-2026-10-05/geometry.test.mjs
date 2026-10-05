@@ -57,11 +57,12 @@ test('fixed rug owns the central 36 cells with a one-cell perimeter',()=>{
   assert.equal(rug.x+rug.w/2,.5);assert.equal(rug.y+rug.d/2,.5);
 });
 
-test('central windows sit above a four-cell bookcase with flanking art at equal centers',()=>{
-  const c=camera(fit),book=fixtures.find(f=>f.id==='bookshelf');assert.equal(book.h,4*cellSize);
+test('enlarged central windows clear the bookcase reduced to 75 percent and keep aligned art',()=>{
+  const c=camera(fit),book=fixtures.find(f=>f.id==='bookshelf');assert.equal(book.h,4*cellSize*.75);
   for(const wall of['left','right']){
     const window=slots.find(s=>s.wall===wall&&s.type==='window'),art=slots.filter(s=>s.wall===wall&&s.type==='art');
-    assert.equal(window.s,.5);assert(window.z-.008>book.h);assert(window.z+window.h<c.wallHeight);
+    assert.equal(window.s,.5);assert.equal(window.w,.32);assert.equal(window.h,1.7*cellSize);
+    assert(window.z-.008>book.h);assert(window.z+window.h<c.wallHeight);
     assert.equal(art.length,2);assert(art[0].s+art[0].w/2<window.s-window.w/2);assert(art[1].s-art[1].w/2>window.s+window.w/2);
     for(const s of art)assert.equal(s.z+s.h/2,window.z+window.h/2);
   }

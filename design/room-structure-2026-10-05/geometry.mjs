@@ -65,17 +65,17 @@ export function centerFixture(f) {
   return {...f,x:(gx+f.cols/2)*cellSize-f.w/2,y:(gy+f.rows/2)*cellSize-f.d/2,cells};
 }
 export const fixtures=[
-  {id:'bookshelf',label:'书柜',anchor:[0,1],cols:1,rows:3,w:.12,d:.26,h:4*cellSize,facing:'x'},
+  {id:'bookshelf',label:'书柜',anchor:[0,1],cols:1,rows:3,w:.12,d:.26,h:3*cellSize,facing:'x'},
   {id:'desk',label:'书桌',anchor:[4,2],cols:3,rows:2,w:.30,d:.17,h:.18,facing:'y'},
   {id:'chair',label:'椅子',anchor:[5,1],cols:1,rows:1,w:.12,d:.115,h:.20,facing:'y'},
   {id:'tree',label:'猫爬架',anchor:[0,5],cols:2,rows:2,w:.17,d:.17,h:.29,facing:'x'},
   {id:'bed',label:'猫窝',anchor:[5,6],cols:2,rows:2,w:.19,d:.19,h:.085,facing:'y'}
 ].map(centerFixture);
-const windowZ=4.25*cellSize,windowH=1.5*cellSize,artH=cellSize;
+const windowH=1.7*cellSize,windowZ=5*cellSize-windowH/2,artH=cellSize;
 const artZ=windowZ+(windowH-artH)/2;
 export const slots=[
-  {id:'window-left',label:'左窗',wall:'left',s:.5,z:windowZ,w:.28,h:windowH,type:'window'},
-  {id:'window-right',label:'右窗',wall:'right',s:.5,z:windowZ,w:.28,h:windowH,type:'window'},
+  {id:'window-left',label:'左窗',wall:'left',s:.5,z:windowZ,w:.32,h:windowH,type:'window'},
+  {id:'window-right',label:'右窗',wall:'right',s:.5,z:windowZ,w:.32,h:windowH,type:'window'},
   {id:'art-left-back',label:'左墙画位 1',wall:'left',s:.18,z:artZ,w:.16,h:artH,type:'art'},
   {id:'art-left-front',label:'左墙画位 2',wall:'left',s:.82,z:artZ,w:.16,h:artH,type:'art'},
   {id:'art-right-back',label:'右墙画位 1',wall:'right',s:.18,z:artZ,w:.16,h:artH,type:'art'},

@@ -13,6 +13,10 @@ const {join}=require('node:path');
     page.on('response',r=>{if(r.status()>=400)badResponses.push([r.url(),r.status()]);});
     await page.goto('http://127.0.0.1:4181/design/room-structure-2026-10-05/');
     await page.waitForFunction(()=>window.roomStudy);
+    assert(await page.locator('#styled-room').isVisible());
+    await page.locator('#styled-room').evaluate(image=>image.decode());
+    await page.locator('#presentation').selectOption('structure');
+    assert(await page.locator('#room').isVisible());
     let states=0;
     for(const a of['8']){
       for(const height of['1','1.5']){
@@ -42,7 +46,7 @@ const {join}=require('node:path');
       const s=window.roomStudy,book=s.masks.find(m=>m.id==='bookshelf');
       return {rug:s.rug,bookHeight:book.h,slots:s.slots};
     });
-    assert.deepEqual([layout.rug.x,layout.rug.y,layout.rug.w,layout.rug.d],[1/8,1/8,6/8,6/8]);assert.equal(layout.bookHeight,4/8);
+    assert.deepEqual([layout.rug.x,layout.rug.y,layout.rug.w,layout.rug.d],[1/8,1/8,6/8,6/8]);assert.equal(layout.bookHeight,3/8);
     for(const wall of['left','right']){
       const win=layout.slots.find(s=>s.wall===wall&&s.type==='window');assert.equal(win.s,.5);assert(win.z>layout.bookHeight);
       const art=layout.slots.filter(s=>s.wall===wall&&s.type==='art');assert.equal(art.length,2);
@@ -81,13 +85,21 @@ const {join}=require('node:path');
     const fit=await page.evaluate(()=>window.roomStudy.fit);
     await page.screenshot({path:join(__dirname,'preview-desktop.png'),fullPage:true});
     await page.locator('#room').screenshot({path:join(__dirname,'structure-preview.png')});
+    await page.locator('#grid').uncheck();await page.locator('#axes').uncheck();
+    await page.locator('#room').screenshot({path:join(__dirname,'style-blockout.png')});
+    await page.locator('#grid').check();await page.locator('#axes').check();
+    await page.locator('#presentation').selectOption('styled');
+    assert(await page.locator('#room').isHidden());assert(await page.locator('#structure-controls').isHidden());
+    await page.screenshot({path:join(__dirname,'styled-desktop.png'),fullPage:true});
     await page.setViewportSize({width:390,height:844});
     const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);assert.equal(overflow,false);
+    await page.screenshot({path:join(__dirname,'styled-mobile.png'),fullPage:true});
+    await page.locator('#presentation').selectOption('structure');
     const mobile=await page.locator('#room').boundingBox();assert(mobile.width>300&&mobile.height>300);
     await page.screenshot({path:join(__dirname,'preview-mobile.png'),fullPage:true});
     assert.deepEqual(errors,[]);assert.deepEqual(badResponses,[]);
     const report={checkedStates:states,errors,badResponses,mobileOverflow:overflow,desktopFloorWidthPreserved:true,
-      selectedGrid:8,rugFootprint:'central 6x6',furnitureCentered:true,bookcaseHeightCells:4,windowBottomCells:4.25,wallDecorCenterCells:5,
+      selectedGrid:8,rugFootprint:'central 6x6',furnitureCentered:true,bookcaseHeightCells:3,windowBottomCells:4.15,wallDecorCenterCells:5,styledPreviewLoaded:true,
       fit:{slope:fit.slope,elevationDegrees:fit.elevationDegrees,referenceWallHeight:fit.referenceWallHeight,
         maximumSampleResidual:Math.max(...fit.references.flatMap(r=>r.residuals.map(e=>Math.abs(e.errorPixels))))}};
     writeFileSync(join(__dirname,'verification.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

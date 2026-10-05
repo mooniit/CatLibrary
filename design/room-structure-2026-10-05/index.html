@@ -4,7 +4,7 @@
 <link rel="icon" href="data:,"><title>房间结构 · 首轮验证</title>
 <style>
 :root{color-scheme:light;--ink:#25313b;--muted:#52616c;--line:#cdd5d9;--paper:#fff;--canvas:#f4f6f6;--accent:#315f77}
-*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}[hidden]{display:none!important}.styled-room{display:block;width:100%;border-radius:8px}body{margin:0;background:var(--canvas);color:var(--ink);font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}
 main{max-width:1450px;margin:auto;padding:28px}h1{font-size:26px;font-weight:600;margin:0 0 5px}h2{font-size:18px;margin:0 0 12px;font-weight:600}h3{font-size:16px;margin:0 0 8px}p{margin:0 0 16px;color:var(--muted)}a{color:var(--accent)}
 .board{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;align-items:start}
 section{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px}
@@ -20,10 +20,12 @@ details{margin-top:16px}summary{cursor:pointer}pre{font:13px/1.7 ui-monospace,mo
 </style>
 <main>
 <h1>房间结构 · 首轮验证</h1>
-<p>已选定 8×8 网格与 1.5 倍墙高。地毯覆盖中央 6×6 格，窗户居中升高；每件家具在自己的占格范围内居中。</p>
+<p>月轨套恢复弧形、深蓝软包与金色饰边。结构稿书柜降至三格，窗户适当放大，保留 8×8 网格和中央 6×6 地毯。</p>
 <div class="board">
 <section>
-<h2>固定视角与家具占位</h2>
+<h2 id="scene-heading">月轨套 · 家具效果</h2>
+<div class="controls"><label>查看 <select id="presentation"><option value="styled" selected>家具效果稿</option><option value="structure">结构与占格</option></select></label><a href="lunar-style-v2.png" target="_blank" rel="noopener">查看完整效果图</a></div>
+<div id="structure-controls" hidden>
 <div class="controls">
 <span>网格 8 × 8 · 已选定</span>
 <label>墙高 <select id="height"><option value="1.5" selected>参考图 × 1.5</option><option value="1">参考图原高</option></select></label>
@@ -41,9 +43,12 @@ details{margin-top:16px}summary{cursor:pointer}pre{font:13px/1.7 ui-monospace,mo
 <label>物品 <select id="selected"><option value="bookshelf">书柜</option><option value="desk">书桌</option><option value="chair">椅子</option><option value="tree">猫爬架</option><option value="bed">猫窝</option></select></label>
 <button id="turn" type="button">切换朝向：+X</button>
 </div>
-<svg id="room" class="scene" role="img" aria-label="统一投影的房间结构、家具和占格"></svg>
+</div>
+<img id="styled-room" class="styled-room" src="lunar-style-v2.png" alt="月轨家具整屋效果稿：较低书柜、两侧高窗、弧形桌椅、开放猫窝和月牙猫爬架">
+<p id="style-note" style="margin-top:12px">整屋美术效果稿用于查看造型与配色。切换“结构与占格”查看精确布局及两种朝向；生成图中的边线和格数还需在正式单品制作时按模板校正。</p>
+<svg id="room" class="scene" role="img" aria-label="统一投影的房间结构、家具和占格" hidden></svg>
 <div id="status" class="status" aria-live="polite"></div>
-<small>家具是体积和接触点样板；最终弧形、软包和装饰在同一坐标中细化。L 形模式只高亮实际三个格子，空缺格仍可用。结构稿尚未接入游戏存档。</small>
+<small id="structure-note">家具是体积和接触点样板；最终弧形、软包和装饰在同一坐标中细化。L 形模式只高亮实际三个格子，空缺格仍可用。结构稿尚未接入游戏存档。</small>
 </section>
 <section>
 <h2>原图叠线校准</h2>
@@ -60,7 +65,7 @@ details{margin-top:16px}summary{cursor:pointer}pre{font:13px/1.7 ui-monospace,mo
 <p>浅蓝格为物品的完整占地区域。家具的水平外缘与矩形占地区域同心，切换朝向时也保持居中。</p>
 <div id="comparisons" class="compare-grid"></div>
 </section>
-<section style="margin-top:22px"><h2>调整后的固定位置</h2><p>两窗都位于各自墙面的水平中点；下沿高于四格书柜。每扇窗左右各一个画位，画位与窗户的中心等高。</p>
+<section style="margin-top:22px"><h2>调整后的固定位置</h2><p>两窗都位于各自墙面的水平中点；书柜已从四格降为三格。窗户宽度增加约 14%、高度增加约 13%，并与两侧画位保持中心等高。</p>
 <div class="table-wrap"><table><thead><tr><th>位置</th><th>所属墙面</th><th>水平中心（格）</th><th>底边高（格）</th><th>中心高（格）</th><th>宽 × 高（格）</th></tr></thead><tbody id="slot-table"></tbody></table></div>
 <small>一格 = L/8，竖直高度也沿用相同物理单位。地毯固定范围 X/Y 均为 1…7 格，即中央 6×6；家具可摆在其上。原高仅供比较，容不下升高后的窗、画时会恢复完整墙面。</small>
 </section>
