@@ -332,7 +332,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
               onSettings: openSettings,
             ),
           ),
-          if (scene.pan.distance > 1 || scene.zoom != 1)
+          if (scene.pan.distance > 1 || scene.zoom != RoomScene.defaultZoom)
             Positioned(
               bottom: 16,
               right: 16,

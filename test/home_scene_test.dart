@@ -20,7 +20,7 @@ void main() {
     expect(scene.zoom, 1.6);
     expect(scene.pan.distance, lessThan(1000));
     scene.resetView();
-    expect(scene.zoom, 1);
+    expect(scene.zoom, 1.25);
     expect(scene.pan, Offset.zero);
   });
 
@@ -74,6 +74,8 @@ void main() {
     );
     await tester.pump(const Duration(seconds: 1));
     final home = key.currentState!;
+    expect(home.scene.zoom, 1.25);
+    expect(find.byTooltip('回到初始视角'), findsNothing);
     final cardPosition = tester.getCenter(
       find.byKey(const Key('wallet-card-0')),
     );
@@ -95,6 +97,8 @@ void main() {
     await tester.tap(find.byTooltip('回到初始视角'));
     await tester.pump();
     expect(home.scene.pan, Offset.zero);
+    expect(home.scene.zoom, 1.25);
+    expect(find.byTooltip('回到初始视角'), findsNothing);
     await tester.tap(find.byTooltip('打开功能菜单'));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

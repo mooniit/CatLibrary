@@ -12,9 +12,10 @@ typedef RoomCat = ({String name, String appearance});
 /// The frozen room-standard-v1 is the only room camera and geometry.
 class RoomScene extends FlameGame {
   RoomScene();
+  static const defaultZoom = 1.25;
   List<RoomCat> cats = [];
   RoomFurnishings furnishings = const RoomFurnishings();
-  double zoom = 1;
+  double zoom = defaultZoom;
   Offset pan = Offset.zero;
   final _artworks = <ArtworkStyle, ui.Image>{};
   LunarRoom? _lunar;
@@ -66,7 +67,7 @@ class RoomScene extends FlameGame {
   }
 
   void resetView() {
-    zoom = 1;
+    zoom = defaultZoom;
     pan = Offset.zero;
   }
 
