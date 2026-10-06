@@ -1,0 +1,290 @@
+{
+  "geometry": [
+    "wood landscape profile inside template envelope",
+    "wood portrait profile inside template envelope",
+    "wood square profile inside template envelope",
+    "wood window-left sill clearance .136 cells preserved",
+    "wood window-right sill clearance .136 cells preserved",
+    "royal landscape profile inside template envelope",
+    "royal portrait profile inside template envelope",
+    "royal square profile inside template envelope",
+    "royal window-left sill clearance .136 cells preserved",
+    "royal window-right sill clearance .136 cells preserved"
+  ],
+  "sprites": [
+    {
+      "theme": "wood",
+      "id": "bookshelf",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 195,
+          "h": 325,
+          "overflow": 0,
+          "edge": 0,
+          "count": 30051
+        },
+        {
+          "w": 195,
+          "h": 325,
+          "overflow": 0,
+          "edge": 0,
+          "count": 30051
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "desk",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 238,
+          "h": 232,
+          "overflow": 0,
+          "edge": 0,
+          "count": 19351
+        },
+        {
+          "w": 238,
+          "h": 232,
+          "overflow": 0,
+          "edge": 0,
+          "count": 19351
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "chair",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 126,
+          "h": 187,
+          "overflow": 0,
+          "edge": 0,
+          "count": 5210
+        },
+        {
+          "w": 126,
+          "h": 187,
+          "overflow": 0,
+          "edge": 0,
+          "count": 5210
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "tree",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 176,
+          "h": 265,
+          "overflow": 0,
+          "edge": 0,
+          "count": 14313
+        },
+        {
+          "w": 176,
+          "h": 265,
+          "overflow": 0,
+          "edge": 0,
+          "count": 14313
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "bed",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 196,
+          "h": 154,
+          "overflow": 0,
+          "edge": 0,
+          "count": 12957
+        },
+        {
+          "w": 196,
+          "h": 154,
+          "overflow": 0,
+          "edge": 0,
+          "count": 12957
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "bookshelf",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 195,
+          "h": 325,
+          "overflow": 0,
+          "edge": 0,
+          "count": 34547
+        },
+        {
+          "w": 195,
+          "h": 325,
+          "overflow": 0,
+          "edge": 0,
+          "count": 34547
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "desk",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 238,
+          "h": 232,
+          "overflow": 0,
+          "edge": 0,
+          "count": 15462
+        },
+        {
+          "w": 238,
+          "h": 232,
+          "overflow": 0,
+          "edge": 0,
+          "count": 15462
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "chair",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 126,
+          "h": 187,
+          "overflow": 0,
+          "edge": 0,
+          "count": 9234
+        },
+        {
+          "w": 126,
+          "h": 187,
+          "overflow": 0,
+          "edge": 0,
+          "count": 9234
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "tree",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 176,
+          "h": 265,
+          "overflow": 0,
+          "edge": 0,
+          "count": 12155
+        },
+        {
+          "w": 176,
+          "h": 265,
+          "overflow": 0,
+          "edge": 0,
+          "count": 12155
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "bed",
+      "mirrorDifferences": 0,
+      "rasters": [
+        {
+          "w": 196,
+          "h": 154,
+          "overflow": 0,
+          "edge": 0,
+          "count": 10641
+        },
+        {
+          "w": 196,
+          "h": 154,
+          "overflow": 0,
+          "edge": 0,
+          "count": 10641
+        }
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "theme": "wood",
+      "key": "landscape",
+      "transparentCenter": 0,
+      "visibleGoldPixels": 21864
+    },
+    {
+      "theme": "wood",
+      "key": "portrait",
+      "transparentCenter": 0,
+      "visibleGoldPixels": 21864
+    },
+    {
+      "theme": "wood",
+      "key": "square",
+      "transparentCenter": 0,
+      "visibleGoldPixels": 21864
+    },
+    {
+      "theme": "royal",
+      "key": "landscape",
+      "transparentCenter": 0,
+      "visibleGoldPixels": 1323
+    },
+    {
+      "theme": "royal",
+      "key": "portrait",
+      "transparentCenter": 0,
+      "visibleGoldPixels": 1323
+    },
+    {
+      "theme": "royal",
+      "key": "square",
+      "transparentCenter": 0,
+      "visibleGoldPixels": 1323
+    }
+  ],
+  "browser": [
+    {
+      "theme": "wood",
+      "orientationCombinations": 32
+    },
+    {
+      "theme": "wood",
+      "frameCombinations": 36
+    },
+    {
+      "theme": "royal",
+      "orientationCombinations": 32
+    },
+    {
+      "theme": "royal",
+      "frameCombinations": 36
+    }
+  ],
+  "screenshots": [
+    "wood-day-preview.png",
+    "wood-night-preview.png",
+    "royal-day-preview.png",
+    "royal-night-preview.png"
+  ],
+  "consoleErrors": [],
+  "failedRequests": []
+}

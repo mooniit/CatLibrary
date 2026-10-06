@@ -1,0 +1,1589 @@
+{
+  "standard": "room-standard-v1",
+  "theme": "wood",
+  "label": "简约木质",
+  "sourcePolicy": "Fresh text-only furniture; +Y exact RGBA mirror of +X; no old furniture input image",
+  "assets": [
+    {
+      "id": "bookshelf-x",
+      "category": "furniture",
+      "png": "bookshelf-x.png",
+      "svg": "bookshelf-x.svg",
+      "viewBox": [
+        409,
+        310,
+        195,
+        325
+      ],
+      "pixelGroundOrigin": [
+        131,
+        227.4716981132076
+      ],
+      "dimensionsL": [
+        0.12,
+        0.26,
+        0.375
+      ],
+      "dimensionsCells": [
+        0.96,
+        2.08,
+        3
+      ],
+      "gridAnchor": [
+        0,
+        1
+      ],
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.0025000000000000022,
+        0.1825,
+        0
+      ],
+      "facing": "x",
+      "mirrorOf": null,
+      "projectionHull": [
+        [
+          6.199999999999989,
+          69.17808737369398
+        ],
+        [
+          131,
+          6.888154372688518
+        ],
+        [
+          188.60000000000002,
+          35.63735421930642
+        ],
+        [
+          188.60000000000002,
+          256.2208979598255
+        ],
+        [
+          63.80000000000001,
+          318.51083096083096
+        ],
+        [
+          6.199999999999989,
+          289.76163111421306
+        ]
+      ],
+      "fit": {
+        "scale": 0.18882317779867808,
+        "initialScale": 0.1989760062421882,
+        "ratio": 0.9489746093749999,
+        "sourceBounds": [
+          226,
+          17,
+          1129,
+          1181
+        ],
+        "calibratedGround": [
+          439.375,
+          1460.334191738108
+        ],
+        "projectedGround": [
+          57.799999999999955,
+          312.6776043146152
+        ],
+        "vertical": 1.2913791795411949,
+        "shear": -0.14657153687792562
+      }
+    },
+    {
+      "id": "bookshelf-y",
+      "category": "furniture",
+      "png": "bookshelf-y.png",
+      "svg": "bookshelf-y.svg",
+      "viewBox": [
+        409,
+        310,
+        195,
+        325
+      ],
+      "pixelGroundOrigin": [
+        64,
+        227.4716981132076
+      ],
+      "dimensionsL": [
+        0.26,
+        0.12,
+        0.375
+      ],
+      "dimensionsCells": [
+        2.08,
+        0.96,
+        3
+      ],
+      "gridAnchor": [
+        0,
+        1
+      ],
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.057499999999999996,
+        0.1275,
+        0
+      ],
+      "facing": "y",
+      "mirrorOf": "bookshelf-x",
+      "projectionHull": [
+        [
+          188.8,
+          289.76163111421306
+        ],
+        [
+          131.2,
+          318.51083096083096
+        ],
+        [
+          6.399999999999977,
+          256.2208979598255
+        ],
+        [
+          6.399999999999977,
+          35.63735421930642
+        ],
+        [
+          64,
+          6.888154372688518
+        ],
+        [
+          188.8,
+          69.17808737369398
+        ]
+      ],
+      "fit": {
+        "scale": 0.18882317779867808,
+        "initialScale": 0.1989760062421882,
+        "ratio": 0.9489746093749999,
+        "sourceBounds": [
+          226,
+          17,
+          1129,
+          1181
+        ],
+        "calibratedGround": [
+          439.375,
+          1460.334191738108
+        ],
+        "projectedGround": [
+          57.799999999999955,
+          312.6776043146152
+        ],
+        "vertical": 1.2913791795411949,
+        "shear": -0.14657153687792562
+      }
+    },
+    {
+      "id": "desk-x",
+      "category": "furniture",
+      "png": "desk-x.png",
+      "svg": "desk-x.svg",
+      "viewBox": [
+        390,
+        425,
+        238,
+        232
+      ],
+      "pixelGroundOrigin": [
+        150,
+        112.4716981132076
+      ],
+      "dimensionsL": [
+        0.17,
+        0.3,
+        0.18
+      ],
+      "dimensionsCells": [
+        1.36,
+        2.4,
+        1.44
+      ],
+      "gridAnchor": [
+        4,
+        2
+      ],
+      "cells": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.54,
+        0.2875,
+        0
+      ],
+      "facing": "x",
+      "mirrorOf": null,
+      "projectionHull": [
+        [
+          6,
+          78.46459673430314
+        ],
+        [
+          150,
+          6.591597117758454
+        ],
+        [
+          231.60000000000002,
+          47.319630233800524
+        ],
+        [
+          231.60000000000002,
+          153.19973122924966
+        ],
+        [
+          87.60000000000002,
+          225.07273084579435
+        ],
+        [
+          6,
+          184.34469772975228
+        ]
+      ],
+      "fit": {
+        "scale": 0.171044921875,
+        "initialScale": 0.1772549019607843,
+        "ratio": 0.9649658203125001,
+        "sourceBounds": [
+          132,
+          30,
+          1406,
+          983
+        ],
+        "calibratedGround": [
+          515.8888888888889,
+          1156.0049455520843
+        ],
+        "projectedGround": [
+          79.60000000000002,
+          215.23950419957873
+        ],
+        "vertical": 1.1883763164111232,
+        "shear": -0.023767526328222377
+      }
+    },
+    {
+      "id": "desk-y",
+      "category": "furniture",
+      "png": "desk-y.png",
+      "svg": "desk-y.svg",
+      "viewBox": [
+        390,
+        425,
+        238,
+        232
+      ],
+      "pixelGroundOrigin": [
+        88,
+        112.4716981132076
+      ],
+      "dimensionsL": [
+        0.3,
+        0.17,
+        0.18
+      ],
+      "dimensionsCells": [
+        2.4,
+        1.36,
+        1.44
+      ],
+      "gridAnchor": [
+        4,
+        2
+      ],
+      "cells": [
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.5375,
+        0.29,
+        0
+      ],
+      "facing": "y",
+      "mirrorOf": "desk-x",
+      "projectionHull": [
+        [
+          232,
+          184.34469772975228
+        ],
+        [
+          150.39999999999998,
+          225.07273084579435
+        ],
+        [
+          6.399999999999977,
+          153.19973122924966
+        ],
+        [
+          6.399999999999977,
+          47.319630233800524
+        ],
+        [
+          88,
+          6.591597117758454
+        ],
+        [
+          232,
+          78.46459673430314
+        ]
+      ],
+      "fit": {
+        "scale": 0.171044921875,
+        "initialScale": 0.1772549019607843,
+        "ratio": 0.9649658203125001,
+        "sourceBounds": [
+          132,
+          30,
+          1406,
+          983
+        ],
+        "calibratedGround": [
+          515.8888888888889,
+          1156.0049455520843
+        ],
+        "projectedGround": [
+          79.60000000000002,
+          215.23950419957873
+        ],
+        "vertical": 1.1883763164111232,
+        "shear": -0.023767526328222377
+      }
+    },
+    {
+      "id": "chair-x",
+      "category": "furniture",
+      "png": "chair-x.png",
+      "svg": "chair-x.svg",
+      "viewBox": [
+        476,
+        413,
+        126,
+        187
+      ],
+      "pixelGroundOrigin": [
+        64,
+        124.4716981132076
+      ],
+      "dimensionsL": [
+        0.115,
+        0.12,
+        0.2
+      ],
+      "dimensionsCells": [
+        0.92,
+        0.96,
+        1.6
+      ],
+      "gridAnchor": [
+        5,
+        1
+      ],
+      "cells": [
+        [
+          5,
+          1
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.63,
+        0.1275,
+        0
+      ],
+      "facing": "x",
+      "mirrorOf": null,
+      "projectionHull": [
+        [
+          6.399999999999977,
+          35.57634129821531
+        ],
+        [
+          64,
+          6.827141451597413
+        ],
+        [
+          119.20000000000005,
+          34.37845797127295
+        ],
+        [
+          119.20000000000005,
+          152.02301463288313
+        ],
+        [
+          61.60000000000002,
+          180.77221447950103
+        ],
+        [
+          6.399999999999977,
+          153.2208979598255
+        ]
+      ],
+      "fit": {
+        "scale": 0.10415094784564768,
+        "initialScale": 0.11057243670844591,
+        "ratio": 0.9419250488281251,
+        "sourceBounds": [
+          108,
+          40,
+          974,
+          1498
+        ],
+        "calibratedGround": [
+          496.55555555555554,
+          1562.566884061874
+        ],
+        "projectedGround": [
+          55.60000000000002,
+          176.9389878332853
+        ],
+        "vertical": 1.073372156758434,
+        "shear": -0.09123663332446691
+      }
+    },
+    {
+      "id": "chair-y",
+      "category": "furniture",
+      "png": "chair-y.png",
+      "svg": "chair-y.svg",
+      "viewBox": [
+        476,
+        413,
+        126,
+        187
+      ],
+      "pixelGroundOrigin": [
+        62,
+        124.4716981132076
+      ],
+      "dimensionsL": [
+        0.12,
+        0.115,
+        0.2
+      ],
+      "dimensionsCells": [
+        0.96,
+        0.92,
+        1.6
+      ],
+      "gridAnchor": [
+        5,
+        1
+      ],
+      "cells": [
+        [
+          5,
+          1
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.6275,
+        0.13,
+        0
+      ],
+      "facing": "y",
+      "mirrorOf": "chair-x",
+      "projectionHull": [
+        [
+          119.60000000000002,
+          153.2208979598255
+        ],
+        [
+          64.39999999999998,
+          180.77221447950103
+        ],
+        [
+          6.7999999999999545,
+          152.02301463288313
+        ],
+        [
+          6.7999999999999545,
+          34.37845797127295
+        ],
+        [
+          62,
+          6.827141451597413
+        ],
+        [
+          119.60000000000002,
+          35.57634129821531
+        ]
+      ],
+      "fit": {
+        "scale": 0.10415094784564768,
+        "initialScale": 0.11057243670844591,
+        "ratio": 0.9419250488281251,
+        "sourceBounds": [
+          108,
+          40,
+          974,
+          1498
+        ],
+        "calibratedGround": [
+          496.55555555555554,
+          1562.566884061874
+        ],
+        "projectedGround": [
+          55.60000000000002,
+          176.9389878332853
+        ],
+        "vertical": 1.073372156758434,
+        "shear": -0.09123663332446691
+      }
+    },
+    {
+      "id": "tree-x",
+      "category": "furniture",
+      "png": "tree-x.png",
+      "svg": "tree-x.svg",
+      "viewBox": [
+        452,
+        360,
+        176,
+        265
+      ],
+      "pixelGroundOrigin": [
+        88,
+        177.4716981132076
+      ],
+      "dimensionsL": [
+        0.17,
+        0.17,
+        0.29
+      ],
+      "dimensionsCells": [
+        1.36,
+        1.36,
+        2.32
+      ],
+      "gridAnchor": [
+        0,
+        5
+      ],
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.039999999999999994,
+        0.665,
+        0
+      ],
+      "facing": "x",
+      "mirrorOf": null,
+      "projectionHull": [
+        [
+          6.399999999999977,
+          47.61512406991494
+        ],
+        [
+          88,
+          6.887090953872871
+        ],
+        [
+          169.60000000000002,
+          47.61512406991494
+        ],
+        [
+          169.60000000000002,
+          218.19973122924966
+        ],
+        [
+          88,
+          258.92776434529173
+        ],
+        [
+          6.399999999999977,
+          218.19973122924966
+        ]
+      ],
+      "fit": {
+        "scale": 0.14926715370314014,
+        "initialScale": 0.15571570763568485,
+        "ratio": 0.9585876464843749,
+        "sourceBounds": [
+          237,
+          38,
+          962,
+          1331
+        ],
+        "calibratedGround": [
+          582.4444444444445,
+          1732.813100130133
+        ],
+        "projectedGround": [
+          90,
+          257.094537699076
+        ],
+        "vertical": 1.2477951322316794,
+        "shear": 0.12477951322316799
+      }
+    },
+    {
+      "id": "tree-y",
+      "category": "furniture",
+      "png": "tree-y.png",
+      "svg": "tree-y.svg",
+      "viewBox": [
+        452,
+        360,
+        176,
+        265
+      ],
+      "pixelGroundOrigin": [
+        88,
+        177.4716981132076
+      ],
+      "dimensionsL": [
+        0.17,
+        0.17,
+        0.29
+      ],
+      "dimensionsCells": [
+        1.36,
+        1.36,
+        2.32
+      ],
+      "gridAnchor": [
+        0,
+        5
+      ],
+      "cells": [
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.039999999999999994,
+        0.665,
+        0
+      ],
+      "facing": "y",
+      "mirrorOf": "tree-x",
+      "projectionHull": [
+        [
+          169.60000000000002,
+          218.19973122924966
+        ],
+        [
+          88,
+          258.92776434529173
+        ],
+        [
+          6.399999999999977,
+          218.19973122924966
+        ],
+        [
+          6.399999999999977,
+          47.61512406991494
+        ],
+        [
+          88,
+          6.887090953872871
+        ],
+        [
+          169.60000000000002,
+          47.61512406991494
+        ]
+      ],
+      "fit": {
+        "scale": 0.14926715370314014,
+        "initialScale": 0.15571570763568485,
+        "ratio": 0.9585876464843749,
+        "sourceBounds": [
+          237,
+          38,
+          962,
+          1331
+        ],
+        "calibratedGround": [
+          582.4444444444445,
+          1732.813100130133
+        ],
+        "projectedGround": [
+          90,
+          257.094537699076
+        ],
+        "vertical": 1.2477951322316794,
+        "shear": 0.12477951322316799
+      }
+    },
+    {
+      "id": "bed-x",
+      "category": "furniture",
+      "png": "bed-x.png",
+      "svg": "bed-x.svg",
+      "viewBox": [
+        442,
+        481,
+        196,
+        154
+      ],
+      "pixelGroundOrigin": [
+        98,
+        56.471698113207594
+      ],
+      "dimensionsL": [
+        0.19,
+        0.19,
+        0.085
+      ],
+      "dimensionsCells": [
+        1.52,
+        1.52,
+        0.68
+      ],
+      "gridAnchor": [
+        5,
+        6
+      ],
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.655,
+        0.78,
+        0
+      ],
+      "facing": "x",
+      "mirrorOf": null,
+      "projectionHull": [
+        [
+          6.800000000000011,
+          51.99232795583487
+        ],
+        [
+          98,
+          6.472761532023242
+        ],
+        [
+          189.20000000000005,
+          51.99232795583487
+        ],
+        [
+          189.20000000000005,
+          101.99126453701922
+        ],
+        [
+          98,
+          147.51083096083084
+        ],
+        [
+          6.800000000000011,
+          101.99126453701922
+        ]
+      ],
+      "fit": {
+        "scale": 0.14277145955371323,
+        "initialScale": 0.14614773629864972,
+        "ratio": 0.9768981933593748,
+        "sourceBounds": [
+          158,
+          93,
+          1416,
+          946
+        ],
+        "calibratedGround": [
+          729.2727272727273,
+          976.1189370665372
+        ],
+        "projectedGround": [
+          90,
+          139.6776043146151
+        ],
+        "vertical": 1.039829276859733,
+        "shear": -0.010398292768597328
+      }
+    },
+    {
+      "id": "bed-y",
+      "category": "furniture",
+      "png": "bed-y.png",
+      "svg": "bed-y.svg",
+      "viewBox": [
+        442,
+        481,
+        196,
+        154
+      ],
+      "pixelGroundOrigin": [
+        98,
+        56.471698113207594
+      ],
+      "dimensionsL": [
+        0.19,
+        0.19,
+        0.085
+      ],
+      "dimensionsCells": [
+        1.52,
+        1.52,
+        0.68
+      ],
+      "gridAnchor": [
+        5,
+        6
+      ],
+      "cells": [
+        [
+          5,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          6,
+          7
+        ]
+      ],
+      "worldGroundAnchor": [
+        0.655,
+        0.78,
+        0
+      ],
+      "facing": "y",
+      "mirrorOf": "bed-x",
+      "projectionHull": [
+        [
+          189.2,
+          101.99126453701922
+        ],
+        [
+          98,
+          147.51083096083084
+        ],
+        [
+          6.7999999999999545,
+          101.99126453701922
+        ],
+        [
+          6.7999999999999545,
+          51.99232795583487
+        ],
+        [
+          98,
+          6.472761532023242
+        ],
+        [
+          189.2,
+          51.99232795583487
+        ]
+      ],
+      "fit": {
+        "scale": 0.14277145955371323,
+        "initialScale": 0.14614773629864972,
+        "ratio": 0.9768981933593748,
+        "sourceBounds": [
+          158,
+          93,
+          1416,
+          946
+        ],
+        "calibratedGround": [
+          729.2727272727273,
+          976.1189370665372
+        ],
+        "projectedGround": [
+          90,
+          139.6776043146151
+        ],
+        "vertical": 1.039829276859733,
+        "shear": -0.010398292768597328
+      }
+    },
+    {
+      "id": "window-left",
+      "category": "decor",
+      "svg": "window-left.svg",
+      "png": "window-left.png",
+      "viewBox": [
+        210,
+        252,
+        210,
+        237
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint",
+        "four-pane oak sash",
+        "solid central mullion",
+        "solid cross rail",
+        "rounded oak extended sill"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.307,
+        "bottom": 0.013000000000000001,
+        "top": 0.19949999999999998
+      },
+      "dimensionsL": [
+        0.32,
+        0.2125,
+        0.063
+      ],
+      "worldMountCenter": [
+        0,
+        0.5,
+        0.50625
+      ],
+      "sillBottom": 0.392
+    },
+    {
+      "id": "frame-landscape-left",
+      "category": "decor",
+      "svg": "frame-landscape-left.svg",
+      "png": "frame-landscape-left.png",
+      "viewBox": [
+        398,
+        209,
+        120,
+        152
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.187,
+        "bottom": 0.013000000000000001,
+        "top": 0.13699999999999998
+      },
+      "worldMountCenter": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "dimensionsL": [
+        0.2,
+        0.15,
+        0.026
+      ],
+      "template": "landscape",
+      "wall": "left"
+    },
+    {
+      "id": "frame-portrait-left",
+      "category": "decor",
+      "svg": "frame-portrait-left.svg",
+      "png": "frame-portrait-left.png",
+      "viewBox": [
+        410,
+        200,
+        96,
+        170
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.13699999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.187
+      },
+      "worldMountCenter": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "dimensionsL": [
+        0.15,
+        0.2,
+        0.026
+      ],
+      "template": "portrait",
+      "wall": "left"
+    },
+    {
+      "id": "frame-square-left",
+      "category": "decor",
+      "svg": "frame-square-left.svg",
+      "png": "frame-square-left.png",
+      "viewBox": [
+        404,
+        204,
+        108,
+        161
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.16199999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.16199999999999998
+      },
+      "worldMountCenter": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "dimensionsL": [
+        0.175,
+        0.175,
+        0.026
+      ],
+      "template": "square",
+      "wall": "left"
+    },
+    {
+      "id": "wall-left",
+      "category": "decor",
+      "svg": "wall-left.svg",
+      "png": "wall-left.png",
+      "viewBox": [
+        47,
+        52,
+        502,
+        733
+      ],
+      "screenGroundOrigin": [
+        493,
+        485.4716981132076
+      ],
+      "projection": "independent; not mirrored"
+    },
+    {
+      "id": "wall-left-closed",
+      "category": "decor",
+      "svg": "wall-left-closed.svg",
+      "png": "wall-left-closed.png",
+      "viewBox": [
+        47,
+        52,
+        502,
+        733
+      ],
+      "screenGroundOrigin": [
+        493,
+        485.4716981132076
+      ],
+      "projection": "independent; not mirrored"
+    },
+    {
+      "id": "view-left-day",
+      "category": "decor",
+      "svg": "view-left-day.svg",
+      "png": "view-left-day.png",
+      "viewBox": [
+        217,
+        252,
+        166,
+        215
+      ],
+      "crop": [
+        80,
+        70,
+        1080,
+        717.1875
+      ],
+      "imageMatrix": [
+        153.59999999999997,
+        -76.66453292431436,
+        0,
+        124.99734145296082,
+        223.20000000000005,
+        335.3058424934248
+      ],
+      "mode": "day",
+      "projection": "upright, different sky crop per window; positive determinant, never mirrored"
+    },
+    {
+      "id": "view-left-night",
+      "category": "decor",
+      "svg": "view-left-night.svg",
+      "png": "view-left-night.png",
+      "viewBox": [
+        217,
+        252,
+        166,
+        215
+      ],
+      "crop": [
+        80,
+        70,
+        1080,
+        717.1875
+      ],
+      "imageMatrix": [
+        153.59999999999997,
+        -76.66453292431436,
+        0,
+        124.99734145296082,
+        223.20000000000005,
+        335.3058424934248
+      ],
+      "mode": "night",
+      "projection": "upright, different sky crop per window; positive determinant, never mirrored"
+    },
+    {
+      "id": "window-right",
+      "category": "decor",
+      "svg": "window-right.svg",
+      "png": "window-right.png",
+      "viewBox": [
+        660,
+        252,
+        210,
+        237
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint",
+        "four-pane oak sash",
+        "solid central mullion",
+        "solid cross rail",
+        "rounded oak extended sill"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.307,
+        "bottom": 0.013000000000000001,
+        "top": 0.19949999999999998
+      },
+      "dimensionsL": [
+        0.32,
+        0.2125,
+        0.063
+      ],
+      "worldMountCenter": [
+        0.5,
+        0,
+        0.50625
+      ],
+      "sillBottom": 0.392
+    },
+    {
+      "id": "frame-landscape-right",
+      "category": "decor",
+      "svg": "frame-landscape-right.svg",
+      "png": "frame-landscape-right.png",
+      "viewBox": [
+        562,
+        209,
+        120,
+        152
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.187,
+        "bottom": 0.013000000000000001,
+        "top": 0.13699999999999998
+      },
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "dimensionsL": [
+        0.2,
+        0.15,
+        0.026
+      ],
+      "template": "landscape",
+      "wall": "right"
+    },
+    {
+      "id": "frame-portrait-right",
+      "category": "decor",
+      "svg": "frame-portrait-right.svg",
+      "png": "frame-portrait-right.png",
+      "viewBox": [
+        574,
+        200,
+        96,
+        170
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.13699999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.187
+      },
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "dimensionsL": [
+        0.15,
+        0.2,
+        0.026
+      ],
+      "template": "portrait",
+      "wall": "right"
+    },
+    {
+      "id": "frame-square-right",
+      "category": "decor",
+      "svg": "frame-square-right.svg",
+      "png": "frame-square-right.png",
+      "viewBox": [
+        568,
+        204,
+        108,
+        161
+      ],
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.16199999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.16199999999999998
+      },
+      "worldMountCenter": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "dimensionsL": [
+        0.175,
+        0.175,
+        0.026
+      ],
+      "template": "square",
+      "wall": "right"
+    },
+    {
+      "id": "wall-right",
+      "category": "decor",
+      "svg": "wall-right.svg",
+      "png": "wall-right.png",
+      "viewBox": [
+        531,
+        52,
+        502,
+        733
+      ],
+      "screenGroundOrigin": [
+        9,
+        485.4716981132076
+      ],
+      "projection": "independent; not mirrored"
+    },
+    {
+      "id": "wall-right-closed",
+      "category": "decor",
+      "svg": "wall-right-closed.svg",
+      "png": "wall-right-closed.png",
+      "viewBox": [
+        531,
+        52,
+        502,
+        733
+      ],
+      "screenGroundOrigin": [
+        9,
+        485.4716981132076
+      ],
+      "projection": "independent; not mirrored"
+    },
+    {
+      "id": "view-right-day",
+      "category": "decor",
+      "svg": "view-right-day.svg",
+      "png": "view-right-day.png",
+      "viewBox": [
+        697,
+        252,
+        166,
+        215
+      ],
+      "crop": [
+        360,
+        200,
+        1080,
+        717.1875
+      ],
+      "imageMatrix": [
+        153.5999999999999,
+        76.66453292431436,
+        0,
+        124.99734145296082,
+        703.2,
+        258.64130956911043
+      ],
+      "mode": "day",
+      "projection": "upright, different sky crop per window; positive determinant, never mirrored"
+    },
+    {
+      "id": "view-right-night",
+      "category": "decor",
+      "svg": "view-right-night.svg",
+      "png": "view-right-night.png",
+      "viewBox": [
+        697,
+        252,
+        166,
+        215
+      ],
+      "crop": [
+        360,
+        200,
+        1080,
+        717.1875
+      ],
+      "imageMatrix": [
+        153.5999999999999,
+        76.66453292431436,
+        0,
+        124.99734145296082,
+        703.2,
+        258.64130956911043
+      ],
+      "mode": "night",
+      "projection": "upright, different sky crop per window; positive determinant, never mirrored"
+    },
+    {
+      "id": "frame-landscape-flat",
+      "category": "decor",
+      "svg": "frame-landscape-flat.svg",
+      "png": "frame-landscape-flat.png",
+      "viewBox": [
+        -6,
+        -6,
+        332,
+        252
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.187,
+        "bottom": 0.013000000000000001,
+        "top": 0.13699999999999998
+      },
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "template": "landscape",
+      "dimensionsL": [
+        0.2,
+        0.15,
+        0.026
+      ]
+    },
+    {
+      "id": "frame-portrait-flat",
+      "category": "decor",
+      "svg": "frame-portrait-flat.svg",
+      "png": "frame-portrait-flat.png",
+      "viewBox": [
+        -6,
+        -6,
+        252,
+        332
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.13699999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.187
+      },
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "template": "portrait",
+      "dimensionsL": [
+        0.15,
+        0.2,
+        0.026
+      ]
+    },
+    {
+      "id": "frame-square-flat",
+      "category": "decor",
+      "svg": "frame-square-flat.svg",
+      "png": "frame-square-flat.png",
+      "viewBox": [
+        -6,
+        -6,
+        292,
+        292
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.16199999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.16199999999999998
+      },
+      "parts": [
+        "rounded oak rails",
+        "recessed mortise joint"
+      ],
+      "template": "square",
+      "dimensionsL": [
+        0.175,
+        0.175,
+        0.026
+      ]
+    },
+    {
+      "id": "floor",
+      "category": "decor",
+      "svg": "floor.svg",
+      "png": "floor.png",
+      "viewBox": [
+        54,
+        531,
+        972,
+        505
+      ],
+      "screenGroundOrigin": [
+        486,
+        6.471698113207594
+      ]
+    },
+    {
+      "id": "rug",
+      "category": "decor",
+      "svg": "rug.svg",
+      "png": "rug.png",
+      "viewBox": [
+        181,
+        593,
+        718,
+        366
+      ],
+      "worldFootprint": [
+        0.125,
+        0.125,
+        0.75,
+        0.75
+      ],
+      "cells": "central 6×6"
+    }
+  ]
+}
