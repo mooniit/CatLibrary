@@ -2,7 +2,8 @@
   "standard": "room-standard-v1",
   "theme": "wood",
   "label": "简约木质",
-  "sourcePolicy": "Fresh text-only furniture; +Y exact RGBA mirror of +X; no old furniture input image",
+  "sourcePolicy": "New numeric construction guide constrains every generation; actual pixel edges checked; uniform registration only; +Y exact mirror",
+  "generationRequirements": "../../room-structure-2026-10-05/FURNITURE-GENERATION.md",
   "assets": [
     {
       "id": "bookshelf-x",
@@ -10,14 +11,14 @@
       "png": "bookshelf-x.png",
       "svg": "bookshelf-x.svg",
       "viewBox": [
-        409,
-        310,
-        195,
-        325
+        410,
+        315,
+        193,
+        317
       ],
       "pixelGroundOrigin": [
-        131,
-        227.4716981132076
+        130,
+        222.4716981132076
       ],
       "dimensionsL": [
         0.12,
@@ -56,51 +57,205 @@
       "mirrorOf": null,
       "projectionHull": [
         [
-          6.199999999999989,
-          69.17808737369398
+          5.199999999999989,
+          64.17808737369398
         ],
         [
-          131,
-          6.888154372688518
+          130,
+          1.8881543726885184
         ],
         [
-          188.60000000000002,
-          35.63735421930642
+          187.60000000000002,
+          30.637354219306417
         ],
         [
-          188.60000000000002,
-          256.2208979598255
+          187.60000000000002,
+          251.2208979598255
         ],
         [
-          63.80000000000001,
-          318.51083096083096
+          62.80000000000001,
+          313.51083096083096
         ],
         [
-          6.199999999999989,
-          289.76163111421306
+          5.199999999999989,
+          284.76163111421306
         ]
       ],
-      "fit": {
-        "scale": 0.18882317779867808,
-        "initialScale": 0.1989760062421882,
-        "ratio": 0.9489746093749999,
+      "coordinateGuide": "bookshelf-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.12,
+            0.01,
+            0.034
+          ],
+          "b": [
+            0.12,
+            0.25,
+            0.034
+          ],
+          "label": "shelf front +Y",
+          "outer": false,
+          "screen": [
+            [
+              182.80000000000007,
+              233.61708998123663
+            ],
+            [
+              67.60000000000002,
+              291.1154896744724
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.12,
+            0.01,
+            0.14
+          ],
+          "b": [
+            0.12,
+            0.25,
+            0.14
+          ],
+          "label": "shelf front +Y",
+          "outer": false,
+          "screen": [
+            [
+              182.80000000000007,
+              171.2654749505832
+            ],
+            [
+              67.60000000000002,
+              228.763874643819
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.12,
+            0.01,
+            0.24600000000000002
+          ],
+          "b": [
+            0.12,
+            0.25,
+            0.24600000000000002
+          ],
+          "label": "shelf front +Y",
+          "outer": false,
+          "screen": [
+            [
+              182.80000000000007,
+              108.91385991992979
+            ],
+            [
+              67.60000000000002,
+              166.4122596131656
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.017,
+            0,
+            0.375
+          ],
+          "b": [
+            0.103,
+            0,
+            0.375
+          ],
+          "label": "top outer depth +X",
+          "outer": true,
+          "screen": [
+            [
+              138.15999999999997,
+              5.96095768429268
+            ],
+            [
+              179.44000000000005,
+              26.564550907702255
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.19662555429127976,
+        "translation": [
+          0.47837561633444636,
+          0.3830954621864464
+        ],
         "sourceBounds": [
-          226,
-          17,
-          1129,
-          1181
+          30,
+          27,
+          945,
+          1583
         ],
-        "calibratedGround": [
-          439.375,
-          1460.334191738108
+        "targetBounds": [
+          6,
+          6.333333333333333,
+          186.66666666666666,
+          311
         ],
-        "projectedGround": [
-          57.799999999999955,
-          312.6776043146152
-        ],
-        "vertical": 1.2913791795411949,
-        "shear": -0.14657153687792562
-      }
+        "aspectError": 0.008420322607645359,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "shelf front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.772940503472576,
+          "angleError": 0.2483290635684142,
+          "distance": 0.5,
+          "residual": 0.0803571428571428,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "shelf front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.524611439904163,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "shelf front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.92193406054389,
+          "angleError": 0.39732262063972573,
+          "distance": 0.25,
+          "residual": 0.07857142857142874,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "top outer depth +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990423,
+          "measuredAngle": 27.079006681122127,
+          "angleError": 0.5543952412178967,
+          "distance": 0.25,
+          "residual": 0.08571428571428566,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
     },
     {
       "id": "bookshelf-y",
@@ -108,14 +263,14 @@
       "png": "bookshelf-y.png",
       "svg": "bookshelf-y.svg",
       "viewBox": [
-        409,
-        310,
-        195,
-        325
+        410,
+        315,
+        193,
+        317
       ],
       "pixelGroundOrigin": [
-        64,
-        227.4716981132076
+        63,
+        222.4716981132076
       ],
       "dimensionsL": [
         0.26,
@@ -154,51 +309,209 @@
       "mirrorOf": "bookshelf-x",
       "projectionHull": [
         [
-          188.8,
-          289.76163111421306
+          187.8,
+          284.76163111421306
         ],
         [
-          131.2,
-          318.51083096083096
+          130.2,
+          313.51083096083096
         ],
         [
-          6.399999999999977,
-          256.2208979598255
+          5.399999999999977,
+          251.2208979598255
         ],
         [
-          6.399999999999977,
-          35.63735421930642
+          5.399999999999977,
+          30.637354219306417
         ],
         [
-          64,
-          6.888154372688518
+          63,
+          1.8881543726885184
         ],
         [
-          188.8,
-          69.17808737369398
+          187.8,
+          64.17808737369398
         ]
       ],
-      "fit": {
-        "scale": 0.18882317779867808,
-        "initialScale": 0.1989760062421882,
-        "ratio": 0.9489746093749999,
+      "coordinateGuide": "bookshelf-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.01,
+            0.12,
+            0.034
+          ],
+          "b": [
+            0.25,
+            0.12,
+            0.034
+          ],
+          "label": "shelf front +X",
+          "outer": false,
+          "screen": [
+            [
+              10.199999999999932,
+              233.61708998123663
+            ],
+            [
+              125.39999999999998,
+              291.1154896744724
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.01,
+            0.12,
+            0.14
+          ],
+          "b": [
+            0.25,
+            0.12,
+            0.14
+          ],
+          "label": "shelf front +X",
+          "outer": false,
+          "screen": [
+            [
+              10.199999999999932,
+              171.2654749505832
+            ],
+            [
+              125.39999999999998,
+              228.763874643819
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.01,
+            0.12,
+            0.24600000000000002
+          ],
+          "b": [
+            0.25,
+            0.12,
+            0.24600000000000002
+          ],
+          "label": "shelf front +X",
+          "outer": false,
+          "screen": [
+            [
+              10.199999999999932,
+              108.91385991992979
+            ],
+            [
+              125.39999999999998,
+              166.4122596131656
+            ]
+          ]
+        },
+        {
+          "a": [
+            0,
+            0.017,
+            0.375
+          ],
+          "b": [
+            0,
+            0.103,
+            0.375
+          ],
+          "label": "top outer depth +Y",
+          "outer": true,
+          "screen": [
+            [
+              54.84000000000003,
+              5.96095768429268
+            ],
+            [
+              13.559999999999945,
+              26.564550907702255
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.19662555429127976,
+        "translation": [
+          0.47837561633444636,
+          0.3830954621864464
+        ],
         "sourceBounds": [
-          226,
-          17,
-          1129,
-          1181
+          30,
+          27,
+          945,
+          1583
         ],
-        "calibratedGround": [
-          439.375,
-          1460.334191738108
+        "targetBounds": [
+          6,
+          6.333333333333333,
+          186.66666666666666,
+          311
         ],
-        "projectedGround": [
-          57.799999999999955,
-          312.6776043146152
-        ],
-        "vertical": 1.2913791795411949,
-        "shear": -0.14657153687792562
-      }
+        "aspectError": 0.008420322607645359,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "shelf front +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904163,
+          "measuredAngle": 26.772940503472576,
+          "angleError": 0.2483290635684142,
+          "distance": 0.5,
+          "residual": 0.0803571428571428,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bookshelf-x exact mirror"
+        },
+        {
+          "label": "shelf front +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904163,
+          "measuredAngle": 26.524611439904163,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bookshelf-x exact mirror"
+        },
+        {
+          "label": "shelf front +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904163,
+          "measuredAngle": 26.92193406054389,
+          "angleError": 0.39732262063972573,
+          "distance": 0.25,
+          "residual": 0.07857142857142874,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bookshelf-x exact mirror"
+        },
+        {
+          "label": "top outer depth +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990423,
+          "measuredAngle": -27.079006681122127,
+          "angleError": 0.5543952412178967,
+          "distance": 0.25,
+          "residual": 0.08571428571428566,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bookshelf-x exact mirror"
+        }
+      ]
     },
     {
       "id": "desk-x",
@@ -206,14 +519,14 @@
       "png": "desk-x.png",
       "svg": "desk-x.svg",
       "viewBox": [
-        390,
-        425,
-        238,
-        232
+        391,
+        426,
+        235,
+        227
       ],
       "pixelGroundOrigin": [
-        150,
-        112.4716981132076
+        149,
+        111.4716981132076
       ],
       "dimensionsL": [
         0.17,
@@ -264,51 +577,168 @@
       "mirrorOf": null,
       "projectionHull": [
         [
-          6,
-          78.46459673430314
+          5,
+          77.46459673430314
         ],
         [
-          150,
-          6.591597117758454
+          149,
+          5.591597117758454
         ],
         [
-          231.60000000000002,
-          47.319630233800524
+          230.60000000000002,
+          46.319630233800524
         ],
         [
-          231.60000000000002,
-          153.19973122924966
+          230.60000000000002,
+          152.19973122924966
         ],
         [
-          87.60000000000002,
-          225.07273084579435
+          86.60000000000002,
+          224.07273084579435
         ],
         [
-          6,
-          184.34469772975228
+          5,
+          183.34469772975228
         ]
       ],
-      "fit": {
-        "scale": 0.171044921875,
-        "initialScale": 0.1772549019607843,
-        "ratio": 0.9649658203125001,
+      "coordinateGuide": "desk-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.17,
+            0,
+            0.18
+          ],
+          "b": [
+            0.17,
+            0.3,
+            0.18
+          ],
+          "label": "desktop front +Y",
+          "outer": false,
+          "screen": [
+            [
+              230.60000000000002,
+              46.319630233800524
+            ],
+            [
+              86.60000000000002,
+              118.19262985034516
+            ]
+          ]
+        },
+        {
+          "a": [
+            0,
+            0,
+            0.18
+          ],
+          "b": [
+            0.17,
+            0,
+            0.18
+          ],
+          "label": "desktop outer side +X",
+          "outer": true,
+          "screen": [
+            [
+              149,
+              5.591597117758454
+            ],
+            [
+              230.60000000000002,
+              46.319630233800524
+            ]
+          ]
+        },
+        {
+          "a": [
+            0,
+            0,
+            0.18
+          ],
+          "b": [
+            0,
+            0.3,
+            0.18
+          ],
+          "label": "desktop rear +Y",
+          "outer": true,
+          "screen": [
+            [
+              149,
+              5.591597117758454
+            ],
+            [
+              5,
+              77.46459673430314
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.18107329586982995,
+        "translation": [
+          -1.0412854052100187,
+          1.8683130962498353
+        ],
         "sourceBounds": [
-          132,
-          30,
-          1406,
-          983
+          32,
+          31,
+          1281,
+          1202
         ],
-        "calibratedGround": [
-          515.8888888888889,
-          1156.0049455520843
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          229.33333333333334,
+          221
         ],
-        "projectedGround": [
-          79.60000000000002,
-          215.23950419957873
-        ],
-        "vertical": 1.1883763164111232,
-        "shear": -0.023767526328222377
-      }
+        "aspectError": 0.02756437708306181,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "desktop front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904135,
+          "measuredAngle": -26.89544665198321,
+          "angleError": 0.3708352120790756,
+          "distance": 3.25,
+          "residual": 0.08333333333333337,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 3,
+          "passed": true
+        },
+        {
+          "label": "desktop outer side +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904206,
+          "measuredAngle": 27.17900720190142,
+          "angleError": 0.6543957619972132,
+          "distance": 1,
+          "residual": 0.08333333333333315,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "desktop rear +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -27.110128515226684,
+          "angleError": 0.5855170753225213,
+          "distance": 1.75,
+          "residual": 0.1184210526315792,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
     },
     {
       "id": "desk-y",
@@ -316,14 +746,14 @@
       "png": "desk-y.png",
       "svg": "desk-y.svg",
       "viewBox": [
-        390,
-        425,
-        238,
-        232
+        391,
+        426,
+        235,
+        227
       ],
       "pixelGroundOrigin": [
-        88,
-        112.4716981132076
+        86,
+        111.4716981132076
       ],
       "dimensionsL": [
         0.3,
@@ -374,51 +804,171 @@
       "mirrorOf": "desk-x",
       "projectionHull": [
         [
-          232,
-          184.34469772975228
+          230,
+          183.34469772975228
         ],
         [
-          150.39999999999998,
-          225.07273084579435
+          148.39999999999998,
+          224.07273084579435
         ],
         [
-          6.399999999999977,
-          153.19973122924966
+          4.399999999999977,
+          152.19973122924966
         ],
         [
-          6.399999999999977,
-          47.319630233800524
+          4.399999999999977,
+          46.319630233800524
         ],
         [
-          88,
-          6.591597117758454
+          86,
+          5.591597117758454
         ],
         [
-          232,
-          78.46459673430314
+          230,
+          77.46459673430314
         ]
       ],
-      "fit": {
-        "scale": 0.171044921875,
-        "initialScale": 0.1772549019607843,
-        "ratio": 0.9649658203125001,
+      "coordinateGuide": "desk-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0,
+            0.17,
+            0.18
+          ],
+          "b": [
+            0.3,
+            0.17,
+            0.18
+          ],
+          "label": "desktop front +X",
+          "outer": false,
+          "screen": [
+            [
+              4.399999999999977,
+              46.319630233800524
+            ],
+            [
+              148.39999999999998,
+              118.19262985034516
+            ]
+          ]
+        },
+        {
+          "a": [
+            0,
+            0,
+            0.18
+          ],
+          "b": [
+            0,
+            0.17,
+            0.18
+          ],
+          "label": "desktop outer side +Y",
+          "outer": true,
+          "screen": [
+            [
+              86,
+              5.591597117758454
+            ],
+            [
+              4.399999999999977,
+              46.319630233800524
+            ]
+          ]
+        },
+        {
+          "a": [
+            0,
+            0,
+            0.18
+          ],
+          "b": [
+            0.3,
+            0,
+            0.18
+          ],
+          "label": "desktop rear +X",
+          "outer": true,
+          "screen": [
+            [
+              86,
+              5.591597117758454
+            ],
+            [
+              230,
+              77.46459673430314
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.18107329586982995,
+        "translation": [
+          -1.0412854052100187,
+          1.8683130962498353
+        ],
         "sourceBounds": [
-          132,
-          30,
-          1406,
-          983
+          32,
+          31,
+          1281,
+          1202
         ],
-        "calibratedGround": [
-          515.8888888888889,
-          1156.0049455520843
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          229.33333333333334,
+          221
         ],
-        "projectedGround": [
-          79.60000000000002,
-          215.23950419957873
-        ],
-        "vertical": 1.1883763164111232,
-        "shear": -0.023767526328222377
-      }
+        "aspectError": 0.02756437708306181,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "desktop front +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904135,
+          "measuredAngle": 26.89544665198321,
+          "angleError": 0.3708352120790756,
+          "distance": 3.25,
+          "residual": 0.08333333333333337,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 3,
+          "passed": true,
+          "derivedFrom": "desk-x exact mirror"
+        },
+        {
+          "label": "desktop outer side +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904206,
+          "measuredAngle": -27.17900720190142,
+          "angleError": 0.6543957619972132,
+          "distance": 1,
+          "residual": 0.08333333333333315,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "desk-x exact mirror"
+        },
+        {
+          "label": "desktop rear +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904163,
+          "measuredAngle": 27.110128515226684,
+          "angleError": 0.5855170753225213,
+          "distance": 1.75,
+          "residual": 0.1184210526315792,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "desk-x exact mirror"
+        }
+      ]
     },
     {
       "id": "chair-x",
@@ -426,14 +976,14 @@
       "png": "chair-x.png",
       "svg": "chair-x.svg",
       "viewBox": [
-        476,
-        413,
-        126,
-        187
+        483,
+        420,
+        111,
+        173
       ],
       "pixelGroundOrigin": [
-        64,
-        124.4716981132076
+        57,
+        117.4716981132076
       ],
       "dimensionsL": [
         0.115,
@@ -464,51 +1014,170 @@
       "mirrorOf": null,
       "projectionHull": [
         [
-          6.399999999999977,
-          35.57634129821531
+          -0.6000000000000227,
+          28.57634129821531
         ],
         [
-          64,
-          6.827141451597413
+          57,
+          -0.17285854840258708
         ],
         [
-          119.20000000000005,
-          34.37845797127295
+          112.20000000000005,
+          27.37845797127295
         ],
         [
-          119.20000000000005,
-          152.02301463288313
+          112.20000000000005,
+          145.02301463288313
         ],
         [
-          61.60000000000002,
-          180.77221447950103
+          54.60000000000002,
+          173.77221447950103
         ],
         [
-          6.399999999999977,
-          153.2208979598255
+          -0.6000000000000227,
+          146.2208979598255
         ]
       ],
-      "fit": {
-        "scale": 0.10415094784564768,
-        "initialScale": 0.11057243670844591,
-        "ratio": 0.9419250488281251,
+      "coordinateGuide": "chair-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.10700000000000001,
+            0.019,
+            0.062
+          ],
+          "b": [
+            0.10700000000000001,
+            0.10099999999999999,
+            0.062
+          ],
+          "label": "seat lower front +Y",
+          "outer": false,
+          "contrast": "alpha",
+          "screen": [
+            [
+              99.24000000000001,
+              111.18854538705727
+            ],
+            [
+              59.879999999999995,
+              130.83383194891292
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.017,
+            0.11399999999999999,
+            0.062
+          ],
+          "b": [
+            0.098,
+            0.11399999999999999,
+            0.062
+          ],
+          "label": "visible seat side +X",
+          "outer": false,
+          "contrast": "alpha",
+          "screen": [
+            [
+              10.43999999999994,
+              112.38642871399963
+            ],
+            [
+              49.319999999999936,
+              131.79213861046674
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.012,
+            0.03,
+            0.2
+          ],
+          "b": [
+            0.012,
+            0.09,
+            0.2
+          ],
+          "label": "backrest outer rail +Y",
+          "outer": true,
+          "screen": [
+            [
+              48.360000000000014,
+              9.889361397913717
+            ],
+            [
+              19.560000000000002,
+              24.26396132122261
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.1099935872908438,
+        "translation": [
+          0.17657816416636507,
+          0.09668461158139507
+        ],
         "sourceBounds": [
-          108,
-          40,
-          974,
-          1498
+          57,
+          52,
+          955,
+          1513
         ],
-        "calibratedGround": [
-          496.55555555555554,
-          1562.566884061874
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          105.33333333333333,
+          166.33333333333334
         ],
-        "projectedGround": [
-          55.60000000000002,
-          176.9389878332853
-        ],
-        "vertical": 1.073372156758434,
-        "shear": -0.09123663332446691
-      }
+        "aspectError": 0.004581676073880825,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "seat lower front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990425,
+          "measuredAngle": -26.727340832493876,
+          "angleError": 0.20272939258962944,
+          "distance": 0.3475378787878788,
+          "residual": 0.018949553001277125,
+          "positionTolerance": 4,
+          "samples": 28,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "visible seat side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990421,
+          "measuredAngle": 26.56312895964114,
+          "angleError": 0.03851751973693251,
+          "distance": 0.351890756302521,
+          "residual": 0.024781430161616404,
+          "positionTolerance": 4,
+          "samples": 27,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "backrest outer rail +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904078,
+          "measuredAngle": -26.524611439904078,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
     },
     {
       "id": "chair-y",
@@ -516,14 +1185,14 @@
       "png": "chair-y.png",
       "svg": "chair-y.svg",
       "viewBox": [
-        476,
-        413,
-        126,
-        187
+        483,
+        420,
+        111,
+        173
       ],
       "pixelGroundOrigin": [
-        62,
-        124.4716981132076
+        54,
+        117.4716981132076
       ],
       "dimensionsL": [
         0.12,
@@ -554,51 +1223,173 @@
       "mirrorOf": "chair-x",
       "projectionHull": [
         [
-          119.60000000000002,
-          153.2208979598255
+          111.60000000000002,
+          146.2208979598255
         ],
         [
-          64.39999999999998,
-          180.77221447950103
+          56.39999999999998,
+          173.77221447950103
         ],
         [
-          6.7999999999999545,
-          152.02301463288313
+          -1.2000000000000455,
+          145.02301463288313
         ],
         [
-          6.7999999999999545,
-          34.37845797127295
+          -1.2000000000000455,
+          27.37845797127295
         ],
         [
-          62,
-          6.827141451597413
+          54,
+          -0.17285854840258708
         ],
         [
-          119.60000000000002,
-          35.57634129821531
+          111.60000000000002,
+          28.57634129821531
         ]
       ],
-      "fit": {
-        "scale": 0.10415094784564768,
-        "initialScale": 0.11057243670844591,
-        "ratio": 0.9419250488281251,
+      "coordinateGuide": "chair-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.019,
+            0.10700000000000001,
+            0.062
+          ],
+          "b": [
+            0.10099999999999999,
+            0.10700000000000001,
+            0.062
+          ],
+          "label": "seat lower front +X",
+          "outer": false,
+          "contrast": "alpha",
+          "screen": [
+            [
+              11.759999999999991,
+              111.18854538705727
+            ],
+            [
+              51.120000000000005,
+              130.83383194891292
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.11399999999999999,
+            0.017,
+            0.062
+          ],
+          "b": [
+            0.11399999999999999,
+            0.098,
+            0.062
+          ],
+          "label": "visible seat side +Y",
+          "outer": false,
+          "contrast": "alpha",
+          "screen": [
+            [
+              100.56000000000006,
+              112.38642871399963
+            ],
+            [
+              61.680000000000064,
+              131.79213861046674
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.03,
+            0.012,
+            0.2
+          ],
+          "b": [
+            0.09,
+            0.012,
+            0.2
+          ],
+          "label": "backrest outer rail +X",
+          "outer": true,
+          "screen": [
+            [
+              62.639999999999986,
+              9.889361397913717
+            ],
+            [
+              91.44,
+              24.26396132122261
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.1099935872908438,
+        "translation": [
+          0.17657816416636507,
+          0.09668461158139507
+        ],
         "sourceBounds": [
-          108,
-          40,
-          974,
-          1498
+          57,
+          52,
+          955,
+          1513
         ],
-        "calibratedGround": [
-          496.55555555555554,
-          1562.566884061874
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          105.33333333333333,
+          166.33333333333334
         ],
-        "projectedGround": [
-          55.60000000000002,
-          176.9389878332853
-        ],
-        "vertical": 1.073372156758434,
-        "shear": -0.09123663332446691
-      }
+        "aspectError": 0.004581676073880825,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "seat lower front +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990425,
+          "measuredAngle": 26.727340832493876,
+          "angleError": 0.20272939258962944,
+          "distance": 0.3475378787878788,
+          "residual": 0.018949553001277125,
+          "positionTolerance": 4,
+          "samples": 28,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "chair-x exact mirror"
+        },
+        {
+          "label": "visible seat side +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990421,
+          "measuredAngle": -26.56312895964114,
+          "angleError": 0.03851751973693251,
+          "distance": 0.351890756302521,
+          "residual": 0.024781430161616404,
+          "positionTolerance": 4,
+          "samples": 27,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "chair-x exact mirror"
+        },
+        {
+          "label": "backrest outer rail +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904078,
+          "measuredAngle": 26.524611439904078,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "chair-x exact mirror"
+        }
+      ]
     },
     {
       "id": "tree-x",
@@ -606,14 +1397,14 @@
       "png": "tree-x.png",
       "svg": "tree-x.svg",
       "viewBox": [
-        452,
-        360,
-        176,
-        265
+        454,
+        362,
+        172,
+        262
       ],
       "pixelGroundOrigin": [
-        88,
-        177.4716981132076
+        86,
+        175.4716981132076
       ],
       "dimensionsL": [
         0.17,
@@ -656,51 +1447,168 @@
       "mirrorOf": null,
       "projectionHull": [
         [
-          6.399999999999977,
-          47.61512406991494
+          4.399999999999977,
+          45.61512406991494
         ],
         [
-          88,
-          6.887090953872871
+          86,
+          4.887090953872871
         ],
         [
-          169.60000000000002,
-          47.61512406991494
+          167.60000000000002,
+          45.61512406991494
         ],
         [
-          169.60000000000002,
-          218.19973122924966
+          167.60000000000002,
+          216.19973122924966
         ],
         [
-          88,
-          258.92776434529173
+          86,
+          256.92776434529173
         ],
         [
-          6.399999999999977,
-          218.19973122924966
+          4.399999999999977,
+          216.19973122924966
         ]
       ],
-      "fit": {
-        "scale": 0.14926715370314014,
-        "initialScale": 0.15571570763568485,
-        "ratio": 0.9585876464843749,
+      "coordinateGuide": "tree-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.17,
+            0.019,
+            0
+          ],
+          "b": [
+            0.17,
+            0.15100000000000002,
+            0
+          ],
+          "label": "tree base front +Y",
+          "outer": false,
+          "screen": [
+            [
+              158.48000000000002,
+              220.7516878716308
+            ],
+            [
+              95.12,
+              252.3758077029105
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.019,
+            0.17,
+            0
+          ],
+          "b": [
+            0.15100000000000002,
+            0.17,
+            0
+          ],
+          "label": "tree visible base side +X",
+          "outer": false,
+          "screen": [
+            [
+              13.519999999999982,
+              220.7516878716308
+            ],
+            [
+              76.88,
+              252.3758077029105
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.164,
+            0.015,
+            0.095
+          ],
+          "b": [
+            0.164,
+            0.10800000000000001,
+            0.095
+          ],
+          "label": "tree lower terrace bottom +Y",
+          "outer": false,
+          "screen": [
+            [
+              157.51999999999998,
+              162.4747568034811
+            ],
+            [
+              112.88,
+              184.75538668461002
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.1685310683113733,
+        "translation": [
+          0.4704828319780461,
+          0.04763111877352344
+        ],
         "sourceBounds": [
-          237,
-          38,
-          962,
-          1331
+          33,
+          37,
+          982,
+          1521
         ],
-        "calibratedGround": [
-          582.4444444444445,
-          1732.813100130133
+        "targetBounds": [
+          6,
+          6.333333333333333,
+          166,
+          256.3333333333333
         ],
-        "projectedGround": [
-          90,
-          257.094537699076
-        ],
-        "vertical": 1.2477951322316794,
-        "shear": 0.12477951322316799
-      }
+        "aspectError": 0.0008008429926238403,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "tree base front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -26.875781654595293,
+          "angleError": 0.3511702146911014,
+          "distance": 0.25,
+          "residual": 0.09027777777777779,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "tree visible base side +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904188,
+          "measuredAngle": 26.524611439904188,
+          "angleError": 0,
+          "distance": 0.25,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "tree lower terrace bottom +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -26.52461143990422,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
     },
     {
       "id": "tree-y",
@@ -708,14 +1616,14 @@
       "png": "tree-y.png",
       "svg": "tree-y.svg",
       "viewBox": [
-        452,
-        360,
-        176,
-        265
+        454,
+        362,
+        172,
+        262
       ],
       "pixelGroundOrigin": [
-        88,
-        177.4716981132076
+        86,
+        175.4716981132076
       ],
       "dimensionsL": [
         0.17,
@@ -758,51 +1666,171 @@
       "mirrorOf": "tree-x",
       "projectionHull": [
         [
-          169.60000000000002,
-          218.19973122924966
+          167.60000000000002,
+          216.19973122924966
         ],
         [
-          88,
-          258.92776434529173
+          86,
+          256.92776434529173
         ],
         [
-          6.399999999999977,
-          218.19973122924966
+          4.399999999999977,
+          216.19973122924966
         ],
         [
-          6.399999999999977,
-          47.61512406991494
+          4.399999999999977,
+          45.61512406991494
         ],
         [
-          88,
-          6.887090953872871
+          86,
+          4.887090953872871
         ],
         [
-          169.60000000000002,
-          47.61512406991494
+          167.60000000000002,
+          45.61512406991494
         ]
       ],
-      "fit": {
-        "scale": 0.14926715370314014,
-        "initialScale": 0.15571570763568485,
-        "ratio": 0.9585876464843749,
+      "coordinateGuide": "tree-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.019,
+            0.17,
+            0
+          ],
+          "b": [
+            0.15100000000000002,
+            0.17,
+            0
+          ],
+          "label": "tree base front +X",
+          "outer": false,
+          "screen": [
+            [
+              13.519999999999982,
+              220.7516878716308
+            ],
+            [
+              76.88,
+              252.3758077029105
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.17,
+            0.019,
+            0
+          ],
+          "b": [
+            0.17,
+            0.15100000000000002,
+            0
+          ],
+          "label": "tree visible base side +Y",
+          "outer": false,
+          "screen": [
+            [
+              158.48000000000002,
+              220.7516878716308
+            ],
+            [
+              95.12,
+              252.3758077029105
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.015,
+            0.164,
+            0.095
+          ],
+          "b": [
+            0.10800000000000001,
+            0.164,
+            0.095
+          ],
+          "label": "tree lower terrace bottom +X",
+          "outer": false,
+          "screen": [
+            [
+              14.480000000000018,
+              162.4747568034811
+            ],
+            [
+              59.120000000000005,
+              184.75538668461002
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.1685310683113733,
+        "translation": [
+          0.4704828319780461,
+          0.04763111877352344
+        ],
         "sourceBounds": [
-          237,
-          38,
-          962,
-          1331
+          33,
+          37,
+          982,
+          1521
         ],
-        "calibratedGround": [
-          582.4444444444445,
-          1732.813100130133
+        "targetBounds": [
+          6,
+          6.333333333333333,
+          166,
+          256.3333333333333
         ],
-        "projectedGround": [
-          90,
-          257.094537699076
-        ],
-        "vertical": 1.2477951322316794,
-        "shear": 0.12477951322316799
-      }
+        "aspectError": 0.0008008429926238403,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "tree base front +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990419,
+          "measuredAngle": 26.875781654595293,
+          "angleError": 0.3511702146911014,
+          "distance": 0.25,
+          "residual": 0.09027777777777779,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "tree-x exact mirror"
+        },
+        {
+          "label": "tree visible base side +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904188,
+          "measuredAngle": -26.524611439904188,
+          "angleError": 0,
+          "distance": 0.25,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "tree-x exact mirror"
+        },
+        {
+          "label": "tree lower terrace bottom +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990422,
+          "measuredAngle": 26.52461143990422,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "tree-x exact mirror"
+        }
+      ]
     },
     {
       "id": "bed-x",
@@ -810,14 +1838,14 @@
       "png": "bed-x.png",
       "svg": "bed-x.svg",
       "viewBox": [
-        442,
-        481,
-        196,
-        154
+        449,
+        486,
+        182,
+        143
       ],
       "pixelGroundOrigin": [
-        98,
-        56.471698113207594
+        91,
+        51.471698113207594
       ],
       "dimensionsL": [
         0.19,
@@ -860,51 +1888,168 @@
       "mirrorOf": null,
       "projectionHull": [
         [
-          6.800000000000011,
-          51.99232795583487
+          -0.19999999999998863,
+          46.99232795583487
         ],
         [
-          98,
-          6.472761532023242
+          91,
+          1.4727615320232417
         ],
         [
-          189.20000000000005,
-          51.99232795583487
+          182.20000000000005,
+          46.99232795583487
         ],
         [
-          189.20000000000005,
-          101.99126453701922
+          182.20000000000005,
+          96.99126453701922
         ],
         [
-          98,
-          147.51083096083084
+          91,
+          142.51083096083084
         ],
         [
-          6.800000000000011,
-          101.99126453701922
+          -0.19999999999998863,
+          96.99126453701922
         ]
       ],
-      "fit": {
-        "scale": 0.14277145955371323,
-        "initialScale": 0.14614773629864972,
-        "ratio": 0.9768981933593748,
+      "coordinateGuide": "bed-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.186,
+            0.018,
+            0.026
+          ],
+          "b": [
+            0.186,
+            0.17200000000000001,
+            0.026
+          ],
+          "label": "bed front base +Y",
+          "outer": false,
+          "screen": [
+            [
+              171.64,
+              85.05154548644862
+            ],
+            [
+              97.72000000000003,
+              121.94635195627495
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.018,
+            0.186,
+            0.012
+          ],
+          "b": [
+            0.17200000000000001,
+            0.186,
+            0.012
+          ],
+          "label": "bed visible lower side +X",
+          "outer": false,
+          "screen": [
+            [
+              10.360000000000014,
+              93.28666445276133
+            ],
+            [
+              84.27999999999997,
+              130.18147092258766
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.186,
+            0.02,
+            0.012
+          ],
+          "b": [
+            0.186,
+            0.17,
+            0.012
+          ],
+          "label": "bed lower front base +Y",
+          "outer": false,
+          "screen": [
+            [
+              170.67999999999995,
+              93.7658177835383
+            ],
+            [
+              98.67999999999995,
+              129.7023175918107
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.12698987970930958,
+        "translation": [
+          1.0276702259541537,
+          0.3063137888719041
+        ],
         "sourceBounds": [
-          158,
-          93,
-          1416,
-          946
+          42,
+          40,
+          1375,
+          1076
         ],
-        "calibratedGround": [
-          729.2727272727273,
-          976.1189370665372
+        "targetBounds": [
+          6,
+          5.666666666666667,
+          176,
+          136.66666666666666
         ],
-        "projectedGround": [
-          90,
-          139.6776043146151
-        ],
-        "vertical": 1.039829276859733,
-        "shear": -0.010398292768597328
-      }
+        "aspectError": 0.008572753875491834,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "bed front base +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -26.874163398923223,
+          "angleError": 0.3495519590190022,
+          "distance": 0,
+          "residual": 0.08064516129032268,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "bed visible lower side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990422,
+          "measuredAngle": 27.06640754910305,
+          "angleError": 0.5417961091988315,
+          "distance": 0.25,
+          "residual": 0.0875,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "bed lower front base +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -26.969610960378013,
+          "angleError": 0.44499952047382074,
+          "distance": 0.25,
+          "residual": 0.1400000000000001,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
     },
     {
       "id": "bed-y",
@@ -912,14 +2057,14 @@
       "png": "bed-y.png",
       "svg": "bed-y.svg",
       "viewBox": [
-        442,
-        481,
-        196,
-        154
+        449,
+        486,
+        182,
+        143
       ],
       "pixelGroundOrigin": [
-        98,
-        56.471698113207594
+        91,
+        51.471698113207594
       ],
       "dimensionsL": [
         0.19,
@@ -962,51 +2107,171 @@
       "mirrorOf": "bed-x",
       "projectionHull": [
         [
-          189.2,
-          101.99126453701922
+          182.2,
+          96.99126453701922
         ],
         [
-          98,
-          147.51083096083084
+          91,
+          142.51083096083084
         ],
         [
-          6.7999999999999545,
-          101.99126453701922
+          -0.20000000000004547,
+          96.99126453701922
         ],
         [
-          6.7999999999999545,
-          51.99232795583487
+          -0.20000000000004547,
+          46.99232795583487
         ],
         [
-          98,
-          6.472761532023242
+          91,
+          1.4727615320232417
         ],
         [
-          189.2,
-          51.99232795583487
+          182.2,
+          46.99232795583487
         ]
       ],
-      "fit": {
-        "scale": 0.14277145955371323,
-        "initialScale": 0.14614773629864972,
-        "ratio": 0.9768981933593748,
+      "coordinateGuide": "bed-coordinate-guide.png",
+      "guideEdges": [
+        {
+          "a": [
+            0.018,
+            0.186,
+            0.026
+          ],
+          "b": [
+            0.17200000000000001,
+            0.186,
+            0.026
+          ],
+          "label": "bed front base +X",
+          "outer": false,
+          "screen": [
+            [
+              10.360000000000014,
+              85.05154548644862
+            ],
+            [
+              84.27999999999997,
+              121.94635195627495
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.186,
+            0.018,
+            0.012
+          ],
+          "b": [
+            0.186,
+            0.17200000000000001,
+            0.012
+          ],
+          "label": "bed visible lower side +Y",
+          "outer": false,
+          "screen": [
+            [
+              171.64,
+              93.28666445276133
+            ],
+            [
+              97.72000000000003,
+              130.18147092258766
+            ]
+          ]
+        },
+        {
+          "a": [
+            0.02,
+            0.186,
+            0.012
+          ],
+          "b": [
+            0.17,
+            0.186,
+            0.012
+          ],
+          "label": "bed lower front base +X",
+          "outer": false,
+          "screen": [
+            [
+              11.32000000000005,
+              93.7658177835383
+            ],
+            [
+              83.32000000000005,
+              129.7023175918107
+            ]
+          ]
+        }
+      ],
+      "registration": {
+        "scale": 0.12698987970930958,
+        "translation": [
+          1.0276702259541537,
+          0.3063137888719041
+        ],
         "sourceBounds": [
-          158,
-          93,
-          1416,
-          946
+          42,
+          40,
+          1375,
+          1076
         ],
-        "calibratedGround": [
-          729.2727272727273,
-          976.1189370665372
+        "targetBounds": [
+          6,
+          5.666666666666667,
+          176,
+          136.66666666666666
         ],
-        "projectedGround": [
-          90,
-          139.6776043146151
-        ],
-        "vertical": 1.039829276859733,
-        "shear": -0.010398292768597328
-      }
+        "aspectError": 0.008572753875491834,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "axisChecks": [
+        {
+          "label": "bed front base +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990422,
+          "measuredAngle": 26.874163398923223,
+          "angleError": 0.3495519590190022,
+          "distance": 0,
+          "residual": 0.08064516129032268,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bed-x exact mirror"
+        },
+        {
+          "label": "bed visible lower side +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -27.06640754910305,
+          "angleError": 0.5417961091988315,
+          "distance": 0.25,
+          "residual": 0.0875,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bed-x exact mirror"
+        },
+        {
+          "label": "bed lower front base +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990419,
+          "measuredAngle": 26.969610960378013,
+          "angleError": 0.44499952047382074,
+          "distance": 0.25,
+          "residual": 0.1400000000000001,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true,
+          "derivedFrom": "bed-x exact mirror"
+        }
+      ]
     },
     {
       "id": "window-left",

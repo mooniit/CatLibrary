@@ -2,7 +2,7 @@ import {fixtures,orient,slots,camera,project,roomStandard} from '../room-structu
 import {scene,artwork} from '../room-structure-2026-10-05/lunar-art.mjs';
 import {templates,themes} from './theme-geometry.mjs';
 const $=id=>document.getElementById(id),manifest=Object.fromEntries(await Promise.all(Object.keys(themes).map(async key=>[key,await(await fetch('./'+key+'/manifest.json')).json()])));
-const descriptions={wood:{bookshelf:'开放梯架 · 三层木板 · 榫接侧架',desk:'A 字支架 · 连贯横撑 · 圆角桌板',chair:'三根椅背竖杆 · 亚麻坐垫 · 收细椅腿',tree:'矩形阶梯 · 原色麻绳柱 · 开放木托台',bed:'三道低背木条 · 方形软垫 · 低前沿'},royal:{bookshelf:'拱顶藏书柜 · 壁柱 · 下部双门',desk:'弧形写字桌 · 红皮桌垫 · 曲腿',chair:'盾形软包椅背 · 开放扶手 · 雕饰曲腿',tree:'车木立柱 · 椭圆高台 · 雕饰柜式底座',bed:'低背小躺椅 · 卷曲扶手 · 绗缝绒垫'}};
+const descriptions={wood:{bookshelf:'开放梯架 · 三层木板 · 榫接侧架',desk:'A 字支架 · 连贯横撑 · 圆角桌板',chair:'三根椅背竖杆 · 亚麻坐垫 · 收细椅腿',tree:'矩形阶梯 · 木质立柱 · 开放木托台',bed:'三道低背木条 · 亚麻软垫 · 低前沿'},royal:{bookshelf:'拱顶藏书柜 · 壁柱 · 下部双门',desk:'弧边写字桌 · 酒红软包桌心 · 曲腿',chair:'盾形软包椅背 · 开放扶手 · 雕饰曲腿',tree:'车木立柱 · 椭圆高台 · 雕饰柜式底座',bed:'低背小躺椅 · 低扶手圆钮 · 绗缝绒垫'}};
 const defaults=()=>Object.fromEntries(fixtures.map(f=>[f.id,f.facing])),frames=()=>Object.fromEntries(slots.filter(s=>s.type==='art').map(s=>[s.id,s.id.endsWith('back')?'landscape':'portrait'])),pictures=()=>Object.fromEntries(slots.filter(s=>s.type==='art').map(s=>[s.id,s.id.endsWith('back')?'starry':'pearl']));
 const query=new URLSearchParams(location.search),state={theme:query.get('theme')==='royal'?'royal':'wood',windowMode:query.get('mode')==='night'?'night':'day',facings:defaults(),frames:frames(),pictures:pictures(),hidden:[],grid:false,leftWindow:true,rightWindow:true,rug:true,art:true};
 function wallDecor(slot){
@@ -19,6 +19,7 @@ function wallDecor(slot){
 function refresh(){
   const assets=manifest[state.theme].assets; $('theme').value=state.theme;$('mode').value=state.windowMode;
   $('room').innerHTML=scene({...state,assets,assetBase:state.theme+'/',wallDecor});
+  if($('coordinate-guides').checked)for(const f of fixtures.filter(f=>!state.hidden.includes(f.id)).map(f=>orient(f,state.facings[f.id]))){const a=assets.find(a=>a.id===f.id+'-'+f.facing),p=project(camera(),[f.x,f.y,0]),W=a.viewBox[2],H=a.viewBox[3],x=p[0]-a.pixelGroundOrigin[0],y=p[1]-a.pixelGroundOrigin[1];$('room').innerHTML+=`<g data-coordinate-guide="${f.id}" transform="translate(${x} ${y})"><image href="${state.theme}/${a.coordinateGuide}" width="${W}" height="${H}" opacity=".3" ${f.facing==='y'?`transform="translate(${W} 0) scale(-1 1)"`:''}/>${a.guideEdges.map(e=>`<line x1="${e.screen[0][0]}" y1="${e.screen[0][1]}" x2="${e.screen[1][0]}" y2="${e.screen[1][1]}" stroke="#367f98" stroke-width="1"/>`).join('')}</g>`;}
   $('subtitle').textContent=state.theme==='wood'?'浅黄橡木、亚麻与开放结构，轻巧安静。':'胡桃木、象牙色雕饰与酒红绒垫，古典而温暖。';
   $('frame-template').value=state.frames[$('frame-slot').value];$('picture').value=state.pictures[$('frame-slot').value]||'';
   const selected=orient(fixtures.find(f=>f.id===$('item').value),state.facings[$('item').value]);$('rotate').textContent='转向：+'+selected.facing.toUpperCase()+' → +'+(selected.facing==='x'?'Y':'X');
@@ -34,7 +35,8 @@ function refresh(){
 $('theme').onchange=()=>{state.theme=$('theme').value;history.replaceState(null,'','?theme='+state.theme+'&mode='+state.windowMode);refresh();};$('mode').onchange=()=>{state.windowMode=$('mode').value;refresh();};
 for(const id of ['grid','leftWindow','rightWindow','rug','art'])$(id).onchange=()=>{state[id]=$(id).checked;refresh();};
 for(const id of ['item','frame-slot'])$(id).onchange=refresh;
+$('coordinate-guides').onchange=refresh;
 $('rotate').onclick=()=>{const id=$('item').value;state.facings[id]=state.facings[id]==='x'?'y':'x';refresh();};$('hide').onclick=()=>{const id=$('item').value;state.hidden=state.hidden.includes(id)?state.hidden.filter(s=>s!==id):[...state.hidden,id];refresh();};
 $('frame-template').onchange=()=>{state.frames[$('frame-slot').value]=$('frame-template').value;refresh();};$('picture').onchange=()=>{state.pictures[$('frame-slot').value]=$('picture').value||null;refresh();};
-$('reset').onclick=()=>{state.facings=defaults();state.hidden=[];state.frames=frames();state.pictures=pictures();for(const id of ['grid','leftWindow','rightWindow','rug','art'])state[id]=$(id).checked=id!=='grid';refresh();};
+$('reset').onclick=()=>{state.facings=defaults();state.hidden=[];state.frames=frames();state.pictures=pictures();$('coordinate-guides').checked=false;for(const id of ['grid','leftWindow','rightWindow','rug','art'])state[id]=$(id).checked=id!=='grid';refresh();};
 refresh();

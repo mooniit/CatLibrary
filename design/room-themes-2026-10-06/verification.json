@@ -11,6 +11,691 @@
     "royal window-left sill clearance .136 cells preserved",
     "royal window-right sill clearance .136 cells preserved"
   ],
+  "sourceEdges": [
+    {
+      "theme": "wood",
+      "id": "bookshelf-x",
+      "registration": {
+        "scale": 0.19662555429127976,
+        "translation": [
+          0.47837561633444636,
+          0.3830954621864464
+        ],
+        "sourceBounds": [
+          30,
+          27,
+          945,
+          1583
+        ],
+        "targetBounds": [
+          6,
+          6.333333333333333,
+          186.66666666666666,
+          311
+        ],
+        "aspectError": 0.008420322607645359,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "shelf front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.772940503472576,
+          "angleError": 0.2483290635684142,
+          "distance": 0.5,
+          "residual": 0.0803571428571428,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "shelf front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.524611439904163,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "shelf front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.92193406054389,
+          "angleError": 0.39732262063972573,
+          "distance": 0.25,
+          "residual": 0.07857142857142874,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "top outer depth +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990423,
+          "measuredAngle": 27.079006681122127,
+          "angleError": 0.5543952412178967,
+          "distance": 0.25,
+          "residual": 0.08571428571428566,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "desk-x",
+      "registration": {
+        "scale": 0.18107329586982995,
+        "translation": [
+          -1.0412854052100187,
+          1.8683130962498353
+        ],
+        "sourceBounds": [
+          32,
+          31,
+          1281,
+          1202
+        ],
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          229.33333333333334,
+          221
+        ],
+        "aspectError": 0.02756437708306181,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "desktop front +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904135,
+          "measuredAngle": -26.89544665198321,
+          "angleError": 0.3708352120790756,
+          "distance": 3.25,
+          "residual": 0.08333333333333337,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 3,
+          "passed": true
+        },
+        {
+          "label": "desktop outer side +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904206,
+          "measuredAngle": 27.17900720190142,
+          "angleError": 0.6543957619972132,
+          "distance": 1,
+          "residual": 0.08333333333333315,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "desktop rear +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -27.110128515226684,
+          "angleError": 0.5855170753225213,
+          "distance": 1.75,
+          "residual": 0.1184210526315792,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "chair-x",
+      "registration": {
+        "scale": 0.1099935872908438,
+        "translation": [
+          0.17657816416636507,
+          0.09668461158139507
+        ],
+        "sourceBounds": [
+          57,
+          52,
+          955,
+          1513
+        ],
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          105.33333333333333,
+          166.33333333333334
+        ],
+        "aspectError": 0.004581676073880825,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "seat lower front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990425,
+          "measuredAngle": -26.727340832493876,
+          "angleError": 0.20272939258962944,
+          "distance": 0.3475378787878788,
+          "residual": 0.018949553001277125,
+          "positionTolerance": 4,
+          "samples": 28,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "visible seat side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990421,
+          "measuredAngle": 26.56312895964114,
+          "angleError": 0.03851751973693251,
+          "distance": 0.351890756302521,
+          "residual": 0.024781430161616404,
+          "positionTolerance": 4,
+          "samples": 27,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "backrest outer rail +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904078,
+          "measuredAngle": -26.524611439904078,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "tree-x",
+      "registration": {
+        "scale": 0.1685310683113733,
+        "translation": [
+          0.4704828319780461,
+          0.04763111877352344
+        ],
+        "sourceBounds": [
+          33,
+          37,
+          982,
+          1521
+        ],
+        "targetBounds": [
+          6,
+          6.333333333333333,
+          166,
+          256.3333333333333
+        ],
+        "aspectError": 0.0008008429926238403,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "tree base front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -26.875781654595293,
+          "angleError": 0.3511702146911014,
+          "distance": 0.25,
+          "residual": 0.09027777777777779,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "tree visible base side +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904188,
+          "measuredAngle": 26.524611439904188,
+          "angleError": 0,
+          "distance": 0.25,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "tree lower terrace bottom +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -26.52461143990422,
+          "angleError": 0,
+          "distance": 0.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "wood",
+      "id": "bed-x",
+      "registration": {
+        "scale": 0.12698987970930958,
+        "translation": [
+          1.0276702259541537,
+          0.3063137888719041
+        ],
+        "sourceBounds": [
+          42,
+          40,
+          1375,
+          1076
+        ],
+        "targetBounds": [
+          6,
+          5.666666666666667,
+          176,
+          136.66666666666666
+        ],
+        "aspectError": 0.008572753875491834,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "bed front base +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -26.874163398923223,
+          "angleError": 0.3495519590190022,
+          "distance": 0,
+          "residual": 0.08064516129032268,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "bed visible lower side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990422,
+          "measuredAngle": 27.06640754910305,
+          "angleError": 0.5417961091988315,
+          "distance": 0.25,
+          "residual": 0.0875,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "bed lower front base +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -26.969610960378013,
+          "angleError": 0.44499952047382074,
+          "distance": 0.25,
+          "residual": 0.1400000000000001,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "bookshelf-x",
+      "registration": {
+        "scale": 0.1875250986228238,
+        "translation": [
+          1.3727293128292501,
+          2.011309144166489
+        ],
+        "sourceBounds": [
+          26,
+          22,
+          985,
+          1567
+        ],
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          186,
+          296
+        ],
+        "aspectError": 0.0018877422602566751,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "lower shelf +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.134715178851085,
+          "angleError": 0.3898962610530771,
+          "distance": 0.5,
+          "residual": 0.08750000000000008,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "upper shelf +Y",
+          "family": "Y",
+          "expectedAngle": -26.524611439904163,
+          "measuredAngle": -26.004755999605962,
+          "angleError": 0.519855440298201,
+          "distance": 1.5,
+          "residual": 0.08333333333333337,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "visible canopy depth +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904184,
+          "measuredAngle": 26.524611439904184,
+          "angleError": 0,
+          "distance": 1,
+          "residual": 0,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "desk-x",
+      "registration": {
+        "scale": 0.18256283436552126,
+        "translation": [
+          -0.7889160901692946,
+          1.2202474645366692
+        ],
+        "sourceBounds": [
+          38,
+          27,
+          1267,
+          1172
+        ],
+        "targetBounds": [
+          6.666666666666667,
+          5.666666666666667,
+          230,
+          215.66666666666666
+        ],
+        "aspectError": 0.009195758585506364,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "desktop rear +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -26.838289087273225,
+          "angleError": 0.3136776473690342,
+          "distance": 0.5,
+          "residual": 0.1578947368421053,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "desktop side +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904156,
+          "measuredAngle": 26.197787378563486,
+          "angleError": 0.3268240613406703,
+          "distance": 0,
+          "residual": 0.11486486486486484,
+          "positionTolerance": 2,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "leather inset +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -26.830470293425247,
+          "angleError": 0.3058588535210557,
+          "distance": 0.75,
+          "residual": 0.10227272727272735,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "chair-x",
+      "registration": {
+        "scale": 0.10600757788524948,
+        "translation": [
+          0.17877163364843085,
+          0.7981953398988963
+        ],
+        "sourceBounds": [
+          57,
+          57,
+          971,
+          1475
+        ],
+        "targetBounds": [
+          6.333333333333333,
+          6.666666666666667,
+          103,
+          157.33333333333334
+        ],
+        "aspectError": 0.004618423345791212,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "seat upper front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990425,
+          "measuredAngle": -26.52461143990425,
+          "angleError": 0,
+          "distance": 0,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "visible seat side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990421,
+          "measuredAngle": 27.287612404012332,
+          "angleError": 0.7630009641081237,
+          "distance": 0.25,
+          "residual": 0.19444444444444448,
+          "positionTolerance": 4,
+          "samples": 40,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "armrest +X",
+          "family": "X",
+          "expectedAngle": 26.524611439904252,
+          "measuredAngle": 27.423665745269496,
+          "angleError": 0.8990543053652431,
+          "distance": 1.75,
+          "residual": 0.10156250000000003,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "tree-x",
+      "registration": {
+        "scale": 0.15771011258049797,
+        "translation": [
+          2.646697640236283,
+          3.5811264211888982
+        ],
+        "sourceBounds": [
+          21,
+          19,
+          998,
+          1525
+        ],
+        "targetBounds": [
+          6.333333333333333,
+          6,
+          159.66666666666666,
+          244.66666666666666
+        ],
+        "aspectError": 0.009680757992486355,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "tree base front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -27.47269635130138,
+          "angleError": 0.9480849113971883,
+          "distance": 3.25,
+          "residual": 0.14374999999999993,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 5,
+          "passed": true
+        },
+        {
+          "label": "tree visible base side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990421,
+          "measuredAngle": 27.314704232833417,
+          "angleError": 0.7900927929292089,
+          "distance": 3.25,
+          "residual": 0.10937499999999994,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 4,
+          "passed": true
+        },
+        {
+          "label": "pedestal front +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -26.041757779535217,
+          "angleError": 0.4828536603690029,
+          "distance": 2.5,
+          "residual": 0.11111111111111122,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "theme": "royal",
+      "id": "bed-x",
+      "registration": {
+        "scale": 0.124391598841226,
+        "translation": [
+          1.686832031999728,
+          1.0248584425401788
+        ],
+        "sourceBounds": [
+          39,
+          34,
+          1397,
+          1075
+        ],
+        "targetBounds": [
+          6,
+          5.666666666666667,
+          176,
+          134.33333333333334
+        ],
+        "aspectError": 0.012823643425641018,
+        "warp": "none",
+        "anchor": "numeric construction guide"
+      },
+      "checks": [
+        {
+          "label": "bed front base +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990422,
+          "measuredAngle": -26.843321246011048,
+          "angleError": 0.31870980610682775,
+          "distance": 1,
+          "residual": 0.09558823529411775,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "bed visible lower side +X",
+          "family": "X",
+          "expectedAngle": 26.52461143990422,
+          "measuredAngle": 26.52461143990422,
+          "angleError": 0,
+          "distance": 3.5,
+          "residual": 0,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        },
+        {
+          "label": "bed lower front base +Y",
+          "family": "Y",
+          "expectedAngle": -26.52461143990419,
+          "measuredAngle": -27.095116262252933,
+          "angleError": 0.5705048223487432,
+          "distance": 1.5,
+          "residual": 0.14102564102564097,
+          "positionTolerance": 4,
+          "samples": 41,
+          "boundarySamples": 0,
+          "passed": true
+        }
+      ]
+    }
+  ],
   "sprites": [
     {
       "theme": "wood",
@@ -18,18 +703,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 195,
-          "h": 325,
+          "w": 193,
+          "h": 317,
           "overflow": 0,
           "edge": 0,
-          "count": 30051
+          "count": 39475
         },
         {
-          "w": 195,
-          "h": 325,
+          "w": 193,
+          "h": 317,
           "overflow": 0,
           "edge": 0,
-          "count": 30051
+          "count": 39475
         }
       ]
     },
@@ -39,18 +724,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 238,
-          "h": 232,
+          "w": 235,
+          "h": 227,
           "overflow": 0,
           "edge": 0,
-          "count": 19351
+          "count": 23199
         },
         {
-          "w": 238,
-          "h": 232,
+          "w": 235,
+          "h": 227,
           "overflow": 0,
           "edge": 0,
-          "count": 19351
+          "count": 23199
         }
       ]
     },
@@ -60,18 +745,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 126,
-          "h": 187,
+          "w": 111,
+          "h": 173,
           "overflow": 0,
           "edge": 0,
-          "count": 5210
+          "count": 6781
         },
         {
-          "w": 126,
-          "h": 187,
+          "w": 111,
+          "h": 173,
           "overflow": 0,
           "edge": 0,
-          "count": 5210
+          "count": 6781
         }
       ]
     },
@@ -81,18 +766,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 176,
-          "h": 265,
+          "w": 172,
+          "h": 262,
           "overflow": 0,
           "edge": 0,
-          "count": 14313
+          "count": 18246
         },
         {
-          "w": 176,
-          "h": 265,
+          "w": 172,
+          "h": 262,
           "overflow": 0,
           "edge": 0,
-          "count": 14313
+          "count": 18246
         }
       ]
     },
@@ -102,18 +787,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 196,
-          "h": 154,
+          "w": 182,
+          "h": 143,
           "overflow": 0,
           "edge": 0,
-          "count": 12957
+          "count": 11944
         },
         {
-          "w": 196,
-          "h": 154,
+          "w": 182,
+          "h": 143,
           "overflow": 0,
           "edge": 0,
-          "count": 12957
+          "count": 11944
         }
       ]
     },
@@ -123,18 +808,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 195,
-          "h": 325,
+          "w": 192,
+          "h": 302,
           "overflow": 0,
           "edge": 0,
-          "count": 34547
+          "count": 40923
         },
         {
-          "w": 195,
-          "h": 325,
+          "w": 192,
+          "h": 302,
           "overflow": 0,
           "edge": 0,
-          "count": 34547
+          "count": 40923
         }
       ]
     },
@@ -144,18 +829,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 238,
-          "h": 232,
+          "w": 236,
+          "h": 222,
           "overflow": 0,
           "edge": 0,
-          "count": 15462
+          "count": 19442
         },
         {
-          "w": 238,
-          "h": 232,
+          "w": 236,
+          "h": 222,
           "overflow": 0,
           "edge": 0,
-          "count": 15462
+          "count": 19442
         }
       ]
     },
@@ -165,18 +850,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 126,
-          "h": 187,
+          "w": 109,
+          "h": 163,
           "overflow": 0,
           "edge": 0,
-          "count": 9234
+          "count": 7894
         },
         {
-          "w": 126,
-          "h": 187,
+          "w": 109,
+          "h": 163,
           "overflow": 0,
           "edge": 0,
-          "count": 9234
+          "count": 7894
         }
       ]
     },
@@ -186,18 +871,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 176,
-          "h": 265,
+          "w": 166,
+          "h": 251,
           "overflow": 0,
           "edge": 0,
-          "count": 12155
+          "count": 15227
         },
         {
-          "w": 176,
-          "h": 265,
+          "w": 166,
+          "h": 251,
           "overflow": 0,
           "edge": 0,
-          "count": 12155
+          "count": 15227
         }
       ]
     },
@@ -207,18 +892,18 @@
       "mirrorDifferences": 0,
       "rasters": [
         {
-          "w": 196,
-          "h": 154,
+          "w": 182,
+          "h": 141,
           "overflow": 0,
           "edge": 0,
-          "count": 10641
+          "count": 12588
         },
         {
-          "w": 196,
-          "h": 154,
+          "w": 182,
+          "h": 141,
           "overflow": 0,
           "edge": 0,
-          "count": 10641
+          "count": 12588
         }
       ]
     }
@@ -285,6 +970,15 @@
     "royal-day-preview.png",
     "royal-night-preview.png"
   ],
+  "measurementControls": {
+    "exactModelPassed": true,
+    "wrongProjectionRejected": true,
+    "wrongProjectionAngles": [
+      5.48438412451083,
+      3.463056841272312,
+      5.835116993799624
+    ]
+  },
   "consoleErrors": [],
   "failedRequests": []
 }
