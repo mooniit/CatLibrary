@@ -469,7 +469,12 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
   Widget build(BuildContext context) {
     final p = widget.product,
         remaining = (widget.product.purchaseLimit ?? 1) - widget.owned;
+    final scheme = Theme.of(context).colorScheme;
     return Dialog(
+      backgroundColor: scheme.surface,
+      surfaceTintColor: Colors.transparent,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 440),
         child: SingleChildScrollView(
@@ -494,26 +499,64 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
                     ),
                   ],
                 ),
-                SizedBox(height: 180, child: FurnitureThumbnail(product: p)),
                 const SizedBox(height: 12),
-                Text(
-                  p.kind == 'souvenir'
-                      ? '已拥有 ${widget.owned}'
-                      : '已拥有 ${widget.owned}/${p.purchaseLimit ?? 1}',
+                Container(
+                  height: (MediaQuery.sizeOf(context).height * .28).clamp(
+                    160,
+                    240,
+                  ),
+                  decoration: BoxDecoration(
+                    color: scheme.surfaceContainerLow,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: FurnitureThumbnail(product: p),
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        right: 10,
+                        child: IconButton.filledTonal(
+                          key: const Key('product-preview'),
+                          tooltip: '在小窝中预览',
+                          onPressed: () => Navigator.pop(context, (
+                            preview: true,
+                            quantity: 1,
+                          )),
+                          icon: const Icon(Icons.visibility_outlined),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.inventory_2_outlined,
+                      size: 18,
+                      color: scheme.primary,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      p.kind == 'souvenir'
+                          ? '已拥有 ${widget.owned}'
+                          : '已拥有 ${widget.owned}/${p.purchaseLimit ?? 1}',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
                 ),
                 if (widget.ownership != null)
                   Text(
                     widget.ownership!,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                      height: 1.6,
+                    ),
                   ),
-                const SizedBox(height: 8),
-                IconButton.filledTonal(
-                  key: const Key('product-preview'),
-                  tooltip: '在小窝中预览',
-                  onPressed: () =>
-                      Navigator.pop(context, (preview: true, quantity: 1)),
-                  icon: const Icon(Icons.visibility_outlined),
-                ),
                 if ((p.purchaseLimit ?? 1) > 1 && remaining > 0) ...[
                   const SizedBox(height: 8),
                   Row(
@@ -541,6 +584,9 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
                 const SizedBox(height: 12),
                 FilledButton(
                   key: ValueKey('buy-${p.sku}'),
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                  ),
                   onPressed: widget.canPurchase
                       ? () => Navigator.pop(context, (
                           preview: false,
