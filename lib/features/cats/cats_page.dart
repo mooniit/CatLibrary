@@ -29,6 +29,7 @@ class _CatsPageState extends State<CatsPage> {
   Map<String, dynamic>? data;
   bool busy = true;
   String? error;
+  String? failedAction;
   String? notice;
   @override
   void initState() {
@@ -49,6 +50,7 @@ class _CatsPageState extends State<CatsPage> {
     setState(() {
       busy = true;
       error = null;
+      failedAction = null;
       notice = null;
     });
     try {
@@ -97,15 +99,18 @@ class _CatsPageState extends State<CatsPage> {
         'Repair in progress': '小屋修缮中，暂不能领养或喂食。',
       };
       if (mounted) {
-        setState(
-          () => error = e is PostgrestException && messages[e.message] != null
+        setState(() {
+          failedAction = action;
+          error = e is PostgrestException && messages[e.message] != null
               ? messages[e.message]
               : action == 'feed_cat'
               ? '喂食结果待确认，请刷新；当天重复请求不会重复扣款。'
+              : action == 'cats_state'
+              ? '猫咪暂时无法同步，请重试；已有记录仍保留。'
               : e is PostgrestException
               ? '领养未确认成功，请刷新或重试。'
-              : '连接失败，请重试；尚未确认领养成功。',
-        );
+              : '连接失败，请重试；尚未确认领养成功。';
+        });
       }
     } finally {
       if (mounted) setState(() => busy = false);
@@ -114,6 +119,7 @@ class _CatsPageState extends State<CatsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     final cats = (data?['cats'] as List?) ?? [];
     final owned = cats
         .where((c) => c['is_mine'] == true)
@@ -134,10 +140,10 @@ class _CatsPageState extends State<CatsPage> {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
         children: [
           if (busy) const LinearProgressIndicator(),
-          if (error != null)
+          if (error != null && failedAction != 'adopt_cat')
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Text(error!, key: const Key('cat-error')),
@@ -214,34 +220,81 @@ class _CatsPageState extends State<CatsPage> {
               ),
             for (final cat in cats)
               Card(
-                child: ListTile(
-                  leading: const Icon(Icons.pets_outlined),
-                  title: Text(cat['name'] as String),
-                  subtitle: Text(
-                    '${appearances[cat['appearance']]}\n登记主人：${cat['is_mine'] == true ? '我' : cat['owner_id']}'
-                    '\n${cat['traveling'] == true
-                        ? '旅行中，无需喂食'
-                        : cat['fed_today'] == true
-                        ? '今日已喂食'
-                        : '今日尚未喂食'}',
+                margin: const EdgeInsets.only(top: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          portrait(cat['appearance'] as String, size: 96),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  cat['name'] as String,
+                                  style: Theme.of(context).textTheme.titleMedium
+                                      ?.copyWith(fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '${appearances[cat['appearance']]}\n登记主人：${cat['is_mine'] == true ? '我' : '家庭成员'}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: scheme.onSurfaceVariant,
+                                    height: 1.6,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              cat['traveling'] == true
+                                  ? '旅行中，无需喂食'
+                                  : cat['fed_today'] == true
+                                  ? '今日已喂食'
+                                  : '今日尚未喂食',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: scheme.onSurfaceVariant,
+                                height: 1.5,
+                              ),
+                            ),
+                          ),
+                          if (cat['traveling'] == true)
+                            const Icon(
+                              Icons.flight_takeoff_outlined,
+                              semanticLabel: '旅行中',
+                            )
+                          else if (cat['fed_today'] == true)
+                            const Icon(
+                              Icons.check_circle_outline,
+                              semanticLabel: '今日已喂食',
+                            )
+                          else
+                            FilledButton(
+                              onPressed: busy || repairing
+                                  ? null
+                                  : () => act('feed_cat', {
+                                      'target_cat': cat['id'],
+                                    }),
+                              child: const Text('喂食 15'),
+                            ),
+                        ],
+                      ),
+                    ],
                   ),
-                  trailing: cat['traveling'] == true
-                      ? const Icon(
-                          Icons.flight_takeoff_outlined,
-                          semanticLabel: '旅行中',
-                        )
-                      : cat['fed_today'] == true
-                      ? const Icon(
-                          Icons.check_circle_outline,
-                          semanticLabel: '今日已喂食',
-                        )
-                      : FilledButton(
-                          onPressed: busy || repairing
-                              ? null
-                              : () =>
-                                    act('feed_cat', {'target_cat': cat['id']}),
-                          child: const Text('喂食 15'),
-                        ),
                 ),
               ),
             const Divider(height: 32),
@@ -249,27 +302,83 @@ class _CatsPageState extends State<CatsPage> {
               Text('认识新伙伴', style: Theme.of(context).textTheme.titleLarge),
               const Text('免费领养 · 登记主人为本人'),
               const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                key: ValueKey(appearance),
-                initialValue: appearance,
-                items: [
+              Row(
+                children: [
                   for (final entry in appearances.entries)
-                    DropdownMenuItem(
-                      value: entry.key,
-                      enabled: !owned.contains(entry.key),
-                      child: Text(
-                        '${entry.value}${owned.contains(entry.key) ? '（已领养）' : ''}',
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          right: entry.key == appearances.keys.first ? 10 : 0,
+                        ),
+                        child: Material(
+                          color: scheme.surfaceContainerLow,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(
+                              color: appearance == entry.key
+                                  ? scheme.primary
+                                  : scheme.outlineVariant,
+                            ),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            onTap: busy || owned.contains(entry.key)
+                                ? null
+                                : () => setState(() => appearance = entry.key),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 6,
+                              ),
+                              child: Column(
+                                children: [
+                                  Opacity(
+                                    opacity: owned.contains(entry.key) ? .5 : 1,
+                                    child: portrait(entry.key, size: 84),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    entry.value,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.labelMedium,
+                                  ),
+                                  const SizedBox(height: 6),
+                                  if (owned.contains(entry.key))
+                                    Text(
+                                      '已领养',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: scheme.onSurfaceVariant,
+                                      ),
+                                    )
+                                  else
+                                    Icon(
+                                      appearance == entry.key
+                                          ? Icons.check_circle
+                                          : Icons.radio_button_unchecked,
+                                      size: 18,
+                                      color: scheme.primary,
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                 ],
-                onChanged: busy
-                    ? null
-                    : (value) => setState(() => appearance = value!),
               ),
+              const SizedBox(height: 16),
               TextField(
                 controller: name,
                 enabled: !busy,
-                decoration: const InputDecoration(labelText: '给猫咪起个名字'),
+                decoration: InputDecoration(
+                  labelText: '给猫咪起个名字',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
               FilledButton(
@@ -278,7 +387,10 @@ class _CatsPageState extends State<CatsPage> {
                     : () {
                         final chosen = name.text.trim();
                         if (chosen.isEmpty) {
-                          setState(() => error = '请给猫咪起个名字。');
+                          setState(() {
+                            failedAction = 'adopt_cat';
+                            error = '请给猫咪起个名字。';
+                          });
                           return;
                         }
                         act('adopt_cat', {
@@ -288,14 +400,40 @@ class _CatsPageState extends State<CatsPage> {
                       },
                 child: const Text('免费领养'),
               ),
-              const Text('每人最多两只，同一外观只能领养一次；小屋内名字不能重复。'),
+              if (error != null && failedAction == 'adopt_cat')
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Text(
+                    error!,
+                    key: const Key('cat-error'),
+                    style: TextStyle(color: scheme.error),
+                  ),
+                ),
+              const SizedBox(height: 12),
+              Text(
+                '每人最多两只，同一外观只能领养一次；小屋内名字不能重复。',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: scheme.onSurfaceVariant,
+                  height: 1.5,
+                ),
+              ),
             ] else if (remaining == 0)
               const Text('你的两只猫咪名额已用完。'),
-            const SizedBox(height: 20),
-            const Text('可选三花猫或蓝眸长毛猫；猫咪性格由你后续补充。'),
           ],
         ],
       ),
     );
   }
+
+  Widget portrait(String appearance, {double size = 64}) => SizedBox.square(
+    dimension: size,
+    child: Image.asset(
+      'assets/images/cats/${appearance == 'light_long' ? 'longhair' : 'calico'}-sitting-v1.png',
+      fit: BoxFit.contain,
+      cacheWidth: (size * 3).round(),
+      excludeFromSemantics: true,
+      errorBuilder: (_, _, _) => const Icon(Icons.pets_outlined),
+    ),
+  );
 }

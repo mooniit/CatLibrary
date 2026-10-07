@@ -22,7 +22,7 @@
   "format": "RGBA PNG",
   "render": "Full-body contain, cacheWidth limited to 3 times UI logical size",
   "alphaCheck": "Real transparency confirmed. Bright fringe RGB appears only at alpha 1 or 2; judge composite in native light/night theme, not transparent preview RGB alone.",
-  "nativeLightNight": "pending",
+  "nativeLightNight": "PASS m7_ui_test; inspect m7-cats-ui-light/night and m7-adoption-ui-light/night screenshots; no visible colored halo",
   "phone": "pending device connection",
   "promptSet": [
     "Identity-preserve, approved calico model sheet, one front-view sitting cat, natural adult proportions, amber eyes/pink nose, image-left black face/image-right orange face and white forehead/chest/belly/paws, preserve shoulder/rear-hip/tail patches, refined hand-drawn painted fur, genuinely transparent, full body and tail, no text/props/clothes/chibi/pixels.",
