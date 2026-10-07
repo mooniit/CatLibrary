@@ -7,6 +7,7 @@ const verification=read('design/room-themes-2026-10-06/verification.json');
 if(verification.consoleErrors.length||verification.failedRequests.length)throw Error('Theme verification failed');
 const lunar=read('assets/images/room/lunar-v5/catalog.json');
 const products=[];
+const retired=read('assets/data/furniture-products.json').filter(p=>p.kind==='frame').map(p=>({...p,active:false}));
 const labels={bookshelf:'书柜',desk:'书桌',chair:'椅子',tree:'猫爬架',bed:'开放猫窝',window:'窗户',rug:'地毯',wall:'墙面',floor:'地板'};
 for(const theme of ['lunar','wood','royal']){
   let catalog=lunar;
@@ -44,14 +45,14 @@ for(const theme of ['lunar','wood','royal']){
     }
     products.push({sku:theme+'-'+kind,label:({lunar:'月轨',wood:'木质',royal:'皇家'})[theme]+labels[kind],theme,kind,placement,geometry,price:null,currency:null,purchase_limit:null,active:false,is_test:false});
   }
-  for(const template of ['landscape','portrait','square']){
-    products.push({sku:theme+'-frame-'+template,label:({lunar:'月轨',wood:'木质',royal:'皇家'})[theme]+({landscape:'横版',portrait:'竖版',square:'方形'})[template]+'画框',theme,kind:'frame',placement:'art',geometry:{template},price:null,currency:null,purchase_limit:null,active:false,is_test:false});
+  for(const [artwork,label,template] of [
+    ['starry','爪印星夜','landscape'],['mona','猫娜丽莎','portrait'],['scream','喵的呐喊','portrait'],['pearl','戴珍珠耳环的猫','portrait'],['sunflowers','向日葵','square']]){
+    products.push({sku:theme+'-painting-'+artwork,label:({lunar:'月轨',wood:'木质',royal:'皇家'})[theme]+label,theme,kind:'painting',placement:'art',geometry:{template,artwork},price:null,currency:null,purchase_limit:null,active:false,is_test:false});
   }
 }
 mkdirSync('assets/data',{recursive:true});
 for(const p of products)Object.assign(p,approvedEconomy(p.theme,p.kind));
+products.push(...retired);
 writeFileSync('assets/data/furniture-products.json',JSON.stringify(products,null,2)+'\n');
-const q=s=>"'"+s.replaceAll("'","''")+"'";
-const rows=products.map(p=>'('+[p.sku,p.label,p.theme,p.kind,p.placement,JSON.stringify(p.geometry)].map(q).join(',')+')');
-writeFileSync('supabase/migrations/202610060002_furniture_catalog.sql','-- Verified geometry only. No approved prices or implied ownership.\ninsert into public.furniture_products(sku,label,theme,kind,placement,geometry) values\n'+rows.join(',\n')+';\n');
+// The original migration is historical. Apply catalog changes incrementally.
 console.log('Exported '+products.length+' approved products; two verified theme catalogs; footprints unchanged.');

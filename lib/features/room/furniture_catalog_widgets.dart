@@ -1,34 +1,184 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
+import 'lunar_room.dart';
+import 'room_furniture.dart';
 import 'layout_draft.dart';
 
 const furnitureCategories = {
   'all': 'All',
   'furniture': '家具',
   'cats': '猫用',
-  'decoration': '装饰',
-  'windows': '窗景',
+  'decoration': '地毯',
+  'windows': '窗画',
   'renovation': '装修',
 };
 
 const furnitureCategoryIcons = {
   'furniture': Icons.chair_outlined,
   'cats': Icons.pets_outlined,
-  'decoration': Icons.image_outlined,
-  'windows': Icons.window_outlined,
-  'renovation': Icons.wallpaper_outlined,
+  'decoration': Icons.texture_outlined,
+  'windows': Icons.photo_library_outlined,
+  'renovation': Icons.space_dashboard_outlined,
 };
 
 String furnitureCategory(String kind) => switch (kind) {
   'bookshelf' || 'desk' || 'chair' => 'furniture',
   'tree' || 'bed' => 'cats',
-  'rug' || 'frame' => 'decoration',
-  'window' => 'windows',
+  'rug' => 'decoration',
+  'window' || 'frame' || 'painting' => 'windows',
   'wall' || 'floor' => 'renovation',
   _ => throw ArgumentError.value(kind, 'kind', 'Unregistered furniture kind'),
 };
 
 bool matchesFurnitureCategory(String category, String kind) =>
     category == 'all' || furnitureCategory(kind) == category;
+
+class RoomCategoryIcon extends StatelessWidget {
+  const RoomCategoryIcon({
+    super.key,
+    required this.category,
+    required this.color,
+  });
+  final String category;
+  final Color color;
+  @override
+  Widget build(BuildContext context) =>
+      ['decoration', 'renovation'].contains(category)
+      ? CustomPaint(
+          size: const Size(22, 22),
+          painter: _SurfaceIcon(category, color),
+        )
+      : Icon(furnitureCategoryIcons[category], size: 22, color: color);
+}
+
+class _SurfaceIcon extends CustomPainter {
+  _SurfaceIcon(this.category, this.color);
+  final String category;
+  final Color color;
+  @override
+  void paint(Canvas canvas, Size size) {
+    final pen = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.6
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    if (category == 'decoration') {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          const Rect.fromLTWH(4, 5, 14, 12),
+          const Radius.circular(1),
+        ),
+        pen,
+      );
+      canvas.drawRect(const Rect.fromLTWH(7, 8, 8, 6), pen);
+      for (final x in [6.0, 11.0, 16.0]) {
+        canvas.drawLine(Offset(x, 3), Offset(x, 5), pen);
+        canvas.drawLine(Offset(x, 17), Offset(x, 19), pen);
+      }
+    } else {
+      canvas.drawPath(
+        Path()
+          ..moveTo(3, 14)
+          ..lineTo(3, 5)
+          ..lineTo(11, 2)
+          ..lineTo(19, 5)
+          ..lineTo(19, 14)
+          ..lineTo(11, 20)
+          ..close(),
+        pen,
+      );
+      canvas.drawLine(const Offset(11, 2), const Offset(11, 10), pen);
+      canvas.drawPath(
+        Path()
+          ..moveTo(3, 14)
+          ..lineTo(11, 10)
+          ..lineTo(19, 14),
+        pen,
+      );
+      canvas.drawLine(const Offset(7, 17), const Offset(15, 12), pen);
+      canvas.drawLine(const Offset(7, 12), const Offset(15, 17), pen);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_SurfaceIcon old) =>
+      old.color != color || old.category != category;
+}
+
+/// Artwork cards use the exact mounted frame and uncropped painting renderer.
+class FurnitureThumbnail extends StatelessWidget {
+  const FurnitureThumbnail({super.key, required this.product});
+  final FurnitureProduct product;
+  static final _thumbnails = <String, Future<ui.Image>>{};
+  static final _images = <String, Future<ui.Image>>{};
+  static Future<ui.Image> _image(String path) =>
+      _images.putIfAbsent(path, () async {
+        final bytes = await rootBundle.load(path);
+        final codec = await ui.instantiateImageCodec(
+          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
+        );
+        final frame = await codec.getNextFrame();
+        codec.dispose();
+        return frame.image;
+      });
+  static Future<ui.Image> _painting(FurnitureProduct p) async {
+    final catalog =
+        jsonDecode(await rootBundle.loadString('${p.assetRoot}catalog.json'))
+            as Map<String, dynamic>;
+    final frame = p.sprite;
+    final art = ArtworkStyle.values.byName(p.artwork!);
+    final renderer = LunarRoom(catalog, {
+      frame: await _image('${p.assetRoot}$frame.png'),
+    });
+    final item = PlacedItem(
+      'thumbnail',
+      slot: 'art-left-back',
+      artwork: p.artwork!,
+    );
+    final bounds = renderer.placedSpriteBounds(item, p, {p.theme: renderer});
+    final recorder = ui.PictureRecorder();
+    final canvas = Canvas(recorder);
+    final scale = (300 / bounds.width).clamp(0.0, 210 / bounds.height);
+    canvas.translate(
+      (320 - bounds.width * scale) / 2,
+      (230 - bounds.height * scale) / 2,
+    );
+    canvas.scale(scale);
+    canvas.translate(-bounds.left, -bounds.top);
+    renderer.renderGhost(
+      canvas,
+      item,
+      p,
+      {p.theme: renderer},
+      false,
+      {art: await _image('assets/images/${art.asset}')},
+      opacity: 1,
+    );
+    final picture = recorder.endRecording();
+    final result = await picture.toImage(320, 230);
+    picture.dispose();
+    return result;
+  }
+
+  @override
+  Widget build(BuildContext context) => product.artwork == null
+      ? Image.asset(
+          '${product.assetRoot}${product.sprite}.png',
+          fit: BoxFit.contain,
+        )
+      : FutureBuilder<ui.Image>(
+          future: _thumbnails.putIfAbsent(
+            '${product.theme}-${product.artwork}',
+            () => _painting(product),
+          ),
+          builder: (_, snapshot) => snapshot.hasData
+              ? RawImage(image: snapshot.data, fit: BoxFit.contain)
+              : const SizedBox.shrink(),
+        );
+}
 
 class FurnitureTool extends StatelessWidget {
   const FurnitureTool({
@@ -104,9 +254,8 @@ class FurnitureCategories extends StatelessWidget {
                                       ).colorScheme.primary,
                                     ),
                                   )
-                                : Icon(
-                                    furnitureCategoryIcons[e.key],
-                                    size: 22,
+                                : RoomCategoryIcon(
+                                    category: e.key,
                                     color: selected == e.key
                                         ? Theme.of(context).colorScheme.primary
                                         : Theme.of(
@@ -192,12 +341,7 @@ class FurnitureGrid extends StatelessWidget {
                     padding: const EdgeInsets.all(4),
                     child: Column(
                       children: [
-                        Expanded(
-                          child: Image.asset(
-                            '${p.assetRoot}${p.sprite}.png',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
+                        Expanded(child: FurnitureThumbnail(product: p)),
                         const SizedBox(height: 4),
                         Text(
                           count,
@@ -310,13 +454,7 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 180,
-                  child: Image.asset(
-                    '${p.assetRoot}${p.sprite}.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
+                SizedBox(height: 180, child: FurnitureThumbnail(product: p)),
                 const SizedBox(height: 12),
                 Text('已拥有 ${widget.owned}/${p.purchaseLimit ?? 1}'),
                 if (widget.ownership != null)

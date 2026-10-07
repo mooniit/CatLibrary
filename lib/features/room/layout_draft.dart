@@ -18,6 +18,7 @@ class FurnitureProduct {
   final int? price, purchaseLimit;
   final String? currency;
   final bool active, isTest;
+  String? get artwork => geometry['artwork'] as String?;
   String get sprite => placement == 'ground'
       ? '$kind-x'
       : placement == 'window'
@@ -25,7 +26,7 @@ class FurnitureProduct {
       : placement == 'art'
       ? 'frame-${geometry['template']}-left'
       : placement == 'wall'
-      ? 'wall-left'
+      ? 'wall-left-closed'
       : kind;
   String get assetRoot =>
       'assets/images/room/${theme == 'lunar' ? 'lunar-v5' : theme}/';
@@ -171,13 +172,14 @@ class PlacementRules {
           errors.add('固定挂位不匹配或已占用');
         }
         if (product.placement == 'art' &&
-            ![
-              'starry',
-              'mona',
-              'scream',
-              'pearl',
-              'sunflowers',
-            ].contains(item.artwork)) {
+            ((product.artwork != null && item.artwork != product.artwork) ||
+                ![
+                  'starry',
+                  'mona',
+                  'scream',
+                  'pearl',
+                  'sunflowers',
+                ].contains(item.artwork))) {
           errors.add('画作无效');
         }
         if (item.gx != 0 || item.gy != 0 || item.facing != 'x') {
@@ -187,6 +189,18 @@ class PlacementRules {
     }
     return errors.toSet().toList();
   }
+}
+
+String nextMount(
+  PlacementRules rules,
+  FurnitureProduct product,
+  String? current,
+) {
+  final slots = rules.slots.entries
+      .where((e) => e.value == product.placement)
+      .map((e) => e.key)
+      .toList();
+  return slots[(slots.indexOf(current ?? '') + 1) % slots.length];
 }
 
 class LayoutDraft {

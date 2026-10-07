@@ -1,10 +1,10 @@
 begin;
 select no_plan();
-select is((select count(*)::integer from public.furniture_products where not is_test and active and currency='miao' and purchase_limit=1),36,'all 36 approved styles are active and unique per household');
+select is((select count(*)::integer from public.furniture_products where not is_test and active and currency='miao' and purchase_limit=1),42,'all 42 approved styles are active and unique per household');
 select is((select count(*)::integer from public.furniture_products p join (values
-  ('bookshelf',120),('desk',100),('chair',40),('tree',140),('bed',60),('window',60),('rug',80),('wall',100),('floor',100),('frame',30)
+  ('bookshelf',120),('desk',100),('chair',40),('tree',140),('bed',60),('window',60),('rug',80),('wall',100),('floor',100),('painting',30)
 ) b(kind,price) on b.kind=p.kind join (values ('wood',1::numeric),('lunar',1.5::numeric),('royal',2::numeric)) t(theme,multiplier)
-on t.theme=p.theme where not p.is_test and p.price=b.price*t.multiplier),36,'approved price matrix is authoritative');
+on t.theme=p.theme where not p.is_test and p.active and p.price=b.price*t.multiplier),42,'approved price matrix is authoritative');
 insert into auth.users(id) values ('76000000-0000-0000-0000-000000000001'),('76000000-0000-0000-0000-000000000002');
 set local role authenticated;
 select set_config('request.jwt.claims','{"sub":"76000000-0000-0000-0000-000000000001"}',true);

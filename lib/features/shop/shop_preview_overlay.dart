@@ -8,9 +8,11 @@ class ShopPreviewOverlay extends StatelessWidget {
     required this.scene,
     required this.onRotate,
     required this.onCancel,
+    this.enabled = true,
   });
   final RoomScene scene;
   final VoidCallback onRotate, onCancel;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<int>(
@@ -32,7 +34,7 @@ class ShopPreviewOverlay extends StatelessWidget {
           top: top.clamp(56, (box.maxHeight - 48).clamp(56, double.infinity)),
           child: IconButton(
             tooltip: label,
-            onPressed: action,
+            onPressed: enabled ? action : null,
             icon: SizedBox(
               width: 48,
               height: 48,
@@ -62,10 +64,16 @@ class ShopPreviewOverlay extends StatelessWidget {
         );
         return Stack(
           children: [
-            if (scene.ghostProduct!.placement == 'ground')
+            if ([
+              'ground',
+              'art',
+              'window',
+            ].contains(scene.ghostProduct!.placement))
               handle(
-                '切换朝向',
-                Icons.rotate_90_degrees_ccw_outlined,
+                scene.ghostProduct!.placement == 'ground' ? '切换朝向' : '切换挂位',
+                scene.ghostProduct!.placement == 'ground'
+                    ? Icons.rotate_90_degrees_ccw_outlined
+                    : Icons.swap_horiz_rounded,
                 bounds.left - 40,
                 bounds.bottom - 8,
                 Alignment.topRight,

@@ -162,7 +162,7 @@ void main() {
       Future<void> shot(String name) async {
         await tester.pump(const Duration(milliseconds: 500));
         await binding.takeScreenshot(
-          name.replaceFirst('m5-native-', 'm5-focused-'),
+          name.replaceFirst('m5-native-', 'm5-artwork-'),
         );
       }
 
@@ -204,6 +204,59 @@ void main() {
         await waitFor(find.byTooltip('结束预览'));
         await shot('m5-native-night-preview');
         await showShop(repoA);
+        await shot('m5-native-basic-shell');
+        for (final kind in ['floor', 'wall']) {
+          await tap(find.byKey(const Key('category-renovation')));
+          await revealProduct('wood-$kind');
+          await tap(find.byKey(ValueKey('product-wood-$kind')));
+          await tap(find.byKey(const Key('product-preview')));
+          await waitFor(find.byTooltip('结束预览'));
+          final previewScene = shopHost!.currentState!.scene;
+          final instance = previewScene.ghostItem!;
+          expect(
+            previewScene.roomState!.layout.items
+                .where((i) => i.slot == kind)
+                .single
+                .instanceId,
+            instance.instanceId,
+          );
+          expect(
+            previewScene
+                .roomState!
+                .products[previewScene.roomState!.inventory
+                    .firstWhere((i) => i.id == instance.instanceId)
+                    .sku]!
+                .theme,
+            'wood',
+          );
+          await shot('m5-native-wood-$kind-preview');
+          await tap(find.byTooltip('结束预览'));
+          expect(previewScene.roomState!.layout.items, isEmpty);
+        }
+        await tap(find.byKey(const Key('category-windows')));
+        for (final target in ['lunar-painting-pearl', 'wood-window']) {
+          await revealProduct(target);
+          await tap(find.byKey(ValueKey('product-$target')));
+          await tap(find.byKey(const Key('product-preview')));
+          await waitFor(find.byTooltip('切换挂位'));
+          final scene = shopHost!.currentState!.scene;
+          final first = scene.ghostItem!.slot;
+          final origin = scene.origin;
+          expect(find.byType(DropdownButton<String>), findsNothing);
+          for (var i = 0; i < (target.contains('painting') ? 4 : 2); i++) {
+            await tap(find.byTooltip('切换挂位'));
+            expect(
+              scene.origin,
+              origin,
+              reason: 'slot cycling must not reset view',
+            );
+          }
+          expect(scene.ghostItem!.slot, first);
+          await shot('m5-native-$target-preview');
+          await tap(find.byTooltip('结束预览'));
+        }
+        await tap(find.byKey(const Key('category-furniture')));
+        await revealProduct(sku);
         await tester.drag(
           find.byType(FurnitureCategories),
           const Offset(320, 0),
@@ -315,6 +368,24 @@ void main() {
         final facing = shopScene.ghostItem!.facing;
         await tap(find.byTooltip('切换朝向'));
         expect(shopScene.ghostItem!.facing, isNot(facing));
+        final viewBeforePan = shopScene.origin;
+        await tester.dragFrom(
+          tester.getTopLeft(shopRoom) + const Offset(24, 110),
+          const Offset(40, -25),
+        );
+        await tester.pump(const Duration(milliseconds: 400));
+        expect(
+          shopScene.origin,
+          isNot(viewBeforePan),
+          reason: 'empty room space must pan freely',
+        );
+        final freeView = shopScene.origin;
+        await tap(find.byTooltip('切换朝向'));
+        expect(
+          shopScene.origin,
+          freeView,
+          reason: 'rotation must retain user view',
+        );
         expect((await repoA.load()).inventory, isEmpty);
         expect((await repoA.load()).layout.items, isEmpty);
         await shot('m5-native-shop-preview');

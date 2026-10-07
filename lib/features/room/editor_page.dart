@@ -81,8 +81,6 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
   void updateScene() {
     if (state == null) return;
     scene.roomState = state;
-    scene.ghostItem = null;
-    scene.ghostProduct = null;
     scene.draftLayout = draft?.preview == null
         ? draft?.layout
         : draft?.candidate(replacing: replacing);
@@ -92,6 +90,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
         .where((i) => i.id == selected?.instanceId)
         .firstOrNull
         ?.sku;
+    scene.setGhost(selected, state!.products[sku]);
     scene.setFurnitureFocus(selected, state!.products[sku]);
     scene.showGrid = true;
   }
@@ -300,6 +299,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
             PlacedItem(
               instance.id,
               slot: p.placement == 'ground' ? null : slots.first,
+              artwork: p.artwork ?? 'starry',
             );
         message = '选中${p.label}，预览尚未确认到草稿';
         scene.setFurnitureFocus(draft!.preview, p, refocus: true);
@@ -382,7 +382,10 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
     if (chosen != null && mounted) {
       select(
         chosen,
-        placed: original.copy(instanceId: chosen.id),
+        placed: original.copy(
+          instanceId: chosen.id,
+          artwork: state!.products[chosen.sku]!.artwork,
+        ),
         replace: original.instanceId,
       );
     }
@@ -423,16 +426,35 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
   }
 
   void dragEnd() {
-    final item = draft?.preview;
-    if (dragItem != null && item != null) {
-      final sku = state!.inventory
-          .firstWhere((i) => i.id == item.instanceId)
-          .sku;
-      scene.keepFurnitureVisible(item, state!.products[sku]!);
-    }
     dragWorld = null;
     dragItem = null;
     unawaited(persist());
+  }
+
+  void rotatePreview() {
+    final item = draft?.preview;
+    if (!editable || item == null) return;
+    final p =
+        state!.products[state!.inventory
+            .firstWhere((i) => i.id == item.instanceId)
+            .sku]!;
+    unawaited(
+      change(
+        () => draft!.preview = p.placement == 'ground'
+            ? item.copy(facing: item.facing == 'x' ? 'y' : 'x')
+            : item.copy(slot: nextMount(state!.rules, p, item.slot)),
+      ),
+    );
+  }
+
+  void cancelPreview() {
+    if (!editable) return;
+    unawaited(
+      change(() {
+        draft!.cancelPreview();
+        replacing = null;
+      }),
+    );
   }
 
   Future<void> save() async {
@@ -635,64 +657,9 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                           color: Theme.of(context).colorScheme.error,
                         ),
                       ),
-                    if (p.placement != 'ground')
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: DropdownButton<String>(
-                          value: current.slot,
-                          items: [
-                            for (final e in room!.rules.slots.entries.where(
-                              (e) => e.value == p.placement,
-                            ))
-                              DropdownMenuItem(
-                                value: e.key,
-                                child: Text(slotLabel(e.key)),
-                              ),
-                          ],
-                          onChanged: editable
-                              ? (v) => change(
-                                  () => draft!.preview = current.copy(slot: v),
-                                )
-                              : null,
-                        ),
-                      ),
-                    if (p.placement == 'art')
-                      DropdownButton<String>(
-                        value: current.artwork,
-                        items: [
-                          for (final a in {
-                            'starry': '爪印星夜',
-                            'mona': '猫娜丽莎',
-                            'scream': '喵的呐喊',
-                            'pearl': '戴珍珠耳环的猫',
-                            'sunflowers': '向日葵',
-                          }.entries)
-                            DropdownMenuItem(
-                              value: a.key,
-                              child: Text(a.value),
-                            ),
-                        ],
-                        onChanged: editable
-                            ? (v) => change(
-                                () => draft!.preview = current.copy(artwork: v),
-                              )
-                            : null,
-                      ),
                     Wrap(
                       alignment: WrapAlignment.center,
                       children: [
-                        if (p.placement == 'ground')
-                          FurnitureTool(
-                            label: '切换朝向',
-                            icon: Icons.flip_outlined,
-                            onPressed: editable
-                                ? () => change(
-                                    () => draft!.preview = current.copy(
-                                      facing: current.facing == 'x' ? 'y' : 'x',
-                                    ),
-                                  )
-                                : null,
-                          ),
                         FurnitureTool(
                           label: '收起',
                           icon: Icons.inventory_2_outlined,
@@ -724,16 +691,6 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                                   );
                                   replacing = null;
                                   message = '已确认到草稿，尚未保存到家庭';
-                                })
-                              : null,
-                        ),
-                        FurnitureTool(
-                          label: '取消',
-                          icon: Icons.close_rounded,
-                          onPressed: editable
-                              ? () => change(() {
-                                  draft!.cancelPreview();
-                                  replacing = null;
                                 })
                               : null,
                         ),

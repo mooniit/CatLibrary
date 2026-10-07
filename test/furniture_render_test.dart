@@ -86,18 +86,21 @@ void main() {
             beforeDrag,
             reason: 'drag must not move the view',
           );
-          scene.keepFurnitureVisible(moved, product);
-          final afterDrag = scene.placedViewportBounds(moved, product);
-          expect(
-            scene.furnitureFocusArea!.inflate(1e-8).contains(afterDrag.topLeft),
-            isTrue,
+          scene.moveView(
+            scene.zoom * 1.2,
+            const ui.Offset(180, 150),
+            const ui.Offset(37, -26),
           );
+          final freelyMoved = scene.origin;
+          final freelyScaled = scene.displayScale;
+          expect(freelyMoved, isNot(beforeDrag));
+          scene.setFurnitureFocus(moved.copy(facing: 'y'), product);
           expect(
-            scene.furnitureFocusArea!
-                .inflate(1e-8)
-                .contains(afterDrag.bottomRight),
-            isTrue,
+            scene.origin,
+            freelyMoved,
+            reason: 'rotation must not snap the view back',
           );
+          expect(scene.displayScale, freelyScaled);
           final shifted = themes['lunar']!.placedSpriteBounds(
             item.copy(gx: 3),
             product,
@@ -262,13 +265,15 @@ void main() {
           final picture = recorder.endRecording(),
               image = await picture.toImage(1080, 1073);
           picture.dispose();
-          await File(
-            'docs/evidence/m5-rendered-$theme-${night ? 'night' : 'day'}.png',
-          ).writeAsBytes(
-            (await image.toByteData(
-              format: ui.ImageByteFormat.png,
-            ))!.buffer.asUint8List(),
-          );
+          if (const bool.fromEnvironment('EXPORT_ROOM_TEST_IMAGES')) {
+            await File(
+              'docs/evidence/m5-artwork-rendered-$theme-${night ? 'night' : 'day'}.png',
+            ).writeAsBytes(
+              (await image.toByteData(
+                format: ui.ImageByteFormat.png,
+              ))!.buffer.asUint8List(),
+            );
+          }
           pixels.add(
             (await image.toByteData(
               format: ui.ImageByteFormat.rawRgba,

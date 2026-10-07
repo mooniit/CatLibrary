@@ -53,6 +53,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool hasFamily = false;
   int _request = 0;
   double _startZoom = 1;
+  Offset? _roomPointerDown;
   int _furnitureRequest = 0;
   bool loadingFurniture = true;
   String? furnitureError;
@@ -283,6 +284,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         _roomToolsShown = true;
         _arranging = false;
         scene.fitViewport = true;
+        scene.zoom = 1;
         scene.forceLayout = true;
         scene.pan = Offset.zero;
       });
@@ -406,6 +408,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _roomToolsShown = true;
       _arranging = true;
       scene.fitViewport = true;
+      scene.zoom = 1;
       scene.forceLayout = true;
       scene.pan = Offset.zero;
     });
@@ -504,83 +507,91 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 right: 0,
                 // Keep the same room canvas, extending it behind the tinted shelf.
                 bottom: _roomToolsShown ? constraints.maxHeight * 0.30 : 0,
-                child: GestureDetector(
-                  key: const Key('room-viewport'),
-                  behavior: HitTestBehavior.opaque,
-                  dragStartBehavior: DragStartBehavior.down,
-                  onTapUp: _roomToolsShown && !_arranging
-                      ? (event) => _shopKey.currentState?.tapPreview(
-                          event.localPosition,
-                        )
-                      : null,
-                  onDoubleTap: _roomToolsShown
-                      ? null
-                      : () => setState(scene.resetView),
-                  onScaleStart: _roomToolsShown
-                      ? null
-                      : (_) {
-                          _startZoom = scene.zoom;
-                        },
-                  onScaleUpdate: _roomToolsShown
-                      ? null
-                      : (event) => setState(() {
-                          scene.moveView(
-                            _startZoom * event.scale,
-                            event.localFocalPoint,
-                            event.focalPointDelta,
-                          );
-                        }),
-                  onPanStart: !_roomToolsShown
-                      ? null
-                      : (event) {
-                          if (_arranging) {
-                            _editorKey.currentState?.dragStart(event);
-                          } else {
-                            _shopKey.currentState?.dragStart(event);
-                          }
-                        },
-                  onPanUpdate: !_roomToolsShown
-                      ? null
-                      : (event) {
-                          if (_arranging) {
-                            _editorKey.currentState?.dragUpdate(event);
-                          } else {
-                            _shopKey.currentState?.dragUpdate(event);
-                          }
-                        },
-                  onPanEnd: !_roomToolsShown
-                      ? null
-                      : (_) {
-                          if (_arranging) {
-                            _editorKey.currentState?.dragEnd();
-                          } else {
-                            _shopKey.currentState?.dragEnd();
-                          }
-                        },
-                  onPanCancel: !_roomToolsShown
-                      ? null
-                      : () {
+                child: Listener(
+                  onPointerDown: (event) =>
+                      _roomPointerDown = event.localPosition,
+                  child: GestureDetector(
+                    key: const Key('room-viewport'),
+                    behavior: HitTestBehavior.opaque,
+                    dragStartBehavior: DragStartBehavior.down,
+                    onTapUp: _roomToolsShown && !_arranging
+                        ? (event) => _shopKey.currentState?.tapPreview(
+                            event.localPosition,
+                          )
+                        : null,
+                    onDoubleTap: _roomToolsShown
+                        ? null
+                        : () => setState(scene.resetView),
+                    onScaleStart: (event) {
+                      _startZoom = scene.zoom;
+                      if (_roomToolsShown && event.pointerCount == 1) {
+                        final start = DragStartDetails(
+                          localPosition:
+                              _roomPointerDown ?? event.localFocalPoint,
+                        );
+                        if (_arranging) {
+                          _editorKey.currentState?.dragStart(start);
+                        } else {
+                          _shopKey.currentState?.dragStart(start);
+                        }
+                      }
+                    },
+                    onScaleUpdate: (event) => setState(() {
+                      final dragging = _arranging
+                          ? _editorKey.currentState?.dragItem != null
+                          : _shopKey.currentState?.dragItem != null;
+                      if (_roomToolsShown &&
+                          event.pointerCount == 1 &&
+                          dragging) {
+                        final update = DragUpdateDetails(
+                          globalPosition: event.focalPoint,
+                          delta: event.focalPointDelta,
+                          localPosition: event.localFocalPoint,
+                        );
+                        if (_arranging) {
+                          _editorKey.currentState?.dragUpdate(update);
+                        } else {
+                          _shopKey.currentState?.dragUpdate(update);
+                        }
+                      } else {
+                        if (event.pointerCount > 1 && dragging) {
                           if (_arranging) {
                             _editorKey.currentState?.dragEnd();
                           } else {
                             _shopKey.currentState?.dragEnd();
                           }
-                        },
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Semantics(
-                        label: '小屋家具陈设，拖动查看，双指缩放，双击回到初始视角。',
-                        child: GameWidget(
-                          key: _roomWidgetKey,
-                          game: scene,
-                          loadingBuilder: (_) =>
-                              const Center(child: CircularProgressIndicator()),
-                          errorBuilder: (_, _) =>
-                              const Center(child: Text('猫窝素材加载失败，请重新打开页面')),
+                        }
+                        scene.moveView(
+                          _startZoom * event.scale,
+                          event.localFocalPoint,
+                          event.focalPointDelta,
+                        );
+                      }
+                    }),
+                    onScaleEnd: (_) {
+                      if (_arranging) {
+                        _editorKey.currentState?.dragEnd();
+                      } else if (_roomToolsShown) {
+                        _shopKey.currentState?.dragEnd();
+                      }
+                    },
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Semantics(
+                          label: '小屋家具陈设，拖动查看，双指缩放，双击回到初始视角。',
+                          child: GameWidget(
+                            key: _roomWidgetKey,
+                            game: scene,
+                            loadingBuilder: (_) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorBuilder: (_, _) =>
+                                const Center(child: Text('猫窝素材加载失败，请重新打开页面')),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -617,7 +628,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   ),
                 ),
               // Handles stay above the shelf when a preview overlaps its edge.
-              if (_roomToolsShown && !_arranging)
+              if (_roomToolsShown)
                 Positioned(
                   top: 64,
                   left: 0,
@@ -625,8 +636,20 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   bottom: constraints.maxHeight * 0.30,
                   child: ShopPreviewOverlay(
                     scene: scene,
-                    onRotate: () => _shopKey.currentState?.rotatePreview(),
-                    onCancel: () => _shopKey.currentState?.cancelPreview(),
+                    onRotate: () {
+                      if (_arranging) {
+                        _editorKey.currentState?.rotatePreview();
+                      } else {
+                        _shopKey.currentState?.rotatePreview();
+                      }
+                    },
+                    onCancel: () {
+                      if (_arranging) {
+                        _editorKey.currentState?.cancelPreview();
+                      } else {
+                        _shopKey.currentState?.cancelPreview();
+                      }
+                    },
                   ),
                 ),
               if (_roomToolsShown)

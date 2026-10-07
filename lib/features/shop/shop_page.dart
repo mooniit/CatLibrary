@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../core/storage/app_database.dart';
 import '../identity/identity_repository.dart';
 import '../room/layout_draft.dart';
-import '../room/editor_page.dart';
 import '../room/room_scene.dart';
 import '../room/furniture_catalog_widgets.dart';
 import 'shop_repository.dart';
@@ -100,7 +99,9 @@ class ShopPageState extends State<ShopPage> {
                   .where((i) => i.sku == p.sku)
                   .map(
                     (i) =>
-                        '${i.source == 'purchase'
+                        '${i.source == 'test_grant'
+                            ? '测试发放'
+                            : i.source == 'purchase'
                             ? '购买'
                             : i.source == 'initial'
                             ? '初始赠送'
@@ -202,7 +203,16 @@ class ShopPageState extends State<ShopPage> {
 
   void rotatePreview() {
     final trial = preview;
-    if (trial == null || trial.product.placement != 'ground') return;
+    if (trial == null) return;
+    if (['art', 'window'].contains(trial.product.placement)) {
+      setState(
+        () => trial.item = trial.item.copy(
+          slot: nextMount(trial.base.rules, trial.product, trial.item.slot),
+        ),
+      );
+      return;
+    }
+    if (trial.product.placement != 'ground') return;
     dragEnd();
     setState(() {
       trial.item = trial.item.copy(
@@ -225,29 +235,9 @@ class ShopPageState extends State<ShopPage> {
           '此处无法摆放，请调整位置',
           style: TextStyle(color: Theme.of(context).colorScheme.error),
         ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (trial.product.placement != 'ground')
-            DropdownButton<String>(
-              value: trial.item.slot,
-              items: [
-                for (final e in trial.base.rules.slots.entries.where(
-                  (e) => e.value == trial.product.placement,
-                ))
-                  DropdownMenuItem(value: e.key, child: Text(slotLabel(e.key))),
-              ],
-              onChanged: (v) =>
-                  setState(() => trial.item = trial.item.copy(slot: v)),
-            ),
-        ],
-      ),
     ],
   );
   void dragEnd() {
-    if (dragItem != null && preview != null) {
-      scene.keepFurnitureVisible(preview!.item, preview!.product);
-    }
     dragWorld = null;
     dragItem = null;
   }
@@ -255,7 +245,11 @@ class ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     final room = state;
-    scene.roomState = room;
+    scene.roomState =
+        preview != null &&
+            ['wall', 'floor'].contains(preview!.product.placement)
+        ? preview!.view
+        : room;
     scene.draftLayout = null;
     scene.selectedInstance = null;
     scene.showGrid = false;
@@ -265,6 +259,7 @@ class ShopPageState extends State<ShopPage> {
         room?.products.values
             .where(
               (p) =>
+                  p.active &&
                   (!p.isTest || room.testScope) &&
                   matchesFurnitureCategory(category, p.kind),
             )

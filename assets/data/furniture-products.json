@@ -347,7 +347,7 @@
     "price": 45,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -362,7 +362,7 @@
     "price": 45,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -377,7 +377,7 @@
     "price": 45,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -728,7 +728,7 @@
     "price": 30,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -743,7 +743,7 @@
     "price": 30,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -758,7 +758,7 @@
     "price": 30,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -1109,7 +1109,7 @@
     "price": 60,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -1124,7 +1124,7 @@
     "price": 60,
     "currency": "miao",
     "purchase_limit": 1,
-    "active": true,
+    "active": false,
     "is_test": false
   },
   {
@@ -1135,6 +1135,246 @@
     "placement": "art",
     "geometry": {
       "template": "square"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": false,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-painting-starry",
+    "label": "月轨爪印星夜",
+    "theme": "lunar",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "landscape",
+      "artwork": "starry"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-painting-mona",
+    "label": "月轨猫娜丽莎",
+    "theme": "lunar",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "mona"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-painting-scream",
+    "label": "月轨喵的呐喊",
+    "theme": "lunar",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "scream"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-painting-pearl",
+    "label": "月轨戴珍珠耳环的猫",
+    "theme": "lunar",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "pearl"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-painting-sunflowers",
+    "label": "月轨向日葵",
+    "theme": "lunar",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "square",
+      "artwork": "sunflowers"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-painting-starry",
+    "label": "木质爪印星夜",
+    "theme": "wood",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "landscape",
+      "artwork": "starry"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-painting-mona",
+    "label": "木质猫娜丽莎",
+    "theme": "wood",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "mona"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-painting-scream",
+    "label": "木质喵的呐喊",
+    "theme": "wood",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "scream"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-painting-pearl",
+    "label": "木质戴珍珠耳环的猫",
+    "theme": "wood",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "pearl"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-painting-sunflowers",
+    "label": "木质向日葵",
+    "theme": "wood",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "square",
+      "artwork": "sunflowers"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-painting-starry",
+    "label": "皇家爪印星夜",
+    "theme": "royal",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "landscape",
+      "artwork": "starry"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-painting-mona",
+    "label": "皇家猫娜丽莎",
+    "theme": "royal",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "mona"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-painting-scream",
+    "label": "皇家喵的呐喊",
+    "theme": "royal",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "scream"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-painting-pearl",
+    "label": "皇家戴珍珠耳环的猫",
+    "theme": "royal",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait",
+      "artwork": "pearl"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-painting-sunflowers",
+    "label": "皇家向日葵",
+    "theme": "royal",
+    "kind": "painting",
+    "placement": "art",
+    "geometry": {
+      "template": "square",
+      "artwork": "sunflowers"
     },
     "price": 60,
     "currency": "miao",

@@ -41,7 +41,8 @@ void main() {
       expect(matchesFurnitureCategory('furniture', 'desk'), isTrue);
       expect(matchesFurnitureCategory('furniture', 'chair'), isTrue);
       expect(matchesFurnitureCategory('decoration', 'rug'), isTrue);
-      expect(matchesFurnitureCategory('decoration', 'frame'), isTrue);
+      expect(matchesFurnitureCategory('windows', 'painting'), isTrue);
+      expect(matchesFurnitureCategory('windows', 'window'), isTrue);
     },
   );
   testWidgets(
@@ -61,7 +62,7 @@ void main() {
         ),
       );
       expect(find.text('All'), findsOneWidget);
-      expect(find.byType(Icon), findsNWidgets(5));
+      expect(find.byType(RoomCategoryIcon), findsNWidgets(5));
       expect(find.text('家具'), findsNothing);
       expect(find.byTooltip('装修'), findsOneWidget);
       final all = tester.getRect(find.byKey(const Key('category-all')));
@@ -89,13 +90,50 @@ void main() {
   test(
     'fixed preview remains in its registered slot and cannot move as ground furniture',
     () {
-      for (final sku in ['wood-window', 'lunar-rug', 'royal-frame-square']) {
+      for (final sku in [
+        'wood-window',
+        'lunar-rug',
+        'royal-painting-sunflowers',
+      ]) {
         final trial = ShopPreview(base(), base().products[sku]!);
         final before = trial.item.toJson();
         trial.move(6, 6);
         expect(trial.item.toJson(), before);
         expect(trial.view.rules.validate(trial.view.layout), isEmpty);
       }
+    },
+  );
+  test(
+    'paintings bind their frame and artwork; fixed slots cycle without moving anchors',
+    () {
+      expect(base().products.values.where((p) => p.active), hasLength(42));
+      for (final product in base().products.values.where(
+        (p) => p.kind == 'painting',
+      )) {
+        final trial = ShopPreview(base(), product);
+        expect(trial.item.artwork, product.artwork);
+        final first = trial.item.slot;
+        for (var i = 0; i < 4; i++) {
+          trial.item = trial.item.copy(
+            slot: nextMount(trial.base.rules, product, trial.item.slot),
+          );
+          expect(trial.view.rules.validate(trial.view.layout), isEmpty);
+        }
+        expect(trial.item.slot, first);
+        trial.item = trial.item.copy(
+          artwork: product.artwork == 'mona' ? 'starry' : 'mona',
+        );
+        expect(trial.view.rules.validate(trial.view.layout), contains('画作无效'));
+      }
+      final trial = ShopPreview(base(), base().products['wood-window']!);
+      expect(
+        nextMount(trial.base.rules, trial.product, trial.item.slot),
+        'window-right',
+      );
+      expect(
+        nextMount(trial.base.rules, trial.product, 'window-right'),
+        'window-left',
+      );
     },
   );
   testWidgets(

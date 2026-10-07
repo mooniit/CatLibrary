@@ -33,11 +33,6 @@ class RoomScene extends FlameGame {
   PlacedItem? _focusItem;
   FurnitureProduct? _focusProduct;
 
-  Rect? get _focusBounds =>
-      !geometryReady || _focusItem == null || _focusProduct == null
-      ? null
-      : _lunar!.placedSpriteBounds(_focusItem!, _focusProduct!, _themes);
-
   void setFurnitureFocus(
     PlacedItem? item,
     FurnitureProduct? product, {
@@ -46,13 +41,10 @@ class RoomScene extends FlameGame {
     if (item == null || product == null) {
       _focusItem = null;
       _focusProduct = null;
-    } else if (refocus ||
-        item.instanceId != _focusItem?.instanceId ||
-        item.facing != _focusItem?.facing ||
-        item.slot != _focusItem?.slot) {
-      // Freeze the focus while dragging; its world coordinates remain stable.
+    } else if (refocus) {
       _focusItem = item;
       _focusProduct = product;
+      _applyInitialFocus();
     } else {
       return;
     }
@@ -69,14 +61,23 @@ class RoomScene extends FlameGame {
     );
   }
 
-  void keepFurnitureVisible(PlacedItem item, FurnitureProduct product) {
+  void _applyInitialFocus() {
     final area = furnitureFocusArea;
-    if (!geometryReady || area == null) return;
-    final bounds = placedViewportBounds(item, product);
-    if (!area.inflate(.5).contains(bounds.topLeft) ||
-        !area.inflate(.5).contains(bounds.bottomRight)) {
-      setFurnitureFocus(item, product, refocus: true);
-    }
+    if (!geometryReady || area == null || _focusItem == null) return;
+    final bounds = _lunar!.placedSpriteBounds(
+      _focusItem!,
+      _focusProduct!,
+      _themes,
+    );
+    final scale = math.min(
+      baseScale,
+      math.min(area.width / bounds.width, area.height / bounds.height),
+    );
+    zoom = scale / baseScale;
+    pan = area.center - bounds.center * scale - _centeredOrigin;
+    // Consumed once. Subsequent pan, zoom, rotation and slot changes stay free.
+    _focusItem = null;
+    _focusProduct = null;
   }
 
   final previewChanges = ValueNotifier<int>(0);
@@ -130,6 +131,7 @@ class RoomScene extends FlameGame {
     for (final theme in ['wood', 'royal']) {
       _themes[theme] = await LunarRoom.load(images.load, theme: theme);
     }
+    _applyInitialFocus();
     notifyPreviewChanged();
   }
 
@@ -140,38 +142,21 @@ class RoomScene extends FlameGame {
     canvasSize.x / 1120,
     (canvasSize.y - (fitViewport ? 0 : 112)).clamp(1, double.infinity) / 1113,
   );
-  double get displayScale {
-    if (!fitViewport) return baseScale * zoom;
-    final area = furnitureFocusArea, bounds = _focusBounds;
-    if (area == null || bounds == null) return baseScale;
-    return math.min(
-      baseScale,
-      math.min(area.width / bounds.width, area.height / bounds.height),
-    );
-  }
+  double get displayScale => baseScale * zoom;
 
-  Offset get origin {
-    final area = furnitureFocusArea, bounds = _focusBounds;
-    if (fitViewport && area != null && bounds != null) {
-      return area.center - bounds.center * displayScale + pan;
-    }
-    return Offset(
-          (canvasSize.x - artboard.width * displayScale) / 2,
-          (canvasSize.y - artboard.height * displayScale) / 2 +
-              (fitViewport ? 0 : 48),
-        ) +
-        pan;
-  }
+  Offset get _centeredOrigin => Offset(
+    (canvasSize.x - artboard.width * displayScale) / 2,
+    (canvasSize.y - artboard.height * displayScale) / 2 +
+        (fitViewport ? 0 : 48),
+  );
+  Offset get origin => _centeredOrigin + pan;
 
   void moveView(double nextZoom, Offset focalPoint, Offset delta) {
     final local = (focalPoint - delta - origin) / displayScale;
-    zoom = nextZoom.clamp(0.8, 1.6);
-    final centered = Offset(
-      (canvasSize.x - artboard.width * displayScale) / 2,
-      (canvasSize.y - artboard.height * displayScale) / 2 + 48,
-    );
-    pan = focalPoint - local * displayScale - centered;
-    _clampPan();
+    zoom = nextZoom.clamp(fitViewport ? 0.2 : 0.8, fitViewport ? 2.5 : 1.6);
+    pan = focalPoint - local * displayScale - _centeredOrigin;
+    if (!fitViewport) _clampPan();
+    notifyPreviewChanged();
   }
 
   void _clampPan() {
@@ -208,7 +193,7 @@ class RoomScene extends FlameGame {
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    _clampPan();
+    if (!fitViewport) _clampPan();
     notifyPreviewChanged();
   }
 
@@ -234,7 +219,10 @@ class RoomScene extends FlameGame {
     } else {
       _lunar!.render(canvas, furnishings, night, _artworks);
     }
-    if (ghostItem != null && ghostProduct != null) {
+    if (selectedInstance == null &&
+        ghostItem != null &&
+        ghostProduct != null &&
+        !['wall', 'floor'].contains(ghostProduct!.placement)) {
       _lunar!.renderGhost(
         canvas,
         ghostItem!,

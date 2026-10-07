@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'room_furniture.dart';
 import 'layout_draft.dart';
+import 'basic_room_surfaces.dart';
 
 /// Independent approved sprites placed in the frozen room-standard-v1 camera.
 class LunarRoom {
@@ -241,13 +242,31 @@ class LunarRoom {
         layout.items.where((i) => i.slot == slot).firstOrNull;
     LunarRoom skin(PlacedItem? i) =>
         i == null ? this : themes[product(i)?.theme] ?? this;
-    skin(mounted('floor')).drawLayer(canvas, 'floor');
+    if (mounted('floor') == null) {
+      BasicRoomSurfaces.floor(
+        canvas,
+        project,
+        (standard['floorThickness'] as num).toDouble(),
+      );
+    } else {
+      skin(mounted('floor')).drawLayer(canvas, 'floor');
+    }
     final rug = mounted('rug');
     if (rug != null) skin(rug).drawLayer(canvas, 'rug');
     final walls = skin(mounted('wall'));
     for (final side in ['left', 'right']) {
       final window = mounted('window-$side');
-      walls.drawLayer(canvas, 'wall-$side${window == null ? '-closed' : ''}');
+      if (mounted('wall') == null) {
+        BasicRoomSurfaces.wall(
+          canvas,
+          project,
+          (camera['wallHeight'] as num).toDouble(),
+          side,
+          (standard['wallThickness'] as num).toDouble(),
+        );
+      } else {
+        walls.drawLayer(canvas, 'wall-$side${window == null ? '-closed' : ''}');
+      }
       if (window != null) {
         final renderer = skin(window);
         final slot =
@@ -275,7 +294,7 @@ class LunarRoom {
         slot,
         RoomFurnishings(
           frameTemplate: p.geometry['template'],
-          artwork: ArtworkStyle.values.byName(item.artwork),
+          artwork: ArtworkStyle.values.byName(p.artwork ?? item.artwork),
         ),
         artworks,
         pairedDefaults: false,
@@ -354,10 +373,14 @@ class LunarRoom {
     FurnitureProduct p,
     Map<String, LunarRoom> themes,
     bool night,
-    Map<ArtworkStyle, ui.Image> artworks,
-  ) {
+    Map<ArtworkStyle, ui.Image> artworks, {
+    double opacity = .5,
+  }) {
     final renderer = themes[p.theme] ?? this;
-    canvas.saveLayer(null, ui.Paint()..color = const ui.Color(0x80ffffff));
+    canvas.saveLayer(
+      null,
+      ui.Paint()..color = const ui.Color(0xffffffff).withValues(alpha: opacity),
+    );
     if (p.placement == 'ground') {
       final f = (renderer.catalog['fixtures'] as List).firstWhere(
         (f) => f['id'] == p.kind,
@@ -387,7 +410,7 @@ class LunarRoom {
         slot,
         RoomFurnishings(
           frameTemplate: p.geometry['template'],
-          artwork: ArtworkStyle.values.byName(item.artwork),
+          artwork: ArtworkStyle.values.byName(p.artwork ?? item.artwork),
         ),
         artworks,
         pairedDefaults: false,

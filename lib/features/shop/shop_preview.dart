@@ -15,7 +15,11 @@ class ShopPreview {
         : base.rules.slots.entries
               .firstWhere((e) => e.value == product.placement)
               .key;
-    item = PlacedItem(instance.id, slot: slot);
+    item = PlacedItem(
+      instance.id,
+      slot: slot,
+      artwork: product.artwork ?? 'starry',
+    );
     if (product.placement == 'ground') {
       for (var x = 2; x < 10; x++) {
         for (var y = 2; y < 10; y++) {
