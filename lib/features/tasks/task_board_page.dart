@@ -249,14 +249,20 @@ class _TaskBoardPageState extends State<TaskBoardPage>
   Widget build(BuildContext context) {
     if (loading) return const Center(child: CircularProgressIndicator());
     final active = repository.active;
+    final scheme = Theme.of(context).colorScheme;
     return RefreshIndicator(
       onRefresh: sync,
       child: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+        physics: const AlwaysScrollableScrollPhysics(),
         children: [
           Text('常规任务', style: Theme.of(context).textTheme.headlineSmall),
-          const SizedBox(height: 8),
-          const Text('计时结束后上传照片，再自行确认完成。当天同类任务累计满 10 分钟起奖。'),
+          const SizedBox(height: 6),
+          Text(
+            '计时、上传照片，再确认完成',
+            style: TextStyle(color: scheme.onSurfaceVariant),
+          ),
+          const SizedBox(height: 18),
           if (message != null)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -264,24 +270,87 @@ class _TaskBoardPageState extends State<TaskBoardPage>
             ),
           for (final activity in TaskActivity.values)
             Card(
-              child: ListTile(
-                title: Text(activity.label),
-                subtitle: Text(
-                  '今日已获得 ${issued(activity)}/12 ${activity.rewardLabel} · 每满 5 分钟 1 ${activity.rewardLabel}',
+              margin: const EdgeInsets.only(bottom: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: BorderSide(
+                  color: active?.activity == activity
+                      ? scheme.primary
+                      : scheme.outlineVariant.withValues(alpha: 0.5),
                 ),
-                trailing: active?.activity == activity
-                    ? Text(
-                        _duration(active!.checkpoint(DateTime.now()).elapsed),
-                      )
-                    : FilledButton(
-                        onPressed:
-                            active == null && !busy && !repository.needsRecovery
-                            ? () => start(activity)
-                            : null,
-                        child: const Text('开始'),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          activity == TaskActivity.language
+                              ? Icons.translate_rounded
+                              : Icons.directions_run_rounded,
+                          size: 30,
+                          color: scheme.primary,
+                        ),
+                        const SizedBox(width: 14),
+                        Expanded(
+                          child: Text(
+                            activity.label,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        if (active?.activity == activity)
+                          Text(
+                            _duration(
+                              active!.checkpoint(DateTime.now()).elapsed,
+                            ),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          )
+                        else
+                          FilledButton.tonal(
+                            onPressed:
+                                active == null &&
+                                    !busy &&
+                                    !repository.needsRecovery
+                                ? () => start(activity)
+                                : null,
+                            child: const Text('开始'),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    LinearProgressIndicator(
+                      value: (issued(activity) / 12).clamp(0, 1),
+                      minHeight: 3,
+                      borderRadius: BorderRadius.circular(3),
+                      backgroundColor: scheme.outlineVariant.withValues(
+                        alpha: 0.5,
                       ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      '今日 ${issued(activity)}/12 ${activity.rewardLabel}',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: scheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              '当天同类累计满 10 分钟起奖，每满 5 分钟获得 1 枚奖励。',
+              style: TextStyle(
+                fontSize: 12,
+                color: scheme.onSurfaceVariant,
+                height: 1.5,
+              ),
+            ),
+          ),
           if (active != null)
             FilledButton.icon(
               onPressed: busy ? null : stop,
@@ -344,7 +413,16 @@ class _TaskBoardPageState extends State<TaskBoardPage>
           ],
           const SizedBox(height: 16),
           Text('完成记录', style: Theme.of(context).textTheme.titleLarge),
-          if (feed.isEmpty) const ListTile(title: Text('暂无已确认任务')),
+          if (feed.isEmpty)
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              leading: Icon(
+                Icons.photo_library_outlined,
+                color: scheme.outline,
+              ),
+              title: const Text('暂无已确认任务'),
+              subtitle: const Text('完成后的照片会留在这里'),
+            ),
           for (final item in feed)
             ListTile(
               title: Text(

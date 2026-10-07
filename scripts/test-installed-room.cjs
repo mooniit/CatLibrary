@@ -22,7 +22,14 @@ async function screenshot(name) {
   assert(!labels().some(s => s.includes('交互预览')), 'Unexpected preview shell');
   await screenshot(prefix + '-home');
   await p.tap('任务板', true);
-  p.shown('常规任务'); p.shown('完成记录');
+  p.shown('常规任务');
+  if (!labels().some(s => s.includes('完成记录'))) {
+    p.run('shell', 'input', 'swipe', '170', '440', '170', '190', '350');
+    await p.pause(500);
+    p.shown('完成记录');
+    p.run('shell', 'input', 'swipe', '170', '190', '170', '440', '350');
+    await p.pause(500);
+  } else p.shown('完成记录');
   assert(!labels().some(s => s.includes('无真实资产')), 'Preview tasks must not pass');
   await screenshot(prefix + '-tasks');
   console.log('PASS real TaskBoardPage, existing tasks/records visible');
