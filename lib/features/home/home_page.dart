@@ -787,8 +787,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         children: [
                           if (wallet == null)
                             status('交互预览 · 家具陈设', null)
-                          else if (wallet.cached)
-                            status('离线 · 钱包为上次同步余额', null),
+                          else
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: HomeConnectionStatus(
+                                cached: wallet.cached,
+                                onTap: openSettings,
+                              ),
+                            ),
                           if ((wallet?.miaoCoins ?? 0) < 0)
                             status('喵喵币欠款 ${-wallet!.miaoCoins}', null),
                           if (loadingCats)
@@ -831,7 +837,25 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         borderRadius: BorderRadius.circular(8),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          child: Text(text, style: const TextStyle(fontSize: 12)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                onTap == null
+                    ? Icons.info_outline_rounded
+                    : Icons.arrow_circle_right_outlined,
+                size: 15,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              const SizedBox(width: 6),
+              Flexible(
+                child: Text(
+                  text,
+                  style: const TextStyle(fontSize: 12, height: 1.4),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),

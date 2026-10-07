@@ -1,6 +1,56 @@
 import 'package:flutter/material.dart';
 
 import '../identity/identity_repository.dart';
+import '../../core/sync/cloud_client.dart';
+import '../../core/sync/cloud_connection.dart';
+
+class HomeConnectionStatus extends StatelessWidget {
+  const HomeConnectionStatus({
+    super.key,
+    required this.cached,
+    required this.onTap,
+  });
+  final bool cached;
+  final VoidCallback onTap;
+  @override
+  Widget build(BuildContext context) => ValueListenableBuilder<CloudStatus>(
+    valueListenable: CloudClient.connection,
+    builder: (context, status, _) {
+      final scheme = Theme.of(context).colorScheme;
+      final connected = status.phase == CloudPhase.online;
+      return Material(
+        color: scheme.surface.withValues(alpha: .96),
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  connected
+                      ? Icons.cloud_done_outlined
+                      : Icons.cloud_off_outlined,
+                  size: 16,
+                  color: scheme.primary,
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    connected && cached ? '已连接，余额待核对' : status.label,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
 
 class RoomActionButton extends StatelessWidget {
   const RoomActionButton({
@@ -56,7 +106,7 @@ class HomeWallet extends StatelessWidget {
               child: Material(
                 key: Key('wallet-card-$i'),
                 color: scheme.surface.withValues(alpha: 0.96),
-                elevation: 2,
+                elevation: 0,
                 shadowColor: scheme.shadow.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(13),
                 child: InkWell(

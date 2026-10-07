@@ -13,6 +13,7 @@ import '../features/tasks/task_board_page.dart';
 import 'app_theme.dart';
 import '../core/sync/cloud_client.dart';
 import '../core/sync/cloud_connection.dart';
+import '../features/settings/settings_page.dart';
 
 class CatLibraryApp extends StatefulWidget {
   const CatLibraryApp({
@@ -151,20 +152,43 @@ class _PrototypeShellState extends State<PrototypeShell>
         ? null
         : AppBar(
             title: Text(['猫窝', '任务板', '阅读', '自习'][index]),
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(30),
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 8),
-                child: Text(
-                  wallet == null
-                      ? '交互预览 · 无真实资产'
-                      : wallet!.cached
-                      ? '离线记录中 · 钱包为上次同步余额'
-                      : '已连接',
-                  style: const TextStyle(fontSize: 12),
+            actions: [
+              if (wallet != null)
+                ValueListenableBuilder<CloudStatus>(
+                  valueListenable: CloudClient.connection,
+                  builder: (context, status, _) => IconButton(
+                    tooltip: status.phase == CloudPhase.online && wallet!.cached
+                        ? '已连接，余额待核对'
+                        : status.label,
+                    icon: Icon(
+                      status.phase == CloudPhase.online
+                          ? Icons.cloud_done_outlined
+                          : Icons.cloud_off_outlined,
+                      size: 21,
+                    ),
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => SettingsPage(
+                          ownerId: wallet!.ownerId,
+                          onThemeChanged: widget.onThemeChanged,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+            ],
+            bottom: wallet == null
+                ? const PreferredSize(
+                    preferredSize: Size.fromHeight(24),
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        '交互预览 · 无真实资产',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  )
+                : null,
           ),
     body: SafeArea(
       child: IndexedStack(
