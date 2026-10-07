@@ -1,0 +1,31 @@
+{
+  "purpose": "Native cat management and adoption portraits; not room animation sprites",
+  "generator": "built-in image_gen",
+  "generatedAt": "2026-10-08",
+  "assets": [
+    {
+      "appearance": "black_short",
+      "label": "三花猫",
+      "path": "assets/images/cats/calico-sitting-v1.png",
+      "reference": "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png",
+      "generatedFile": "exec-fa6094e4-8c60-4f0c-a0f8-3cddaa90c31b.png"
+    },
+    {
+      "appearance": "light_long",
+      "label": "蓝眸长毛猫",
+      "path": "assets/images/cats/longhair-sitting-v1.png",
+      "reference": "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+      "generatedFile": "exec-449c57f1-bc0b-47eb-84bb-ed9e7e81e558.png"
+    }
+  ],
+  "size": [1143, 1376],
+  "format": "RGBA PNG",
+  "render": "Full-body contain, cacheWidth limited to 3 times UI logical size",
+  "alphaCheck": "Real transparency confirmed. Bright fringe RGB appears only at alpha 1 or 2; judge composite in native light/night theme, not transparent preview RGB alone.",
+  "nativeLightNight": "pending",
+  "phone": "pending device connection",
+  "promptSet": [
+    "Identity-preserve, approved calico model sheet, one front-view sitting cat, natural adult proportions, amber eyes/pink nose, image-left black face/image-right orange face and white forehead/chest/belly/paws, preserve shoulder/rear-hip/tail patches, refined hand-drawn painted fur, genuinely transparent, full body and tail, no text/props/clothes/chibi/pixels.",
+    "Identity-preserve, approved blue-eyed longhair model sheet; calico output only as pose/style reference. One front-view sitting cat, cream-white fur, grey-brown mask/ears, icy blue eyes, narrow white forehead blaze, white paws, fluffy gradient grey-brown tail without rings, natural adult proportions, genuinely transparent, no text/props/clothes/chibi/pixels."
+  ]
+}
