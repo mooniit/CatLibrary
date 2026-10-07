@@ -1,0 +1,17 @@
+✔ portable standard data exactly matches the live frozen geometry (4.7584ms)
+✔ observed directions fit within sampled pixel tolerance (0.3039ms)
+✔ all facing combinations reserve distinct complete footprints on the selected grid (3.8034ms)
+✔ ground and wall inverse use the same projection (0.798ms)
+✔ the accepted room standard is immutable and preserves all five landmark coordinates (0.9188ms)
+✔ L footprint rotates with its empty corner and four turns restore it (0.641ms)
+✔ rectangular furniture is centered in its declared grid area in both orientations (0.351ms)
+✔ fixed rug owns the central 36 cells with a one-cell perimeter (1.0541ms)
+✔ enlarged central windows clear the bookcase reduced to 75 percent and keep aligned art (0.2978ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 167.3176

@@ -1,0 +1,11 @@
+{
+  "scope": "Browser interface prototype only; no native/transactions proof",
+  "errors": [],
+  "failed": [],
+  "checks": [
+    "three theme images",
+    "offline message",
+    "light/night",
+    "390px no overflow"
+  ]
+}

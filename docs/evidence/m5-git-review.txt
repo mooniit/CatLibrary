@@ -1,0 +1,23 @@
+2026-10-07 Git delivery review
+
+Base: ae8b22a, branch codex/room-structure-sample.
+Fetched origin using the existing Windows system proxy without changing Git proxy settings.
+Upstream branch matched the base; origin/main is an ancestor (12 commits behind the base).
+No unmerged index entries, source conflict markers, or whitespace errors.
+Credential scan of the owned change set: no JWTs, private keys, GitHub tokens or private debug endpoints.
+Eight pre-existing untracked design/study files are excluded and preserved locally.
+
+Reviewed: RPC authentication and grants, server prices/limits, family/wallet lock ordering,
+purchase/save idempotency, lease/version/ownership validation, SQLite upgrades and request persistence,
+shared scene/view transformations, theme following and isolated native fixtures.
+No required changes identified in the reviewed scope.
+
+Verification already completed on this exact application version:
+- Flutter analysis: no issues (m5-focused-analyze.txt).
+- Full Flutter suite: 91 passed (m5-focused-flutter.txt).
+- Local database: 26 files / 341 tests passed on the unchanged server rules (m5-inline-database.txt).
+- Isolated two-member native flow: passed, including day/night and preview focus (m5-focused-native-integration.txt).
+- Normal emulator UI: preview, rotation and cancel passed; wallet preserved (m5-focused-current-ui.txt).
+
+APK is the normal configured build, not the integration fixture build.
+Phone installation is a separate install-r step; no uninstall, app-data clearing or identity reset.

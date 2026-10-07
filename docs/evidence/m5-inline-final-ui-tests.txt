@@ -1,0 +1,6 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/shop_preview_test.dart
+00:00 +0: shop preview moves virtual furniture without changing household inventory or layout
+00:00 +1: fixed preview remains in its registered slot and cannot move as ground furniture
+00:00 +2: unique products hide quantity and owned copies disable purchase but allow preview
+00:01 +3: only explicitly configured multiple copies show quantity; respects remaining capacity
+00:01 +4: All tests passed!

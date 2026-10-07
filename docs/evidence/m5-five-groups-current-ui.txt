@@ -1,0 +1,7 @@
+[
+  { label: '小屋家具陈设，拖动查看，双指缩放，双击回到初始视角。', bounds: '[0,88][320,297]' },
+  { label: '结束预览', bounds: '[171,144][219,192]' },
+  { label: '切换朝向', bounds: '[83,240][131,288]' }
+]
+PASS All plus five categories and floating controls in normal application; no purchase submitted
+PASS rotation and cancel in normal application; original wallet unchanged

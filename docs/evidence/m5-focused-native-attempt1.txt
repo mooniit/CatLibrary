@@ -1,0 +1,183 @@
+Running Gradle task 'assembleDebug'...                             47.2s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           5.4s
+D/nativeloader( 3542): Load /data/app/~~ZLwRT2u0kwCz9e-57mvNWA==/com.catlibrary.cat_library_demo-TbUt1nttZyzN21iwH6AmTw==/base.apk!/lib/x86_64/libdartjni.so using ns clns-7 from class loader (caller=/data/app/~~ZLwRT2u0kwCz9e-57mvNWA==/com.catlibrary.cat_library_demo-TbUt1nttZyzN21iwH6AmTw==/base.apk!classes5.dex): ok
+W/at_library_demo( 3542): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/at_library_demo( 3542): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/at_library_demo( 3542): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/at_library_demo( 3542): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 3542): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 3542): Width is zero. 0,0
+W/HWUI    ( 3542): Unknown dataspace 0
+D/ProfileInstaller( 3542): Installing profile for com.catlibrary.cat_library_demo
+I/WindowExtensionsImpl( 3542): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 3542): Width is zero. 0,0
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+I/Gralloc4( 3542): mapper 4.x is not supported
+W/HWUI    ( 3542): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 3542): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 3542): Skipped 59 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+I/at_library_demo( 3542): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at [private debug endpoint]
+VMServiceFlutterDriver: Isolate found with number: 2461952282684899
+VMServiceFlutterDriver: Isolate 2461952282684899 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 3542): 00:00 +0: two isolated members purchase, draft, save, notice and manually refresh
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3542): Skipped 39 frames!  The application may be doing too much work on its main thread.
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+W/WindowOnBackDispatcher( 3542): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3542): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3542): app_time_stats: avg=1102.09ms min=757.69ms max=1446.48ms count=2
+D/EGL_emulation( 3542): app_time_stats: avg=362.09ms min=218.34ms max=440.04ms count=3
+D/EGL_emulation( 3542): app_time_stats: avg=179.13ms min=22.77ms max=422.85ms count=6
+D/EGL_emulation( 3542): app_time_stats: avg=175.88ms min=8.30ms max=463.41ms count=7
+D/EGL_emulation( 3542): app_time_stats: avg=4452.92ms min=288.28ms max=8617.56ms count=2
+D/EGL_emulation( 3542): app_time_stats: avg=242.29ms min=16.66ms max=519.03ms count=5
+D/EGL_emulation( 3542): app_time_stats: avg=1074.66ms min=1074.66ms max=1074.66ms count=1
+D/EGL_emulation( 3542): app_time_stats: avg=1200.00ms min=1200.00ms max=1200.00ms count=1
+W/WindowOnBackDispatcher( 3542): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3542): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3542): app_time_stats: avg=344.89ms min=221.78ms max=512.55ms count=3
+I/flutter ( 3542):
+I/flutter ( 3542): Warning: A call to drag() with finder "Found 1 widget with type "FurnitureCategories": [
+I/flutter ( 3542):   FurnitureCategories(dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#315e5]]),
+I/flutter ( 3542): ]" derived an Offset (Offset(160.0, 331.2)) that would not hit test on the specified widget.
+I/flutter ( 3542): Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+I/flutter ( 3542): The finder corresponds to this RenderBox: RenderConstrainedBox#68b30 relayoutBoundary=up1
+I/flutter ( 3542): The hit test result at that offset is: HitTestResult(_RenderInkFeatures#de28f@Offset(160.0, 24.0), RenderCustomPaint#90769@Offset(160.0, 24.0), RenderPhysicalShape#00fa7@Offset(160.0, 24.0), RenderStack#63bd9@Offset(160.0, 331.2), _RenderLayoutBuilder#37630@Offset(160.0, 331.2), RenderCustomMultiChildLayoutBox#525f6@Offset(160.0, 331.2), _RenderInkFeatures#76995@Offset(160.0, 331.2), RenderPhysicalModel#c900e@Offset(160.0, 331.2), RenderSemanticsAnnotations#9a5fe@Offset(160.0, 331.2), RenderRepaintBoundary#aaae1@Offset(160.0, 331.2), RenderIgnorePointer#d64bc@Offset(160.0, 331.2), RenderAnimatedOpacity#3fc9e@Offset(160.0, 331.2), RenderAnimatedOpacity#4a014@Offset(160.0, 331.2), _RenderColoredBox#97f6a@Offset(160.0, 331.2), RenderAnimatedOpacity#9abb2@Offset(160.0, 331.2), RenderIgnorePointer#29917@Offset(160.0, 331.2), RenderAnimatedOpacity#4520b@Offset(160.0, 331.2), RenderRepaintBoundary#6fff8@Offset(160.0, 331.2), RenderSemanticsAnnotations#fb30a@Offset(160.0, 331.2), RenderOffstage#eddf9@Offset(160.0, 3
+I/flutter ( 3542): #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+I/flutter ( 3542): #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+I/flutter ( 3542): #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+I/flutter ( 3542): #3      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:207:22)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): #6      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): To silence this warning, pass "warnIfMissed: false" to "drag()".
+I/flutter ( 3542): To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+I/flutter ( 3542):
+D/EGL_emulation( 3542): app_time_stats: avg=143.87ms min=15.47ms max=466.78ms count=9
+D/EGL_emulation( 3542): app_time_stats: avg=211.92ms min=14.58ms max=521.68ms count=6
+D/EGL_emulation( 3542): app_time_stats: avg=6095.20ms min=6095.20ms max=6095.20ms count=1
+D/EGL_emulation( 3542): app_time_stats: avg=174.64ms min=13.94ms max=415.63ms count=6
+I/ImeTracker( 3542): com.catlibrary.cat_library_demo:954e6a38: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 3542): showSoftInput() view=io.flutter.embedding.android.FlutterView{8d7f391 VFE...... .F....ID 0,0-320,640 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 3542): com.catlibrary.cat_library_demo:1356fc14: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 3542): showSoftInput() view=io.flutter.embedding.android.FlutterView{8d7f391 VFE...... .F....ID 0,0-320,640 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/EGL_emulation( 3542): app_time_stats: avg=2054.03ms min=2054.03ms max=2054.03ms count=1
+D/EGL_emulation( 3542): app_time_stats: avg=181.69ms min=74.37ms max=237.40ms count=6
+D/InputConnectionAdaptor( 3542): The input method toggled cursor monitoring on
+D/InsetsController( 3542): show(ime(), fromIme=true)
+W/InteractionJankMonitor( 3542): Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.catlibrary.cat_library_demo
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+I/ImeTracker( 3542): com.catlibrary.cat_library_demo:1356fc14: onShown
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/EGL_emulation( 3542): app_time_stats: avg=266.92ms min=88.46ms max=597.04ms count=4
+I/ImeTracker( 3542): com.catlibrary.cat_library_demo:61201fda: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+D/InsetsController( 3542): hide(ime(), fromIme=true)
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/EGL_emulation( 3542): app_time_stats: avg=48.48ms min=2.27ms max=520.88ms count=22
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+I/ImeTracker( 3542): com.catlibrary.cat_library_demo:5d9289dc: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+I/ImeTracker( 3542): com.catlibrary.cat_library_demo:61201fda: onHidden
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/FlutterJNI( 3542): Sending viewport metrics to the engine.
+D/EGL_emulation( 3542): app_time_stats: avg=238.33ms min=69.86ms max=400.78ms count=5
+D/EGL_emulation( 3542): app_time_stats: avg=168.22ms min=11.60ms max=367.81ms count=6
+D/EGL_emulation( 3542): app_time_stats: avg=150.53ms min=10.75ms max=2600.39ms count=20
+D/EGL_emulation( 3542): app_time_stats: avg=243.91ms min=21.97ms max=518.29ms count=5
+D/EGL_emulation( 3542): app_time_stats: avg=463.68ms min=19.28ms max=2014.43ms count=6
+I/flutter ( 3542): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 3542): The following TestFailure was thrown running a test:
+I/flutter ( 3542): Expected: Size:<Size(48.0, 48.0)>
+I/flutter ( 3542):   Actual: Size:<Size(48.0, 48.0)>
+I/flutter ( 3542):
+I/flutter ( 3542): When the exception was thrown, this was the stack:
+I/flutter ( 3542): #4      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:278:9)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 3542): <asynchronous suspension>
+I/flutter ( 3542):
+I/flutter ( 3542): This was caught by the test expectation on the following line:
+I/flutter ( 3542):   file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart line 278
+I/flutter ( 3542): The test description was:
+I/flutter ( 3542):   two isolated members purchase, draft, save, notice and manually refresh
+I/flutter ( 3542): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 3542): 00:25 +0: two isolated members purchase, draft, save, notice and manually refresh [E]
+I/flutter ( 3542):   Test failed. See exception logs above.
+I/flutter ( 3542):   The test description was: two isolated members purchase, draft, save, notice and manually refresh
+I/flutter ( 3542):
+I/flutter ( 3542): 00:25 +0 -1: (tearDownAll)
+I/flutter ( 3542): 00:25 +1 -1: Some tests failed.
+D/EGL_emulation( 3542): app_time_stats: avg=3329.74ms min=3329.74ms max=3329.74ms count=1
+Failure Details:
+Failure in method: two isolated members purchase, draft, save, notice and manually refresh
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: Size:<Size(48.0, 48.0)>
+  Actual: Size:<Size(48.0, 48.0)>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:278:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart line 278
+The test description was:
+  two isolated members purchase, draft, save, notice and manually
+  refresh
+═════════════════════════════════════════════════════════════════
+
+end of failure 1

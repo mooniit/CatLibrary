@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-06T15:46:26.896Z",
+  "result": "PASS",
+  "scope": "Local Supabase HTTP; isolated synthetic users/product/100 test coins",
+  "checks": [
+    "12 same-ID concurrent purchases issue one instance",
+    "two members race at family purchase cap",
+    "outsider test scope denied",
+    "pending purchase stays bound to its original family",
+    "simultaneous lease acquisition admits one",
+    "lost save receipt lookup",
+    "partner later save preserved",
+    "expired lease refused"
+  ]
+}

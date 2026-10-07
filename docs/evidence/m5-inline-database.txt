@@ -1,0 +1,32 @@
+Connecting to local database...
+/2DoProjects/CatLibrary/supabase/tests/cats.test.sql ...................... ok
+/2DoProjects/CatLibrary/supabase/tests/cloud_probe.test.sql ............... ok
+/2DoProjects/CatLibrary/supabase/tests/daily_settlement.test.sql .......... ok
+/2DoProjects/CatLibrary/supabase/tests/exchange.test.sql .................. ok
+/2DoProjects/CatLibrary/supabase/tests/exchange_quantity.test.sql ......... ok
+/2DoProjects/CatLibrary/supabase/tests/family.test.sql .................... ok
+/2DoProjects/CatLibrary/supabase/tests/feeding.test.sql ................... ok
+/2DoProjects/CatLibrary/supabase/tests/furniture_economy.test.sql ......... ok
+/2DoProjects/CatLibrary/supabase/tests/identity.test.sql .................. ok
+/2DoProjects/CatLibrary/supabase/tests/layout_save.test.sql ............... ok
+/2DoProjects/CatLibrary/supabase/tests/m4_lifecycle.test.sql .............. ok
+/2DoProjects/CatLibrary/supabase/tests/midnight.test.sql .................. ok
+/2DoProjects/CatLibrary/supabase/tests/proxy_payment.test.sql ............. ok
+/2DoProjects/CatLibrary/supabase/tests/purchase.test.sql .................. ok
+/2DoProjects/CatLibrary/supabase/tests/purchase_quantity.test.sql ......... ok
+/2DoProjects/CatLibrary/supabase/tests/q08_reward_before_repair.test.sql .. ok
+/2DoProjects/CatLibrary/supabase/tests/repair_grace.test.sql .............. ok
+/2DoProjects/CatLibrary/supabase/tests/repair_overlap.test.sql ............ ok
+/2DoProjects/CatLibrary/supabase/tests/repair_progress.test.sql ........... ok
+/2DoProjects/CatLibrary/supabase/tests/repair_state.test.sql .............. ok
+/2DoProjects/CatLibrary/supabase/tests/repair_windows.test.sql ............ ok
+/2DoProjects/CatLibrary/supabase/tests/rewards.test.sql ................... ok
+/2DoProjects/CatLibrary/supabase/tests/settlement_isolation.test.sql ...... ok
+/2DoProjects/CatLibrary/supabase/tests/settlement_scheduler.test.sql ...... ok
+/2DoProjects/CatLibrary/supabase/tests/tasks.test.sql ..................... ok
+/2DoProjects/CatLibrary/supabase/tests/weekly_tasks.test.sql .............. ok
+All tests successful.
+Files=26, Tests=341,  3 wallclock secs ( 0.20 usr  0.11 sys +  0.27 cusr  0.23 csys =  0.81 CPU)
+Result: PASS
+A new version of Supabase CLI is available: v2.119.0 (currently installed v2.117.0)
+We recommend updating regularly for new features and bug fixes: https://supabase.com/docs/guides/cli/getting-started#updating-the-supabase-cli

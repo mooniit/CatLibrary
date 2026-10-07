@@ -1,0 +1,12 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/home_scene_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: camera zoom keeps focal ground point and has bounded pan/reset
+00:00 +1: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: camera zoom keeps focal ground point and has bounded pan/reset
+00:00 +2: D:/2DoProjects/CatLibrary/test/shop_preview_test.dart: All and five icon categories fit a narrow phone without text labels
+00:01 +3: D:/2DoProjects/CatLibrary/test/shop_preview_test.dart: All and five icon categories fit a narrow phone without text labels
+00:01 +4: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:01 +5: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:01 +6: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:01 +7: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:03 +8: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:04 +9: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: real empty home has no demo cats; refresh failure retains known cats
+00:05 +10: All tests passed!

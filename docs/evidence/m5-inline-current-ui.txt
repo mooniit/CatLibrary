@@ -1,0 +1,3 @@
+PASS actual quantity input, two source currencies and disabled insufficient-balance submit
+PASS normal player preview and miao exchange modal; no purchase or exchange submitted
+Quantity field is exposed as Android EditText; floating label is not a separate UIAutomator content-desc

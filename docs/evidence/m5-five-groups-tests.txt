@@ -1,0 +1,13 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/shop_preview_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/shop_preview_test.dart: every catalog product belongs to exactly one of five aggregate categories
+00:00 +1: D:/2DoProjects/CatLibrary/test/shop_preview_test.dart: All and five icon categories fit a narrow phone without text labels
+00:00 +2: D:/2DoProjects/CatLibrary/test/shop_preview_test.dart: All and five icon categories fit a narrow phone without text labels
+00:02 +3: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: three separate balance cards fit four digits without an exchange tap
+00:02 +4: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: three separate balance cards fit four digits without an exchange tap
+00:02 +5: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:02 +6: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:03 +7: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +8: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:07 +9: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:07 +10: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:08 +11: All tests passed!

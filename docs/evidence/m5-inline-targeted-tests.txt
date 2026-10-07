@@ -1,0 +1,11 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: lost batch receipt retains quantity and request across reopening
+00:00 +1: D:/2DoProjects/CatLibrary/test/task_repository_test.dart: interrupted task keeps last checkpoint and needs a photo before queueing
+00:00 +2: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:00 +3: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:00 +4: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:02 +5: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +6: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:03 +7: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: room drag keeps cards and menu fixed; menu reveals entries
+00:04 +8: D:/2DoProjects/CatLibrary/test/home_scene_test.dart: real empty home has no demo cats; refresh failure retains known cats
+00:04 +9: All tests passed!

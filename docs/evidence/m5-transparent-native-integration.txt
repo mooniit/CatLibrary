@@ -1,0 +1,169 @@
+Running Gradle task 'assembleDebug'...                             54.5s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           5.7s
+D/FlutterRenderer( 1903): Width is zero. 0,0
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+W/HWUI    ( 1903): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 1903): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 1903): Skipped 53 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/ProfileInstaller( 1903): Installing profile for com.catlibrary.cat_library_demo
+VMServiceFlutterDriver: Connecting to Flutter application at [private debug endpoint]
+VMServiceFlutterDriver: Isolate found with number: 2320130275509991
+VMServiceFlutterDriver: Isolate 2320130275509991 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 1903): 00:00 +0: two isolated members purchase, draft, save, notice and manually refresh
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 1903): Skipped 34 frames!  The application may be doing too much work on its main thread.
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+D/EGL_emulation( 1903): app_time_stats: avg=1108.75ms min=759.49ms max=1458.01ms count=2
+W/WindowOnBackDispatcher( 1903): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 1903): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 1903): app_time_stats: avg=421.93ms min=302.49ms max=506.54ms count=3
+I/flutter ( 1903):
+I/flutter ( 1903): Warning: A call to drag() with finder "Found 1 widget with type "FurnitureCategories": [
+I/flutter ( 1903):   FurnitureCategories(dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#c6430]]),
+I/flutter ( 1903): ]" derived an Offset (Offset(160.0, 331.2)) that would not hit test on the specified widget.
+I/flutter ( 1903): Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+I/flutter ( 1903): The finder corresponds to this RenderBox: RenderConstrainedBox#3eece relayoutBoundary=up1
+I/flutter ( 1903): The hit test result at that offset is: HitTestResult(_RenderInkFeatures#a2a43@Offset(160.0, 24.0), RenderCustomPaint#a5875@Offset(160.0, 24.0), RenderPhysicalShape#3cc60@Offset(160.0, 24.0), RenderStack#7861f@Offset(160.0, 331.2), _RenderLayoutBuilder#4c2b2@Offset(160.0, 331.2), RenderCustomMultiChildLayoutBox#c313d@Offset(160.0, 331.2), _RenderInkFeatures#845d9@Offset(160.0, 331.2), RenderPhysicalModel#898f4@Offset(160.0, 331.2), RenderSemanticsAnnotations#700d8@Offset(160.0, 331.2), RenderRepaintBoundary#e2a72@Offset(160.0, 331.2), RenderIgnorePointer#3c53b@Offset(160.0, 331.2), RenderAnimatedOpacity#18237@Offset(160.0, 331.2), RenderAnimatedOpacity#1f282@Offset(160.0, 331.2), _RenderColoredBox#2652a@Offset(160.0, 331.2), RenderAnimatedOpacity#5b188@Offset(160.0, 331.2), RenderIgnorePointer#ca8c4@Offset(160.0, 331.2), RenderAnimatedOpacity#69291@Offset(160.0, 331.2), RenderRepaintBoundary#62aab@Offset(160.0, 331.2), RenderSemanticsAnnotations#bdf19@Offset(160.0, 331.2), RenderOffstage#fe9ca@Offset(160.0, 3
+I/flutter ( 1903): #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+I/flutter ( 1903): #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+I/flutter ( 1903): #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+I/flutter ( 1903): #3      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:191:22)
+I/flutter ( 1903): <asynchronous suspension>
+I/flutter ( 1903): #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 1903): <asynchronous suspension>
+I/flutter ( 1903): #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 1903): <asynchronous suspension>
+I/flutter ( 1903): #6      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 1903): <asynchronous suspension>
+I/flutter ( 1903): To silence this warning, pass "warnIfMissed: false" to "drag()".
+I/flutter ( 1903): To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+I/flutter ( 1903):
+D/EGL_emulation( 1903): app_time_stats: avg=202.86ms min=8.94ms max=743.10ms count=5
+D/EGL_emulation( 1903): app_time_stats: avg=147.55ms min=24.33ms max=432.59ms count=7
+D/EGL_emulation( 1903): app_time_stats: avg=4497.42ms min=388.67ms max=8606.17ms count=2
+D/EGL_emulation( 1903): app_time_stats: avg=446.20ms min=248.54ms max=566.33ms count=3
+D/EGL_emulation( 1903): app_time_stats: avg=187.10ms min=28.93ms max=366.53ms count=6
+I/ImeTracker( 1903): com.catlibrary.cat_library_demo:5a8534f4: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 1903): showSoftInput() view=io.flutter.embedding.android.FlutterView{e119ff3 VFE...... .F....ID 0,0-320,640 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 1903): com.catlibrary.cat_library_demo:685e14b8: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 1903): showSoftInput() view=io.flutter.embedding.android.FlutterView{e119ff3 VFE...... .F....ID 0,0-320,640 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/EGL_emulation( 1903): app_time_stats: avg=2174.77ms min=2174.77ms max=2174.77ms count=1
+D/InputConnectionAdaptor( 1903): The input method toggled cursor monitoring on
+D/EGL_emulation( 1903): app_time_stats: avg=239.14ms min=115.84ms max=599.60ms count=6
+D/InsetsController( 1903): show(ime(), fromIme=true)
+I/ImeTracker( 1903): com.catlibrary.cat_library_demo:538d1956: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+W/InteractionJankMonitor( 1903): Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.catlibrary.cat_library_demo
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/EGL_emulation( 1903): app_time_stats: avg=718.31ms min=667.99ms max=768.63ms count=2
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/EGL_emulation( 1903): app_time_stats: avg=218.49ms min=43.99ms max=374.33ms count=5
+I/ImeTracker( 1903): com.catlibrary.cat_library_demo:685e14b8: onShown
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/InsetsController( 1903): hide(ime(), fromIme=true)
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+I/ImeTracker( 1903): com.catlibrary.cat_library_demo:3a33678e: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+I/ImeTracker( 1903): com.catlibrary.cat_library_demo:538d1956: onHidden
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/FlutterJNI( 1903): Sending viewport metrics to the engine.
+D/EGL_emulation( 1903): app_time_stats: avg=366.02ms min=91.15ms max=721.66ms count=4
+D/EGL_emulation( 1903): app_time_stats: avg=168.95ms min=1.92ms max=2448.36ms count=19
+D/EGL_emulation( 1903): app_time_stats: avg=169.86ms min=8.28ms max=532.95ms count=8
+D/EGL_emulation( 1903): app_time_stats: avg=176.23ms min=71.79ms max=261.75ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=2028.44ms min=2028.44ms max=2028.44ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=3939.23ms min=3939.23ms max=3939.23ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=187.88ms min=33.76ms max=517.79ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=133.72ms min=27.16ms max=416.44ms count=8
+D/EGL_emulation( 1903): app_time_stats: avg=230.19ms min=32.18ms max=608.65ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=2748.00ms min=2748.00ms max=2748.00ms count=1
+E/FrameTracker( 1903): force finish cuj, time out: J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+D/EGL_emulation( 1903): app_time_stats: avg=177.48ms min=6.33ms max=436.49ms count=6
+E/FrameTracker( 1903): force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 80, 16040, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 80, 16048, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 80, 16063, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 66, 16085, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 80, 16115, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed App frame:UNKNOWN: 88, 16123, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 88, 16123, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed App frame:UNKNOWN: 88, 16138, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:UNKNOWN: 88, 16138, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:PREDICTION_ERROR, 16147, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 1903): Missed SF frame:PREDICTION_ERROR, 16162, 0, CUJ=J<IME_INSETS_HIDE_ANIMATION::1@1@com.catlibrary.cat_library_demo>
+V/PerfettoTrigger( 1903): Not triggering com.android.telemetry.interaction-jank-monitor-81 - not enough time since last trigger
+D/EGL_emulation( 1903): app_time_stats: avg=152.08ms min=15.01ms max=424.45ms count=9
+D/EGL_emulation( 1903): app_time_stats: avg=179.54ms min=46.57ms max=415.27ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=4040.35ms min=4040.35ms max=4040.35ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=568.88ms min=528.27ms max=609.48ms count=2
+D/EGL_emulation( 1903): app_time_stats: avg=1086.43ms min=1086.43ms max=1086.43ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=1225.42ms min=1225.42ms max=1225.42ms count=1
+W/WindowOnBackDispatcher( 1903): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 1903): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 1903): app_time_stats: avg=364.36ms min=233.07ms max=532.45ms count=3
+D/EGL_emulation( 1903): app_time_stats: avg=151.67ms min=25.73ms max=397.21ms count=7
+D/EGL_emulation( 1903): app_time_stats: avg=159.52ms min=13.63ms max=425.05ms count=8
+D/EGL_emulation( 1903): app_time_stats: avg=179.27ms min=21.04ms max=421.02ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=172.00ms min=9.57ms max=322.32ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=211.21ms min=22.16ms max=536.00ms count=5
+D/EGL_emulation( 1903): app_time_stats: avg=9539.11ms min=9539.11ms max=9539.11ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=182.61ms min=29.90ms max=440.76ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=272.62ms min=46.11ms max=1041.77ms count=7
+W/WindowOnBackDispatcher( 1903): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 1903): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 1903): app_time_stats: avg=1306.86ms min=1306.86ms max=1306.86ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=367.53ms min=235.24ms max=549.33ms count=3
+D/EGL_emulation( 1903): app_time_stats: avg=169.55ms min=15.43ms max=370.97ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=133.31ms min=12.45ms max=336.14ms count=9
+D/EGL_emulation( 1903): app_time_stats: avg=8193.30ms min=8193.30ms max=8193.30ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=230.40ms min=27.01ms max=550.36ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=178.66ms min=19.23ms max=262.95ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=183.24ms min=28.00ms max=304.46ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=3788.75ms min=3788.75ms max=3788.75ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=363.12ms min=245.23ms max=528.49ms count=3
+D/EGL_emulation( 1903): app_time_stats: avg=147.69ms min=28.16ms max=352.02ms count=9
+D/EGL_emulation( 1903): app_time_stats: avg=1152.81ms min=258.24ms max=2047.38ms count=2
+D/EGL_emulation( 1903): app_time_stats: avg=147.37ms min=14.46ms max=394.74ms count=9
+D/EGL_emulation( 1903): app_time_stats: avg=6681.26ms min=6681.26ms max=6681.26ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=232.04ms min=13.36ms max=584.02ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=187.03ms min=31.26ms max=386.09ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=1691.77ms min=1691.77ms max=1691.77ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=206.17ms min=31.25ms max=565.42ms count=5
+D/EGL_emulation( 1903): app_time_stats: avg=217.56ms min=15.32ms max=401.91ms count=5
+D/EGL_emulation( 1903): app_time_stats: avg=481.07ms min=27.38ms max=1029.91ms count=3
+D/EGL_emulation( 1903): app_time_stats: avg=3541.83ms min=3541.83ms max=3541.83ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=999.97ms min=530.44ms max=1469.51ms count=2
+W/WindowOnBackDispatcher( 1903): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 1903): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 1903): app_time_stats: avg=190.49ms min=17.15ms max=348.51ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=134.95ms min=20.46ms max=343.79ms count=9
+D/EGL_emulation( 1903): app_time_stats: avg=293.59ms min=10.87ms max=1016.36ms count=6
+D/EGL_emulation( 1903): app_time_stats: avg=6111.23ms min=6111.23ms max=6111.23ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=389.89ms min=319.70ms max=518.48ms count=3
+D/EGL_emulation( 1903): app_time_stats: avg=146.80ms min=21.97ms max=414.35ms count=7
+D/EGL_emulation( 1903): app_time_stats: avg=138.50ms min=14.05ms max=434.60ms count=9
+D/EGL_emulation( 1903): app_time_stats: avg=1069.77ms min=97.63ms max=2041.92ms count=2
+D/EGL_emulation( 1903): app_time_stats: avg=5749.01ms min=5749.01ms max=5749.01ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=252.35ms min=36.03ms max=513.15ms count=4
+D/EGL_emulation( 1903): app_time_stats: avg=1332.52ms min=1332.52ms max=1332.52ms count=1
+D/EGL_emulation( 1903): app_time_stats: avg=222.57ms min=18.94ms max=514.33ms count=5
+I/flutter ( 1903): 01:14 +1: (tearDownAll)
+I/flutter ( 1903): 01:14 +2: All tests passed!
+All tests passed.
