@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-07T09:01:10.716Z",
+  "device": "119bad33",
+  "model": "PJE110",
+  "android": "16",
+  "scope": "physical phone coverage install and read-only navigation; no identity reset or data clearing",
+  "before": {
+    "sha256": "8dd761b2dca25c687d8ce7f8b60b82af2250e8c997b0f8ad5cf963fb3197ee1d",
+    "owners": [
+      "a943f6a8f8bbfb85773c91bd116a8460154293a073efad8b8444ac4eeacc10a3"
+    ],
+    "tables": [
+      "account_cache",
+      "furniture_local",
+      "pending_exchanges",
+      "pending_operations",
+      "study_preset_owners",
+      "study_presets",
+      "study_sessions",
+      "task_sessions",
+      "weekly_drafts",
+      "weekly_offer_cache"
+    ]
+  },
+  "oldVersion": [
+    "versionCode=8 minSdk=24 targetSdk=36",
+    "versionName=0.1.7",
+    "firstInstallTime=2026-09-21 19:12:52"
+  ],
+  "apkSha256": "57ac5bed32b2390d37e75fc8f3a13ba1ffec4a44a819ccafb103e56b1f3eb0b8",
+  "install": "Performing Streamed Install\r\nSuccess",
+  "afterInstall": {
+    "sha256": "8dd761b2dca25c687d8ce7f8b60b82af2250e8c997b0f8ad5cf963fb3197ee1d",
+    "owners": [
+      "a943f6a8f8bbfb85773c91bd116a8460154293a073efad8b8444ac4eeacc10a3"
+    ],
+    "tables": [
+      "account_cache",
+      "furniture_local",
+      "pending_exchanges",
+      "pending_operations",
+      "study_preset_owners",
+      "study_presets",
+      "study_sessions",
+      "task_sessions",
+      "weekly_drafts",
+      "weekly_offer_cache"
+    ]
+  },
+  "localDatabasePreserved": true,
+  "reverse": "54321",
+  "newVersion": [
+    "versionCode=10 minSdk=24 targetSdk=36",
+    "versionName=0.1.9",
+    "firstInstallTime=2026-09-21 19:12:52"
+  ],
+  "postStartup": {
+    "ownersPreserved": true,
+    "cachedWalletsUnchanged": true,
+    "cachedInventoryInstancesUnchanged": true,
+    "scope": "local authenticated cache comparison; no claim of full cloud or two-member phone verification"
+  },
+  "navigation": "PASS home/tasks/study/countdown/reading navigation, no purchase or timer start"
+}
