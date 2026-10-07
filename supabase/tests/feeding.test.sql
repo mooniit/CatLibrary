@@ -56,7 +56,8 @@ select is((select count(*)::int from public.wallet_entries where kind='feeding'
   and owner_id in ('51000000-0000-0000-0000-000000000001',
     '51000000-0000-0000-0000-000000000002')),2,
   'one wallet ledger entry per paid cat');
-select is((select business_day from public.cat_feedings limit 1),
+select is((select business_day from public.cat_feedings
+  where cat_id=current_setting('test.first_cat')::uuid),
   (clock_timestamp() at time zone 'Asia/Shanghai')::date,
   'feeding uses Beijing business date');
 set local role authenticated;

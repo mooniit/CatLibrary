@@ -34,7 +34,9 @@ select is(public.settle_family_day((select family_id from public.family_members
   where user_id='67000000-0000-0000-0000-000000000001'),
   '2026-09-01')->>'mode','normal',
   'reward first moves B off -150, so dual repair does not start');
-select is((select count(*)::int from public.repair_episodes),0,
+select is((select count(*)::int from public.repair_episodes where family_id=
+  (select family_id from public.family_members
+    where user_id='67000000-0000-0000-0000-000000000001')),0,
   'no repair episode is opened after B reward offsets debt');
 select is((select balance_after_reward from public.daily_interest_charges
   where owner_id='67000000-0000-0000-0000-000000000002'),-130,

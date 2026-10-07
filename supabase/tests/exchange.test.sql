@@ -37,7 +37,7 @@ select public.bootstrap_identity();
 select throws_ok($$select public.exchange_special('42000000-0000-0000-0000-000000000001','eagle')$$,
   '42501','Exchange identity mismatch','other owner cannot replay the same request id');
 reset role;
-select ok(not has_function_privilege('anon','public.exchange_special(uuid,text)','EXECUTE'),
+select ok(not has_function_privilege('anon','public.exchange_special(uuid,text,integer)','EXECUTE'),
   'public anonymous role cannot exchange');
 select * from finish();
 rollback;

@@ -51,7 +51,9 @@ select is(public.settle_family_day(current_setting('test.home')::uuid,
   current_setting('test.day1')::date+2)->>'mode','repair',
   'third day starts joint repair before any new fees');
 select is((select count(*)::int from public.daily_interest_charges
-  where business_day=current_setting('test.day1')::date+2),0,
+  where business_day=current_setting('test.day1')::date+2
+  and owner_id in ('61000000-0000-0000-0000-000000000001',
+    '61000000-0000-0000-0000-000000000002')),0,
   'repair trigger stops both members interest immediately');
 set local role authenticated;
 select set_config('request.jwt.claims',

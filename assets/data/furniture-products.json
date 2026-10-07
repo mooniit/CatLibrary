@@ -1,0 +1,1145 @@
+[
+  {
+    "sku": "lunar-bookshelf",
+    "label": "月轨书柜",
+    "theme": "lunar",
+    "kind": "bookshelf",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "w": 0.12,
+        "d": 0.26,
+        "h": 0.375
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "w": 0.26,
+        "d": 0.12,
+        "h": 0.375
+      }
+    },
+    "price": 180,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-desk",
+    "label": "月轨书桌",
+    "theme": "lunar",
+    "kind": "desk",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.3,
+        "h": 0.18
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "w": 0.3,
+        "d": 0.17,
+        "h": 0.18
+      }
+    },
+    "price": 150,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-chair",
+    "label": "月轨椅子",
+    "theme": "lunar",
+    "kind": "chair",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "w": 0.115,
+        "d": 0.12,
+        "h": 0.2
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "w": 0.12,
+        "d": 0.115,
+        "h": 0.2
+      }
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-tree",
+    "label": "月轨猫爬架",
+    "theme": "lunar",
+    "kind": "tree",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.17,
+        "h": 0.29
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.17,
+        "h": 0.29
+      }
+    },
+    "price": 210,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-bed",
+    "label": "月轨开放猫窝",
+    "theme": "lunar",
+    "kind": "bed",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.19,
+        "d": 0.19,
+        "h": 0.085
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.19,
+        "d": 0.19,
+        "h": 0.085
+      }
+    },
+    "price": 90,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-window",
+    "label": "月轨窗户",
+    "theme": "lunar",
+    "kind": "window",
+    "placement": "window",
+    "geometry": {},
+    "price": 90,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-rug",
+    "label": "月轨地毯",
+    "theme": "lunar",
+    "kind": "rug",
+    "placement": "rug",
+    "geometry": {},
+    "price": 120,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-wall",
+    "label": "月轨墙面",
+    "theme": "lunar",
+    "kind": "wall",
+    "placement": "wall",
+    "geometry": {},
+    "price": 150,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-floor",
+    "label": "月轨地板",
+    "theme": "lunar",
+    "kind": "floor",
+    "placement": "floor",
+    "geometry": {},
+    "price": 150,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-frame-landscape",
+    "label": "月轨横版画框",
+    "theme": "lunar",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "landscape"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-frame-portrait",
+    "label": "月轨竖版画框",
+    "theme": "lunar",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "lunar-frame-square",
+    "label": "月轨方形画框",
+    "theme": "lunar",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "square"
+    },
+    "price": 45,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-bookshelf",
+    "label": "木质书柜",
+    "theme": "wood",
+    "kind": "bookshelf",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "w": 0.12,
+        "d": 0.26,
+        "h": 0.375
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "w": 0.26,
+        "d": 0.12,
+        "h": 0.375
+      }
+    },
+    "price": 120,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-desk",
+    "label": "木质书桌",
+    "theme": "wood",
+    "kind": "desk",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.3,
+        "h": 0.18
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "w": 0.3,
+        "d": 0.17,
+        "h": 0.18
+      }
+    },
+    "price": 100,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-chair",
+    "label": "木质椅子",
+    "theme": "wood",
+    "kind": "chair",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "w": 0.115,
+        "d": 0.12,
+        "h": 0.2
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "w": 0.12,
+        "d": 0.115,
+        "h": 0.2
+      }
+    },
+    "price": 40,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-tree",
+    "label": "木质猫爬架",
+    "theme": "wood",
+    "kind": "tree",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.17,
+        "h": 0.29
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.17,
+        "h": 0.29
+      }
+    },
+    "price": 140,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-bed",
+    "label": "木质开放猫窝",
+    "theme": "wood",
+    "kind": "bed",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.19,
+        "d": 0.19,
+        "h": 0.085
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.19,
+        "d": 0.19,
+        "h": 0.085
+      }
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-window",
+    "label": "木质窗户",
+    "theme": "wood",
+    "kind": "window",
+    "placement": "window",
+    "geometry": {},
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-rug",
+    "label": "木质地毯",
+    "theme": "wood",
+    "kind": "rug",
+    "placement": "rug",
+    "geometry": {},
+    "price": 80,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-wall",
+    "label": "木质墙面",
+    "theme": "wood",
+    "kind": "wall",
+    "placement": "wall",
+    "geometry": {},
+    "price": 100,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-floor",
+    "label": "木质地板",
+    "theme": "wood",
+    "kind": "floor",
+    "placement": "floor",
+    "geometry": {},
+    "price": 100,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-frame-landscape",
+    "label": "木质横版画框",
+    "theme": "wood",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "landscape"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-frame-portrait",
+    "label": "木质竖版画框",
+    "theme": "wood",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "wood-frame-square",
+    "label": "木质方形画框",
+    "theme": "wood",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "square"
+    },
+    "price": 30,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-bookshelf",
+    "label": "皇家书柜",
+    "theme": "royal",
+    "kind": "bookshelf",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "w": 0.12,
+        "d": 0.26,
+        "h": 0.375
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "w": 0.26,
+        "d": 0.12,
+        "h": 0.375
+      }
+    },
+    "price": 240,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-desk",
+    "label": "皇家书桌",
+    "theme": "royal",
+    "kind": "desk",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.3,
+        "h": 0.18
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "w": 0.3,
+        "d": 0.17,
+        "h": 0.18
+      }
+    },
+    "price": 200,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-chair",
+    "label": "皇家椅子",
+    "theme": "royal",
+    "kind": "chair",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "w": 0.115,
+        "d": 0.12,
+        "h": 0.2
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "w": 0.12,
+        "d": 0.115,
+        "h": 0.2
+      }
+    },
+    "price": 80,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-tree",
+    "label": "皇家猫爬架",
+    "theme": "royal",
+    "kind": "tree",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.17,
+        "h": 0.29
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.17,
+        "d": 0.17,
+        "h": 0.29
+      }
+    },
+    "price": 280,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-bed",
+    "label": "皇家开放猫窝",
+    "theme": "royal",
+    "kind": "bed",
+    "placement": "ground",
+    "geometry": {
+      "x": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.19,
+        "d": 0.19,
+        "h": 0.085
+      },
+      "y": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "w": 0.19,
+        "d": 0.19,
+        "h": 0.085
+      }
+    },
+    "price": 120,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-window",
+    "label": "皇家窗户",
+    "theme": "royal",
+    "kind": "window",
+    "placement": "window",
+    "geometry": {},
+    "price": 120,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-rug",
+    "label": "皇家地毯",
+    "theme": "royal",
+    "kind": "rug",
+    "placement": "rug",
+    "geometry": {},
+    "price": 160,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-wall",
+    "label": "皇家墙面",
+    "theme": "royal",
+    "kind": "wall",
+    "placement": "wall",
+    "geometry": {},
+    "price": 200,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-floor",
+    "label": "皇家地板",
+    "theme": "royal",
+    "kind": "floor",
+    "placement": "floor",
+    "geometry": {},
+    "price": 200,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-frame-landscape",
+    "label": "皇家横版画框",
+    "theme": "royal",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "landscape"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-frame-portrait",
+    "label": "皇家竖版画框",
+    "theme": "royal",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "portrait"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  },
+  {
+    "sku": "royal-frame-square",
+    "label": "皇家方形画框",
+    "theme": "royal",
+    "kind": "frame",
+    "placement": "art",
+    "geometry": {
+      "template": "square"
+    },
+    "price": 60,
+    "currency": "miao",
+    "purchase_limit": 1,
+    "active": true,
+    "is_test": false
+  }
+]
