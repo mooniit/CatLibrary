@@ -36,18 +36,12 @@ class CloudClient {
     }
     final client = Supabase.instance.client;
     final preferences = await SharedPreferences.getInstance();
-    final database = AppDatabase();
-    late final List<String> cachedOwners;
-    try {
-      cachedOwners =
-          (await database
-                  .customSelect('SELECT owner_id FROM account_cache')
-                  .get())
-              .map((row) => row.read<String>('owner_id'))
-              .toList();
-    } finally {
-      await database.close();
-    }
+    final cachedOwners =
+        (await AppDatabase.shared
+                .customSelect('SELECT owner_id FROM account_cache')
+                .get())
+            .map((row) => row.read<String>('owner_id'))
+            .toList();
     IdentityGuard.check(
       client.auth.currentUser?.id,
       rememberedOwner: preferences.getString('identity_original_owner'),
