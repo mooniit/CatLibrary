@@ -1,0 +1,6 @@
+[
+  { label: '小屋家具陈设，拖动查看，双指缩放，双击回到初始视角。', bounds: '[0,88][320,422]' },
+  { label: '结束预览', bounds: '[180,144][228,192]' },
+  { label: '切换朝向', bounds: '[92,256][140,304]' }
+]
+PASS six categories, floating rotation/cancel and original wallet retained; no purchase or exchange

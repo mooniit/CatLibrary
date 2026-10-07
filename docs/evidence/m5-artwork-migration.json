@@ -1,0 +1,15 @@
+{
+  "scope": "Actual migration conversion block; isolated rollback fixtures only",
+  "result": {
+    "placedSku": "lunar-painting-mona",
+    "storedSku": "wood-painting-sunflowers",
+    "retainedInstances": 2,
+    "version": 8,
+    "leaseReleased": true,
+    "artwork": "mona",
+    "receiptSku": "lunar-frame-portrait",
+    "walletEntriesDelta": 0,
+    "walletUnchanged": true
+  },
+  "checks": "IDs/buyer/source retained; placed artwork retained; stored frame default bound; version bumped; old lease released; receipt unchanged; no wallet mutation"
+}

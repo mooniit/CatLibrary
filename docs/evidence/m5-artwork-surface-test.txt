@@ -1,0 +1,3 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/room_surface_preview_test.dart
+00:00 +0: native surface preview replaces the selected layer and empty shell has no window holes
+00:02 +1: All tests passed!

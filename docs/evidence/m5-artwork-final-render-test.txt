@@ -1,0 +1,4 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/room_surface_preview_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/room_surface_preview_test.dart: native surface preview replaces the selected layer and empty shell has no window holes
+00:03 +1: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:03 +2: All tests passed!

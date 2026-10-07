@@ -1,0 +1,226 @@
+Running Gradle task 'assembleDebug'...                             42.7s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           5.4s
+D/nativeloader( 6140): Load /data/app/~~H9yh6N4hhw_bigC7zFGUVw==/com.catlibrary.cat_library_demo-mnh2wVEjYgfQbdTrbew5Kg==/base.apk!/lib/x86_64/libdartjni.so using ns clns-7 from class loader (caller=/data/app/~~H9yh6N4hhw_bigC7zFGUVw==/com.catlibrary.cat_library_demo-mnh2wVEjYgfQbdTrbew5Kg==/base.apk!classes5.dex): ok
+W/at_library_demo( 6140): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/at_library_demo( 6140): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/at_library_demo( 6140): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/at_library_demo( 6140): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 6140): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 6140): Width is zero. 0,0
+W/HWUI    ( 6140): Unknown dataspace 0
+D/ProfileInstaller( 6140): Installing profile for com.catlibrary.cat_library_demo
+I/WindowExtensionsImpl( 6140): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 6140): Width is zero. 0,0
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+I/Gralloc4( 6140): mapper 4.x is not supported
+W/HWUI    ( 6140): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 6140): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 6140): Skipped 65 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+I/at_library_demo( 6140): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at <local VM service>
+VMServiceFlutterDriver: Isolate found with number: 6522816188951759
+VMServiceFlutterDriver: Isolate 6522816188951759 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 6140): 00:00 +0: two isolated members purchase, draft, save, notice and manually refresh
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 6140): Skipped 43 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 6140): Davey! duration=968ms; Flags=1, FrameTimelineVsyncId=5375271, IntendedVsync=12270413327895, Vsync=12271129994533, InputEventId=0, HandleInputStart=12271138523662, AnimationStart=12271138525521, PerformTraversalsStart=12271138526587, DrawStart=12271142390560, FrameDeadline=12270429994561, FrameInterval=12271136748946, FrameStartTime=16666666, SyncQueued=12271145723643, SyncStart=12271145964993, IssueDrawCommandsStart=12271149497174, SwapBuffers=12271257963340, FrameCompleted=12271381980564, DequeueBufferDuration=746076, QueueBufferDuration=690116, GpuCompleted=12271381980564, SwapBuffersCompleted=12271371834761, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=12271257963340,
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+W/WindowOnBackDispatcher( 6140): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 6140): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 6140): app_time_stats: avg=1177.87ms min=775.96ms max=1579.78ms count=2
+D/EGL_emulation( 6140): app_time_stats: avg=411.93ms min=240.99ms max=698.35ms count=3
+D/EGL_emulation( 6140): app_time_stats: avg=200.03ms min=11.81ms max=456.88ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=204.69ms min=56.02ms max=452.56ms count=7
+I/at_library_demo( 6140): NativeAlloc concurrent mark compact GC freed 2249KB AllocSpace bytes, 5(100KB) LOS objects, 49% free, 2710KB/5421KB, paused 158us,5.091ms total 52.928ms
+D/EGL_emulation( 6140): app_time_stats: avg=4827.54ms min=272.70ms max=9382.38ms count=2
+D/EGL_emulation( 6140): app_time_stats: avg=247.24ms min=10.76ms max=549.70ms count=5
+D/EGL_emulation( 6140): app_time_stats: avg=1135.35ms min=1135.35ms max=1135.35ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=1144.36ms min=1144.36ms max=1144.36ms count=1
+W/WindowOnBackDispatcher( 6140): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 6140): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 6140): app_time_stats: avg=369.90ms min=230.34ms max=563.63ms count=3
+D/EGL_emulation( 6140): app_time_stats: avg=226.52ms min=47.47ms max=533.07ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=5075.05ms min=5075.05ms max=5075.05ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=189.65ms min=25.27ms max=391.35ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=181.80ms min=19.09ms max=442.12ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=168.49ms min=43.90ms max=374.39ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=3769.31ms min=3769.31ms max=3769.31ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=230.95ms min=32.13ms max=527.82ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=167.69ms min=20.64ms max=426.70ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=190.41ms min=17.00ms max=424.81ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=169.01ms min=20.84ms max=382.24ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=4560.59ms min=4560.59ms max=4560.59ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=231.18ms min=30.30ms max=537.14ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=167.96ms min=53.64ms max=273.56ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=183.73ms min=25.28ms max=394.82ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=173.46ms min=31.84ms max=361.95ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=148.20ms min=23.53ms max=379.51ms count=7
+D/EGL_emulation( 6140): app_time_stats: avg=161.15ms min=29.71ms max=435.84ms count=8
+D/EGL_emulation( 6140): app_time_stats: avg=7631.31ms min=7631.31ms max=7631.31ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=218.06ms min=29.56ms max=515.40ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=174.61ms min=14.98ms max=407.12ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=122.52ms min=12.07ms max=407.08ms count=11
+D/EGL_emulation( 6140): app_time_stats: avg=175.27ms min=43.47ms max=359.35ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=150.62ms min=30.60ms max=361.73ms count=7
+D/EGL_emulation( 6140): app_time_stats: avg=5519.25ms min=5519.25ms max=5519.25ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=251.82ms min=33.83ms max=540.65ms count=4
+D/EGL_emulation( 6140): app_time_stats: avg=180.60ms min=56.20ms max=330.64ms count=6
+I/flutter ( 6140):
+I/flutter ( 6140): Warning: A call to drag() with finder "Found 1 widget with type "FurnitureCategories": [
+I/flutter ( 6140):   FurnitureCategories(dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#ba9f8]]),
+I/flutter ( 6140): ]" derived an Offset (Offset(160.0, 331.2)) that would not hit test on the specified widget.
+I/flutter ( 6140): Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+I/flutter ( 6140): The finder corresponds to this RenderBox: RenderConstrainedBox#1364c relayoutBoundary=up1
+I/flutter ( 6140): The hit test result at that offset is: HitTestResult(_RenderInkFeatures#8b931@Offset(160.0, 24.0), RenderCustomPaint#ec3cc@Offset(160.0, 24.0), RenderPhysicalShape#ba795@Offset(160.0, 24.0), RenderStack#a69ac@Offset(160.0, 331.2), _RenderLayoutBuilder#5b769@Offset(160.0, 331.2), RenderCustomMultiChildLayoutBox#ecc9b@Offset(160.0, 331.2), _RenderInkFeatures#cac7f@Offset(160.0, 331.2), RenderPhysicalModel#9a55a@Offset(160.0, 331.2), RenderSemanticsAnnotations#c8479@Offset(160.0, 331.2), RenderRepaintBoundary#fef82@Offset(160.0, 331.2), RenderIgnorePointer#9b13d@Offset(160.0, 331.2), RenderAnimatedOpacity#53cd1@Offset(160.0, 331.2), RenderAnimatedOpacity#71501@Offset(160.0, 331.2), _RenderColoredBox#6762e@Offset(160.0, 331.2), RenderAnimatedOpacity#d2c86@Offset(160.0, 331.2), RenderIgnorePointer#fc1bf@Offset(160.0, 331.2), RenderAnimatedOpacity#75143@Offset(160.0, 331.2), RenderRepaintBoundary#33872@Offset(160.0, 331.2), RenderSemanticsAnnotations#027c8@Offset(160.0, 331.2), RenderOffstage#17e47@Offset(160.0, 3
+D/EGL_emulation( 6140): app_time_stats: avg=187.22ms min=31.24ms max=378.14ms count=6
+I/flutter ( 6140): #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+I/flutter ( 6140): #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+I/flutter ( 6140): #2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+I/flutter ( 6140): #3      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:242:22)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): #6      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): To silence this warning, pass "warnIfMissed: false" to "drag()".
+I/flutter ( 6140): To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+I/flutter ( 6140):
+D/EGL_emulation( 6140): app_time_stats: avg=146.53ms min=31.20ms max=422.27ms count=9
+D/EGL_emulation( 6140): app_time_stats: avg=4078.11ms min=4078.11ms max=4078.11ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=204.43ms min=30.42ms max=539.50ms count=5
+D/EGL_emulation( 6140): app_time_stats: avg=274.32ms min=132.77ms max=396.92ms count=4
+I/ImeTracker( 6140): com.catlibrary.cat_library_demo:d53dacd8: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 6140): showSoftInput() view=io.flutter.embedding.android.FlutterView{440a4c2 VFE...... .F....ID 0,0-320,640 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 6140): com.catlibrary.cat_library_demo:5e80e838: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 6140): showSoftInput() view=io.flutter.embedding.android.FlutterView{440a4c2 VFE...... .F....ID 0,0-320,640 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/EGL_emulation( 6140): app_time_stats: avg=2113.46ms min=2113.46ms max=2113.46ms count=1
+D/InputConnectionAdaptor( 6140): The input method toggled cursor monitoring on
+D/InsetsController( 6140): show(ime(), fromIme=true)
+W/InteractionJankMonitor( 6140): Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.catlibrary.cat_library_demo
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+I/ImeTracker( 6140): com.catlibrary.cat_library_demo:5e80e838: onShown
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/EGL_emulation( 6140): app_time_stats: avg=230.78ms min=31.73ms max=617.81ms count=6
+I/ImeTracker( 6140): com.catlibrary.cat_library_demo:59e6a8d4: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+D/InsetsController( 6140): hide(ime(), fromIme=true)
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/EGL_emulation( 6140): app_time_stats: avg=67.66ms min=3.05ms max=612.90ms count=20
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386484, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386499, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386514, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386522, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386530, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386545, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386553, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386568, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386591, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed App frame:UNKNOWN: 72, 5386606, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed App frame:UNKNOWN: 24, 5386622, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 24, 5386622, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386636, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386644, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386659, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386667, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+W/FrameTracker( 6140): Missed SF frame:UNKNOWN: 80, 5386682, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@com.catlibrary.cat_library_demo>
+V/PerfettoTrigger( 6140): Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-80
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+I/ImeTracker( 6140): com.catlibrary.cat_library_demo:5bb23140: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+I/ImeTracker( 6140): com.catlibrary.cat_library_demo:59e6a8d4: onHidden
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/FlutterJNI( 6140): Sending viewport metrics to the engine.
+D/EGL_emulation( 6140): app_time_stats: avg=210.03ms min=71.89ms max=350.21ms count=5
+D/EGL_emulation( 6140): app_time_stats: avg=185.20ms min=13.40ms max=317.46ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=179.43ms min=2.67ms max=2437.67ms count=15
+D/EGL_emulation( 6140): app_time_stats: avg=221.71ms min=24.67ms max=543.08ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=178.28ms min=26.75ms max=394.76ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=2022.01ms min=2022.01ms max=2022.01ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=3957.64ms min=3957.64ms max=3957.64ms count=1
+D/EGL_emulation( 6140): app_time_stats: avg=192.44ms min=30.06ms max=537.27ms count=6
+D/EGL_emulation( 6140): app_time_stats: avg=140.64ms min=17.81ms max=399.11ms count=8
+I/flutter ( 6140): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 6140): The following TestFailure was thrown running a test:
+I/flutter ( 6140): Expected: not <2>
+I/flutter ( 6140):   Actual: <2>
+I/flutter ( 6140):
+I/flutter ( 6140): When the exception was thrown, this was the stack:
+I/flutter ( 6140): #4      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:347:9)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 6140): <asynchronous suspension>
+I/flutter ( 6140):
+I/flutter ( 6140): This was caught by the test expectation on the following line:
+I/flutter ( 6140):   file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart line 347
+I/flutter ( 6140): The test description was:
+I/flutter ( 6140):   two isolated members purchase, draft, save, notice and manually refresh
+I/flutter ( 6140): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 6140): 00:53 +0: two isolated members purchase, draft, save, notice and manually refresh [E]
+I/flutter ( 6140):   Test failed. See exception logs above.
+I/flutter ( 6140):   The test description was: two isolated members purchase, draft, save, notice and manually refresh
+I/flutter ( 6140):
+I/flutter ( 6140): 00:53 +0 -1: (tearDownAll)
+D/EGL_emulation( 6140): app_time_stats: avg=1623.27ms min=1623.27ms max=1623.27ms count=1
+I/flutter ( 6140): 00:53 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: two isolated members purchase, draft, save, notice and manually refresh
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: not <2>
+  Actual: <2>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart:347:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///D:/2DoProjects/CatLibrary/integration_test/furniture_sync_test.dart line 347
+The test description was:
+  two isolated members purchase, draft, save, notice and manually
+  refresh
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
