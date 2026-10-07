@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/sync/cloud_client.dart';
+import '../../core/sync/connection_panel.dart';
 import '../family/family_page.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -84,19 +84,9 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 4),
-            leading: const Icon(Icons.cloud_outlined),
-            title: const Text('连接验证'),
-            subtitle: const Text('开发测试工具'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => showModalBottomSheet<void>(
-              context: context,
-              isScrollControlled: true,
-              showDragHandle: true,
-              builder: (_) => const CloudProbePanel(),
-            ),
-          ),
+          const SizedBox(height: 16),
+          Text('联网与同步', style: Theme.of(context).textTheme.titleMedium),
+          const ConnectionPanel(),
         ],
       ),
     );

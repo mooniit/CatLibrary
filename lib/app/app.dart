@@ -11,6 +11,8 @@ import '../features/study/timer_probe.dart';
 import '../features/study/study_page.dart';
 import '../features/tasks/task_board_page.dart';
 import 'app_theme.dart';
+import '../core/sync/cloud_client.dart';
+import '../core/sync/cloud_connection.dart';
 
 class CatLibraryApp extends StatefulWidget {
   const CatLibraryApp({
@@ -90,17 +92,27 @@ class _PrototypeShellState extends State<PrototypeShell>
   late IdentityWallet? wallet = widget.wallet;
   Timer? walletRefresh;
   bool refreshingWallet = false;
+  CloudPhase? _previousConnection;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    CloudClient.connection.addListener(connectionChanged);
     if (wallet != null) {
       walletRefresh = Timer.periodic(
         const Duration(minutes: 5),
         (_) => unawaited(refreshWallet()),
       );
     }
+  }
+
+  void connectionChanged() {
+    final phase = CloudClient.connection.value.phase;
+    final recovered =
+        phase == CloudPhase.online && _previousConnection != CloudPhase.online;
+    _previousConnection = phase;
+    if (recovered && wallet != null) unawaited(refreshWallet());
   }
 
   Future<void> refreshWallet() async {
@@ -127,6 +139,7 @@ class _PrototypeShellState extends State<PrototypeShell>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     walletRefresh?.cancel();
+    CloudClient.connection.removeListener(connectionChanged);
     super.dispose();
   }
 
@@ -147,7 +160,7 @@ class _PrototypeShellState extends State<PrototypeShell>
                       ? '交互预览 · 无真实资产'
                       : wallet!.cached
                       ? '离线记录中 · 钱包为上次同步余额'
-                      : '开发版',
+                      : '已连接',
                   style: const TextStyle(fontSize: 12),
                 ),
               ),

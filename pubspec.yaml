@@ -1,7 +1,7 @@
 name: cat_library_demo
 description: M0 interaction and feasibility probes for 喵的图书馆.
 publish_to: none
-version: 0.1.9+10
+version: 0.1.10+11
 environment:
   sdk: '>=3.11.0 <4.0.0'
 dependencies:
@@ -14,6 +14,7 @@ dependencies:
   cupertino_icons: 1.0.8
   image_picker: 1.2.3
   shared_preferences: 2.5.5
+  http: 1.6.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

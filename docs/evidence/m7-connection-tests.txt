@@ -1,0 +1,118 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/album_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:00 +1: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:00 +2: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:00 +3: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +4: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +5: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +6: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +7: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +8: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +9: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +10: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:01 +11: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:02 +12: D:/2DoProjects/CatLibrary/test/cats_page_test.dart: adoption displays server cat, owner and remaining quota
+00:02 +13: D:/2DoProjects/CatLibrary/test/cats_page_test.dart: adoption displays server cat, owner and remaining quota
+00:03 +14: D:/2DoProjects/CatLibrary/test/cats_page_test.dart: adoption displays server cat, owner and remaining quota
+00:03 +15: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +16: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +17: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +18: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +19: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +20: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:03 +21: D:/2DoProjects/CatLibrary/test/exchange_quantity_test.dart: currency modal calculates typed batch and disables insufficient balance
+00:04 +22: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:04 +23: D:/2DoProjects/CatLibrary/test/family_page_test.dart: applicant submits code without creating a home and sees pending
+00:04 +24: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +25: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +26: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +27: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +28: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +29: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +30: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +31: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +32: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +33: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +34: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +35: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +36: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +37: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +38: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +39: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +40: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +41: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +42: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +43: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +44: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +45: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:04 +46: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:05 +47: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:05 +48: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:05 +49: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:05 +50: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:05 +51: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:06 +52: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:06 +53: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:07 +54: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:08 +55: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:08 +56: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:08 +57: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +58: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +59: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +60: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +61: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +62: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +63: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +64: D:/2DoProjects/CatLibrary/test/furniture_render_test.dart: three native themes keep registrations, mirrored pixels and valid layout rendering
+00:09 +65: D:/2DoProjects/CatLibrary/test/navigation_test.dart: four destinations and collapsed home menu fit a narrow phone
+00:09 +66: D:/2DoProjects/CatLibrary/test/lunar_room_test.dart: native furniture controls save the chosen facing and reusable frame
+00:10 +67: D:/2DoProjects/CatLibrary/test/lunar_room_test.dart: native furniture controls save the chosen facing and reusable frame
+00:10 +68: D:/2DoProjects/CatLibrary/test/lunar_room_test.dart: native furniture controls save the chosen facing and reusable frame
+00:11 +69: D:/2DoProjects/CatLibrary/test/lunar_room_test.dart: native furniture controls save the chosen facing and reusable frame
+00:11 +70: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:11 +71: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:12 +72: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:12 +73: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:12 +74: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +75: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +76: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +77: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +78: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +79: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +80: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +81: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +82: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +83: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +84: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:13 +85: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:14 +86: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:14 +87: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:14 +88: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:14 +89: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:15 +90: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:15 +91: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:15 +92: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:16 +93: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:16 +94: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:16 +95: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:16 +96: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:16 +97: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:16 +98: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:17 +99: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:17 +100: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:17 +101: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:17 +102: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:17 +103: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:18 +104: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:19 +105: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:19 +106: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: shop changes the home, hides each slot and restores choices after reopening
+00:19 +107: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: pause excludes the gap and ending confirms all run segments
+00:19 +108: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: pause excludes the gap and ending confirms all run segments
+00:19 +109: D:/2DoProjects/CatLibrary/test/theme_settings_test.dart: settings theme persists and restores on next launch
+00:19 +110: D:/2DoProjects/CatLibrary/test/room_furniture_test.dart: reopening the store waits for a pending save and retains it on the next choice
+00:20 +111: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: countdown has a five-hour wheel and auto ends at target
+00:20 +112: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: countdown has a five-hour wheel and auto ends at target
+00:20 +113: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: countdown has a five-hour wheel and auto ends at target
+00:21 +114: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: pause does not reset the six-hour limit for one run
+00:23 +115: D:/2DoProjects/CatLibrary/test/study_timer_ui_test.dart: preset can be named, edited and deleted without reseeding
+00:25 +116: All tests passed!

@@ -2,12 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import '../storage/app_database.dart';
+import 'cloud_connection.dart';
+import 'identity_guard.dart';
 
 class CloudClient {
   static const url = String.fromEnvironment('SUPABASE_URL');
   static const key = String.fromEnvironment('SUPABASE_ANON_KEY');
   static Future<SupabaseClient>? _opening;
   static bool _initialized = false;
+  static final connection = CloudConnection();
   static bool get configured => url.isNotEmpty && key.isNotEmpty;
   static Future<SupabaseClient> connect() =>
       _opening ??= _connect().catchError((Object e) {
@@ -15,15 +21,45 @@ class CloudClient {
         throw e;
       });
   static Future<SupabaseClient> _connect() async {
-    if (!configured) throw StateError('尚未配置测试项目');
+    if (!configured) {
+      connection.unconfigured();
+      throw StateError('尚未配置服务');
+    }
     if (!_initialized) {
-      await Supabase.initialize(url: url, publishableKey: key, debug: false);
+      await Supabase.initialize(
+        url: url,
+        publishableKey: key,
+        debug: false,
+        httpClient: ConnectionHttpClient(http.Client(), connection),
+      );
       _initialized = true;
     }
     final client = Supabase.instance.client;
+    final preferences = await SharedPreferences.getInstance();
+    final database = AppDatabase();
+    late final List<String> cachedOwners;
+    try {
+      cachedOwners =
+          (await database
+                  .customSelect('SELECT owner_id FROM account_cache')
+                  .get())
+              .map((row) => row.read<String>('owner_id'))
+              .toList();
+    } finally {
+      await database.close();
+    }
+    IdentityGuard.check(
+      client.auth.currentUser?.id,
+      rememberedOwner: preferences.getString('identity_original_owner'),
+      cachedOwners: cachedOwners,
+    );
     if (client.auth.currentSession == null) {
       await client.auth.signInAnonymously();
     }
+    await preferences.setString(
+      'identity_original_owner',
+      client.auth.currentUser!.id,
+    );
     return client;
   }
 

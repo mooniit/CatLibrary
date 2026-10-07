@@ -23,6 +23,8 @@ import '../../core/storage/app_database.dart';
 import 'home_controls.dart';
 import '../album/album_page.dart';
 import '../travel/travel_repository.dart';
+import '../../core/sync/cloud_client.dart';
+import '../../core/sync/cloud_connection.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -74,17 +76,32 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   Timer? _roomPoll;
   bool _checkingRoom = false;
   bool _roomUpdate = false;
+  CloudPhase? _previousConnection;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    CloudClient.connection.addListener(connectionChanged);
     unawaited(refreshCats());
     unawaited(loadFurniture());
     _roomPoll = Timer.periodic(
       const Duration(seconds: 30),
       (_) => unawaited(checkRoomUpdate()),
     );
+  }
+
+  void connectionChanged() {
+    final phase = CloudClient.connection.value.phase;
+    final recovered =
+        phase == CloudPhase.online && _previousConnection != CloudPhase.online;
+    _previousConnection = phase;
+    if (mounted && recovered && widget.wallet != null && !_roomToolsShown) {
+      if (!loadingCats) unawaited(refreshCats());
+      if (!loadingFurniture && furnitureError != null) {
+        unawaited(loadFurniture());
+      }
+    }
   }
 
   @override
@@ -150,13 +167,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   Future<void> checkRoomUpdate() async {
     final owner = widget.wallet?.ownerId;
-    if (owner == null ||
-        scene.roomState == null ||
-        _checkingRoom ||
-        _storeOpen) {
+    if (owner == null || _checkingRoom || _roomToolsShown) {
       return;
     }
     _checkingRoom = true;
+    if (scene.roomState == null) {
+      try {
+        if (!loadingFurniture) await loadFurniture();
+        if (catsError != null && !loadingCats) await refreshCats();
+      } finally {
+        _checkingRoom = false;
+      }
+      return;
+    }
     final request = _furnitureRequest;
     try {
       final latest =
@@ -168,6 +191,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
           (latest.familyId != scene.roomState?.familyId ||
               latest.version > scene.roomState!.version)) {
         setState(() => _roomUpdate = true);
+      } else if (mounted &&
+          request == _furnitureRequest &&
+          !_roomToolsShown &&
+          owner == widget.wallet?.ownerId &&
+          latest.familyId == scene.roomState?.familyId &&
+          latest.version == scene.roomState?.version) {
+        setState(() {
+          scene.roomState = latest;
+          furnitureError = null;
+        });
       }
     } catch (_) {
       /* The confirmed displayed layout remains; next check retries. */
@@ -201,6 +234,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _roomPoll?.cancel();
+    CloudClient.connection.removeListener(connectionChanged);
     super.dispose();
   }
 
