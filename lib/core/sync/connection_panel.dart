@@ -55,9 +55,14 @@ class _ConnectionPanelState extends State<ConnectionPanel> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Text(
-                    CloudClient.configured ? status.label : '尚未配置在线服务',
-                    style: Theme.of(context).textTheme.titleMedium,
+                  child: Semantics(
+                    container: true,
+                    label: CloudClient.configured ? status.label : '尚未配置在线服务',
+                    excludeSemantics: true,
+                    child: Text(
+                      CloudClient.configured ? status.label : '尚未配置在线服务',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                 ),
                 IconButton(
@@ -89,7 +94,12 @@ class _ConnectionPanelState extends State<ConnectionPanel> {
             if (message != null)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
-                child: Text(message!),
+                child: Semantics(
+                  container: true,
+                  label: message!,
+                  excludeSemantics: true,
+                  child: Text(message!),
+                ),
               ),
           ],
         ),

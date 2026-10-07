@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-07T23:41:49.959Z",
+  "scope": "Existing emulator account; local ADB reverse fault/recovery only",
+  "serial": "emulator-5554",
+  "before": {
+    "owners": [
+      "d7fb2f25753d40f303cc089d560d04380b8bdfeb09e9ffcea324471433b8b91b"
+    ],
+    "wallets": [
+      "88fbbac98b1b2c838dd6c33db7138c9ef50251626b117928cb2a7871010820e2"
+    ]
+  },
+  "after": {
+    "owners": [
+      "d7fb2f25753d40f303cc089d560d04380b8bdfeb09e9ffcea324471433b8b91b"
+    ],
+    "wallets": [
+      "88fbbac98b1b2c838dd6c33db7138c9ef50251626b117928cb2a7871010820e2"
+    ]
+  },
+  "identityPreserved": true,
+  "walletUnchanged": true,
+  "remoteInternetVerified": false,
+  "phoneVerified": false,
+  "actions": "No account recreation, data clearing, purchases, feeding or timer start"
+}
