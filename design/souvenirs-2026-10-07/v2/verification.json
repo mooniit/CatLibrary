@@ -1,0 +1,482 @@
+[
+  {
+    "id": "palace",
+    "passed": false,
+    "registration": {
+      "scale": 0.08033516165236596,
+      "translation": [
+        1.1118646138807406,
+        0.3265020274428849
+      ],
+      "sourceBounds": [
+        27,
+        17,
+        1215,
+        1257
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        2.3333333333333335,
+        99.33333333333333,
+        100.66666666666667
+      ],
+      "aspectError": 0.026080009130856396,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "axisChecks": [
+      {
+        "label": "base X contact",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 28.025213988231513,
+        "angleError": 1.5006025483273453,
+        "distance": 0.2304421768707483,
+        "residual": 0.01727432384473271,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y contact",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.434195277652535,
+        "angleError": 0.9095838377483715,
+        "distance": 0.17849099099099097,
+        "residual": 0.02511473711939244,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      },
+      {
+        "label": "base X top",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.63699282606439,
+        "angleError": 1.1123813861602216,
+        "distance": 0.5,
+        "residual": 0.08333333333333337,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y top",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.120583429751342,
+        "angleError": 0.5959719898471785,
+        "distance": 2.5,
+        "residual": 0.08035714285714297,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      }
+    ]
+  },
+  {
+    "id": "louvre",
+    "passed": false,
+    "registration": {
+      "scale": 0.0991640896461802,
+      "translation": [
+        0.6742245045635471,
+        0.025364025476662277
+      ],
+      "sourceBounds": [
+        25,
+        29,
+        990,
+        1547
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.6666666666666665,
+        99.33333333333333,
+        152.66666666666666
+      ],
+      "aspectError": 0.020551517891296056,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "axisChecks": [
+      {
+        "label": "base X contact",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 28.128471516515038,
+        "angleError": 1.6038600766108702,
+        "distance": 0.24780701754385964,
+        "residual": 0.01973130240204002,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y contact",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -28.573741324150784,
+        "angleError": 2.0491298842466223,
+        "distance": 0.3173076923076923,
+        "residual": 0.021689037127048838,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base X top",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 28.250415280830694,
+        "angleError": 1.7258038409265288,
+        "distance": 2.25,
+        "residual": 0.10344827586206917,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y top",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -28.378166499558546,
+        "angleError": 1.8535550596543817,
+        "distance": 2.25,
+        "residual": 0.08333333333333337,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "id": "fuji",
+    "passed": false,
+    "registration": {
+      "scale": 0.07656200048343456,
+      "translation": [
+        -1.9043423340532826,
+        -4.907767961803465
+      ],
+      "sourceBounds": [
+        36,
+        121,
+        1346,
+        1100
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3,
+        99.33333333333333,
+        80.66666666666667
+      ],
+      "aspectError": 0.069848966353242,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "axisChecks": [
+      {
+        "label": "base X contact",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.127180965883714,
+        "angleError": 0.6025695259795459,
+        "distance": 1.4118975903614457,
+        "residual": 0.028298600791400008,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      },
+      {
+        "label": "base Y contact",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.223499174988298,
+        "angleError": 0.6988877350841335,
+        "distance": 1.22931654676259,
+        "residual": 0.027261162927281424,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      },
+      {
+        "label": "base X top",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 26.524611439904167,
+        "angleError": 0,
+        "distance": 4,
+        "residual": 0,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 41,
+        "passed": false
+      },
+      {
+        "label": "base Y top",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -26.524611439904163,
+        "angleError": 0,
+        "distance": 4,
+        "residual": 0,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 41,
+        "passed": false
+      }
+    ]
+  },
+  {
+    "id": "pyramid",
+    "passed": false,
+    "registration": {
+      "scale": 0.07930327233578432,
+      "translation": [
+        0.5234671582732773,
+        0.5698809688210744
+      ],
+      "sourceBounds": [
+        31,
+        31,
+        1242,
+        1203
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.3333333333333335,
+        99.33333333333333,
+        95.66666666666667
+      ],
+      "aspectError": 0.01321520240157148,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "axisChecks": [
+      {
+        "label": "base X contact",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 31.803506670319347,
+        "angleError": 5.278895230415181,
+        "distance": 1.0692640692640694,
+        "residual": 0.028327236604122508,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y contact",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.35106865004917,
+        "angleError": 0.82645721014501,
+        "distance": 0.900709219858156,
+        "residual": 0.027188224041217096,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      },
+      {
+        "label": "base X top",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.04609133887824,
+        "angleError": 0.521479898974074,
+        "distance": 4,
+        "residual": 0.14062499999999997,
+        "positionTolerance": 4,
+        "samples": 30,
+        "boundarySamples": 26,
+        "passed": false
+      },
+      {
+        "label": "base Y top",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.31921847155308,
+        "angleError": 0.7946070316489143,
+        "distance": 2.25,
+        "residual": 0.07142857142857129,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      }
+    ]
+  },
+  {
+    "id": "eiffel",
+    "passed": false,
+    "registration": {
+      "scale": 0.10241991714859931,
+      "translation": [
+        -0.05632869857675615,
+        0.9709343341126271
+      ],
+      "sourceBounds": [
+        26,
+        24,
+        971,
+        1529
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.3333333333333335,
+        99.33333333333333,
+        157.66666666666666
+      ],
+      "aspectError": 0.0024798016158706915,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "axisChecks": [
+      {
+        "label": "base X contact",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.705803640317825,
+        "angleError": 1.1811922004136601,
+        "distance": 0.40403225806451615,
+        "residual": 0.02303499201608561,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y contact",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.301303920293027,
+        "angleError": 0.7766924803888628,
+        "distance": 0.26773049645390073,
+        "residual": 0.028495448744317475,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      },
+      {
+        "label": "base X top",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.675340662648637,
+        "angleError": 1.1507292227444719,
+        "distance": 0.75,
+        "residual": 0.09482758620689646,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y top",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.1920939446119,
+        "angleError": 0.6674825047077391,
+        "distance": 0.75,
+        "residual": 0.10999999999999999,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": true
+      }
+    ]
+  },
+  {
+    "id": "liberty",
+    "passed": false,
+    "registration": {
+      "scale": 0.10270943987879748,
+      "translation": [
+        0.8264386192074298,
+        1.1260845246588929
+      ],
+      "sourceBounds": [
+        27,
+        9,
+        950,
+        1608
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.6666666666666665,
+        99.33333333333333,
+        164.66666666666666
+      ],
+      "aspectError": 0.04015396728195242,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "axisChecks": [
+      {
+        "label": "base X contact",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.772749737138174,
+        "angleError": 1.248138297234006,
+        "distance": 1.1577380952380953,
+        "residual": 0.029789528570096424,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base Y contact",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.951096193082257,
+        "angleError": 1.4264847531780929,
+        "distance": 1.0639367816091954,
+        "residual": 0.027560704425623694,
+        "positionTolerance": 2,
+        "samples": 41,
+        "boundarySamples": 0,
+        "passed": false
+      },
+      {
+        "label": "base X top",
+        "family": "X",
+        "expectedAngle": 26.524611439904167,
+        "measuredAngle": 27.808074994747944,
+        "angleError": 1.283463554843776,
+        "distance": 3,
+        "residual": 0.1153846153846152,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 2,
+        "passed": false
+      },
+      {
+        "label": "base Y top",
+        "family": "Y",
+        "expectedAngle": -26.524611439904163,
+        "measuredAngle": -27.808074994747937,
+        "angleError": 1.2834635548437754,
+        "distance": 3,
+        "residual": 0.13461538461538436,
+        "positionTolerance": 4,
+        "samples": 41,
+        "boundarySamples": 1,
+        "passed": false
+      }
+    ]
+  }
+]

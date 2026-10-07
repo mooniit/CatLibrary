@@ -1,0 +1,93 @@
+Running Gradle task 'assembleDebug'...                             77.6s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           5.7s
+D/nativeloader( 7327): Load /data/app/~~t5U5J_uVovgCL22ygAGuwQ==/com.catlibrary.cat_library_demo-GQ5iTOW8eOZulV1GkgU0Jw==/base.apk!/lib/x86_64/libdartjni.so using ns clns-7 from class loader (caller=/data/app/~~t5U5J_uVovgCL22ygAGuwQ==/com.catlibrary.cat_library_demo-GQ5iTOW8eOZulV1GkgU0Jw==/base.apk!classes5.dex): ok
+W/at_library_demo( 7327): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/at_library_demo( 7327): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/at_library_demo( 7327): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/at_library_demo( 7327): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 7327): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 7327): Width is zero. 0,0
+W/HWUI    ( 7327): Unknown dataspace 0
+D/ProfileInstaller( 7327): Installing profile for com.catlibrary.cat_library_demo
+I/WindowExtensionsImpl( 7327): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 7327): Width is zero. 0,0
+D/FlutterJNI( 7327): Sending viewport metrics to the engine.
+I/Gralloc4( 7327): mapper 4.x is not supported
+W/HWUI    ( 7327): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 7327): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 7327): Skipped 48 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 7327): Sending viewport metrics to the engine.
+I/at_library_demo( 7327): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at [private-debug-endpoint]
+VMServiceFlutterDriver: Isolate found with number: 5328271532631475
+VMServiceFlutterDriver: Isolate 5328271532631475 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 7327): 00:00 +0: two members travel, lost receipt, return, album, provenance and room save
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 7327): Skipped 37 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 7327): app_time_stats: avg=1145.25ms min=233.28ms max=2104.70ms count=3
+D/EGL_emulation( 7327): app_time_stats: avg=1494.23ms min=1375.99ms max=1612.48ms count=2
+W/WindowOnBackDispatcher( 7327): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 7327): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+D/EGL_emulation( 7327): app_time_stats: avg=257.41ms min=5.60ms max=730.51ms count=8
+I/flutter ( 7327): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 7327): The following assertion was thrown running a test:
+I/flutter ( 7327): Surface already converted to an image
+I/flutter ( 7327): 'package:integration_test/src/_callback_io.dart':
+I/flutter ( 7327): Failed assertion: line 70 pos 12: '!_isSurfaceRendered'
+I/flutter ( 7327):
+I/flutter ( 7327): When the exception was thrown, this was the stack:
+I/flutter ( 7327): #2      _IOCallbackManager.convertFlutterSurfaceToImage (package:integration_test/src/_callback_io.dart:70:12)
+I/flutter ( 7327): #3      IntegrationTestWidgetsFlutterBinding.convertFlutterSurfaceToImage (package:integration_test/integration_test.dart:205:27)
+I/flutter ( 7327): #4      main.<anonymous closure>.shot (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:76:23)
+I/flutter ( 7327): #5      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:115:15)
+I/flutter ( 7327): <asynchronous suspension>
+I/flutter ( 7327): #6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 7327): <asynchronous suspension>
+I/flutter ( 7327): #7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 7327): <asynchronous suspension>
+I/flutter ( 7327): #8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 7327): <asynchronous suspension>
+I/flutter ( 7327): (elided 2 frames from class _AssertionError)
+I/flutter ( 7327):
+I/flutter ( 7327): The test description was:
+I/flutter ( 7327):   two members travel, lost receipt, return, album, provenance and room save
+I/flutter ( 7327): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 7327): 00:06 +0: two members travel, lost receipt, return, album, provenance and room save [E]
+I/flutter ( 7327):   Test failed. See exception logs above.
+I/flutter ( 7327):   The test description was: two members travel, lost receipt, return, album, provenance and room save
+I/flutter ( 7327):
+I/flutter ( 7327): 00:06 +0 -1: (tearDownAll)
+D/EGL_emulation( 7327): app_time_stats: avg=1267.37ms min=95.25ms max=2439.49ms count=2
+I/flutter ( 7327): 00:06 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: two members travel, lost receipt, return, album, provenance and room save
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following assertion was thrown running a test:
+Surface already converted to an image
+'package:integration_test/src/_callback_io.dart':
+Failed assertion: line 70 pos 12: '!_isSurfaceRendered'
+
+When the exception was thrown, this was the stack:
+#2      _IOCallbackManager.convertFlutterSurfaceToImage (package:integration_test/src/_callback_io.dart:70:12)
+#3      IntegrationTestWidgetsFlutterBinding.convertFlutterSurfaceToImage (package:integration_test/integration_test.dart:205:27)
+#4      main.<anonymous closure>.shot (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:76:23)
+#5      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:115:15)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+(elided 2 frames from class _AssertionError)
+
+The test description was:
+  two members travel, lost receipt, return, album, provenance and
+  room save
+═════════════════════════════════════════════════════════════════
+
+end of failure 1

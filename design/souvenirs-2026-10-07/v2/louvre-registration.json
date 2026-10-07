@@ -1,0 +1,80 @@
+{
+  "id": "louvre",
+  "passed": false,
+  "registration": {
+    "scale": 0.0991640896461802,
+    "translation": [
+      0.6742245045635471,
+      0.025364025476662277
+    ],
+    "sourceBounds": [
+      25,
+      29,
+      990,
+      1547
+    ],
+    "targetBounds": [
+      2.6666666666666665,
+      3.6666666666666665,
+      99.33333333333333,
+      152.66666666666666
+    ],
+    "aspectError": 0.020551517891296056,
+    "warp": "none",
+    "anchor": "numeric construction guide"
+  },
+  "axisChecks": [
+    {
+      "label": "base X contact",
+      "family": "X",
+      "expectedAngle": 26.524611439904167,
+      "measuredAngle": 28.128471516515038,
+      "angleError": 1.6038600766108702,
+      "distance": 0.24780701754385964,
+      "residual": 0.01973130240204002,
+      "positionTolerance": 2,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": false
+    },
+    {
+      "label": "base Y contact",
+      "family": "Y",
+      "expectedAngle": -26.524611439904163,
+      "measuredAngle": -28.573741324150784,
+      "angleError": 2.0491298842466223,
+      "distance": 0.3173076923076923,
+      "residual": 0.021689037127048838,
+      "positionTolerance": 2,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": false
+    },
+    {
+      "label": "base X top",
+      "family": "X",
+      "expectedAngle": 26.524611439904167,
+      "measuredAngle": 28.250415280830694,
+      "angleError": 1.7258038409265288,
+      "distance": 2.25,
+      "residual": 0.10344827586206917,
+      "positionTolerance": 4,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": false
+    },
+    {
+      "label": "base Y top",
+      "family": "Y",
+      "expectedAngle": -26.524611439904163,
+      "measuredAngle": -28.378166499558546,
+      "angleError": 1.8535550596543817,
+      "distance": 2.25,
+      "residual": 0.08333333333333337,
+      "positionTolerance": 4,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": false
+    }
+  ]
+}

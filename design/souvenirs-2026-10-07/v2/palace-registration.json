@@ -1,0 +1,80 @@
+{
+  "id": "palace",
+  "passed": false,
+  "registration": {
+    "scale": 0.08033516165236596,
+    "translation": [
+      1.1118646138807406,
+      0.3265020274428849
+    ],
+    "sourceBounds": [
+      27,
+      17,
+      1215,
+      1257
+    ],
+    "targetBounds": [
+      2.6666666666666665,
+      2.3333333333333335,
+      99.33333333333333,
+      100.66666666666667
+    ],
+    "aspectError": 0.026080009130856396,
+    "warp": "none",
+    "anchor": "numeric construction guide"
+  },
+  "axisChecks": [
+    {
+      "label": "base X contact",
+      "family": "X",
+      "expectedAngle": 26.524611439904167,
+      "measuredAngle": 28.025213988231513,
+      "angleError": 1.5006025483273453,
+      "distance": 0.2304421768707483,
+      "residual": 0.01727432384473271,
+      "positionTolerance": 2,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": false
+    },
+    {
+      "label": "base Y contact",
+      "family": "Y",
+      "expectedAngle": -26.524611439904163,
+      "measuredAngle": -27.434195277652535,
+      "angleError": 0.9095838377483715,
+      "distance": 0.17849099099099097,
+      "residual": 0.02511473711939244,
+      "positionTolerance": 2,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": true
+    },
+    {
+      "label": "base X top",
+      "family": "X",
+      "expectedAngle": 26.524611439904167,
+      "measuredAngle": 27.63699282606439,
+      "angleError": 1.1123813861602216,
+      "distance": 0.5,
+      "residual": 0.08333333333333337,
+      "positionTolerance": 4,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": false
+    },
+    {
+      "label": "base Y top",
+      "family": "Y",
+      "expectedAngle": -26.524611439904163,
+      "measuredAngle": -27.120583429751342,
+      "angleError": 0.5959719898471785,
+      "distance": 2.5,
+      "residual": 0.08035714285714297,
+      "positionTolerance": 4,
+      "samples": 41,
+      "boundarySamples": 0,
+      "passed": true
+    }
+  ]
+}

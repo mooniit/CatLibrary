@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-07T08:12:13.140Z",
+  "path": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "versionName": "0.1.8",
+  "versionCode": 9,
+  "sizeBytes": 188491104,
+  "sha256": "ed3700fbd200768a37add26dbc7fb9b767791acd0edaf9199eabb5f2e6d3869b",
+  "configuration": "normal local Supabase configuration; localhost connection requires existing adb reverse",
+  "testFixtureDefines": false,
+  "artStatus": "contains previous numeric prototypes; v2 refined candidates rejected by geometry gate, not integrated",
+  "phoneInstalled": false,
+  "phoneDeferral": "user requested preserve package and test records, connect later"
+}

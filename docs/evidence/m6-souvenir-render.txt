@@ -1,0 +1,3 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/souvenir_render_test.dart
+00:00 +0: six actual sculpture drawings follow axes, contact, masks and mirrored orientation
+00:00 +1: All tests passed!

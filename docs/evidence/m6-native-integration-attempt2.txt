@@ -1,0 +1,121 @@
+Running Gradle task 'assembleDebug'...                             35.1s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...        1,879ms
+I/flutter ( 7447): The Dart VM service is listening on [private-debug-endpoint]
+D/nativeloader( 7447): Load /data/app/~~qsMDR9K0IHnNSDqkmFz6_g==/com.catlibrary.cat_library_demo-kCK64RlHJUJBFtHC-4GNQw==/base.apk!/lib/x86_64/libdartjni.so using ns clns-7 from class loader (caller=/data/app/~~qsMDR9K0IHnNSDqkmFz6_g==/com.catlibrary.cat_library_demo-kCK64RlHJUJBFtHC-4GNQw==/base.apk!classes5.dex): ok
+W/at_library_demo( 7447): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/at_library_demo( 7447): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/at_library_demo( 7447): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/at_library_demo( 7447): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 7447): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 7447): Width is zero. 0,0
+W/HWUI    ( 7447): Unknown dataspace 0
+I/WindowExtensionsImpl( 7447): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 7447): Width is zero. 0,0
+D/FlutterJNI( 7447): Sending viewport metrics to the engine.
+I/Gralloc4( 7447): mapper 4.x is not supported
+W/HWUI    ( 7447): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 7447): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 7447): Skipped 45 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 7447): Sending viewport metrics to the engine.
+D/ProfileInstaller( 7447): Installing profile for com.catlibrary.cat_library_demo
+VMServiceFlutterDriver: Connecting to Flutter application at [private-debug-endpoint]
+VMServiceFlutterDriver: Isolate found with number: 6408739035827095
+VMServiceFlutterDriver: Isolate 6408739035827095 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/Choreographer( 7447): Skipped 31 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 7447): 00:00 +0: two members travel, lost receipt, return, album, provenance and room save
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 7447): Skipped 51 frames!  The application may be doing too much work on its main thread.
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+D/EGL_emulation( 7447): app_time_stats: avg=1577.55ms min=390.43ms max=3729.57ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=1190.90ms min=1190.90ms max=1190.90ms count=1
+D/EGL_emulation( 7447): app_time_stats: avg=2649.57ms min=2105.56ms max=3193.57ms count=2
+I/at_library_demo( 7447): NativeAlloc concurrent mark compact GC freed 2111KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2688KB/5377KB, paused 213us,8.626ms total 62.318ms
+W/WindowOnBackDispatcher( 7447): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 7447): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 7447): app_time_stats: avg=333.77ms min=20.46ms max=914.33ms count=5
+D/EGL_emulation( 7447): app_time_stats: avg=166.99ms min=65.25ms max=251.70ms count=6
+D/EGL_emulation( 7447): app_time_stats: avg=1359.25ms min=172.83ms max=2545.67ms count=2
+D/EGL_emulation( 7447): app_time_stats: avg=542.93ms min=243.41ms max=1105.68ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=1702.71ms min=1702.71ms max=1702.71ms count=1
+D/EGL_emulation( 7447): app_time_stats: avg=152.17ms min=62.49ms max=234.09ms count=7
+D/EGL_emulation( 7447): app_time_stats: avg=352.52ms min=329.07ms max=383.94ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=367.55ms min=353.21ms max=377.50ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=410.28ms min=363.59ms max=465.77ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=419.36ms min=397.32ms max=447.67ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=373.24ms min=338.33ms max=404.49ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=381.18ms min=345.26ms max=436.79ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=366.15ms min=357.52ms max=372.90ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=399.66ms min=389.46ms max=418.38ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=353.59ms min=341.02ms max=363.13ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=394.81ms min=338.69ms max=469.34ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=372.06ms min=357.76ms max=380.54ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=394.92ms min=327.30ms max=501.90ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=366.59ms min=344.08ms max=386.79ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=375.61ms min=359.10ms max=396.81ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=380.03ms min=365.21ms max=404.11ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=345.44ms min=335.18ms max=354.61ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=370.60ms min=350.25ms max=411.12ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=354.59ms min=323.88ms max=403.14ms count=3
+D/EGL_emulation( 7447): app_time_stats: avg=361.25ms min=344.20ms max=373.48ms count=3
+I/flutter ( 7447): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 7447): The following TestFailure was thrown running a test:
+I/flutter ( 7447): Expected: at least one matching candidate
+I/flutter ( 7447):   Actual: _TextWidgetFinder:<Found 0 widgets with text "远行猫甲回来了": []>
+I/flutter ( 7447):    Which: means none were found but some were expected
+I/flutter ( 7447):
+I/flutter ( 7447): When the exception was thrown, this was the stack:
+I/flutter ( 7447): #4      main.<anonymous closure>.waitFor (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:65:9)
+I/flutter ( 7447): <asynchronous suspension>
+I/flutter ( 7447): #5      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:125:9)
+I/flutter ( 7447): <asynchronous suspension>
+I/flutter ( 7447): #6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 7447): <asynchronous suspension>
+I/flutter ( 7447): #7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 7447): <asynchronous suspension>
+I/flutter ( 7447): #8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 7447): <asynchronous suspension>
+I/flutter ( 7447):
+I/flutter ( 7447): This was caught by the test expectation on the following line:
+I/flutter ( 7447):   file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart line 65
+I/flutter ( 7447): The test description was:
+I/flutter ( 7447):   two members travel, lost receipt, return, album, provenance and room save
+I/flutter ( 7447): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 7447): 00:34 +0: two members travel, lost receipt, return, album, provenance and room save [E]
+I/flutter ( 7447):   Test failed. See exception logs above.
+I/flutter ( 7447):   The test description was: two members travel, lost receipt, return, album, provenance and room save
+I/flutter ( 7447):
+I/flutter ( 7447): 00:34 +0 -1: (tearDownAll)
+D/EGL_emulation( 7447): app_time_stats: avg=23439.01ms min=23439.01ms max=23439.01ms count=1
+I/flutter ( 7447): 00:34 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: two members travel, lost receipt, return, album, provenance and room save
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: at least one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "远行猫甲回来了":
+[]>
+   Which: means none were found but some were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.waitFor (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:65:9)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart:125:9)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///D:/2DoProjects/CatLibrary/integration_test/travel_sync_test.dart line 65
+The test description was:
+  two members travel, lost receipt, return, album, provenance and
+  room save
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
