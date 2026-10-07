@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-07T22:47:38.262Z",
+  "scope": "Explicitly authorized original PJE110 account, local Supabase; no remote grant claimed",
+  "ownerHash": "a943f6a8f8bbfb85773c91bd116a8460154293a073efad8b8444ac4eeacc10a3",
+  "previouslyOwned": 14,
+  "owned": 14,
+  "walletUnchanged": true,
+  "layoutUnchanged": true,
+  "source": "test_grant",
+  "sourceId": "79000000-0000-0000-0000-000000000007",
+  "globalInitialGrant": false,
+  "deviceRefreshVerified": false
+}
