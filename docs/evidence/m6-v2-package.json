@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-07T08:52:24.160Z",
+  "path": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "versionName": "0.1.9",
+  "versionCode": 10,
+  "sizeBytes": 190032657,
+  "sha256": "57ac5bed32b2390d37e75fc8f3a13ba1ffec4a44a819ccafb103e56b1f3eb0b8",
+  "configuration": "normal local Supabase; existing adb reverse 54321 required",
+  "testFixtureDefines": false,
+  "artStatus": "six selected refined sprites integrated by explicit user request; original geometry failure reports retained",
+  "emulatorInstalled": true,
+  "phoneInstalled": false,
+  "phoneDeferral": "phone detected as 119bad33; previous user instruction to preserve package and records remains in effect",
+  "cloudMigration": "202610070009 local only; remote not deployed"
+}

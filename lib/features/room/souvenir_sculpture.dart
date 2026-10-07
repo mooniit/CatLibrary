@@ -1,82 +1,80 @@
-import 'dart:math' as math;
+import 'dart:convert';
 import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
 import 'layout_draft.dart';
 
-/// Registered numeric sculptures; the second facing reflects the first drawing.
+/// Selected artwork registered uniformly in the fixed room coordinate system.
+/// The second facing is an exact pixel reflection of the first.
 class SouvenirSculpture {
   static final _prepared = <String, Future<void>>{};
   static final _sprites = <String, (ui.Rect, ui.Image, ui.Image)>{};
+  // Rendering always uses the bundled registration, including while offline
+  // inventory still contains catalog metadata cached before this art update.
+  static final _registrations = rootBundle
+      .loadString('assets/data/souvenir-products.json')
+      .then(
+        (json) => {
+          for (final p in jsonDecode(json) as List)
+            p['sku'] as String: p['geometry']['sprite'] as Map,
+        },
+      );
+
+  static ui.Rect _rect(Map sprite) {
+    final values = sprite['rect'] as List;
+    return ui.Rect.fromLTWH(
+      (values[0] as num).toDouble(),
+      (values[1] as num).toDouble(),
+      (values[2] as num).toDouble(),
+      (values[3] as num).toDouble(),
+    );
+  }
+
   static Future<void> prepare(
     FurnitureProduct product,
     ui.Offset Function(num, num, [num]) project,
   ) => _prepared.putIfAbsent(product.sku, () async {
-    final bounds = SouvenirSculpture.bounds(
-      const PlacedItem('source'),
-      product,
-      project,
-    );
-    final rect = ui.Rect.fromLTRB(
-      bounds.left.floorToDouble(),
-      bounds.top.floorToDouble(),
-      bounds.right.ceilToDouble(),
-      bounds.bottom.ceilToDouble(),
-    );
-    final firstRecorder = ui.PictureRecorder(),
-        firstCanvas = ui.Canvas(firstRecorder);
-    firstCanvas.translate(-rect.left, -rect.top);
-    _drawModel(firstCanvas, product, project);
-    final firstPicture = firstRecorder.endRecording(),
-        first = await firstPicture.toImage(
-          rect.width.toInt(),
-          rect.height.toInt(),
-        );
-    firstPicture.dispose();
-    final mirrorRecorder = ui.PictureRecorder(),
-        mirrorCanvas = ui.Canvas(mirrorRecorder);
-    mirrorCanvas.translate(rect.width, 0);
-    mirrorCanvas.scale(-1, 1);
-    mirrorCanvas.drawImage(
-      first,
-      ui.Offset.zero,
-      ui.Paint()
-        ..filterQuality = ui.FilterQuality.none
-        ..isAntiAlias = false,
-    );
-    final mirrorPicture = mirrorRecorder.endRecording(),
-        mirror = await mirrorPicture.toImage(first.width, first.height);
-    mirrorPicture.dispose();
-    _sprites[product.sku] = (rect, first, mirror);
+    final sprite = (await _registrations)[product.sku];
+    if (sprite == null) throw StateError('未注册的纪念品：${product.sku}');
+    Future<ui.Image> load(String path) async {
+      final bytes = await rootBundle.load(path);
+      final codec = await ui.instantiateImageCodec(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
+      );
+      try {
+        return (await codec.getNextFrame()).image;
+      } finally {
+        codec.dispose();
+      }
+    }
+
+    final first = await load(sprite['x'] as String);
+    try {
+      final second = await load(sprite['y'] as String);
+      _sprites[product.sku] = (_rect(sprite), first, second);
+    } catch (_) {
+      first.dispose();
+      rethrow;
+    }
   });
-  static List<ui.Offset> _points(
-    Map face,
-    ui.Offset Function(num, num, [num]) project,
-  ) => [for (final p in face['points'] as List) project(p[0], p[1], p[2])];
+
   static ui.Rect bounds(
     PlacedItem item,
     FurnitureProduct product,
     ui.Offset Function(num, num, [num]) project,
   ) {
+    final rect =
+        _sprites[product.sku]?.$1 ?? _rect(product.geometry['sprite'] as Map);
     final center = project(.0625, .0625),
         shift = project(item.gx / 8, item.gy / 8) - project(0, 0);
-    final points =
-        [
-              for (final face in product.geometry['faces'] as List)
-                ..._points(face, project),
-            ]
-            .map(
-              (p) =>
-                  (item.facing == 'y'
-                      ? ui.Offset(2 * center.dx - p.dx, p.dy)
-                      : p) +
-                  shift,
-            )
-            .toList();
-    return ui.Rect.fromLTRB(
-      points.map((p) => p.dx).reduce(math.min),
-      points.map((p) => p.dy).reduce(math.min),
-      points.map((p) => p.dx).reduce(math.max),
-      points.map((p) => p.dy).reduce(math.max),
-    ).inflate(.5);
+    return (item.facing == 'x'
+            ? rect
+            : ui.Rect.fromLTWH(
+                2 * center.dx - rect.right,
+                rect.top,
+                rect.width,
+                rect.height,
+              ))
+        .shift(shift);
   }
 
   static void draw(
@@ -87,40 +85,12 @@ class SouvenirSculpture {
   ) {
     final sprite = _sprites[product.sku];
     if (sprite == null) throw StateError('纪念品素材尚未注册：${product.sku}');
-    final shift = project(item.gx / 8, item.gy / 8) - project(0, 0),
-        center = project(.0625, .0625);
-    final origin = item.facing == 'x'
-        ? sprite.$1.topLeft
-        : ui.Offset(2 * center.dx - sprite.$1.right, sprite.$1.top);
-    canvas.drawImage(
-      item.facing == 'x' ? sprite.$2 : sprite.$3,
-      origin + shift,
+    final image = item.facing == 'x' ? sprite.$2 : sprite.$3;
+    canvas.drawImageRect(
+      image,
+      ui.Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+      bounds(item, product, project),
       ui.Paint()..filterQuality = ui.FilterQuality.medium,
     );
-  }
-
-  static void _drawModel(
-    ui.Canvas canvas,
-    FurnitureProduct product,
-    ui.Offset Function(num, num, [num]) project,
-  ) {
-    for (final face in product.geometry['faces'] as List) {
-      final path = ui.Path()..addPolygon(_points(face, project), true);
-      canvas.drawPath(
-        path,
-        ui.Paint()
-          ..color = ui.Color(
-            int.parse('ff${(face['color'] as String).substring(1)}', radix: 16),
-          ),
-      );
-      canvas.drawPath(
-        path,
-        ui.Paint()
-          ..color = const ui.Color(0xff526773)
-          ..style = ui.PaintingStyle.stroke
-          ..strokeWidth = .45
-          ..strokeJoin = ui.StrokeJoin.round,
-      );
-    }
   }
 }

@@ -2,6 +2,9 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {roomStandard,project,box,boxFaces,sortBoxes} from '../design/room-structure-2026-10-05/geometry.mjs';
 
+assert(!fs.existsSync('assets/images/room/souvenirs-v2/manifest.json'),
+  'Historical numeric prototype generator is retired. Use package-souvenir-v2.mjs; do not overwrite integrated artwork or applied migrations.');
+
 // Deterministic vector sculptures. All visible faces are the actual numeric model,
 // rather than AI textures fitted to an envelope. World cell = .125L.
 const dir='design/souvenirs-2026-10-07';fs.mkdirSync(dir,{recursive:true});

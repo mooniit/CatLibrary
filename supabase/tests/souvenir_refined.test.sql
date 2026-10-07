@@ -1,0 +1,12 @@
+begin;
+select plan(8);
+select is((select count(*)::int from public.furniture_products where kind='souvenir'),6,'same six reward SKUs');
+select is((select label from public.furniture_products where sku='souvenir-louvre'),'维纳斯雕像','Louvre now Venus');
+select is((select geometry->'x'->>'h' from public.furniture_products where sku='souvenir-louvre'),'0.21','Venus complete height');
+select ok((select bool_and(geometry->'x'->'cells'='[[0,0]]'::jsonb and geometry->'y'->'cells'='[[0,0]]'::jsonb) from public.furniture_products where kind='souvenir'),'both facings remain 1x1');
+select ok((select bool_and(not active and not is_test) from public.furniture_products where kind='souvenir'),'still travel rewards, never sold');
+select ok((select bool_and(geometry->'sprite'->>'x' like 'assets/images/room/souvenirs-v2/%-x.png' and geometry->'sprite'->>'y' like 'assets/images/room/souvenirs-v2/%-y.png') from public.furniture_products where kind='souvenir'),'both registered assets exposed');
+select ok((select bool_and(geometry->>'standard'='room-standard-v1' and geometry->'anchor'='[0,0]'::jsonb) from public.furniture_products where kind='souvenir'),'fixed standard and anchor unchanged');
+select ok((select bool_and(geometry->'sprite'->>'density'='3') from public.furniture_products where kind='souvenir'),'threefold source detail, uniform room registration');
+select * from finish();
+rollback;

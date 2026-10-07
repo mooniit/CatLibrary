@@ -1,0 +1,86 @@
+Running Gradle task 'assembleDebug'...                             45.3s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...        2,874ms
+D/nativeloader( 8843): Load /data/app/~~6N79q-_Tej5R7Im7o4j73A==/com.catlibrary.cat_library_demo-pW_76vFagLOpTBlTIcAnHQ==/base.apk!/lib/x86_64/libdartjni.so using ns clns-7 from class loader (caller=/data/app/~~6N79q-_Tej5R7Im7o4j73A==/com.catlibrary.cat_library_demo-pW_76vFagLOpTBlTIcAnHQ==/base.apk!classes5.dex): ok
+W/at_library_demo( 8843): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/at_library_demo( 8843): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/at_library_demo( 8843): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/at_library_demo( 8843): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 8843): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 8843): Width is zero. 0,0
+W/HWUI    ( 8843): Unknown dataspace 0
+I/Choreographer( 8843): Skipped 270 frames!  The application may be doing too much work on its main thread.
+I/WindowExtensionsImpl( 8843): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 8843): Width is zero. 0,0
+D/FlutterJNI( 8843): Sending viewport metrics to the engine.
+I/Gralloc4( 8843): mapper 4.x is not supported
+W/HWUI    ( 8843): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 8843): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 8843): Skipped 88 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 8843): Sending viewport metrics to the engine.
+I/at_library_demo( 8843): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:9726/7BHe0nVD-YI=/
+VMServiceFlutterDriver: Isolate found with number: 4119964440304623
+VMServiceFlutterDriver: Isolate 4119964440304623 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/Choreographer( 8843): Skipped 35 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 8843): 00:00 +0: two members travel, lost receipt, return, album, provenance and room save
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 8843): Installing profile for com.catlibrary.cat_library_demo
+I/Choreographer( 8843): Skipped 85 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 8843): Davey! duration=1784ms; Flags=1, FrameTimelineVsyncId=7375055, IntendedVsync=21818729612629, Vsync=21820146279239, InputEventId=0, HandleInputStart=21820163800165, AnimationStart=21820163808003, PerformTraversalsStart=21820163808659, DrawStart=21820183702574, FrameDeadline=21818746279295, FrameInterval=21820158413461, FrameStartTime=16666666, SyncQueued=21820187513040, SyncStart=21820188277307, IssueDrawCommandsStart=21820191328600, SwapBuffers=21820342166430, FrameCompleted=21820514963651, DequeueBufferDuration=2170858, QueueBufferDuration=797130, GpuCompleted=21820512556561, SwapBuffersCompleted=21820514963651, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=21820342166430,
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+D/EGL_emulation( 8843): app_time_stats: avg=1315.11ms min=264.56ms max=4048.98ms count=4
+D/EGL_emulation( 8843): app_time_stats: avg=1138.51ms min=1138.51ms max=1138.51ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=2862.32ms min=2362.32ms max=3362.33ms count=2
+W/WindowOnBackDispatcher( 8843): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 8843): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 8843): app_time_stats: avg=503.04ms min=17.93ms max=994.30ms count=3
+D/EGL_emulation( 8843): app_time_stats: avg=155.91ms min=11.46ms max=215.85ms count=7
+D/EGL_emulation( 8843): app_time_stats: avg=1350.25ms min=160.76ms max=2539.74ms count=2
+D/EGL_emulation( 8843): app_time_stats: avg=290.54ms min=54.25ms max=442.79ms count=4
+D/EGL_emulation( 8843): app_time_stats: avg=1064.85ms min=1064.85ms max=1064.85ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=2261.36ms min=2261.36ms max=2261.36ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=323.28ms min=81.54ms max=744.00ms count=4
+W/WindowOnBackDispatcher( 8843): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 8843): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 8843): app_time_stats: avg=142.31ms min=23.68ms max=230.82ms count=7
+D/EGL_emulation( 8843): app_time_stats: avg=2369.62ms min=2369.62ms max=2369.62ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=147.28ms min=57.35ms max=253.26ms count=7
+D/EGL_emulation( 8843): app_time_stats: avg=419.90ms min=350.04ms max=475.41ms count=3
+D/EGL_emulation( 8843): app_time_stats: avg=1040.17ms min=1040.17ms max=1040.17ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=3212.67ms min=3212.67ms max=3212.67ms count=1
+W/WindowOnBackDispatcher( 8843): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 8843): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 8843): app_time_stats: avg=336.27ms min=25.57ms max=730.65ms count=4
+D/EGL_emulation( 8843): app_time_stats: avg=1549.91ms min=1549.91ms max=1549.91ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=260.22ms min=11.92ms max=1107.88ms count=7
+W/WindowOnBackDispatcher( 8843): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 8843): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 8843): app_time_stats: avg=151.16ms min=24.19ms max=438.09ms count=7
+D/EGL_emulation( 8843): app_time_stats: avg=3315.66ms min=3315.66ms max=3315.66ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=198.82ms min=6.73ms max=548.52ms count=6
+D/EGL_emulation( 8843): app_time_stats: avg=147.54ms min=41.70ms max=319.88ms count=7
+D/EGL_emulation( 8843): app_time_stats: avg=1034.65ms min=1034.65ms max=1034.65ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=2650.19ms min=2650.19ms max=2650.19ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=557.49ms min=28.81ms max=1086.18ms count=2
+D/EGL_emulation( 8843): app_time_stats: avg=1845.96ms min=1845.96ms max=1845.96ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=2000.05ms min=2000.05ms max=2000.05ms count=1
+W/WindowOnBackDispatcher( 8843): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 8843): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 8843): app_time_stats: avg=361.23ms min=327.60ms max=411.71ms count=3
+D/EGL_emulation( 8843): app_time_stats: avg=6684.44ms min=6684.44ms max=6684.44ms count=1
+I/at_library_demo( 8843): Background concurrent mark compact GC freed 926KB AllocSpace bytes, 52(1824KB) LOS objects, 49% free, 2690KB/5380KB, paused 54us,5.712ms total 30.667ms
+D/EGL_emulation( 8843): app_time_stats: avg=144.74ms min=17.32ms max=273.54ms count=8
+D/EGL_emulation( 8843): app_time_stats: avg=128.25ms min=23.32ms max=364.11ms count=10
+D/EGL_emulation( 8843): app_time_stats: avg=181.36ms min=35.00ms max=356.98ms count=6
+D/EGL_emulation( 8843): app_time_stats: avg=1840.17ms min=997.02ms max=2683.32ms count=2
+D/EGL_emulation( 8843): app_time_stats: avg=156.54ms min=25.63ms max=319.02ms count=7
+D/EGL_emulation( 8843): app_time_stats: avg=312.71ms min=29.21ms max=1034.21ms count=5
+D/EGL_emulation( 8843): app_time_stats: avg=2268.61ms min=2268.61ms max=2268.61ms count=1
+D/EGL_emulation( 8843): app_time_stats: avg=168.16ms min=32.97ms max=394.04ms count=7
+I/flutter ( 8843): 00:39 +1: (tearDownAll)
+I/flutter ( 8843): 00:39 +2: All tests passed!
+D/EGL_emulation( 8843): app_time_stats: avg=804.39ms min=781.75ms max=827.03ms count=2
+All tests passed.

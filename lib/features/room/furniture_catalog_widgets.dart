@@ -353,7 +353,9 @@ class FurnitureGrid extends StatelessWidget {
                 (i) => layout?.items.any((x) => x.instanceId == i.id) == true,
               )
               .length;
-          final count = '$own/${p.purchaseLimit ?? 1}';
+          final count = p.kind == 'souvenir'
+              ? '$own'
+              : '$own/${p.purchaseLimit ?? 1}';
           return Material(
             color: colors.surfaceContainerLow,
             shape: RoundedRectangleBorder(
@@ -494,7 +496,11 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
                 ),
                 SizedBox(height: 180, child: FurnitureThumbnail(product: p)),
                 const SizedBox(height: 12),
-                Text('已拥有 ${widget.owned}/${p.purchaseLimit ?? 1}'),
+                Text(
+                  p.kind == 'souvenir'
+                      ? '已拥有 ${widget.owned}'
+                      : '已拥有 ${widget.owned}/${p.purchaseLimit ?? 1}',
+                ),
                 if (widget.ownership != null)
                   Text(
                     widget.ownership!,

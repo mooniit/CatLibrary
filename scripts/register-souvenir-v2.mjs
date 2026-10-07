@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createRequire} from 'node:module';
 import {registerSource} from '../design/room-themes-2026-10-06/register-source.mjs';
-const dir='design/souvenirs-2026-10-07/v2', out='assets/images/room/souvenirs-v2';
+const dir='design/souvenirs-2026-10-07/v2', out=`${dir}/validated`;
 const {chromium}=createRequire(path.resolve('.tooling/browser/package.json'))('playwright-core');
 const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true}),page=await browser.newPage();
 const data=p=>'data:image/png;base64,'+fs.readFileSync(p).toString('base64');

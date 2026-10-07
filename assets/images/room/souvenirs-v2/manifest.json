@@ -1,0 +1,254 @@
+[
+  {
+    "sku": "souvenir-palace",
+    "label": "故宫宫殿",
+    "sprite": {
+      "x": "assets/images/room/souvenirs-v2/palace-x.png",
+      "y": "assets/images/room/souvenirs-v2/palace-y.png",
+      "rect": [
+        487,
+        488,
+        106,
+        109
+      ],
+      "density": 3
+    },
+    "sourceSha256": "8ec9b483cf116b4f67ed0888f3e7db25aab4cd9756a504e199edf399fa1a4c8e",
+    "registration": {
+      "scale": 0.08033516165236596,
+      "translation": [
+        1.1118646138807406,
+        0.3265020274428849
+      ],
+      "sourceBounds": [
+        27,
+        17,
+        1215,
+        1257
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        2.3333333333333335,
+        99.33333333333333,
+        100.66666666666667
+      ],
+      "aspectError": 0.026080009130856396,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "geometryPassed": false,
+    "admission": "user-authorized-selected-draft-2026-10-07",
+    "transparentEdgePixels": 0,
+    "secondFacing": "exact RGBA pixel reflection of first"
+  },
+  {
+    "sku": "souvenir-louvre",
+    "label": "维纳斯雕像",
+    "sprite": {
+      "x": "assets/images/room/souvenirs-v2/louvre-x.png",
+      "y": "assets/images/room/souvenirs-v2/louvre-y.png",
+      "rect": [
+        486,
+        436,
+        108,
+        160
+      ],
+      "density": 3
+    },
+    "sourceSha256": "62b79a82449d443304fb1156d9e8c6d978d5d2500883d74a4f4ce3d6caa8b500",
+    "registration": {
+      "scale": 0.0991640896461802,
+      "translation": [
+        0.6742245045635471,
+        0.025364025476662277
+      ],
+      "sourceBounds": [
+        25,
+        29,
+        990,
+        1547
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.6666666666666665,
+        99.33333333333333,
+        152.66666666666666
+      ],
+      "aspectError": 0.020551517891296056,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "geometryPassed": false,
+    "admission": "user-authorized-selected-draft-2026-10-07",
+    "transparentEdgePixels": 0,
+    "secondFacing": "exact RGBA pixel reflection of first"
+  },
+  {
+    "sku": "souvenir-fuji",
+    "label": "富士山",
+    "sprite": {
+      "x": "assets/images/room/souvenirs-v2/fuji-x.png",
+      "y": "assets/images/room/souvenirs-v2/fuji-y.png",
+      "rect": [
+        484,
+        503,
+        112,
+        94
+      ],
+      "density": 3
+    },
+    "sourceSha256": "bebbcb2aa73e577a1902deb646a6f1280da2974726da83e8b7535cf93fb9f9da",
+    "registration": {
+      "scale": 0.07656200048343456,
+      "translation": [
+        -1.9043423340532826,
+        -4.907767961803465
+      ],
+      "sourceBounds": [
+        36,
+        121,
+        1346,
+        1100
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3,
+        99.33333333333333,
+        80.66666666666667
+      ],
+      "aspectError": 0.069848966353242,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "geometryPassed": false,
+    "admission": "user-authorized-selected-draft-2026-10-07",
+    "transparentEdgePixels": 0,
+    "secondFacing": "exact RGBA pixel reflection of first"
+  },
+  {
+    "sku": "souvenir-pyramid",
+    "label": "埃及金字塔",
+    "sprite": {
+      "x": "assets/images/room/souvenirs-v2/pyramid-x.png",
+      "y": "assets/images/room/souvenirs-v2/pyramid-y.png",
+      "rect": [
+        486,
+        493,
+        108,
+        105
+      ],
+      "density": 3
+    },
+    "sourceSha256": "6664565d8e80231b429dee5276f56d18698dd3f02cd23e43a8732423277330a8",
+    "registration": {
+      "scale": 0.07930327233578432,
+      "translation": [
+        0.5234671582732773,
+        0.5698809688210744
+      ],
+      "sourceBounds": [
+        31,
+        31,
+        1242,
+        1203
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.3333333333333335,
+        99.33333333333333,
+        95.66666666666667
+      ],
+      "aspectError": 0.01321520240157148,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "geometryPassed": false,
+    "admission": "user-authorized-selected-draft-2026-10-07",
+    "transparentEdgePixels": 0,
+    "secondFacing": "exact RGBA pixel reflection of first"
+  },
+  {
+    "sku": "souvenir-eiffel",
+    "label": "埃菲尔铁塔",
+    "sprite": {
+      "x": "assets/images/room/souvenirs-v2/eiffel-x.png",
+      "y": "assets/images/room/souvenirs-v2/eiffel-y.png",
+      "rect": [
+        485,
+        431,
+        110,
+        169
+      ],
+      "density": 3
+    },
+    "sourceSha256": "e3aba3cadf1a5256ca5875e3230c59dc5fede9333874a25b29851356f0614491",
+    "registration": {
+      "scale": 0.10241991714859931,
+      "translation": [
+        -0.05632869857675615,
+        0.9709343341126271
+      ],
+      "sourceBounds": [
+        26,
+        24,
+        971,
+        1529
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.3333333333333335,
+        99.33333333333333,
+        157.66666666666666
+      ],
+      "aspectError": 0.0024798016158706915,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "geometryPassed": false,
+    "admission": "user-authorized-selected-draft-2026-10-07",
+    "transparentEdgePixels": 0,
+    "secondFacing": "exact RGBA pixel reflection of first"
+  },
+  {
+    "sku": "souvenir-liberty",
+    "label": "自由女神像",
+    "sprite": {
+      "x": "assets/images/room/souvenirs-v2/liberty-x.png",
+      "y": "assets/images/room/souvenirs-v2/liberty-y.png",
+      "rect": [
+        486,
+        425,
+        108,
+        172
+      ],
+      "density": 3
+    },
+    "sourceSha256": "dc9096baf9d81ae856175cf6aff401c2f6c60221c61f709ef07149d9cd45bc6d",
+    "registration": {
+      "scale": 0.10270943987879748,
+      "translation": [
+        0.8264386192074298,
+        1.1260845246588929
+      ],
+      "sourceBounds": [
+        27,
+        9,
+        950,
+        1608
+      ],
+      "targetBounds": [
+        2.6666666666666665,
+        3.6666666666666665,
+        99.33333333333333,
+        164.66666666666666
+      ],
+      "aspectError": 0.04015396728195242,
+      "warp": "none",
+      "anchor": "numeric construction guide"
+    },
+    "geometryPassed": false,
+    "admission": "user-authorized-selected-draft-2026-10-07",
+    "transparentEdgePixels": 0,
+    "secondFacing": "exact RGBA pixel reflection of first"
+  }
+]

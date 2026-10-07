@@ -1,0 +1,42 @@
+Running Gradle task 'assembleDebug'...                             79.2s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...           6.8s
+D/nativeloader( 8729): Load /data/app/~~azyLw2Nr6lqiwM4UpuTqjA==/com.catlibrary.cat_library_demo-3UkHnzNsOsPAGvWBAXV3MA==/base.apk!/lib/x86_64/libdartjni.so using ns clns-7 from class loader (caller=/data/app/~~azyLw2Nr6lqiwM4UpuTqjA==/com.catlibrary.cat_library_demo-3UkHnzNsOsPAGvWBAXV3MA==/base.apk!classes5.dex): ok
+W/at_library_demo( 8729): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/at_library_demo( 8729): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/at_library_demo( 8729): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/at_library_demo( 8729): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 8729): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 8729): Width is zero. 0,0
+W/HWUI    ( 8729): Unknown dataspace 0
+D/ProfileInstaller( 8729): Installing profile for com.catlibrary.cat_library_demo
+I/WindowExtensionsImpl( 8729): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 8729): Width is zero. 0,0
+D/FlutterJNI( 8729): Sending viewport metrics to the engine.
+I/Gralloc4( 8729): mapper 4.x is not supported
+W/HWUI    ( 8729): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/at_library_demo( 8729): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 8729): Skipped 110 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 8729): Sending viewport metrics to the engine.
+I/at_library_demo( 8729): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:9150/SKT5pjNMs-s=/
+VMServiceFlutterDriver: Isolate found with number: 6463681107312071
+VMServiceFlutterDriver: Isolate 6463681107312071 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 8729): 00:00 +0: six refined souvenirs in the existing native room, both facings and preview
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 8729): Skipped 40 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 8729): Skipped 31 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 8729): Skipped 65 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 8729): Davey! duration=858ms; Flags=1, FrameTimelineVsyncId=7365940, IntendedVsync=21686512951251, Vsync=21686712951243, InputEventId=0, HandleInputStart=21686753081148, AnimationStart=21686753084158, PerformTraversalsStart=21686753084939, DrawStart=21686831074216, FrameDeadline=21686529617917, FrameInterval=21686729411712, FrameStartTime=16666666, SyncQueued=21686852090496, SyncStart=21686856058092, IssueDrawCommandsStart=21686864135294, SwapBuffers=21687199696043, FrameCompleted=21687375330329, DequeueBufferDuration=1923955, QueueBufferDuration=3983453, GpuCompleted=21687373329013, SwapBuffersCompleted=21687375330329, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=21687199696043,
+D/EGL_emulation( 8729): app_time_stats: avg=1661.68ms min=1639.84ms max=1683.53ms count=2
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+D/EGL_emulation( 8729): app_time_stats: avg=226.89ms min=92.34ms max=452.21ms count=5
+D/EGL_emulation( 8729): app_time_stats: avg=136.98ms min=114.72ms max=159.94ms count=8
+D/EGL_emulation( 8729): app_time_stats: avg=141.27ms min=115.86ms max=196.13ms count=8
+D/EGL_emulation( 8729): app_time_stats: avg=220.46ms min=106.91ms max=690.61ms count=6
+D/EGL_emulation( 8729): app_time_stats: avg=1852.60ms min=398.49ms max=6084.17ms count=4
+I/flutter ( 8729): 00:10 +1: (tearDownAll)
+I/flutter ( 8729): 00:10 +2: All tests passed!
+All tests passed.
