@@ -1,0 +1,5 @@
+PASS real TaskBoardPage, existing tasks/records visible
+PASS real StudyPage, timer modes/presets visible
+PASS four-page navigation; no timers, purchases or data clearing performed
+    versionCode=12 minSdk=24 targetSdk=36
+    versionName=0.1.11

@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-07T23:43:39.3341772Z",
+  "path": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "versionName": "0.1.11",
+  "versionCode": 12,
+  "sizeBytes": 168896374,
+  "sha256": "699a0f4d4754bd23120369ff28ea6232cdbd8d0b80d0f66af03da53182aaa54d",
+  "configuration": "normal local Supabase; adb reverse 54321 required; no remote deployment",
+  "testFixtureDefines": false,
+  "analyze": "No issues found",
+  "flutterTests": 116,
+  "emulatorInstall": "Success",
+  "emulatorNavigation": "PASS home/tasks/study/countdown/reading; no timer or asset actions",
+  "nativeCatVisual": "PASS light/night in-memory fixture; no cloud writes",
+  "phoneInstall": "pending; no physical ADB device detected",
+  "nativeReconnect": "PASS local service fault, cold-start cache, identity/wallet preserved; remote not verified"
+}
