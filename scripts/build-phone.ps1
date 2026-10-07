@@ -5,6 +5,8 @@ Set-Location $projectRoot
 if (-not (Test-Path -LiteralPath $DefinesFile)) {
   throw "Missing phone configuration: $DefinesFile. Refusing to build a preview-only APK."
 }
+& node (Join-Path $PSScriptRoot 'cloud-config.cjs') $DefinesFile
+if ($LASTEXITCODE -ne 0) { throw 'Phone configuration validation failed; no APK was built.' }
 $phoneConfig = Get-Content -LiteralPath $DefinesFile -Raw | ConvertFrom-Json
 if ([string]::IsNullOrWhiteSpace($phoneConfig.SUPABASE_URL) -or
     [string]::IsNullOrWhiteSpace($phoneConfig.SUPABASE_ANON_KEY)) {

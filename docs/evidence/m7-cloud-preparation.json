@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-10-07T23:56:06.808Z",
+  "configurationTests": 8,
+  "preflightTests": 6,
+  "invalidBuildConfigBlocked": true,
+  "existingApkPreserved": true,
+  "normalLocalConfigAccepted": true,
+  "buildScriptSyntaxPassed": true,
+  "migrationCount": 45,
+  "migrationManifestSha256": "77a4834405fdcfd2b8f9cd7b413ade938bcab5fc6b524f001de55980615a1b64",
+  "localReadOnlyProbe": {
+    "origin": "http://127.0.0.1:54321",
+    "environment": "local",
+    "keyType": "anon",
+    "checks": [
+      {
+        "service": "auth",
+        "passed": true,
+        "httpStatus": 200,
+        "anonymousSignupEnabled": true
+      },
+      {
+        "service": "rest",
+        "passed": true,
+        "httpStatus": 200
+      }
+    ],
+    "readOnlyPreflightPassed": true,
+    "migrationsVerified": false,
+    "originalIdentityMigrated": false,
+    "mobileInternetVerified": false
+  },
+  "remoteProjectCreated": false,
+  "remoteMigrationsApplied": false,
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false,
+  "databaseModified": false,
+  "accountsCreated": false
+}
