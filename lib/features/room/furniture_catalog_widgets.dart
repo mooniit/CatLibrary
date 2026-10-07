@@ -5,12 +5,13 @@ import 'package:flutter/services.dart';
 import 'lunar_room.dart';
 import 'room_furniture.dart';
 import 'layout_draft.dart';
+import 'souvenir_sculpture.dart';
 
 const furnitureCategories = {
   'all': 'All',
   'furniture': '家具',
   'cats': '猫用',
-  'decoration': '地毯',
+  'decoration': '装饰',
   'windows': '窗画',
   'renovation': '装修',
 };
@@ -26,7 +27,7 @@ const furnitureCategoryIcons = {
 String furnitureCategory(String kind) => switch (kind) {
   'bookshelf' || 'desk' || 'chair' => 'furniture',
   'tree' || 'bed' => 'cats',
-  'rug' => 'decoration',
+  'rug' || 'souvenir' => 'decoration',
   'window' || 'frame' || 'painting' => 'windows',
   'wall' || 'floor' => 'renovation',
   _ => throw ArgumentError.value(kind, 'kind', 'Unregistered furniture kind'),
@@ -163,8 +164,45 @@ class FurnitureThumbnail extends StatelessWidget {
     return result;
   }
 
+  static Future<ui.Image> _souvenir(FurnitureProduct p) async {
+    final catalog =
+        jsonDecode(
+              await rootBundle.loadString(
+                'assets/images/room/lunar-v5/catalog.json',
+              ),
+            )
+            as Map<String, dynamic>;
+    final renderer = LunarRoom(catalog, {});
+    await SouvenirSculpture.prepare(p, renderer.project);
+    const item = PlacedItem('thumbnail');
+    final bounds = SouvenirSculpture.bounds(item, p, renderer.project);
+    final recorder = ui.PictureRecorder(), canvas = Canvas(recorder);
+    final scale = (300 / bounds.width).clamp(0.0, 210 / bounds.height);
+    canvas.translate(
+      (320 - bounds.width * scale) / 2,
+      (230 - bounds.height * scale) / 2,
+    );
+    canvas.scale(scale);
+    canvas.translate(-bounds.left, -bounds.top);
+    SouvenirSculpture.draw(canvas, item, p, renderer.project);
+    final picture = recorder.endRecording(),
+        result = await picture.toImage(320, 230);
+    picture.dispose();
+    return result;
+  }
+
   @override
-  Widget build(BuildContext context) => product.artwork == null
+  Widget build(BuildContext context) => product.kind == 'souvenir'
+      ? FutureBuilder<ui.Image>(
+          future: _thumbnails.putIfAbsent(
+            product.sku,
+            () => _souvenir(product),
+          ),
+          builder: (_, snapshot) => snapshot.hasData
+              ? RawImage(image: snapshot.data, fit: BoxFit.contain)
+              : const SizedBox.shrink(),
+        )
+      : product.artwork == null
       ? Image.asset(
           '${product.assetRoot}${product.sprite}.png',
           fit: BoxFit.contain,

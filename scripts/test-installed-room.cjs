@@ -1,7 +1,8 @@
 const assert = require('node:assert/strict');
 const p = require('./test-android-probe.cjs');
 const physical = process.argv.includes('--physical');
-const prefix = process.argv.includes('--m5') ? (physical ? 'm5-phone' : 'm5-emulator')
+const prefix = process.argv.includes('--m6') ? (physical ? 'm6-phone' : 'm6-emulator')
+  : process.argv.includes('--m5') ? (physical ? 'm5-phone' : 'm5-emulator')
   : physical ? 'lunar-restored-phone' : 'lunar-restored-emulator';
 function labels() { return p.nodes().map(n => n['content-desc'] || n.text || '').filter(Boolean); }
 async function screenshot(name) {

@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 
 import 'room_furniture.dart';
 import 'lunar_room.dart';
+import 'souvenir_sculpture.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'layout_draft.dart';
 import '../shop/shop_repository.dart';
 
@@ -115,7 +118,8 @@ class RoomScene extends FlameGame {
   }
 
   bool showGrid = false;
-  bool get geometryReady => _lunar != null;
+  bool _geometryReady = false;
+  bool get geometryReady => _geometryReady;
   bool night = false;
 
   @override
@@ -127,10 +131,21 @@ class RoomScene extends FlameGame {
       _artworks[style] = await images.load(style.asset);
     }
     _lunar = await LunarRoom.load(images.load);
+    for (final value
+        in jsonDecode(
+              await rootBundle.loadString('assets/data/souvenir-products.json'),
+            )
+            as List) {
+      await SouvenirSculpture.prepare(
+        FurnitureProduct.fromJson(Map<String, dynamic>.from(value)),
+        _lunar!.project,
+      );
+    }
     _themes['lunar'] = _lunar!;
     for (final theme in ['wood', 'royal']) {
       _themes[theme] = await LunarRoom.load(images.load, theme: theme);
     }
+    _geometryReady = true;
     _applyInitialFocus();
     notifyPreviewChanged();
   }

@@ -3,6 +3,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../family/family_page.dart';
 import '../identity/identity_repository.dart';
 import 'cats_repository.dart';
+import '../travel/travel_repository.dart';
+import '../travel/travel_sheet.dart';
+import '../../core/storage/app_database.dart';
 
 class CatsPage extends StatefulWidget {
   const CatsPage({
@@ -74,7 +77,9 @@ class _CatsPageState extends State<CatsPage> {
         }
         if (action == 'adopt_cat') name.clear();
         if (action == 'feed_cat') {
-          notice = result['outcome'] == 'fed'
+          notice = result['outcome'] == 'traveling'
+              ? '这只猫旅行中，不需要喂食。'
+              : result['outcome'] == 'fed'
               ? '已支付 15 喵喵币，今天不用再为这只猫付费。'
               : '这只猫今天已喂食，没有重复扣款。';
         }
@@ -165,6 +170,28 @@ class _CatsPageState extends State<CatsPage> {
             ),
           ],
           if (hasFamily) ...[
+            ListTile(
+              leading: const Icon(Icons.flight_takeoff_outlined),
+              title: const Text('猫咪旅行'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: busy
+                  ? null
+                  : () async {
+                      await Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => TravelSheet(
+                            repository: TravelRepository(
+                              AppDatabase.shared,
+                              widget.ownerId,
+                              rpc: widget.call,
+                            ),
+                            onWallet: widget.onWallet,
+                          ),
+                        ),
+                      );
+                      if (mounted) await act('cats_state');
+                    },
+            ),
             if (repairing)
               const Card(
                 child: ListTile(
@@ -192,9 +219,18 @@ class _CatsPageState extends State<CatsPage> {
                   title: Text(cat['name'] as String),
                   subtitle: Text(
                     '${appearances[cat['appearance']]}\n登记主人：${cat['is_mine'] == true ? '我' : cat['owner_id']}'
-                    '\n${cat['fed_today'] == true ? '今日已喂食' : '今日尚未喂食'}',
+                    '\n${cat['traveling'] == true
+                        ? '旅行中，无需喂食'
+                        : cat['fed_today'] == true
+                        ? '今日已喂食'
+                        : '今日尚未喂食'}',
                   ),
-                  trailing: cat['fed_today'] == true
+                  trailing: cat['traveling'] == true
+                      ? const Icon(
+                          Icons.flight_takeoff_outlined,
+                          semanticLabel: '旅行中',
+                        )
+                      : cat['fed_today'] == true
                       ? const Icon(
                           Icons.check_circle_outline,
                           semanticLabel: '今日已喂食',

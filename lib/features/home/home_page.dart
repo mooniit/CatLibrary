@@ -21,6 +21,8 @@ import '../shop/shop_repository.dart';
 import '../shop/shop_preview_overlay.dart';
 import '../../core/storage/app_database.dart';
 import 'home_controls.dart';
+import '../album/album_page.dart';
+import '../travel/travel_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -227,10 +229,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       if (!mounted || request != _request) return;
       final cats = [
         for (final cat in result['cats'] as List)
-          (
-            name: cat['name'] as String,
-            appearance: cat['appearance'] as String,
-          ),
+          if (cat['traveling'] != true)
+            (
+              name: cat['name'] as String,
+              appearance: cat['appearance'] as String,
+            ),
       ];
       setState(() {
         scene.cats = cats;
@@ -457,10 +460,35 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) =>
-            CatsPage(ownerId: wallet.ownerId, onWallet: widget.onWallet),
+            CatsPage(ownerId: wallet.ownerId, onWallet: acceptWallet),
       ),
     );
     if (mounted) await refreshCats();
+  }
+
+  Future<void> openAlbum() async {
+    final wallet = widget.wallet;
+    if (wallet == null) {
+      info('相册', '连接小屋后可以查看家庭旅行回忆。');
+      return;
+    }
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (_) => AlbumPage(
+          onWallet: acceptWallet,
+          repository: TravelRepository(
+            widget.shopRepository?.database ?? AppDatabase.shared,
+            wallet.ownerId,
+            rpc: widget.shopRepository?.call,
+          ),
+        ),
+      ),
+    );
+    if (mounted) {
+      await refreshCats();
+      await loadFurniture();
+    }
   }
 
   Future<void> openSettings() async {
@@ -694,7 +722,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   onCats: openCats,
                   onStore: openStore,
                   onArrange: openArrange,
-                  onAlbum: () => info('相册', '还没有旅行照片。'),
+                  onAlbum: openAlbum,
                   onSettings: openSettings,
                 ),
               ),

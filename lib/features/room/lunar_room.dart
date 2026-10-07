@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'room_furniture.dart';
 import 'layout_draft.dart';
 import 'basic_room_surfaces.dart';
+import 'souvenir_sculpture.dart';
 
 /// Independent approved sprites placed in the frozen room-standard-v1 camera.
 class LunarRoom {
@@ -305,6 +306,17 @@ class LunarRoom {
         .toList();
     for (final item in sortPlaced(floor, products, inventory)) {
       final p = product(item)!;
+      if (p.kind == 'souvenir') {
+        if (selected != null && selected != item.instanceId) {
+          canvas.saveLayer(
+            null,
+            ui.Paint()..color = const ui.Color(0x70ffffff),
+          );
+        }
+        SouvenirSculpture.draw(canvas, item, p, project);
+        if (selected != null && selected != item.instanceId) canvas.restore();
+        continue;
+      }
       final renderer = skin(item);
       final f = (renderer.catalog['fixtures'] as List).firstWhere(
         (f) => f['id'] == p.kind,
@@ -330,6 +342,7 @@ class LunarRoom {
     Map<String, LunarRoom> themes,
   ) {
     final renderer = themes[p.theme] ?? this;
+    if (p.kind == 'souvenir') return SouvenirSculpture.bounds(item, p, project);
     if (p.placement == 'ground') {
       final fixture = (renderer.catalog['fixtures'] as List).firstWhere(
         (f) => f['id'] == p.kind,
@@ -381,7 +394,9 @@ class LunarRoom {
       null,
       ui.Paint()..color = const ui.Color(0xffffffff).withValues(alpha: opacity),
     );
-    if (p.placement == 'ground') {
+    if (p.kind == 'souvenir') {
+      SouvenirSculpture.draw(canvas, item, p, project);
+    } else if (p.placement == 'ground') {
       final f = (renderer.catalog['fixtures'] as List).firstWhere(
         (f) => f['id'] == p.kind,
       );

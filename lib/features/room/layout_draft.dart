@@ -37,15 +37,35 @@ class FurnitureProduct {
 }
 
 class InventoryInstance {
-  const InventoryInstance(this.id, this.sku, this.purchasedBy, this.source);
+  const InventoryInstance(
+    this.id,
+    this.sku,
+    this.purchasedBy,
+    this.source, {
+    this.sourceCatId,
+    this.sourceCatName,
+    this.sourceTripId,
+    this.sourceDestination,
+    this.sourceDate,
+  });
   factory InventoryInstance.fromJson(Map value) => InventoryInstance(
     value['id'],
     value['sku'],
     value['purchased_by'],
     value['source'],
+    sourceCatId: value['source_cat_id'],
+    sourceCatName: value['source_cat_name'],
+    sourceTripId: value['source_trip_id'],
+    sourceDestination: value['source_destination'],
+    sourceDate: value['source_date'],
   );
   final String id, sku, source;
   final String? purchasedBy;
+  final String? sourceCatId,
+      sourceCatName,
+      sourceTripId,
+      sourceDestination,
+      sourceDate;
 }
 
 class PlacedItem {

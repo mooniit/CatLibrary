@@ -301,7 +301,8 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
               slot: p.placement == 'ground' ? null : slots.first,
               artwork: p.artwork ?? 'starry',
             );
-        message = '选中${p.label}，预览尚未确认到草稿';
+        message =
+            '选中${p.label}${instance.sourceCatName == null ? '' : ' · 来自${instance.sourceCatName}的${instance.sourceDestination}旅行'}，预览尚未确认到草稿';
         scene.setFurnitureFocus(draft!.preview, p, refocus: true);
       }),
     );
@@ -313,7 +314,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
         .where((i) => i.sku == product.sku)
         .toList();
     InventoryInstance? chosen;
-    if (options.length == 1) {
+    if (options.length == 1 && product.kind != 'souvenir') {
       chosen = options.single;
     } else {
       chosen = await showModalBottomSheet<InventoryInstance>(
@@ -327,9 +328,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                 ListTile(
                   title: Text(product.label),
                   subtitle: Text(
-                    draft!.layout.items.any((p) => p.instanceId == i.id)
-                        ? '已摆放 · ${i.id.substring(0, 8)}'
-                        : '库存 · ${i.id.substring(0, 8)}',
+                    '${i.sourceCatName == null ? '' : '${i.sourceCatName} · ${i.sourceDestination}\n'}${draft!.layout.items.any((p) => p.instanceId == i.id) ? '已摆放 · ${i.id.substring(0, 8)}' : '库存 · ${i.id.substring(0, 8)}'}',
                   ),
                   onTap: () => Navigator.pop(c, i),
                 ),
