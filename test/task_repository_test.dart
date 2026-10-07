@@ -57,7 +57,7 @@ void main() {
     final db = AppDatabase(NativeDatabase.memory());
     addTearDown(db.close);
     await db.queueExchange('a', 'request-1', 'eagle');
-    expect(await db.pendingExchange('a'), ('request-1', 'eagle'));
+    expect(await db.pendingExchange('a'), ('request-1', 'eagle', 1));
     await db.acknowledgeExchange('a', 'request-1');
     expect(await db.pendingExchange('a'), isNull);
   });

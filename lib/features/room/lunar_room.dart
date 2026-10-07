@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 
 import 'room_furniture.dart';
+import 'layout_draft.dart';
 
 /// Independent approved sprites placed in the frozen room-standard-v1 camera.
 class LunarRoom {
@@ -14,22 +15,24 @@ class LunarRoom {
   static const assetRoot = 'room/lunar-v5/';
 
   static Future<LunarRoom> load(
-    Future<ui.Image> Function(String) loadImage,
-  ) async {
+    Future<ui.Image> Function(String) loadImage, {
+    String theme = 'lunar-v5',
+  }) async {
+    final root = 'room/$theme/';
     final catalog =
         jsonDecode(
-              await rootBundle.loadString(
-                'assets/images/${assetRoot}catalog.json',
-              ),
+              await rootBundle.loadString('assets/images/${root}catalog.json'),
             )
             as Map<String, dynamic>;
     final images = <String, ui.Image>{};
     final layers = catalog['layers'] as Map<String, dynamic>;
     for (final entry in layers.entries) {
-      images[entry.key] = await loadImage('$assetRoot${entry.value['file']}');
+      images[entry.key] = await loadImage('$root${entry.value['file']}');
     }
-    for (final mode in ['day', 'night']) {
-      images['sky-$mode'] = await loadImage('${assetRoot}sky-$mode.png');
+    if (theme == 'lunar-v5') {
+      for (final mode in ['day', 'night']) {
+        images['sky-$mode'] = await loadImage('${root}sky-$mode.png');
+      }
     }
     return LunarRoom(catalog, images);
   }
@@ -168,8 +171,9 @@ class LunarRoom {
     ui.Canvas canvas,
     Map slot,
     RoomFurnishings room,
-    Map<ArtworkStyle, ui.Image> artworks,
-  ) {
+    Map<ArtworkStyle, ui.Image> artworks, {
+    bool pairedDefaults = true,
+  }) {
     final side = slot['wall'] as String;
     final back = (slot['id'] as String).endsWith('back');
     final key = room.frameTemplate == 'auto'
@@ -187,7 +191,7 @@ class LunarRoom {
     final innerH = (opening['top'] - opening['bottom']) as double;
     final center = centerS - w / 2 + (opening['left'] + opening['right']) / 2;
     final bottom = z + opening['bottom'];
-    final art = room.artwork == ArtworkStyle.starry && !back
+    final art = pairedDefaults && room.artwork == ArtworkStyle.starry && !back
         ? ArtworkStyle.pearl
         : room.artwork;
     final image = artworks[art]!;
@@ -217,6 +221,248 @@ class LunarRoom {
         ? project(0, centerS, centerZ)
         : project(centerS, 0, centerZ);
     drawLayer(canvas, 'frame-$key-$side', destination - original);
+  }
+
+  /// Placement translates registered sprites along world axes, never stretches them.
+  void renderPlaced(
+    ui.Canvas canvas,
+    RoomLayout layout,
+    Map<String, FurnitureProduct> products,
+    List<InventoryInstance> inventory,
+    Map<String, LunarRoom> themes,
+    bool night,
+    Map<ArtworkStyle, ui.Image> artworks, {
+    String? selected,
+  }) {
+    final byId = {for (final i in inventory) i.id: i};
+    FurnitureProduct? product(PlacedItem i) =>
+        products[byId[i.instanceId]?.sku];
+    PlacedItem? mounted(String slot) =>
+        layout.items.where((i) => i.slot == slot).firstOrNull;
+    LunarRoom skin(PlacedItem? i) =>
+        i == null ? this : themes[product(i)?.theme] ?? this;
+    skin(mounted('floor')).drawLayer(canvas, 'floor');
+    final rug = mounted('rug');
+    if (rug != null) skin(rug).drawLayer(canvas, 'rug');
+    final walls = skin(mounted('wall'));
+    for (final side in ['left', 'right']) {
+      final window = mounted('window-$side');
+      walls.drawLayer(canvas, 'wall-$side${window == null ? '-closed' : ''}');
+      if (window != null) {
+        final renderer = skin(window);
+        final slot =
+            (catalog['slots'] as List).firstWhere(
+                  (s) => s['id'] == 'window-$side',
+                )
+                as Map;
+        if (renderer.images.containsKey('sky-day')) {
+          renderer._sky(canvas, slot, night);
+        } else {
+          renderer.drawLayer(canvas, 'view-$side-${night ? 'night' : 'day'}');
+        }
+        renderer.drawLayer(canvas, 'window-$side');
+      }
+    }
+    for (final slot in (catalog['slots'] as List).where(
+      (s) => s['type'] == 'art',
+    )) {
+      final item = mounted(slot['id']);
+      if (item == null) continue;
+      final p = product(item);
+      if (p == null) continue;
+      skin(item)._art(
+        canvas,
+        slot,
+        RoomFurnishings(
+          frameTemplate: p.geometry['template'],
+          artwork: ArtworkStyle.values.byName(item.artwork),
+        ),
+        artworks,
+        pairedDefaults: false,
+      );
+    }
+    final floor = layout.items
+        .where((i) => product(i)?.placement == 'ground')
+        .toList();
+    for (final item in sortPlaced(floor, products, inventory)) {
+      final p = product(item)!;
+      final renderer = skin(item);
+      final f = (renderer.catalog['fixtures'] as List).firstWhere(
+        (f) => f['id'] == p.kind,
+      );
+      final anchor = f['orientations'][item.facing]['anchor'] as List;
+      final shift =
+          project((item.gx - anchor[0]) / 8, (item.gy - anchor[1]) / 8) -
+          project(0, 0);
+      if (selected != null && selected != item.instanceId) {
+        canvas.saveLayer(null, ui.Paint()..color = const ui.Color(0x70ffffff));
+        renderer.drawLayer(canvas, '${p.kind}-${item.facing}', shift);
+        canvas.restore();
+      } else {
+        renderer.drawLayer(canvas, '${p.kind}-${item.facing}', shift);
+      }
+    }
+  }
+
+  /// UI controls use the same registered rectangles and world translation as drawing.
+  ui.Rect placedSpriteBounds(
+    PlacedItem item,
+    FurnitureProduct p,
+    Map<String, LunarRoom> themes,
+  ) {
+    final renderer = themes[p.theme] ?? this;
+    if (p.placement == 'ground') {
+      final fixture = (renderer.catalog['fixtures'] as List).firstWhere(
+        (f) => f['id'] == p.kind,
+      );
+      final anchor = fixture['orientations'][item.facing]['anchor'] as List;
+      final shift =
+          project((item.gx - anchor[0]) / 8, (item.gy - anchor[1]) / 8) -
+          project(0, 0);
+      return renderer.layerRect('${p.kind}-${item.facing}').shift(shift);
+    }
+    if (p.placement == 'window') {
+      return renderer.layerRect(
+        'window-${item.slot == 'window-right' ? 'right' : 'left'}',
+      );
+    }
+    if (p.placement == 'art') {
+      final slot =
+          (catalog['slots'] as List).firstWhere((s) => s['id'] == item.slot)
+              as Map;
+      final side = slot['wall'] as String;
+      final frame = renderer.layer('frame-${p.geometry['template']}-$side');
+      final mount = frame['mount'] as List;
+      final s = slot['s'] as num,
+          z = (slot['z'] as num) + (slot['h'] as num) / 2;
+      final destination = side == 'left' ? project(0, s, z) : project(s, 0, z);
+      return rect(
+        frame['rect'],
+      ).shift(destination - project(mount[0], mount[1], mount[2]));
+    }
+    if (p.placement == 'wall') {
+      return renderer
+          .layerRect('wall-left-closed')
+          .expandToInclude(renderer.layerRect('wall-right-closed'));
+    }
+    return renderer.layerRect(p.placement);
+  }
+
+  void renderGhost(
+    ui.Canvas canvas,
+    PlacedItem item,
+    FurnitureProduct p,
+    Map<String, LunarRoom> themes,
+    bool night,
+    Map<ArtworkStyle, ui.Image> artworks,
+  ) {
+    final renderer = themes[p.theme] ?? this;
+    canvas.saveLayer(null, ui.Paint()..color = const ui.Color(0x80ffffff));
+    if (p.placement == 'ground') {
+      final f = (renderer.catalog['fixtures'] as List).firstWhere(
+        (f) => f['id'] == p.kind,
+      );
+      final anchor = f['orientations'][item.facing]['anchor'] as List;
+      final shift =
+          project((item.gx - anchor[0]) / 8, (item.gy - anchor[1]) / 8) -
+          project(0, 0);
+      renderer.drawLayer(canvas, '${p.kind}-${item.facing}', shift);
+    } else if (p.placement == 'window') {
+      final side = item.slot == 'window-right' ? 'right' : 'left';
+      final slot =
+          (catalog['slots'] as List).firstWhere((s) => s['id'] == item.slot)
+              as Map;
+      if (renderer.images.containsKey('sky-day')) {
+        renderer._sky(canvas, slot, night);
+      } else {
+        renderer.drawLayer(canvas, 'view-$side-${night ? 'night' : 'day'}');
+      }
+      renderer.drawLayer(canvas, 'window-$side');
+    } else if (p.placement == 'art') {
+      final slot =
+          (catalog['slots'] as List).firstWhere((s) => s['id'] == item.slot)
+              as Map;
+      renderer._art(
+        canvas,
+        slot,
+        RoomFurnishings(
+          frameTemplate: p.geometry['template'],
+          artwork: ArtworkStyle.values.byName(item.artwork),
+        ),
+        artworks,
+        pairedDefaults: false,
+      );
+    } else if (p.placement == 'wall') {
+      for (final side in ['left', 'right']) {
+        renderer.drawLayer(canvas, 'wall-$side-closed');
+      }
+    } else {
+      renderer.drawLayer(canvas, p.kind);
+    }
+    canvas.restore();
+  }
+
+  List<PlacedItem> sortPlaced(
+    List<PlacedItem> items,
+    Map<String, FurnitureProduct> products,
+    List<InventoryInstance> inventory,
+  ) {
+    final byId = {for (final i in inventory) i.id: i};
+    final boxes = [
+      for (final i in items)
+        _PlacedBox(i, products[byId[i.instanceId]!.sku]!, project),
+    ];
+    final next = List.generate(boxes.length, (_) => <int>[]),
+        indegree = List.filled(boxes.length, 0);
+    for (var i = 0; i < boxes.length; i++) {
+      for (var j = i + 1; j < boxes.length; j++) {
+        final a = boxes[i], b = boxes[j];
+        if (!_hullsOverlap(a.hull, b.hull)) continue;
+        final ab = a.x + a.w <= b.x + 1e-8 || a.y + a.d <= b.y + 1e-8;
+        final ba = b.x + b.w <= a.x + 1e-8 || b.y + b.d <= a.y + 1e-8;
+        if (ab && !ba) {
+          next[i].add(j);
+          indegree[j]++;
+        } else if (ba && !ab) {
+          next[j].add(i);
+          indegree[i]++;
+        }
+      }
+    }
+    final queue = [
+          for (var i = 0; i < boxes.length; i++)
+            if (indegree[i] == 0) i,
+        ],
+        order = <PlacedItem>[];
+    while (queue.isNotEmpty) {
+      final i = queue.removeAt(0);
+      order.add(boxes[i].item);
+      for (final j in next[i]) {
+        if (--indegree[j] == 0) queue.add(j);
+      }
+    }
+    if (order.length != items.length) throw StateError('家具遮挡存在环，需拆分素材图层');
+    return order;
+  }
+
+  bool hitsGround(ui.Offset point, PlacedItem item, FurnitureProduct product) =>
+      (ui.Path()..addPolygon(_PlacedBox(item, product, project).hull, true))
+          .contains(point);
+
+  static bool _hullsOverlap(List<ui.Offset> a, List<ui.Offset> b) {
+    for (final poly in [a, b]) {
+      for (var i = 0; i < poly.length; i++) {
+        final p = poly[i],
+            q = poly[(i + 1) % poly.length],
+            axis = ui.Offset(q.dy - p.dy, p.dx - q.dx);
+        final A = a.map((v) => v.dx * axis.dx + v.dy * axis.dy).toList()
+          ..sort();
+        final B = b.map((v) => v.dx * axis.dx + v.dy * axis.dy).toList()
+          ..sort();
+        if (A.last <= B.first + 1e-8 || B.last <= A.first + 1e-8) return false;
+      }
+    }
+    return true;
   }
 
   void render(
@@ -260,4 +506,32 @@ class LunarRoom {
       drawLayer(canvas, "${f['id']}-${f['facing']}");
     }
   }
+}
+
+class _PlacedBox {
+  _PlacedBox(
+    this.item,
+    FurnitureProduct product,
+    ui.Offset Function(num, num, [num]) project,
+  ) {
+    final g = product.geometry[item.facing], cells = product.cells(item.facing);
+    final maxX = cells.map((c) => c.$1).reduce((a, b) => a > b ? a : b),
+        maxY = cells.map((c) => c.$2).reduce((a, b) => a > b ? a : b);
+    w = (g['w'] as num).toDouble();
+    d = (g['d'] as num).toDouble();
+    h = (g['h'] as num).toDouble();
+    x = (item.gx + (maxX + 1) / 2) / 8 - w / 2;
+    y = (item.gy + (maxY + 1) / 2) / 8 - d / 2;
+    hull = [
+      project(x, y, h),
+      project(x + w, y, h),
+      project(x + w, y, 0),
+      project(x + w, y + d, 0),
+      project(x, y + d, 0),
+      project(x, y + d, h),
+    ];
+  }
+  final PlacedItem item;
+  late final double x, y, w, d, h;
+  late final List<ui.Offset> hull;
 }

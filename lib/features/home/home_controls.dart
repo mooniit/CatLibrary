@@ -29,8 +29,9 @@ class RoomActionButton extends StatelessWidget {
 }
 
 class HomeWallet extends StatelessWidget {
-  const HomeWallet({super.key, required this.wallet});
+  const HomeWallet({super.key, required this.wallet, this.onExchange});
   final IdentityWallet? wallet;
+  final VoidCallback? onExchange;
 
   @override
   Widget build(BuildContext context) {
@@ -50,49 +51,55 @@ class HomeWallet extends StatelessWidget {
               label:
                   '${values[i].$1} ${values[i].$3 ?? '未连接'}${(values[i].$3 ?? 0) < 0 ? '，欠款' : ''}',
               excludeSemantics: true,
+              button: i == 0 && onExchange != null,
+              onTap: i == 0 ? onExchange : null,
               child: Material(
                 key: Key('wallet-card-$i'),
                 color: scheme.surface.withValues(alpha: 0.96),
                 elevation: 2,
                 shadowColor: scheme.shadow.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(13),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 9,
-                    vertical: 6,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(values[i].$2, size: 14, color: scheme.primary),
-                          const SizedBox(width: 4),
-                          Flexible(
-                            child: Text(
-                              values[i].$1,
-                              maxLines: 1,
-                              style: const TextStyle(fontSize: 11),
+                child: InkWell(
+                  onTap: i == 0 ? onExchange : null,
+                  borderRadius: BorderRadius.circular(13),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 9,
+                      vertical: 6,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(values[i].$2, size: 14, color: scheme.primary),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Text(
+                                values[i].$1,
+                                maxLines: 1,
+                                style: const TextStyle(fontSize: 11),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        FittedBox(
+                          alignment: Alignment.centerLeft,
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            values[i].$3?.toString() ?? '—',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: (values[i].$3 ?? 0) < 0
+                                  ? scheme.error
+                                  : scheme.onSurface,
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      FittedBox(
-                        alignment: Alignment.centerLeft,
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          values[i].$3?.toString() ?? '—',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: (values[i].$3 ?? 0) < 0
-                                ? scheme.error
-                                : scheme.onSurface,
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -177,10 +184,12 @@ class HomeMenu extends StatefulWidget {
     super.key,
     required this.onCats,
     required this.onStore,
+    this.onArrange,
     required this.onAlbum,
     required this.onSettings,
   });
   final VoidCallback onCats, onStore, onAlbum, onSettings;
+  final VoidCallback? onArrange;
 
   @override
   State<HomeMenu> createState() => _HomeMenuState();
@@ -221,6 +230,8 @@ class _HomeMenuState extends State<HomeMenu>
     final entries = [
       ('猫咪管理', Icons.pets_outlined, widget.onCats),
       ('商店', Icons.storefront_outlined, widget.onStore),
+      if (widget.onArrange != null)
+        ('布置', Icons.edit_outlined, widget.onArrange!),
       ('相册', Icons.photo_library_outlined, widget.onAlbum),
       ('设置', Icons.settings_outlined, widget.onSettings),
     ];
@@ -251,8 +262,8 @@ class _HomeMenuState extends State<HomeMenu>
                     CurvedAnimation(
                       parent: controller,
                       curve: Interval(
-                        i * 0.13,
-                        0.58 + i * 0.13,
+                        i * 0.1,
+                        0.58 + i * 0.1,
                         curve: Curves.easeOutCubic,
                       ),
                     ),
@@ -260,7 +271,7 @@ class _HomeMenuState extends State<HomeMenu>
               child: FadeTransition(
                 opacity: CurvedAnimation(
                   parent: controller,
-                  curve: Interval(i * 0.13, 0.58 + i * 0.13),
+                  curve: Interval(i * 0.1, 0.58 + i * 0.1),
                 ),
                 child: Material(
                   key: Key('home-menu-item-$i'),

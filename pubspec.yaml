@@ -25,3 +25,6 @@ flutter:
   assets:
     - assets/images/room/
     - assets/images/room/lunar-v5/
+    - assets/images/room/wood/
+    - assets/images/room/royal/
+    - assets/data/

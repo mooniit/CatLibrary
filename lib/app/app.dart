@@ -86,6 +86,7 @@ class _PrototypeShellState extends State<PrototypeShell>
     with WidgetsBindingObserver {
   int index = 0;
   bool studyFocus = false;
+  bool roomToolsOpen = false;
   late IdentityWallet? wallet = widget.wallet;
   Timer? walletRefresh;
   bool refreshingWallet = false;
@@ -159,6 +160,9 @@ class _PrototypeShellState extends State<PrototypeShell>
           HomePage(
             onStudy: () => select(3),
             onThemeChanged: widget.onThemeChanged,
+            onRoomModeChanged: (value) {
+              if (mounted) setState(() => roomToolsOpen = value);
+            },
             wallet: wallet,
             onWallet: (value) {
               if (mounted) setState(() => wallet = value);
@@ -224,7 +228,8 @@ class _PrototypeShellState extends State<PrototypeShell>
         ],
       ),
     ),
-    bottomNavigationBar: index == 3 && studyFocus
+    bottomNavigationBar:
+        (index == 3 && studyFocus) || (index == 0 && roomToolsOpen)
         ? null
         : NavigationBar(
             height: 56,

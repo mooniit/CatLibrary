@@ -6,42 +6,59 @@ import '../../core/sync/cloud_client.dart';
 import '../identity/identity_repository.dart';
 
 class WalletRepository {
-  WalletRepository(this.database, this.ownerId);
+  WalletRepository(this.database, this.ownerId, {this.rpc});
   final AppDatabase database;
   final String ownerId;
+  final Future<Map<String, dynamic>> Function(String, Map<String, dynamic>)?
+  rpc;
+  bool busy = false;
 
-  Future<(String, String)?> pending() => database.pendingExchange(ownerId);
+  Future<(String, String, int)?> pending() => database.pendingExchange(ownerId);
 
-  Future<IdentityWallet> exchange(String currency) async {
+  Future<IdentityWallet> exchange(String currency, {int quantity = 1}) async {
+    if (busy) throw StateError('Exchange in progress');
+    if (quantity < 1 || quantity > 429496729) {
+      throw ArgumentError('Invalid quantity');
+    }
+    busy = true;
+    try {
+      return await _exchange(currency, quantity);
+    } finally {
+      busy = false;
+    }
+  }
+
+  Future<IdentityWallet> _exchange(String currency, int quantity) async {
     if (currency != 'eagle' && currency != 'gem') {
       throw ArgumentError('Unknown currency');
     }
     final pending = await database.pendingExchange(ownerId);
-    if (pending != null && pending.$2 != currency) {
+    if (pending != null && (pending.$2 != currency || pending.$3 != quantity)) {
       throw StateError('Finish the previous exchange first');
     }
     final requestId = pending?.$1 ?? _newId();
     if (pending == null) {
-      await database.queueExchange(ownerId, requestId, currency);
+      await database.queueExchange(ownerId, requestId, currency, quantity);
     }
-    final client = await CloudClient.connect();
-    if (client.auth.currentUser?.id != ownerId) {
+    final client = rpc == null ? await CloudClient.connect() : null;
+    if (client != null && client.auth.currentUser?.id != ownerId) {
       throw StateError('Identity changed');
     }
     late final Map<String, dynamic> result;
     try {
-      result = Map<String, dynamic>.from(
-        await client
-                .rpc(
-                  'exchange_special',
-                  params: {
-                    'request_id': requestId,
-                    'source_currency': currency,
-                  },
-                )
-                .timeout(const Duration(seconds: 10))
-            as Map,
-      );
+      final params = {
+        'request_id': requestId,
+        'source_currency': currency,
+        if (quantity != 1) 'quantity': quantity,
+      };
+      result = rpc != null
+          ? await rpc!('exchange_special', params)
+          : Map<String, dynamic>.from(
+              await client!
+                      .rpc('exchange_special', params: params)
+                      .timeout(const Duration(seconds: 10))
+                  as Map,
+            );
     } on PostgrestException catch (error) {
       if (error.code == '22023' &&
           error.message == 'Insufficient special currency') {
@@ -52,7 +69,8 @@ class WalletRepository {
     final wallet = IdentityWallet.fromJson(
       Map<String, dynamic>.from(result['wallet'] as Map),
     );
-    if (wallet.ownerId != ownerId || client.auth.currentUser?.id != ownerId) {
+    if (wallet.ownerId != ownerId ||
+        (client != null && client.auth.currentUser?.id != ownerId)) {
       throw StateError('Wallet identity mismatch');
     }
     final cached = await database.accountSnapshot(ownerId);

@@ -1,0 +1,821 @@
+{
+  "version": "wood-content-v1",
+  "standard": {
+    "id": "room-standard-v1",
+    "floorSize": 1,
+    "gridSize": 8,
+    "wallThickness": 0.014,
+    "floorThickness": 0.022,
+    "camera": {
+      "origin": [
+        540,
+        537.4716981132076
+      ],
+      "bx": [
+        480,
+        239.57666538848247
+      ],
+      "by": [
+        -480,
+        239.57666538848247
+      ],
+      "bz": [
+        0,
+        -588.2227833080509
+      ],
+      "wallHeight": 0.8083190784267942,
+      "factor": 1.5,
+      "width": 1080,
+      "height": 1073
+    }
+  },
+  "layers": {
+    "bookshelf-x": {
+      "file": "bookshelf-x.png",
+      "rect": [
+        323.6,
+        359.32168309686926,
+        193,
+        317
+      ]
+    },
+    "bookshelf-y": {
+      "file": "bookshelf-y.png",
+      "rect": [
+        443.40000000000003,
+        359.32168309686926,
+        193,
+        317
+      ]
+    },
+    "desk-x": {
+      "file": "desk-x.png",
+      "rect": [
+        512.2,
+        624.2496906089693,
+        235,
+        227
+      ]
+    },
+    "desk-y": {
+      "file": "desk-y.png",
+      "rect": [
+        572.8,
+        624.2496906089693,
+        235,
+        227
+      ]
+    },
+    "chair-x": {
+      "file": "chair-x.png",
+      "rect": [
+        724.1999999999999,
+        601.4793240317755,
+        111,
+        173
+      ]
+    },
+    "chair-y": {
+      "file": "chair-y.png",
+      "rect": [
+        724.8000000000001,
+        601.4793240317755,
+        111,
+        173
+      ]
+    },
+    "tree-x": {
+      "file": "tree-x.png",
+      "rect": [
+        154,
+        530.9015490988802,
+        172,
+        262
+      ]
+    },
+    "tree-y": {
+      "file": "tree-y.png",
+      "rect": [
+        154,
+        530.9015490988802,
+        172,
+        262
+      ]
+    },
+    "bed-x": {
+      "file": "bed-x.png",
+      "rect": [
+        389.00000000000006,
+        829.7925148324723,
+        182,
+        143
+      ]
+    },
+    "bed-y": {
+      "file": "bed-y.png",
+      "rect": [
+        389.00000000000006,
+        829.7925148324723,
+        182,
+        143
+      ]
+    },
+    "window-left": {
+      "file": "window-left.png",
+      "rect": [
+        210,
+        252,
+        210,
+        237
+      ],
+      "mount": [
+        0,
+        0.5,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.307,
+        "bottom": 0.013000000000000001,
+        "top": 0.19949999999999998
+      }
+    },
+    "frame-landscape-left": {
+      "file": "frame-landscape-left.png",
+      "rect": [
+        398,
+        209,
+        120,
+        152
+      ],
+      "mount": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.187,
+        "bottom": 0.013000000000000001,
+        "top": 0.13699999999999998
+      }
+    },
+    "frame-portrait-left": {
+      "file": "frame-portrait-left.png",
+      "rect": [
+        410,
+        200,
+        96,
+        170
+      ],
+      "mount": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.13699999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.187
+      }
+    },
+    "frame-square-left": {
+      "file": "frame-square-left.png",
+      "rect": [
+        404,
+        204,
+        108,
+        161
+      ],
+      "mount": [
+        0,
+        0.18,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.16199999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.16199999999999998
+      }
+    },
+    "wall-left": {
+      "file": "wall-left.png",
+      "rect": [
+        47,
+        52,
+        502,
+        733
+      ]
+    },
+    "wall-left-closed": {
+      "file": "wall-left-closed.png",
+      "rect": [
+        47,
+        52,
+        502,
+        733
+      ]
+    },
+    "view-left-day": {
+      "file": "view-left-day.png",
+      "rect": [
+        217,
+        252,
+        166,
+        215
+      ]
+    },
+    "view-left-night": {
+      "file": "view-left-night.png",
+      "rect": [
+        217,
+        252,
+        166,
+        215
+      ]
+    },
+    "window-right": {
+      "file": "window-right.png",
+      "rect": [
+        660,
+        252,
+        210,
+        237
+      ],
+      "mount": [
+        0.5,
+        0,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.307,
+        "bottom": 0.013000000000000001,
+        "top": 0.19949999999999998
+      }
+    },
+    "frame-landscape-right": {
+      "file": "frame-landscape-right.png",
+      "rect": [
+        562,
+        209,
+        120,
+        152
+      ],
+      "mount": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.187,
+        "bottom": 0.013000000000000001,
+        "top": 0.13699999999999998
+      }
+    },
+    "frame-portrait-right": {
+      "file": "frame-portrait-right.png",
+      "rect": [
+        574,
+        200,
+        96,
+        170
+      ],
+      "mount": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.13699999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.187
+      }
+    },
+    "frame-square-right": {
+      "file": "frame-square-right.png",
+      "rect": [
+        568,
+        204,
+        108,
+        161
+      ],
+      "mount": [
+        0.18,
+        0,
+        0.50625
+      ],
+      "opening": {
+        "left": 0.013000000000000001,
+        "right": 0.16199999999999998,
+        "bottom": 0.013000000000000001,
+        "top": 0.16199999999999998
+      }
+    },
+    "wall-right": {
+      "file": "wall-right.png",
+      "rect": [
+        531,
+        52,
+        502,
+        733
+      ]
+    },
+    "wall-right-closed": {
+      "file": "wall-right-closed.png",
+      "rect": [
+        531,
+        52,
+        502,
+        733
+      ]
+    },
+    "view-right-day": {
+      "file": "view-right-day.png",
+      "rect": [
+        697,
+        252,
+        166,
+        215
+      ]
+    },
+    "view-right-night": {
+      "file": "view-right-night.png",
+      "rect": [
+        697,
+        252,
+        166,
+        215
+      ]
+    },
+    "floor": {
+      "file": "floor.png",
+      "rect": [
+        54,
+        531,
+        972,
+        505
+      ]
+    },
+    "rug": {
+      "file": "rug.png",
+      "rect": [
+        181,
+        593,
+        718,
+        366
+      ]
+    }
+  },
+  "fixtures": [
+    {
+      "id": "bookshelf",
+      "defaultFacing": "x",
+      "orientations": {
+        "x": {
+          "id": "bookshelf",
+          "label": "书柜",
+          "anchor": [
+            0,
+            1
+          ],
+          "cols": 1,
+          "rows": 3,
+          "w": 0.12,
+          "d": 0.26,
+          "h": 0.375,
+          "facing": "x",
+          "x": 0.0025000000000000022,
+          "y": 0.1825,
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        "y": {
+          "id": "bookshelf",
+          "label": "书柜",
+          "anchor": [
+            0,
+            1
+          ],
+          "cols": 3,
+          "rows": 1,
+          "w": 0.26,
+          "d": 0.12,
+          "h": 0.375,
+          "facing": "y",
+          "x": 0.057499999999999996,
+          "y": 0.1275,
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "desk",
+      "defaultFacing": "y",
+      "orientations": {
+        "x": {
+          "id": "desk",
+          "label": "书桌",
+          "anchor": [
+            4,
+            2
+          ],
+          "cols": 2,
+          "rows": 3,
+          "w": 0.17,
+          "d": 0.3,
+          "h": 0.18,
+          "facing": "x",
+          "x": 0.54,
+          "y": 0.2875,
+          "cells": [
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              4,
+              4
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              5,
+              4
+            ]
+          ]
+        },
+        "y": {
+          "id": "desk",
+          "label": "书桌",
+          "anchor": [
+            4,
+            2
+          ],
+          "cols": 3,
+          "rows": 2,
+          "w": 0.3,
+          "d": 0.17,
+          "h": 0.18,
+          "facing": "y",
+          "x": 0.5375,
+          "y": 0.29,
+          "cells": [
+            [
+              4,
+              2
+            ],
+            [
+              4,
+              3
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              6,
+              2
+            ],
+            [
+              6,
+              3
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "chair",
+      "defaultFacing": "y",
+      "orientations": {
+        "x": {
+          "id": "chair",
+          "label": "椅子",
+          "anchor": [
+            5,
+            1
+          ],
+          "cols": 1,
+          "rows": 1,
+          "w": 0.115,
+          "d": 0.12,
+          "h": 0.2,
+          "facing": "x",
+          "x": 0.63,
+          "y": 0.1275,
+          "cells": [
+            [
+              5,
+              1
+            ]
+          ]
+        },
+        "y": {
+          "id": "chair",
+          "label": "椅子",
+          "anchor": [
+            5,
+            1
+          ],
+          "cols": 1,
+          "rows": 1,
+          "w": 0.12,
+          "d": 0.115,
+          "h": 0.2,
+          "facing": "y",
+          "x": 0.6275,
+          "y": 0.13,
+          "cells": [
+            [
+              5,
+              1
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "tree",
+      "defaultFacing": "x",
+      "orientations": {
+        "x": {
+          "id": "tree",
+          "label": "猫爬架",
+          "anchor": [
+            0,
+            5
+          ],
+          "cols": 2,
+          "rows": 2,
+          "w": 0.17,
+          "d": 0.17,
+          "h": 0.29,
+          "facing": "x",
+          "x": 0.039999999999999994,
+          "y": 0.665,
+          "cells": [
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              6
+            ]
+          ]
+        },
+        "y": {
+          "id": "tree",
+          "label": "猫爬架",
+          "anchor": [
+            0,
+            5
+          ],
+          "cols": 2,
+          "rows": 2,
+          "w": 0.17,
+          "d": 0.17,
+          "h": 0.29,
+          "facing": "y",
+          "x": 0.039999999999999994,
+          "y": 0.665,
+          "cells": [
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              1,
+              5
+            ],
+            [
+              1,
+              6
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "id": "bed",
+      "defaultFacing": "y",
+      "orientations": {
+        "x": {
+          "id": "bed",
+          "label": "猫窝",
+          "anchor": [
+            5,
+            6
+          ],
+          "cols": 2,
+          "rows": 2,
+          "w": 0.19,
+          "d": 0.19,
+          "h": 0.085,
+          "facing": "x",
+          "x": 0.655,
+          "y": 0.78,
+          "cells": [
+            [
+              5,
+              6
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              7
+            ]
+          ]
+        },
+        "y": {
+          "id": "bed",
+          "label": "猫窝",
+          "anchor": [
+            5,
+            6
+          ],
+          "cols": 2,
+          "rows": 2,
+          "w": 0.19,
+          "d": 0.19,
+          "h": 0.085,
+          "facing": "y",
+          "x": 0.655,
+          "y": 0.78,
+          "cells": [
+            [
+              5,
+              6
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              7
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "slots": [
+    {
+      "id": "window-left",
+      "label": "左窗",
+      "wall": "left",
+      "s": 0.5,
+      "z": 0.4,
+      "w": 0.32,
+      "h": 0.2125,
+      "type": "window"
+    },
+    {
+      "id": "window-right",
+      "label": "右窗",
+      "wall": "right",
+      "s": 0.5,
+      "z": 0.4,
+      "w": 0.32,
+      "h": 0.2125,
+      "type": "window"
+    },
+    {
+      "id": "art-left-back",
+      "label": "左墙画位 1",
+      "wall": "left",
+      "s": 0.18,
+      "z": 0.40625,
+      "w": 0.2,
+      "h": 0.2,
+      "type": "art"
+    },
+    {
+      "id": "art-left-front",
+      "label": "左墙画位 2",
+      "wall": "left",
+      "s": 0.82,
+      "z": 0.40625,
+      "w": 0.2,
+      "h": 0.2,
+      "type": "art"
+    },
+    {
+      "id": "art-right-back",
+      "label": "右墙画位 1",
+      "wall": "right",
+      "s": 0.18,
+      "z": 0.40625,
+      "w": 0.2,
+      "h": 0.2,
+      "type": "art"
+    },
+    {
+      "id": "art-right-front",
+      "label": "右墙画位 2",
+      "wall": "right",
+      "s": 0.82,
+      "z": 0.40625,
+      "w": 0.2,
+      "h": 0.2,
+      "type": "art"
+    }
+  ],
+  "frameTemplates": {
+    "landscape": {
+      "label": "横版",
+      "w": 0.2,
+      "h": 0.15,
+      "cells": [
+        1.6,
+        1.2
+      ]
+    },
+    "portrait": {
+      "label": "竖版",
+      "w": 0.15,
+      "h": 0.2,
+      "cells": [
+        1.2,
+        1.6
+      ]
+    },
+    "square": {
+      "label": "正方形",
+      "w": 0.175,
+      "h": 0.175,
+      "cells": [
+        1.4,
+        1.4
+      ]
+    }
+  }
+}

@@ -33,7 +33,7 @@ class AppDatabase extends GeneratedDatabase {
     : super(executor ?? driftDatabase(name: 'cat_library'));
 
   @override
-  int get schemaVersion => 6;
+  int get schemaVersion => 8;
   @override
   Iterable<TableInfo<Table, Object?>> get allTables => const [];
   @override
@@ -52,6 +52,12 @@ class AppDatabase extends GeneratedDatabase {
       if (from < 4) await _createTasks();
       if (from < 5) await _createExchanges();
       if (from < 6) await _createWeekly();
+      if (from < 7) await _createFurniture();
+      if (from >= 5 && from < 8) {
+        await customStatement(
+          'ALTER TABLE pending_exchanges ADD COLUMN quantity INTEGER NOT NULL DEFAULT 1',
+        );
+      }
     },
     onCreate: (_) async {
       await _createCache();
@@ -73,11 +79,52 @@ class AppDatabase extends GeneratedDatabase {
       await _createTasks();
       await _createExchanges();
       await _createWeekly();
+      await _createFurniture();
     },
   );
 
   Future<void> _createCache() => customStatement(
     'CREATE TABLE account_cache (owner_id TEXT PRIMARY KEY, payload TEXT NOT NULL)',
+  );
+
+  Future<void> _createFurniture() =>
+      customStatement('''CREATE TABLE furniture_local (
+    owner_id TEXT NOT NULL, family_id TEXT NOT NULL, kind TEXT NOT NULL,
+    payload TEXT NOT NULL, PRIMARY KEY(owner_id,family_id,kind)
+  )''');
+
+  Future<Map<String, dynamic>?> furnitureLocal(
+    String ownerId,
+    String familyId,
+    String kind,
+  ) async {
+    final row = await customSelect(
+      'SELECT payload FROM furniture_local WHERE owner_id=? AND family_id=? AND kind=?',
+      variables: [Variable(ownerId), Variable(familyId), Variable(kind)],
+    ).getSingleOrNull();
+    return row == null
+        ? null
+        : Map<String, dynamic>.from(jsonDecode(row.read<String>('payload')));
+  }
+
+  Future<void> putFurnitureLocal(
+    String ownerId,
+    String familyId,
+    String kind,
+    Map<String, dynamic> payload,
+  ) => customStatement(
+    '''INSERT INTO furniture_local VALUES (?,?,?,?)
+      ON CONFLICT(owner_id,family_id,kind) DO UPDATE SET payload=excluded.payload''',
+    [ownerId, familyId, kind, jsonEncode(payload)],
+  );
+
+  Future<void> removeFurnitureLocal(
+    String ownerId,
+    String familyId,
+    String kind,
+  ) => customStatement(
+    'DELETE FROM furniture_local WHERE owner_id=? AND family_id=? AND kind=?',
+    [ownerId, familyId, kind],
   );
 
   Future<void> _createPresets() async {
@@ -107,7 +154,8 @@ class AppDatabase extends GeneratedDatabase {
   Future<void> _createExchanges() =>
       customStatement('''CREATE TABLE pending_exchanges (
     owner_id TEXT PRIMARY KEY, request_id TEXT NOT NULL UNIQUE,
-    currency TEXT NOT NULL CHECK(currency IN ('eagle','gem'))
+    currency TEXT NOT NULL CHECK(currency IN ('eagle','gem')),
+    quantity INTEGER NOT NULL DEFAULT 1 CHECK(quantity > 0)
   )''');
 
   Future<void> _createWeekly() async {
@@ -247,25 +295,29 @@ class AppDatabase extends GeneratedDatabase {
     [offerId, ownerId],
   );
 
-  Future<(String, String)?> pendingExchange(String ownerId) async {
+  Future<(String, String, int)?> pendingExchange(String ownerId) async {
     final row = await customSelect(
-      'SELECT request_id,currency FROM pending_exchanges WHERE owner_id=?',
+      'SELECT request_id,currency,quantity FROM pending_exchanges WHERE owner_id=?',
       variables: [Variable(ownerId)],
     ).getSingleOrNull();
     return row == null
         ? null
-        : (row.read<String>('request_id'), row.read<String>('currency'));
+        : (
+            row.read<String>('request_id'),
+            row.read<String>('currency'),
+            row.read<int>('quantity'),
+          );
   }
 
   Future<void> queueExchange(
     String ownerId,
     String requestId,
-    String currency,
-  ) => customStatement('INSERT INTO pending_exchanges VALUES (?,?,?)', [
-    ownerId,
-    requestId,
-    currency,
-  ]);
+    String currency, [
+    int quantity = 1,
+  ]) => customStatement(
+    'INSERT INTO pending_exchanges(owner_id,request_id,currency,quantity) VALUES (?,?,?,?)',
+    [ownerId, requestId, currency, quantity],
+  );
 
   Future<void> acknowledgeExchange(String ownerId, String requestId) =>
       customStatement(
