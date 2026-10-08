@@ -110,6 +110,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (oldWidget.wallet != widget.wallet) _latestWallet = widget.wallet;
     if (oldWidget.wallet?.ownerId != widget.wallet?.ownerId) {
       scene.cats = [];
+      scene.repairing = true;
       hasFamily = false;
       scene.furnishings = const RoomFurnishings();
       scene.roomState = null;
@@ -242,9 +243,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     final request = ++_request;
     if (widget.wallet == null) {
       scene.cats = [
-        (name: '三花猫', appearance: 'black_short'),
-        (name: '蓝眸长毛猫', appearance: 'light_long'),
+        (id: 'preview-calico', name: '三花猫', appearance: 'black_short'),
+        (id: 'preview-longhair', name: '蓝眸长毛猫', appearance: 'light_long'),
       ];
+      scene.repairing = false;
       setState(() {
         loadingCats = false;
         catsError = null;
@@ -265,12 +267,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         for (final cat in result['cats'] as List)
           if (cat['traveling'] != true)
             (
+              id: cat['id'] as String,
               name: cat['name'] as String,
               appearance: cat['appearance'] as String,
             ),
       ];
       setState(() {
         scene.cats = cats;
+        scene.repairing = result['repairing'] != false;
         hasFamily = result['family_id'] != null;
       });
     } catch (_) {

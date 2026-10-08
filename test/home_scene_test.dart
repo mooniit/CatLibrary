@@ -143,10 +143,15 @@ void main() {
                 if (fail) throw StateError('offline');
                 return {
                   'family_id': 'home',
+                  'repairing': false,
                   'cats': empty
                       ? []
                       : [
-                          {'name': '花花', 'appearance': 'black_short'},
+                          {
+                            'id': 'cat-a',
+                            'name': '花花',
+                            'appearance': 'black_short',
+                          },
                         ],
                 };
               },
@@ -162,10 +167,14 @@ void main() {
       await key.currentState!.refreshCats();
       await tester.pump();
       expect(key.currentState!.scene.cats.single.name, '花花');
+      expect(key.currentState!.scene.cats.single.id, 'cat-a');
+      expect(key.currentState!.scene.repairing, isFalse);
       fail = true;
       await key.currentState!.refreshCats();
       await tester.pump();
       expect(key.currentState!.scene.cats.single.name, '花花');
+      expect(key.currentState!.scene.cats.single.id, 'cat-a');
+      expect(key.currentState!.scene.repairing, isFalse);
       expect(find.text('猫咪暂未同步，点击重试'), findsOneWidget);
       await tester.pumpWidget(const SizedBox());
     },

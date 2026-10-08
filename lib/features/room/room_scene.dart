@@ -11,8 +11,9 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'layout_draft.dart';
 import '../shop/shop_repository.dart';
+import 'cat_behavior.dart';
 
-typedef RoomCat = ({String name, String appearance});
+export 'cat_behavior.dart' show RoomCat;
 
 /// The frozen room-standard-v1 is the only room camera and geometry.
 class RoomScene extends FlameGame {
@@ -20,7 +21,16 @@ class RoomScene extends FlameGame {
   bool fitViewport;
   bool forceLayout;
   static const defaultZoom = 1.25;
-  List<RoomCat> cats = [];
+  final catColony = CatColony();
+  List<RoomCat> _cats = const [];
+  List<RoomCat> get cats => _cats;
+  set cats(List<RoomCat> value) {
+    _cats = List.unmodifiable(value);
+    catColony.sync(_cats);
+  }
+
+  // Unknown live state never implies that care during repair is allowed.
+  bool repairing = true;
   RoomFurnishings furnishings = const RoomFurnishings();
   double zoom = defaultZoom;
   Offset pan = Offset.zero;
