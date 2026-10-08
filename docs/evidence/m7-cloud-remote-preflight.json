@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-10-08T12:48:25.31Z",
+  "services": {
+    "origin": "https://ludwvhsvknjgblfgouor.supabase.co",
+    "environment": "remote",
+    "keyType": "publishable",
+    "checks": [
+      {
+        "service": "auth",
+        "passed": false,
+        "httpStatus": 200,
+        "anonymousSignupEnabled": false
+      },
+      {
+        "service": "rest",
+        "passed": true,
+        "httpStatus": 401,
+        "schemaEnumerationRestricted": true,
+        "authenticatedDataAccessVerified": false
+      }
+    ],
+    "readOnlyPreflightPassed": false,
+    "migrationsVerified": false,
+    "originalIdentityMigrated": false,
+    "mobileInternetVerified": false
+  },
+  "tableProbe": {
+    "route": "/rest/v1/furniture_products?select=sku&limit=0",
+    "method": "GET",
+    "httpStatus": 404,
+    "code": "PGRST205",
+    "migrationMissing": true
+  },
+  "configurationStoredOnlyInIgnoredTooling": true,
+  "migrationCount": 45,
+  "databaseModified": false,
+  "accountsCreated": false,
+  "keysRecorded": false,
+  "cliLoginPending": true,
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false
+}

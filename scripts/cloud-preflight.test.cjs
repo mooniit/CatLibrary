@@ -9,6 +9,26 @@ const response = (value, status = 200) => new Response(JSON.stringify(value), {s
 const auth = {external: {anonymous_users: true}, disable_signup: false};
 const rest = {swagger: '2.0', paths: {}};
 
+test('published-key schema restriction proves gateway reachability, not authenticated data access', async () => {
+  const result = await probeServices(configuration, {fetcher: async url =>
+    response(url.endsWith('/settings') ? auth : {message: 'Secret API key required'}, url.endsWith('/settings') ? 200 : 401),
+  });
+  assert.equal(result.readOnlyPreflightPassed, true);
+  const check = result.checks.find(item => item.service === 'rest');
+  assert.equal(check.schemaEnumerationRestricted, true);
+  assert.equal(check.authenticatedDataAccessVerified, false);
+  assert.equal(result.migrationsVerified, false);
+});
+
+test('schema restriction cannot bypass disabled anonymous login or invalid-key responses', async () => {
+  for (const [settings, message] of [[{...auth, external: {anonymous_users: false}}, 'Secret API key required'], [auth, 'Invalid API key']]) {
+    const result = await probeServices(configuration, {fetcher: async url =>
+      response(url.endsWith('/settings') ? settings : {message}, url.endsWith('/settings') ? 200 : 401),
+    });
+    assert.equal(result.readOnlyPreflightPassed, false);
+  }
+});
+
 test('read-only preflight does not claim identity, migration or mobile verification', async () => {
   const requests = [];
   const result = await probeServices(configuration, {fetcher: async (url, options) => {

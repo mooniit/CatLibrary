@@ -21,6 +21,16 @@ async function probeServices(config, {fetcher = fetch, remoteOnly = true} = {}) 
         signal: AbortSignal.timeout(12000),
       });
       if (response.status !== 200) {
+        // Hosted gateways restrict OpenAPI enumeration with public client keys.
+        // https://supabase.com/blog/supabase-security-2025-retro
+        if (name === 'rest' && response.status === 401) {
+          const body = await response.json();
+          if (body?.message === 'Secret API key required') {
+            checks.push({service: name, passed: true, httpStatus: 401,
+              schemaEnumerationRestricted: true, authenticatedDataAccessVerified: false});
+            continue;
+          }
+        }
         checks.push({service: name, passed: false, httpStatus: response.status});
         await response.body?.cancel();
         continue;

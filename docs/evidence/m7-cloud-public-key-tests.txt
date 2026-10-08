@@ -1,0 +1,24 @@
+✔ public hosted configuration is accepted without returning its key (4.785ms)
+✔ legacy anon is accepted and a mismatched project is rejected (1.9308ms)
+✔ admin and session credentials cannot be compiled into an APK (0.3188ms)
+✔ fixture parameters and additional credential fields are rejected (0.175ms)
+✔ URL credentials, query parameters, fragments and API paths are rejected (0.9889ms)
+✔ remote endpoints require HTTPS (0.1734ms)
+✔ local packages remain usable but cannot pass the remote gate (0.4424ms)
+✔ empty, placeholder and non-object configuration fail without echoing values (0.1893ms)
+✔ published-key schema restriction proves gateway reachability, not authenticated data access (24.5167ms)
+✔ schema restriction cannot bypass disabled anonymous login or invalid-key responses (2.1881ms)
+✔ read-only preflight does not claim identity, migration or mobile verification (0.5714ms)
+✔ disabled anonymous signup prevents preflight success (1.2736ms)
+✔ authentication errors, service errors, non-JSON and network failures remain failures (1.2342ms)
+✔ root REST schema must be a valid API description (0.36ms)
+✔ local endpoints are rejected before any remote probe (0.443ms)
+✔ migration manifest uses actual ordered SQL files and excludes seed and fixtures (27.0139ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.1095
