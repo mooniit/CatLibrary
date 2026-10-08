@@ -1,0 +1,73 @@
+{
+  "purpose": "Travel album base images; each cat collection remains a separate record",
+  "batch": 3,
+  "generatedAt": "2026-10-08",
+  "generator": "built-in image_gen",
+  "targetTotal": 12,
+  "deliveredInBatch": 3,
+  "cumulativeDelivered": 9,
+  "format": "RGB PNG",
+  "size": [
+    1536,
+    1024
+  ],
+  "assetUse": "contain full composition, bounded decode width up to 900px",
+  "roomGeometry": "Not applicable to scenic album illustrations",
+  "files": [
+    {
+      "appearance": "black_short",
+      "destination": "pyramid",
+      "references": [
+        "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png",
+        "assets/images/travel/calico-fuji-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one refined landscape 3:2 painting, 1536x1024, for 喵的图书馆 family travel album.\nInput1: approved cat model sheet, identity source only, do not copy labels/panels. Input2: finished travel illustration, style and cat rendering quality only; replace its entire destination with the requested landmark.\nScene: Egypt Giza plateau in warm morning light, monumental recognisable limestone pyramids with true triangular silhouettes, clearly constructed stone courses and weathered masonry, several pyramids staggered behind the subject, desert sandy foreground and pale mist-blue sky. Egyptian landmark and dry desert terrain must be clear at phone thumbnail size; no modern glass pyramids or French buildings, no snow, lake or cherry blossoms.\nSubject: Exactly one natural adult CALICO CAT. Frontal image-left face black, image-right orange, central white forehead blaze, amber eyes and pink nose, white chest/belly/all paws, orange shoulder patch and black rear-hip patch; orange-root, black-middle, white-tip tail. Lock the approved identity without new markings. Sitting naturally in foreground with a slight three-quarter face toward viewer, adult natural proportions. Keep entire ears, body, paws and tail inside generous margins, unobstructed; cat approximately half image height, with the destination clearly recognisable behind.\nStyle: refined non-pixel hand-painted game illustration matching input2, delicate brown-grey outlines, finely rendered fur and architecture, gentle physically coherent sunlight and grounded contact shadow. Warm restrained natural palette with soft blue sky, coherent with white/mist-blue app themes. Not photorealism or baby/chibi proportions.\nComposition: single uninterrupted landscape scene, full cat on ground with spacious margins, clear distinctive landmark behind. No new personality, clothes, props or extra characters.\nAvoid: multiple cats, people, text, UI, watermark, frame, collage, model-sheet panels, cropped paws/ears/tail, incorrect cat identity, copying the reference's destination. This is album scenic art, not room furniture or a sprite.",
+      "path": "assets/images/travel/calico-pyramid-v1.png",
+      "source": "exec-be770a8b-b21b-451a-86ad-f548f84940a2.png",
+      "sha256": "66a8a0dc283cca8e76b0bab710ee0b455d4d7d698a643d57ac951eb51ee6d1c8"
+    },
+    {
+      "appearance": "light_long",
+      "destination": "pyramid",
+      "references": [
+        "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+        "assets/images/travel/longhair-fuji-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one refined landscape 3:2 painting, 1536x1024, for 喵的图书馆 family travel album.\nInput1: approved cat model sheet, identity source only, do not copy labels/panels. Input2: finished travel illustration, style and cat rendering quality only; replace its entire destination with the requested landmark.\nScene: Egypt Giza plateau in warm morning light, monumental recognisable limestone pyramids with true triangular silhouettes, clearly constructed stone courses and weathered masonry, several pyramids staggered behind the subject, desert sandy foreground and pale mist-blue sky. Egyptian landmark and dry desert terrain must be clear at phone thumbnail size; no modern glass pyramids or French buildings, no snow, lake or cherry blossoms.\nSubject: Exactly one natural adult BLUE-EYED LONGHAIR CAT. Cream-white long fur, grey-brown face mask and ears, icy-blue eyes, central white forehead blaze, white chest and pure-white paws; full fluffy grey-brown gradient tail without rings. No calico patches. Preserve approved cat identity. Sitting naturally in foreground with a slight three-quarter face toward viewer, adult natural proportions. Keep entire ears, body, paws and tail inside generous margins, unobstructed; cat approximately half image height, with the destination clearly recognisable behind.\nStyle: refined non-pixel hand-painted game illustration matching input2, delicate brown-grey outlines, finely rendered fur and architecture, gentle physically coherent sunlight and grounded contact shadow. Warm restrained natural palette with soft blue sky, coherent with white/mist-blue app themes. Not photorealism or baby/chibi proportions.\nComposition: single uninterrupted landscape scene, full cat on ground with spacious margins, clear distinctive landmark behind. No new personality, clothes, props or extra characters.\nAvoid: multiple cats, people, text, UI, watermark, frame, collage, model-sheet panels, cropped paws/ears/tail, incorrect cat identity, copying the reference's destination. This is album scenic art, not room furniture or a sprite.",
+      "path": "assets/images/travel/longhair-pyramid-v1.png",
+      "source": "exec-3ec7c700-4630-4c31-97e9-1e45b394a563.png",
+      "sha256": "5c47a95d2ec592169489da4853cb6b81afc1eda82c08aa2a5fc04190b760858b"
+    },
+    {
+      "appearance": "black_short",
+      "destination": "eiffel",
+      "references": [
+        "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png",
+        "assets/images/travel/calico-fuji-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one refined landscape 3:2 painting, 1536x1024, for 喵的图书馆 family travel album.\nInput1: approved cat model sheet, identity source only, do not copy labels/panels. Input2: finished travel illustration, style and cat rendering quality only; replace its entire destination with the requested landmark.\nScene: Paris Champ de Mars gardens, unmistakable Eiffel Tower with delicately drawn iron lattice, four arched legs, platforms and tapering spire, rich but controlled structural detail. A quiet pale stone path and elegant green garden foreground, soft mist-blue morning sky, muted Paris buildings distant, no tourists. Tower must remain readable behind the foreground cat. No snow-capped mountain, desert pyramids, lake or cherry blossoms.\nSubject: Exactly one natural adult CALICO CAT. Frontal image-left face black, image-right orange, central white forehead blaze, amber eyes and pink nose, white chest/belly/all paws, orange shoulder patch and black rear-hip patch; orange-root, black-middle, white-tip tail. Lock the approved identity without new markings. Sitting naturally in foreground with a slight three-quarter face toward viewer, adult natural proportions. Keep entire ears, body, paws and tail inside generous margins, unobstructed; cat approximately half image height, with the destination clearly recognisable behind.\nStyle: refined non-pixel hand-painted game illustration matching input2, delicate brown-grey outlines, finely rendered fur and architecture, gentle physically coherent sunlight and grounded contact shadow. Warm restrained natural palette with soft blue sky, coherent with white/mist-blue app themes. Not photorealism or baby/chibi proportions.\nComposition: single uninterrupted landscape scene, full cat on ground with spacious margins, clear distinctive landmark behind. No new personality, clothes, props or extra characters.\nAvoid: multiple cats, people, text, UI, watermark, frame, collage, model-sheet panels, cropped paws/ears/tail, incorrect cat identity, copying the reference's destination. This is album scenic art, not room furniture or a sprite.",
+      "path": "assets/images/travel/calico-eiffel-v1.png",
+      "refinement": {
+        "reason": "Original tower antenna reached the image boundary",
+        "originalSource": "exec-b3d81a3a-978c-40cc-846a-d6d0b405e3f1.png",
+        "prompt": "Use case: precise-object-edit / travel illustration framing correction.\nEdit the supplied calico Eiffel Tower landscape painting. Preserve its cat EXACTLY: natural adult calico, image-left black face and image-right orange, white blaze/chest/paws, amber eyes, pink nose, orange shoulder, black rear-hip, orange-root/black-middle/white-tip tail. Preserve full cat pose, scale, foreground stone path, refined hand-painted style, soft morning lighting, garden colours and 3:2 landscape dimensions.\nOnly correct the background Eiffel Tower framing: move the tower slightly farther into the scene so the ENTIRE tower, including the complete top antenna and all visible arched feet, fits naturally inside the painting. Leave a clear band of blue sky of at least 6 percent image height ABOVE the antenna tip. Keep the tower centred behind/right of the cat, with recognisable delicate iron lattice, platforms and accurate tapering proportions. Do not simply cut or bend the antenna; draw a complete intact tower at a slightly smaller natural background scale.\nMaintain foreground cat as visual protagonist with whole ears/paws/tail in frame. No new objects, people, cats, clothes, labels, text, UI, watermark or border; no digital stretching or collage. This is a single polished coherent painting."
+      },
+      "source": "exec-68a4fa5f-dabf-4303-8517-d544d109e2ec.png",
+      "sha256": "5e24a3dc7da9085312a18527f1fac4427777b50edc01242ea319f3216cd97c9e"
+    }
+  ],
+  "checks": {
+    "sourceImagesDecoded": true,
+    "manualComposition": "Inspected full cats, correct approved fur/eye identities, readable stone pyramids or complete Eiffel Tower with sky margin; no labels/watermarks/UI. Cropped original tower variant was not integrated.",
+    "native": "PASS: API 35 emulator 320x640 @160dpi, actual decoded frames, light/night album and 3 details; 8 inspected screenshots",
+    "phone": "pending connection",
+    "remote": "pending project",
+    "analysis": "No issues found",
+    "targetedTestsPassed": 7,
+    "decodedCachePeakBytes": 909984,
+    "coldAlbumReadyMsIncludingPaintWait": 3089,
+    "warmNightAlbumReadyMsIncludingPaintWait": 783,
+    "measurementScope": "Debug emulator image cache/readiness only; not total app memory or phone performance",
+    "accountData": "PASS: 3 existing private files unchanged, normal 0.1.14+15 APK restored"
+  }
+}
