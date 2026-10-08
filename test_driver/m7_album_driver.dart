@@ -23,6 +23,8 @@ Future<void> main() async {
           'assetBatch',
           'fixtureOnly',
           'measurements',
+          'allTravelPairsRendered',
+          'completeAlbumViews',
           'remoteInternetVerified',
           'physicalPhoneVerified',
         ])

@@ -1,0 +1,10 @@
+{
+  "version": "0.1.15+16",
+  "target": "lib/main.dart",
+  "sha256": "3ed1e92d84b4477e1b62fc83164d563d59a7127d63165775e882af49a0ce6665",
+  "bytes": 199036650,
+  "configuration": "computer-local Supabase, public configuration only",
+  "emulatorNormalPackageRestored": true,
+  "physicalPhoneInstalled": false,
+  "remoteInternetVerified": false
+}

@@ -1,0 +1,64 @@
+{
+  "nativeVisualTestPassed": true,
+  "assetBatch": 4,
+  "fixtureOnly": true,
+  "measurements": [
+    {
+      "theme": "light",
+      "view": "album",
+      "initialRenderMs": 3501,
+      "decodedImageCacheBytes": 319200
+    },
+    {
+      "theme": "light",
+      "view": "longhair-eiffel",
+      "decodedImageCacheBytes": 516128
+    },
+    {
+      "theme": "light",
+      "view": "calico-liberty",
+      "decodedImageCacheBytes": 713056
+    },
+    {
+      "theme": "light",
+      "view": "longhair-liberty",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "album",
+      "initialRenderMs": 772,
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "longhair-eiffel",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "calico-liberty",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "longhair-liberty",
+      "decodedImageCacheBytes": 909984
+    }
+  ],
+  "allTravelPairsRendered": true,
+  "completeAlbumViews": [
+    {
+      "theme": "light",
+      "decodedDetailPairs": 12,
+      "decodedImageCacheBytes": 3639936
+    },
+    {
+      "theme": "night",
+      "decodedDetailPairs": 12,
+      "decodedImageCacheBytes": 3639936
+    }
+  ],
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false
+}
