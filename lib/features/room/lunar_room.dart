@@ -8,6 +8,7 @@ import 'room_furniture.dart';
 import 'layout_draft.dart';
 import 'basic_room_surfaces.dart';
 import 'souvenir_sculpture.dart';
+import 'room_depth.dart';
 
 /// Independent approved sprites placed in the frozen room-standard-v1 camera.
 class LunarRoom {
@@ -447,61 +448,17 @@ class LunarRoom {
   ) {
     final byId = {for (final i in inventory) i.id: i};
     final boxes = [
-      for (final i in items)
-        _PlacedBox(i, products[byId[i.instanceId]!.sku]!, project),
+      for (final i in items) _PlacedBox(i, products[byId[i.instanceId]!.sku]!),
     ];
-    final next = List.generate(boxes.length, (_) => <int>[]),
-        indegree = List.filled(boxes.length, 0);
-    for (var i = 0; i < boxes.length; i++) {
-      for (var j = i + 1; j < boxes.length; j++) {
-        final a = boxes[i], b = boxes[j];
-        if (!_hullsOverlap(a.hull, b.hull)) continue;
-        final ab = a.x + a.w <= b.x + 1e-8 || a.y + a.d <= b.y + 1e-8;
-        final ba = b.x + b.w <= a.x + 1e-8 || b.y + b.d <= a.y + 1e-8;
-        if (ab && !ba) {
-          next[i].add(j);
-          indegree[j]++;
-        } else if (ba && !ab) {
-          next[j].add(i);
-          indegree[i]++;
-        }
-      }
-    }
-    final queue = [
-          for (var i = 0; i < boxes.length; i++)
-            if (indegree[i] == 0) i,
-        ],
-        order = <PlacedItem>[];
-    while (queue.isNotEmpty) {
-      final i = queue.removeAt(0);
-      order.add(boxes[i].item);
-      for (final j in next[i]) {
-        if (--indegree[j] == 0) queue.add(j);
-      }
-    }
-    if (order.length != items.length) throw StateError('家具遮挡存在环，需拆分素材图层');
-    return order;
+    return sortRoomBodies<PlacedItem>(
+      boxes,
+      project,
+    ).map((b) => b.value).toList();
   }
 
   bool hitsGround(ui.Offset point, PlacedItem item, FurnitureProduct product) =>
-      (ui.Path()..addPolygon(_PlacedBox(item, product, project).hull, true))
+      (ui.Path()..addPolygon(_PlacedBox(item, product).hull(project), true))
           .contains(point);
-
-  static bool _hullsOverlap(List<ui.Offset> a, List<ui.Offset> b) {
-    for (final poly in [a, b]) {
-      for (var i = 0; i < poly.length; i++) {
-        final p = poly[i],
-            q = poly[(i + 1) % poly.length],
-            axis = ui.Offset(q.dy - p.dy, p.dx - q.dx);
-        final A = a.map((v) => v.dx * axis.dx + v.dy * axis.dy).toList()
-          ..sort();
-        final B = b.map((v) => v.dx * axis.dx + v.dy * axis.dy).toList()
-          ..sort();
-        if (A.last <= B.first + 1e-8 || B.last <= A.first + 1e-8) return false;
-      }
-    }
-    return true;
-  }
 
   void render(
     ui.Canvas canvas,
@@ -546,30 +503,17 @@ class LunarRoom {
   }
 }
 
-class _PlacedBox {
-  _PlacedBox(
-    this.item,
-    FurnitureProduct product,
-    ui.Offset Function(num, num, [num]) project,
-  ) {
+class _PlacedBox extends RoomDepthBody<PlacedItem> {
+  factory _PlacedBox(PlacedItem item, FurnitureProduct product) {
     final g = product.geometry[item.facing], cells = product.cells(item.facing);
     final maxX = cells.map((c) => c.$1).reduce((a, b) => a > b ? a : b),
         maxY = cells.map((c) => c.$2).reduce((a, b) => a > b ? a : b);
-    w = (g['w'] as num).toDouble();
-    d = (g['d'] as num).toDouble();
-    h = (g['h'] as num).toDouble();
-    x = (item.gx + (maxX + 1) / 2) / 8 - w / 2;
-    y = (item.gy + (maxY + 1) / 2) / 8 - d / 2;
-    hull = [
-      project(x, y, h),
-      project(x + w, y, h),
-      project(x + w, y, 0),
-      project(x + w, y + d, 0),
-      project(x, y + d, 0),
-      project(x, y + d, h),
-    ];
+    final w = (g['w'] as num).toDouble(),
+        d = (g['d'] as num).toDouble(),
+        h = (g['h'] as num).toDouble();
+    final x = (item.gx + (maxX + 1) / 2) / 8 - w / 2;
+    final y = (item.gy + (maxY + 1) / 2) / 8 - d / 2;
+    return _PlacedBox._(item, x, y, w, d, h);
   }
-  final PlacedItem item;
-  late final double x, y, w, d, h;
-  late final List<ui.Offset> hull;
+  const _PlacedBox._(super.value, super.x, super.y, super.w, super.d, super.h);
 }
