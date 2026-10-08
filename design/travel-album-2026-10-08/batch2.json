@@ -1,0 +1,68 @@
+{
+  "purpose": "Travel album base illustrations, separate from each cat collection record",
+  "batch": 2,
+  "generatedAt": "2026-10-08",
+  "generator": "built-in image_gen",
+  "targetTotal": 12,
+  "deliveredInBatch": 3,
+  "cumulativeDelivered": 6,
+  "format": "RGB PNG",
+  "size": [
+    1536,
+    1024
+  ],
+  "assetUse": "bundled assets; full composition via contain; decode constrained to UI width times device pixel ratio, maximum 900 pixels",
+  "roomGeometry": "Not applicable: full scenic travel illustrations, not room or furniture sprites",
+  "files": [
+    {
+      "appearance": "light_long",
+      "destination": "louvre",
+      "references": [
+        "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+        "assets/images/travel/calico-louvre-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one refined landscape 3:2 painting, 1536x1024, for the 喵的图书馆 travel album.\nInput1 is the approved BLUE-EYED LONGHAIR CAT model sheet, used solely for identity. Input2 is a completed calico Louvre illustration, used solely for architectural detail, palette, lighting and hand-painted game style. Do NOT copy the calico, orange/black patches or amber eyes.\nScene: the Louvre Museum Cour Napoleon courtyard in Paris, recognisable central glass pyramid and elegant pale stone palace facade with mansard roofs. Delicately drawn transparent glass facets, French windows, carved masonry and warm courtyard paving with subtle reflections, soft mist-blue afternoon sky.\nSubject: exactly ONE natural adult-proportioned blue-eyed longhair cat sitting in the foreground, subtle three-quarter pose toward the viewer. Entire ears, paws and fluffy tail safely inside generous margins. Preserve input1 identity precisely: cream-white long fur, grey-brown face mask and ears, icy blue eyes, central white forehead blaze, white chest and pure-white paws; full fluffy grey-brown gradient tail without rings. No new patterns, personality, clothing or props. The cat remains visually primary, approximately half the picture height; the landmark remains readable at mobile thumbnail size.\nStyle: polished non-pixel hand-painted game illustration matching input2, delicate controlled brown-grey outlines, finely shaded natural fur, clear architectural features and coherent grounded shadows. Adult realistic cat proportions with refined illustration treatment, not photorealism or chibi.\nComposition: single continuous scene, full cat unobstructed on paving, recognisable pyramid behind to the right, gentle depth and warm restrained colours that fit the white/mist-blue app themes. This travel landmark scene does not change the separately registered Venus souvenir.\nAvoid: multiple cats, people, text, labels, watermark, UI, border, collage, model-sheet panels, cropped tail/paws/ears, false calico markings.",
+      "path": "assets/images/travel/longhair-louvre-v1.png",
+      "source": "exec-e9abef2e-c2f0-4295-bc48-c3182d5e242c.png",
+      "sha256": "0c04fa284a654e997d334f509f7a6707d5eaa6693f8d383ecc1b2c53004b5959"
+    },
+    {
+      "appearance": "black_short",
+      "destination": "fuji",
+      "references": [
+        "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png",
+        "assets/images/travel/calico-palace-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one polished landscape 3:2 illustration, 1536x1024, for 喵的图书馆 travel album.\nInput1 is the approved CALICO CAT identity model sheet only. Input2 is a completed Forbidden City travel illustration: use its hand-painted polish, cat treatment, soft shadows and refined linework only. Replace Chinese architecture entirely with Mount Fuji scenery.\nScene: Japan's recognisable Mount Fuji seen across a calm lake on a clear spring morning. A broad symmetrical blue mountain cone with clearly legible white snow cap and natural snow gullies, layered quiet foothills and a faint reflection on the lake. A few delicate cherry blossoms frame the side without obscuring the mountain or cat. Foreground is a pale stone lakeside path.\nSubject: exactly ONE natural adult calico cat sitting in the foreground, slight three-quarter pose toward viewer, paws planted on path and entire tail inside generous margins. Lock input1 identity: frontal image-left face black and image-right orange, central white forehead blaze, amber eyes, pink nose, white chest/belly/all paws, orange shoulder patch and black rear-hip patch; orange-root/black-middle/white-tip tail. No invented markings, outfits, accessories or new personality. Cat about half picture height, mountain readable behind.\nStyle: same polished non-pixel hand-painted game illustration as input2, fine soft fur shading, delicate controlled outlines, gentle contact shadow, detailed clean landscape with pale pink blossom, mist-blue lake and mountain, warm restrained sunlight. Adult natural proportions, not baby/chibi, no photographic realism.\nComposition: one coherent continuous landscape painting; full cat unoccluded with margin around ears/paws/tail, snow-capped Fuji clearly recognisable behind, harmonious depth and calm atmosphere. This is travel album background art, not a room sprite.\nAvoid: Chinese palace, Louvre buildings, people, extra cats, text, watermark, UI, frame, collage or model-sheet panels, cropping, anthropomorphic clothing.",
+      "path": "assets/images/travel/calico-fuji-v1.png",
+      "source": "exec-122b8b8f-44dc-45e3-b4d6-d5fc5e74e662.png",
+      "sha256": "4b6b7d6cd1df6e1a7388322913c69f57232769427cf7eb938d54f78f25fdb6a9"
+    },
+    {
+      "appearance": "light_long",
+      "destination": "fuji",
+      "references": [
+        "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+        "assets/images/travel/longhair-palace-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one refined landscape 3:2 painting, 1536x1024, for 喵的图书馆 travel album.\nInput1 is the approved BLUE-EYED LONGHAIR CAT model sheet, identity only. Input2 is a completed longhair Forbidden City travel illustration, only for hand-painted cat/landscape polish, linework, lighting and palette. Replace the Chinese palace with Mount Fuji scenery.\nScene: Japan's unmistakable snow-capped Mount Fuji beyond a calm spring lake, broad symmetrical blue cone, clean white snow cap with natural gullies, distant layered foothills and gentle water reflection. Sparse pale-pink cherry blossoms at one side, pale stone lakeside path foreground, softly lit mist-blue sky. Fuji must be clear at small mobile size.\nSubject: exactly ONE natural adult-proportioned blue-eyed longhair cat sitting gently in the foreground with a slight three-quarter face toward viewer, whole body, paws and full fluffy tail within generous margins. Preserve input1 identity: cream-white long fur, grey-brown mask and ears, icy-blue eyes, central white forehead blaze, white chest and pure-white paws; full grey-brown gradient fluffy tail with NO rings. Natural long fur, no black/orange calico patches, no props/clothing or invented personality. Cat about half image height and visually primary.\nStyle: match input2's refined non-pixel hand-painted game illustration, delicate brown-grey outlines, careful fur detail, gentle grounded contact shadows and coherent sunlight. Warm restrained colours, subtle blue/lilac mountain depth and soft blossom, suitable for app white and mist-blue themes; no photo realism and no chibi.\nComposition: one uninterrupted landscape scene, full cat foreground on path, snow-capped Fuji readable behind, uncluttered generous margins. Do not copy model-sheet panels, palace architecture or labels.\nAvoid: multiple cats, people, Chinese architecture, Louvre glass pyramid, text, UI, watermark, border, cropped ears/paws/tail, anthropomorphic clothes.",
+      "path": "assets/images/travel/longhair-fuji-v1.png",
+      "source": "exec-ca21e4f0-dcb2-4035-9324-506f99a8275d.png",
+      "sha256": "2c3e8aa6d14f412d1b61a465bb5e30916cbf779cbaed4f0bd746c21cd639b656"
+    }
+  ],
+  "checks": {
+    "sourceImagesDecoded": true,
+    "manualComposition": "Inspected all three generated images: correct cat fur/eye identities, full ears/paws/tails, recognisable Louvre or snow-capped Mount Fuji; no UI/text/watermark",
+    "native": "PASS: Android API 35 emulator, 320x640 at 160dpi; 3 new images and details in light/night themes, 8 inspected screenshots; actual decoded image frames awaited",
+    "phone": "pending connection",
+    "remote": "pending project",
+    "flutterTestsPassed": 118,
+    "analysis": "No issues found",
+    "decodedCachePeakBytes": 909984,
+    "coldAlbumReadyMsIncludingPaintWait": 3450,
+    "warmNightAlbumReadyMsIncludingPaintWait": 828,
+    "measurementScope": "Debug emulator image cache and readiness observation only; not total memory or phone performance",
+    "accountData": "PASS: 3 existing private files unchanged; normal APK 0.1.13+14 restored via ADB replacement, no uninstall"
+  }
+}
