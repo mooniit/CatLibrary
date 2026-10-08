@@ -1,0 +1,51 @@
+{
+  "nativeVisualTestPassed": true,
+  "assetBatch": 2,
+  "fixtureOnly": true,
+  "measurements": [
+    {
+      "theme": "light",
+      "view": "album",
+      "initialRenderMs": 3450,
+      "decodedImageCacheBytes": 319200
+    },
+    {
+      "theme": "light",
+      "view": "longhair-louvre",
+      "decodedImageCacheBytes": 516128
+    },
+    {
+      "theme": "light",
+      "view": "calico-fuji",
+      "decodedImageCacheBytes": 713056
+    },
+    {
+      "theme": "light",
+      "view": "longhair-fuji",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "album",
+      "initialRenderMs": 828,
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "longhair-louvre",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "calico-fuji",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "longhair-fuji",
+      "decodedImageCacheBytes": 909984
+    }
+  ],
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false
+}

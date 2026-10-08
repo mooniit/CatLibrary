@@ -1,0 +1,3 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/album_test.dart
+00:00 +0: only delivered appearance and destination pairs use art
+00:00 +1: All tests passed!

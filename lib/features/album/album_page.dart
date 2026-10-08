@@ -177,6 +177,9 @@ class TravelRecordArt extends StatelessWidget {
     'black_short:palace': 'assets/images/travel/calico-palace-v1.png',
     'light_long:palace': 'assets/images/travel/longhair-palace-v1.png',
     'black_short:louvre': 'assets/images/travel/calico-louvre-v1.png',
+    'light_long:louvre': 'assets/images/travel/longhair-louvre-v1.png',
+    'black_short:fuji': 'assets/images/travel/calico-fuji-v1.png',
+    'light_long:fuji': 'assets/images/travel/longhair-fuji-v1.png',
   };
   @override
   Widget build(BuildContext context) {

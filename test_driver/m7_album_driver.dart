@@ -13,9 +13,14 @@ Future<void> main() async {
     },
     responseDataCallback: (data) async {
       if (data == null) throw StateError('Native evidence missing');
+      final batch = data['assetBatch'];
+      if (batch is! int || batch < 1 || batch > 4) {
+        throw StateError('Unexpected travel asset batch');
+      }
       final report = {
         for (final field in [
           'nativeVisualTestPassed',
+          'assetBatch',
           'fixtureOnly',
           'measurements',
           'remoteInternetVerified',
@@ -23,7 +28,9 @@ Future<void> main() async {
         ])
           field: data[field],
       };
-      await File('docs/evidence/m7-album-batch1-native.json').writeAsString(
+      await File(
+        'docs/evidence/m7-album-batch$batch-native.json',
+      ).writeAsString(
         '${const JsonEncoder.withIndent('  ').convert(report)}\n',
       );
     },

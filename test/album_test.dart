@@ -59,9 +59,12 @@ void main() {
     tester,
   ) async {
     for (final pair in [
-      ('black_short', 'palace'),
-      ('light_long', 'palace'),
-      ('black_short', 'louvre'),
+      ('black_short', 'palace', 'calico-palace'),
+      ('light_long', 'palace', 'longhair-palace'),
+      ('black_short', 'louvre', 'calico-louvre'),
+      ('light_long', 'louvre', 'longhair-louvre'),
+      ('black_short', 'fuji', 'calico-fuji'),
+      ('light_long', 'fuji', 'longhair-fuji'),
     ]) {
       await tester.pumpWidget(
         MaterialApp(
@@ -81,9 +84,16 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(Image), findsOneWidget);
+      final provider = tester.widget<Image>(find.byType(Image)).image;
+      expect(provider, isA<ResizeImage>());
+      final resized = provider as ResizeImage;
+      expect(
+        (resized.imageProvider as AssetImage).assetName,
+        'assets/images/travel/${pair.$3}-v1.png',
+      );
       expect(tester.takeException(), isNull);
     }
-    for (final pair in [('light_long', 'louvre'), ('unknown', 'palace')]) {
+    for (final pair in [('light_long', 'pyramid'), ('unknown', 'palace')]) {
       await tester.pumpWidget(
         MaterialApp(
           home: TravelRecordArt(

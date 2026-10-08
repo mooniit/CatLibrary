@@ -23,7 +23,7 @@ void main() {
     fail('Travel artwork did not produce decoded image frames');
   }
 
-  testWidgets('travel batch 1 renders complete art and source in both themes', (
+  testWidgets('travel batch 2 renders complete art and source in both themes', (
     tester,
   ) async {
     final db = AppDatabase(NativeDatabase.memory());
@@ -45,16 +45,16 @@ void main() {
             'family_id': 'visual-family',
             'photos': [
               for (final record in [
-                ('calico-palace', '橘点', 'black_short', 'palace', '故宫', '故宫宫殿'),
-                ('longhair-palace', '白云', 'light_long', 'palace', '故宫', '故宫宫殿'),
                 (
-                  'calico-louvre',
-                  '橘点',
-                  'black_short',
+                  'longhair-louvre',
+                  '白云',
+                  'light_long',
                   'louvre',
                   '卢浮宫',
                   '维纳斯雕像',
                 ),
+                ('calico-fuji', '橘点', 'black_short', 'fuji', '富士山', '富士山'),
+                ('longhair-fuji', '白云', 'light_long', 'fuji', '富士山', '富士山'),
               ])
                 {
                   'id': record.$1,
@@ -89,7 +89,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 200));
       expect(find.byType(Image), findsNWidgets(3));
       expect(find.text('旅行插画待收录'), findsNothing);
-      await binding.takeScreenshot('m7-album-batch1-$mode');
+      await binding.takeScreenshot('m7-album-batch2-$mode');
       measurements.add({
         'theme': mode,
         'view': 'album',
@@ -97,7 +97,7 @@ void main() {
         'decodedImageCacheBytes':
             PaintingBinding.instance.imageCache.currentSizeBytes,
       });
-      for (final id in ['calico-palace', 'longhair-palace', 'calico-louvre']) {
+      for (final id in ['longhair-louvre', 'calico-fuji', 'longhair-fuji']) {
         await tester.tap(find.byKey(ValueKey('photo-$id')));
         await tester.pumpAndSettle();
         await waitForPaintedArt(tester, 1);
@@ -118,6 +118,7 @@ void main() {
     expect(calls, ['family_album', 'family_album']);
     binding.reportData!.addAll({
       'nativeVisualTestPassed': true,
+      'assetBatch': 2,
       'fixtureOnly': true,
       'measurements': measurements,
       'remoteInternetVerified': false,
