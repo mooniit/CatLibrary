@@ -65,6 +65,9 @@ void main() {
       ('light_long', 'louvre', 'longhair-louvre'),
       ('black_short', 'fuji', 'calico-fuji'),
       ('light_long', 'fuji', 'longhair-fuji'),
+      ('black_short', 'pyramid', 'calico-pyramid'),
+      ('light_long', 'pyramid', 'longhair-pyramid'),
+      ('black_short', 'eiffel', 'calico-eiffel'),
     ]) {
       await tester.pumpWidget(
         MaterialApp(
@@ -93,7 +96,7 @@ void main() {
       );
       expect(tester.takeException(), isNull);
     }
-    for (final pair in [('light_long', 'pyramid'), ('unknown', 'palace')]) {
+    for (final pair in [('light_long', 'eiffel'), ('unknown', 'palace')]) {
       await tester.pumpWidget(
         MaterialApp(
           home: TravelRecordArt(

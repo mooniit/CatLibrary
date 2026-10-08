@@ -1,0 +1,3 @@
+{"origin":"http://127.0.0.1:54321","environment":"local","keyType":"anon"}
+Running Gradle task 'assembleDebug'...                             46.0s
+√ Built build\app\outputs\flutter-apk\app-debug.apk

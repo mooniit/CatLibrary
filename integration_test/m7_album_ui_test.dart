@@ -23,7 +23,7 @@ void main() {
     fail('Travel artwork did not produce decoded image frames');
   }
 
-  testWidgets('travel batch 2 renders complete art and source in both themes', (
+  testWidgets('travel batch 3 renders complete art and source in both themes', (
     tester,
   ) async {
     final db = AppDatabase(NativeDatabase.memory());
@@ -46,15 +46,29 @@ void main() {
             'photos': [
               for (final record in [
                 (
-                  'longhair-louvre',
+                  'calico-pyramid',
+                  '橘点',
+                  'black_short',
+                  'pyramid',
+                  '金字塔',
+                  '埃及金字塔',
+                ),
+                (
+                  'longhair-pyramid',
                   '白云',
                   'light_long',
-                  'louvre',
-                  '卢浮宫',
-                  '维纳斯雕像',
+                  'pyramid',
+                  '金字塔',
+                  '埃及金字塔',
                 ),
-                ('calico-fuji', '橘点', 'black_short', 'fuji', '富士山', '富士山'),
-                ('longhair-fuji', '白云', 'light_long', 'fuji', '富士山', '富士山'),
+                (
+                  'calico-eiffel',
+                  '橘点',
+                  'black_short',
+                  'eiffel',
+                  '埃菲尔铁塔',
+                  '埃菲尔铁塔',
+                ),
               ])
                 {
                   'id': record.$1,
@@ -89,7 +103,7 @@ void main() {
       await tester.pump(const Duration(milliseconds: 200));
       expect(find.byType(Image), findsNWidgets(3));
       expect(find.text('旅行插画待收录'), findsNothing);
-      await binding.takeScreenshot('m7-album-batch2-$mode');
+      await binding.takeScreenshot('m7-album-batch3-$mode');
       measurements.add({
         'theme': mode,
         'view': 'album',
@@ -97,7 +111,11 @@ void main() {
         'decodedImageCacheBytes':
             PaintingBinding.instance.imageCache.currentSizeBytes,
       });
-      for (final id in ['longhair-louvre', 'calico-fuji', 'longhair-fuji']) {
+      for (final id in [
+        'calico-pyramid',
+        'longhair-pyramid',
+        'calico-eiffel',
+      ]) {
         await tester.tap(find.byKey(ValueKey('photo-$id')));
         await tester.pumpAndSettle();
         await waitForPaintedArt(tester, 1);
@@ -118,7 +136,7 @@ void main() {
     expect(calls, ['family_album', 'family_album']);
     binding.reportData!.addAll({
       'nativeVisualTestPassed': true,
-      'assetBatch': 2,
+      'assetBatch': 3,
       'fixtureOnly': true,
       'measurements': measurements,
       'remoteInternetVerified': false,

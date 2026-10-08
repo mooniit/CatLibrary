@@ -1,0 +1,51 @@
+{
+  "nativeVisualTestPassed": true,
+  "assetBatch": 3,
+  "fixtureOnly": true,
+  "measurements": [
+    {
+      "theme": "light",
+      "view": "album",
+      "initialRenderMs": 3089,
+      "decodedImageCacheBytes": 319200
+    },
+    {
+      "theme": "light",
+      "view": "calico-pyramid",
+      "decodedImageCacheBytes": 516128
+    },
+    {
+      "theme": "light",
+      "view": "longhair-pyramid",
+      "decodedImageCacheBytes": 713056
+    },
+    {
+      "theme": "light",
+      "view": "calico-eiffel",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "album",
+      "initialRenderMs": 783,
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "calico-pyramid",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "longhair-pyramid",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "calico-eiffel",
+      "decodedImageCacheBytes": 909984
+    }
+  ],
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false
+}
