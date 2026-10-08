@@ -1,0 +1,59 @@
+Running Gradle task 'assembleDebug'...                             14.9s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Performing Streamed Install
+Success
+Starting: Intent { cmp=com.catlibrary.cat_library_demo/.MainActivity }
+I/Choreographer( 5868): Skipped 111 frames!  The application may be doing too much work on its main thread.
+I/WindowExtensionsImpl( 5868): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+I/at_library_demo( 5868): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+D/FlutterRenderer( 5868): Width is zero. 0,0
+D/FlutterJNI( 5868): Sending viewport metrics to the engine.
+W/HWUI    ( 5868): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 5868): mapper 4.x is not supported
+I/Choreographer( 5868): Skipped 54 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 5868): Sending viewport metrics to the engine.
+D/ProfileInstaller( 5868): Installing profile for com.catlibrary.cat_library_demo
+D/EGL_emulation( 5868): app_time_stats: avg=166.10ms min=7.84ms max=336.45ms count=8
+W/WindowOnBackDispatcher( 5868): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5868): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5868): app_time_stats: avg=878.63ms min=322.41ms max=1161.02ms count=3
+D/EGL_emulation( 5868): app_time_stats: avg=221.27ms min=6.61ms max=579.52ms count=8
+W/WindowOnBackDispatcher( 5868): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5868): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5868): app_time_stats: avg=78.81ms min=7.89ms max=138.54ms count=14
+D/EGL_emulation( 5868): app_time_stats: avg=1838.72ms min=1838.72ms max=1838.72ms count=1
+W/WindowOnBackDispatcher( 5868): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5868): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5868): app_time_stats: avg=78.04ms min=21.59ms max=217.05ms count=13
+D/EGL_emulation( 5868): app_time_stats: avg=1693.26ms min=1693.26ms max=1693.26ms count=1
+D/EGL_emulation( 5868): app_time_stats: avg=115.02ms min=47.00ms max=213.67ms count=9
+D/EGL_emulation( 5868): app_time_stats: avg=91.34ms min=9.44ms max=145.53ms count=12
+D/EGL_emulation( 5868): app_time_stats: avg=1667.31ms min=1667.31ms max=1667.31ms count=1
+W/WindowOnBackDispatcher( 5868): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5868): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5868): app_time_stats: avg=108.27ms min=11.66ms max=218.03ms count=10
+D/EGL_emulation( 5868): app_time_stats: avg=98.22ms min=15.65ms max=218.18ms count=11
+W/WindowOnBackDispatcher( 5868): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5868): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5868): app_time_stats: avg=1291.29ms min=982.19ms max=1600.38ms count=2
+D/EGL_emulation( 5868): app_time_stats: avg=100.88ms min=21.54ms max=218.64ms count=10
+W/WindowOnBackDispatcher( 5868): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 5868): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 5868): app_time_stats: avg=77.04ms min=10.22ms max=120.43ms count=14
+D/EGL_emulation( 5868): app_time_stats: avg=1801.18ms min=1801.18ms max=1801.18ms count=1
+D/EGL_emulation( 5868): app_time_stats: avg=99.84ms min=10.78ms max=216.25ms count=11
+I/flutter ( 5868): 00:16 +1: (tearDownAll)
+I/flutter ( 5868): 00:16 +2: All tests passed!
+D/EGL_emulation( 5868): app_time_stats: avg=1245.61ms min=1245.61ms max=1245.61ms count=1
+All tests passed.
+Leaving the application running.
+VMServiceFlutterDriver: Connecting to Flutter application at [VM address hidden]
+VMServiceFlutterDriver: Isolate found with number: 5261753278798931
+VMServiceFlutterDriver: Isolate 5261753278798931 is runnable.
+VMServiceFlutterDriver: Isolate is not paused. Assuming application is ready.
+VMServiceFlutterDriver: Connected to Flutter application.
+VMServiceFlutterDriver: request_data message is taking a long time to complete...
+Performing Streamed Install
+Success
+Starting: Intent { cmp=com.catlibrary.cat_library_demo/.MainActivity }
+PASS: fixture and 3 existing private files preserved; original APK restored

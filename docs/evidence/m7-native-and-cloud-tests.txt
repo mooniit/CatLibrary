@@ -1,0 +1,32 @@
+✔ public hosted configuration is accepted without returning its key (7.8764ms)
+✔ legacy anon is accepted and a mismatched project is rejected (2.9157ms)
+✔ admin and session credentials cannot be compiled into an APK (0.5023ms)
+✔ fixture parameters and additional credential fields are rejected (0.2582ms)
+✔ URL credentials, query parameters, fragments and API paths are rejected (1.7396ms)
+✔ remote endpoints require HTTPS (0.3014ms)
+✔ local packages remain usable but cannot pass the remote gate (1.2531ms)
+✔ empty, placeholder and non-object configuration fail without echoing values (0.3497ms)
+✔ read-only preflight does not claim identity, migration or mobile verification (34.6509ms)
+✔ disabled anonymous signup prevents preflight success (3.2818ms)
+✔ authentication errors, service errors, non-JSON and network failures remain failures (2.7839ms)
+✔ root REST schema must be a valid API description (0.7285ms)
+✔ local endpoints are rejected before any remote probe (0.7306ms)
+✔ migration manifest uses actual ordered SQL files and excludes seed and fixtures (45.0227ms)
+✔ only an explicitly selected Android emulator can receive the native UI test (1.8893ms)
+✔ physical devices, network devices and missing serials are refused before creating a plan (0.7593ms)
+✔ the test APK is built for the requested target without using flutter to install it (0.5224ms)
+✔ ADB installs the test APK as a replacement and permits its test manifest (0.3279ms)
+✔ the app starts only after replacement installation and before attaching the driver (0.3608ms)
+✔ Flutter drive attaches to the running app and explicitly bypasses destructive cleanup (0.3566ms)
+✔ the native test plan contains no uninstall, private-data deletion or emulator reset (0.368ms)
+✔ an absent or invalid VM service address cannot fall back to normal flutter drive (0.2934ms)
+✔ command logging removes the VM service address and session token (0.3652ms)
+✔ success and failure output remove HTTP and WebSocket VM session addresses (0.4016ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 223.9195

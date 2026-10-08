@@ -1,0 +1,14 @@
+{
+  "cause": "Flutter drive default shutdown uninstalls its application package",
+  "emulator": "emulator-5554",
+  "originalOwnerHash": "d7fb2f25753d40f303cc089d560d04380b8bdfeb09e9ffcea324471433b8b91b",
+  "originalServerWalletMatchedBeforeRecovery": true,
+  "recoveredUsingExistingOriginalRefreshSession": true,
+  "originalSqliteSnapshotRestored": true,
+  "recreatedOriginalIdentity": false,
+  "newIdentityDataQuarantined": true,
+  "physicalPhoneTouched": false,
+  "startupVerified": true,
+  "restoredSessionOwnerMatchesOriginal": true,
+  "originalCacheAndWalletVerifiedAfterSafeTest": true
+}
