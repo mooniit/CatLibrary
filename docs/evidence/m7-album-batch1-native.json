@@ -1,0 +1,50 @@
+{
+  "nativeVisualTestPassed": true,
+  "fixtureOnly": true,
+  "measurements": [
+    {
+      "theme": "light",
+      "view": "album",
+      "initialRenderMs": 3637,
+      "decodedImageCacheBytes": 319200
+    },
+    {
+      "theme": "light",
+      "view": "calico-palace",
+      "decodedImageCacheBytes": 516128
+    },
+    {
+      "theme": "light",
+      "view": "longhair-palace",
+      "decodedImageCacheBytes": 713056
+    },
+    {
+      "theme": "light",
+      "view": "calico-louvre",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "album",
+      "initialRenderMs": 770,
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "calico-palace",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "longhair-palace",
+      "decodedImageCacheBytes": 909984
+    },
+    {
+      "theme": "night",
+      "view": "calico-louvre",
+      "decodedImageCacheBytes": 909984
+    }
+  ],
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false
+}

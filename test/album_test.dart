@@ -7,6 +7,99 @@ import 'package:cat_library_demo/features/travel/travel_repository.dart';
 import 'package:cat_library_demo/features/travel/travel_sheet.dart';
 
 void main() {
+  testWidgets(
+    'delivered illustration keeps each cat collection and provenance distinct',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 640);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+      final calls = <String>[];
+      final repo = TravelRepository(
+        db,
+        'A',
+        rpc: (action, _) async {
+          calls.add(action);
+          return {
+            'family_id': 'F',
+            'photos': [
+              for (final cat in ['C1', 'C2'])
+                {
+                  'id': 'visit-$cat',
+                  'cat_id': cat,
+                  'cat_name': cat,
+                  'appearance': 'black_short',
+                  'destination': 'palace',
+                  'destination_label': '故宫',
+                  'taken_at': '2026-10-07T16:00:00Z',
+                  'arranger_label': cat == 'C1' ? '我' : '另一位成员',
+                  'arranged_by': 'private-owner-$cat',
+                  'souvenir_label': '故宫宫殿',
+                },
+            ],
+          };
+        },
+      );
+      await tester.pumpWidget(MaterialApp(home: AlbumPage(repository: repo)));
+      await tester.pumpAndSettle();
+      expect(find.text('2 条旅行回忆'), findsOneWidget);
+      expect(find.text('旅行插画待收录'), findsNothing);
+      expect(find.byType(Image), findsNWidgets(2));
+      await tester.tap(find.byKey(const ValueKey('photo-visit-C2')));
+      await tester.pumpAndSettle();
+      expect(find.text('C2'), findsOneWidget);
+      expect(find.text('安排人：另一位成员'), findsOneWidget);
+      expect(find.textContaining('private-owner'), findsNothing);
+      expect(calls, ['family_album']);
+    },
+  );
+  testWidgets('only delivered appearance and destination pairs use art', (
+    tester,
+  ) async {
+    for (final pair in [
+      ('black_short', 'palace'),
+      ('light_long', 'palace'),
+      ('black_short', 'louvre'),
+    ]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: SizedBox(
+            width: 280,
+            height: 200,
+            child: TravelRecordArt(
+              photo: {
+                'appearance': pair.$1,
+                'destination': pair.$2,
+                'cat_name': '测试猫',
+                'destination_label': '测试地点',
+              },
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(Image), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+    for (final pair in [('light_long', 'louvre'), ('unknown', 'palace')]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: TravelRecordArt(
+            photo: {
+              'appearance': pair.$1,
+              'destination': pair.$2,
+              'cat_name': '测试猫',
+              'destination_label': '测试地点',
+            },
+          ),
+        ),
+      );
+      expect(find.byType(Image), findsNothing);
+      expect(find.text('旅行插画待收录'), findsOneWidget);
+    }
+  });
   testWidgets('shared album metadata visible and no fake photo used', (
     tester,
   ) async {

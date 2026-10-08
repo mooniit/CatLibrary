@@ -173,8 +173,53 @@ class _AlbumPageState extends State<AlbumPage> {
 class TravelRecordArt extends StatelessWidget {
   const TravelRecordArt({super.key, required this.photo});
   final Map<String, dynamic> photo;
+  static const _assets = {
+    'black_short:palace': 'assets/images/travel/calico-palace-v1.png',
+    'light_long:palace': 'assets/images/travel/longhair-palace-v1.png',
+    'black_short:louvre': 'assets/images/travel/calico-louvre-v1.png',
+  };
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) {
+    final asset = _assets['${photo['appearance']}:${photo['destination']}'];
+    if (asset != null) {
+      return Semantics(
+        label: '${photo['cat_name']}的${photo['destination_label']}旅行插画',
+        child: ColoredBox(
+          color: Theme.of(context).colorScheme.surfaceContainerLow,
+          child: LayoutBuilder(
+            builder: (context, constraints) => Image.asset(
+              asset,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.contain,
+              cacheWidth:
+                  (constraints.maxWidth *
+                          MediaQuery.devicePixelRatioOf(context))
+                      .ceil()
+                      .clamp(200, 900),
+              excludeFromSemantics: true,
+              frameBuilder: (context, child, frame, synchronous) =>
+                  synchronous || frame != null
+                  ? child
+                  : Center(
+                      child: Semantics(
+                        label: '旅行插画加载中',
+                        child: Icon(
+                          Icons.photo_outlined,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+              errorBuilder: (_, _, _) => _pending(context),
+            ),
+          ),
+        ),
+      );
+    }
+    return _pending(context);
+  }
+
+  Widget _pending(BuildContext context) => Container(
     width: double.infinity,
     color: Theme.of(context).colorScheme.surfaceContainerLow,
     child: Semantics(
@@ -216,7 +261,13 @@ class PhotoDetail extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
-          SizedBox(height: 240, child: TravelRecordArt(photo: photo)),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: AspectRatio(
+              aspectRatio: 1.5,
+              child: TravelRecordArt(photo: photo),
+            ),
+          ),
           const SizedBox(height: 24),
           Text(
             photo['cat_name'],
@@ -238,10 +289,6 @@ class PhotoDetail extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.person_outline),
             title: Text('安排人：${photo['arranger_label']}'),
-            subtitle: Text(
-              photo['arranged_by'],
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
