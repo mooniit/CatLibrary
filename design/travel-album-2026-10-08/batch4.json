@@ -1,0 +1,74 @@
+{
+  "purpose": "Travel album base images, separate from individual cat collection records",
+  "batch": 4,
+  "generatedAt": "2026-10-08",
+  "generator": "built-in image_gen",
+  "targetTotal": 12,
+  "deliveredInBatch": 3,
+  "cumulativeDelivered": 12,
+  "format": "RGB PNG",
+  "size": [
+    1536,
+    1024
+  ],
+  "assetUse": "full contain composition, bounded decode width up to 900px",
+  "roomGeometry": "Not applicable to full scenic album illustrations",
+  "files": [
+    {
+      "appearance": "light_long",
+      "destination": "eiffel",
+      "references": [
+        "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+        "assets/images/travel/longhair-louvre-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one polished landscape 3:2 painting, 1536x1024, for 喵的图书馆 family travel album.\nInput1 is the approved cat identity model sheet ONLY, not the layout or text. Input2 is a completed album illustration: finely painted cat/landmark quality, linework and lighting reference ONLY. Replace its entire destination with the requested scene; do not copy the wrong cat identity.\nScene: Paris Champ de Mars gardens, COMPLETE recognisable Eiffel Tower at a natural background scale, including all visible arched legs, delicate iron lattice, platforms, tapering spire and whole antenna. A band of clear blue sky at least 8 percent of image height must remain ABOVE its antenna. Pale stone path foreground, green gardens, subtle distant Paris roofs, soft morning light. No Louvre glass pyramid or palace, no Mount Fuji or Egyptian pyramids.\nSubject: exactly ONE Natural adult BLUE-EYED LONGHAIR CAT, cream-white long fur, grey-brown mask and ears, icy-blue eyes, central white forehead blaze, white chest and pure-white paws, grey-brown gradient fluffy tail WITHOUT rings. Preserve approved identity, no calico patterns. Sitting naturally on the foreground path, slight three-quarter face toward viewer, realistic adult proportions; cat visually primary and about half picture height. Keep entire ears, body, paws and full tail safely within generous margins. No props, new personality, clothes or anthropomorphism.\nStyle: refined non-pixel hand-painted game illustration, delicate controlled brown-grey outlines, fine coherent fur, carefully drawn monument detail, soft physically coherent shadows and grounded paws. Warm restrained natural palette with mist-blue sky and elegant depth suitable for app white/mist-blue themes; not photographic realism, not chibi or baby proportions.\nComposition: one continuous landscape scene, full cat unobstructed foreground, clear distinctive COMPLETE landmark behind to the right with sky margin. The image must read as a real travel scene, not model sheet, collage or toy arrangement.\nAvoid: people, extra cats, text, UI, watermark, frame, cropped cat/tail/paws or cropped antenna/torch, incorrect fur or eye identity, copying reference destination.",
+      "path": "assets/images/travel/longhair-eiffel-v1.png",
+      "refinement": {
+        "reason": "Initial tower antenna had too little sky margin",
+        "originalSource": "exec-a9f3e80c-c75e-4de3-97d8-54b588c8676b.png",
+        "prompt": "Use case: precise-object-edit / travel album framing refinement.\nEdit the supplied longhair-cat Eiffel travel painting with ONE targeted change: make the distant Eiffel Tower slightly smaller at its background position, maintaining accurate proportions, so a clear band of BLUE SKY at least 8 percent of image height lies above the ENTIRE antenna. The complete tower and arched feet remain intact and recognisable, with delicate iron lattice, platforms and tapering spire. Do not cut or bend its antenna or stretch the image.\nPreserve the foreground natural adult blue-eyed longhair cat exactly: cream-white long fur, grey-brown mask/ears, icy-blue eyes, central white forehead blaze, white chest/paws and fluffy grey-brown tail without rings. Preserve its full body pose, size, complete ears/paws/tail, gentle morning lighting, hand-painted fine linework, stone paving and Paris garden colours. Keep the existing 1536x1024 landscape 3:2 composition and cat as protagonist, all extremities within margins.\nDo not introduce other cats, people, clothing, props, text, UI, watermark, border or collage. Only refine tower framing within the same coherent polished illustration."
+      },
+      "source": "exec-5be77a8a-7737-403b-ac93-67847a655bed.png",
+      "sha256": "7c9ae3192daf85beba0ff8d2e60fd68ebacae42d5dd3cfd6a69e69e05f48fb7c"
+    },
+    {
+      "appearance": "black_short",
+      "destination": "liberty",
+      "references": [
+        "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png",
+        "assets/images/travel/calico-eiffel-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one polished landscape 3:2 painting, 1536x1024, for 喵的图书馆 family travel album.\nInput1 is the approved cat identity model sheet ONLY, not the layout or text. Input2 is a completed album illustration: finely painted cat/landmark quality, linework and lighting reference ONLY. Replace its entire destination with the requested scene; do not copy the wrong cat identity.\nScene: New York Liberty Island, COMPLETE recognisable Statue of Liberty in the background with weathered pale-green copper patina, the full raised torch and flame, clear seven-point crown, draped robe, left-arm tablet and stone pedestal. Draw the statue as a real monument at a slightly distant natural scale, NOT a tabletop souvenir. Leave clear sky at least 8 percent of image height ABOVE the torch flame; full monument and pedestal comfortably inside frame. Calm blue harbour and subtle distant New York skyline behind, pale stone island path foreground, gentle warm morning sunlight. No Eiffel Tower, Louvre pyramid, mountains or desert.\nSubject: exactly ONE Natural adult CALICO CAT with frontal image-left black face, image-right orange face, central white forehead blaze, amber eyes and pink nose; white chest/belly/paws, orange shoulder and black rear-hip patches, orange-root/black-middle/white-tip tail. Preserve approved markings precisely. Sitting naturally on the foreground path, slight three-quarter face toward viewer, realistic adult proportions; cat visually primary and about half picture height. Keep entire ears, body, paws and full tail safely within generous margins. No props, new personality, clothes or anthropomorphism.\nStyle: refined non-pixel hand-painted game illustration, delicate controlled brown-grey outlines, fine coherent fur, carefully drawn monument detail, soft physically coherent shadows and grounded paws. Warm restrained natural palette with mist-blue sky and elegant depth suitable for app white/mist-blue themes; not photographic realism, not chibi or baby proportions.\nComposition: one continuous landscape scene, full cat unobstructed foreground, clear distinctive COMPLETE landmark behind to the right with sky margin. The image must read as a real travel scene, not model sheet, collage or toy arrangement.\nAvoid: people, extra cats, text, UI, watermark, frame, cropped cat/tail/paws or cropped antenna/torch, incorrect fur or eye identity, copying reference destination.",
+      "path": "assets/images/travel/calico-liberty-v1.png",
+      "source": "exec-2cddd056-0211-4d55-977f-15d3fe0d18a6.png",
+      "sha256": "e0a18c207f1b4013d9b8b3caa156ebe24473455099a1412c4212e46a4d96b9b2"
+    },
+    {
+      "appearance": "light_long",
+      "destination": "liberty",
+      "references": [
+        "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+        "assets/images/travel/longhair-louvre-v1.png"
+      ],
+      "prompt": "Use case: illustration-story / identity-preserving game travel illustration.\nAsset type: one polished landscape 3:2 painting, 1536x1024, for 喵的图书馆 family travel album.\nInput1 is the approved cat identity model sheet ONLY, not the layout or text. Input2 is a completed album illustration: finely painted cat/landmark quality, linework and lighting reference ONLY. Replace its entire destination with the requested scene; do not copy the wrong cat identity.\nScene: New York Liberty Island, COMPLETE recognisable Statue of Liberty in the background with weathered pale-green copper patina, the full raised torch and flame, clear seven-point crown, draped robe, left-arm tablet and stone pedestal. Draw the statue as a real monument at a slightly distant natural scale, NOT a tabletop souvenir. Leave clear sky at least 8 percent of image height ABOVE the torch flame; full monument and pedestal comfortably inside frame. Calm blue harbour and subtle distant New York skyline behind, pale stone island path foreground, gentle warm morning sunlight. No Eiffel Tower, Louvre pyramid, mountains or desert.\nSubject: exactly ONE Natural adult BLUE-EYED LONGHAIR CAT, cream-white long fur, grey-brown mask and ears, icy-blue eyes, central white forehead blaze, white chest and pure-white paws, grey-brown gradient fluffy tail WITHOUT rings. Preserve approved identity, no calico patterns. Sitting naturally on the foreground path, slight three-quarter face toward viewer, realistic adult proportions; cat visually primary and about half picture height. Keep entire ears, body, paws and full tail safely within generous margins. No props, new personality, clothes or anthropomorphism.\nStyle: refined non-pixel hand-painted game illustration, delicate controlled brown-grey outlines, fine coherent fur, carefully drawn monument detail, soft physically coherent shadows and grounded paws. Warm restrained natural palette with mist-blue sky and elegant depth suitable for app white/mist-blue themes; not photographic realism, not chibi or baby proportions.\nComposition: one continuous landscape scene, full cat unobstructed foreground, clear distinctive COMPLETE landmark behind to the right with sky margin. The image must read as a real travel scene, not model sheet, collage or toy arrangement.\nAvoid: people, extra cats, text, UI, watermark, frame, cropped cat/tail/paws or cropped antenna/torch, incorrect fur or eye identity, copying reference destination.",
+      "path": "assets/images/travel/longhair-liberty-v1.png",
+      "source": "exec-b5818dfc-fab2-459f-ade9-54bc5e05d7c9.png",
+      "sha256": "c02bbbfb2fb81205d758d4068eb1bf631434b9bb09b683e026ed2136cb92cef3"
+    }
+  ],
+  "checks": {
+    "sourceImagesDecoded": true,
+    "manualComposition": "Inspected approved cat identities and full bodies/tails, complete Eiffel or Statue of Liberty with readable structure. Eiffel framing refined before integration. No UI/text/watermark.",
+    "native": "PASS: API 35 emulator 320x640 at 160dpi; final 3 art and details, plus complete 12-record album scrolling and all 12 decoded detail pairs in BOTH themes; 12 inspected screenshots",
+    "phone": "pending connection",
+    "remote": "pending project",
+    "analysis": "No issues found",
+    "flutterTestsPassed": 118,
+    "coldAlbumReadyMsIncludingPaintWait": 3501,
+    "warmNightAlbumReadyMsIncludingPaintWait": 772,
+    "finalBatchDecodedCachePeakBytes": 909984,
+    "allTwelveDecodedCacheBytes": 3639936,
+    "measurementScope": "Debug emulator decoded image cache/readiness only; not total memory, GPU textures or physical phone performance",
+    "accountData": "PASS: 3 existing private files unchanged; normal 0.1.15+16 APK restored, original owner and wallet matched after normal startup"
+  }
+}
