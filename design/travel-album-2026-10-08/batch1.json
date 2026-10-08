@@ -1,0 +1,64 @@
+{
+  "purpose": "Travel album base illustrations, separate from each cat's collected visit records",
+  "batch": 1,
+  "generatedAt": "2026-10-08",
+  "generator": "built-in image_gen",
+  "targetTotal": 12,
+  "deliveredCount": 3,
+  "format": "RGB PNG",
+  "size": [
+    1536,
+    1024
+  ],
+  "assetUse": "bundled assets; full composition via contain; decode constrained to UI width times device pixel ratio, maximum 900 pixels",
+  "roomGeometry": "Not applicable: complete scenic travel illustrations, not room sprites or furnishings",
+  "assets": [
+    {
+      "appearance": "black_short",
+      "destination": "palace",
+      "path": "assets/images/travel/calico-palace-v1.png",
+      "source": "exec-3ae7b901-e72b-4848-9791-fd7c844593a8.png",
+      "sha256": "92056f660e2f7767b17d1b43ad73b800987928b69c78fc9f33df4bd70e535871",
+      "references": [
+        "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png"
+      ],
+      "prompt": "Use case: identity-preserve / storybook game travel illustration.\nAsset type: one finished landscape 3:2 illustration for the Flutter game 喵的图书馆 family travel album, approximately 1536x1024.\nReference image 1 is the approved calico cat character model sheet: use only its cat identity and refined hand-painted fur treatment, NOT its sheet layout, labels or text.\nScene: Beijing Forbidden City, a quiet warm morning courtyard with the recognisable grand red-pillared palace, layered golden yellow glazed tile roofs with curved eaves, fine traditional roof details and pale carved stone terrace behind. Architectural detail should be carefully drawn and recognisable at small phone size, without overcrowding. Light mist-blue sky and warm stone foreground harmonise with the project's white / mist-blue themes.\nSubject: exactly ONE adult natural-proportioned calico cat in the foreground, sitting with all paws and entire tail visible, looking calmly toward the viewer in a slight three-quarter pose. Keep the reference identity: image-left face black and image-right orange as seen frontally, white forehead blaze, amber eyes, pink nose, white chest/belly/all four paws, orange shoulder patch, black rear-hip patch; tail orange at root, black middle, white tip. No new personality or accessories. The cat is the protagonist, around 45 percent of picture height; the landmark remains clearly identifiable behind it.\nStyle: polished non-pixel hand-drawn game illustration, delicate controlled brown-grey outlines, fine soft painted fur and roof textures, gentle physical shadows, warm restrained natural colours, depth without photographic realism. The adult cat's paws touch the stone and its shadow agrees with the courtyard morning light.\nComposition: a single continuous landscape scene with cat wholly inside generous margins and enough air around ears and tail; main cat and palace centered so a phone thumbnail retains both. No crop, no collage, no panels, no typography, no labels, no UI, no border, no watermark, no anthropomorphic clothes, no chibi proportions. This is a travel illustration, not a room furniture sprite or a geometry sheet."
+    },
+    {
+      "appearance": "light_long",
+      "destination": "palace",
+      "path": "assets/images/travel/longhair-palace-v1.png",
+      "source": "exec-e14e8bb3-97f1-4fd6-85d8-e9658d72f89a.png",
+      "sha256": "2111e416da8dca0a954496468b9fa86fa5eccfdce4de7e95e153167a17748822",
+      "references": [
+        "design/art/exec-ac98f04d-5d86-4890-ae41-ee9add226e4b.png",
+        "assets/images/travel/calico-palace-v1.png"
+      ],
+      "prompt": "Use case: identity-preserve / storybook game travel illustration.\nAsset type: one finished landscape 3:2 illustration for 喵的图书馆 family travel album, approximately 1536x1024.\nInput 1 is the approved BLUE-EYED LONGHAIR CAT model sheet: identity source only. Input 2 is a completed calico Forbidden City illustration: use its refined painted style, landmark quality, light and landscape composition only. Do NOT copy the calico cat, its orange/black patches or its amber eyes.\nScene: a recognizable Forbidden City courtyard in Beijing, grand red-column palace with layered gold glazed tile roofs, finely drawn eaves, blue-green traditional painted beams, pale carved stone terraces and guardian lions, mist-blue morning sky. A single continuous scene, gentle detailed brushwork consistent with reference2.\nSubject: exactly ONE natural adult-proportioned BLUE-EYED LONGHAIR CAT foreground sitting in a subtle three-quarter pose, four white paws and entire fluffy tail visible, ample margin. Preserve input1 identity: cream-white long fur, grey-brown face mask and ears, icy blue eyes, white forehead blaze, white chest and pure white paws; a full fluffy grey-brown gradient tail with NO rings. Refined natural fur, no new patches, no clothes, props or anthropomorphism. It should be clearly a different approved appearance, never a recoloured calico.\nComposition: softly grounded cat in the foreground occupying around half the picture height, palace recognisable behind; single landscape image with all cat extremities inside frame. Fine cat facial detail readable as mobile thumbnail. Morning illumination and soft contact shadow match palace scene.\nStyle: polished non-pixel hand-painted illustration, delicate grey-brown outlines, soft detailed shading, coherent with input2 and approved game character sheet, no photographic realism, no chibi.\nAvoid: model-sheet layouts, multiple cats, text, UI, labels, watermark, frames, cropped ears/paws/tail, collage, cartoon baby proportions. This is independent travel album art, not room furniture."
+    },
+    {
+      "appearance": "black_short",
+      "destination": "louvre",
+      "path": "assets/images/travel/calico-louvre-v1.png",
+      "source": "exec-841048b6-ad96-44e1-a049-78845610b834.png",
+      "sha256": "1f43e966360034dd081a41c146cd083cb7f5f4f13f56d47372664bc7cae0e2d6",
+      "references": [
+        "design/art/exec-d31776ea-cf0c-4ef6-a2df-05f77864e162.png",
+        "assets/images/travel/calico-palace-v1.png"
+      ],
+      "prompt": "Use case: identity-preserve / refined game travel illustration.\nAsset type: one finished landscape 3:2 painting for 喵的图书馆 travel album, approximately 1536x1024.\nInput 1 is the approved calico identity model sheet. Input 2 is the already generated Forbidden City illustration: style, cat rendering quality and soft lighting reference only. Change the destination completely to the LOUVRE MUSEUM in Paris; do not retain Chinese architecture.\nScene: the Louvre's Cour Napoleon courtyard, clear recognisable transparent glass pyramid behind the cat, the richly detailed pale stone Louvre palace facade and mansard roofs behind it, subtle courtyard reflections and soft mist-blue sky at late afternoon. Refined French architecture, elegant warm pale-stone and muted blue glass palette. This is the travel photograph illustration for the destination; souvenir stays the separately registered Venus statue and is not part of this scene.\nSubject: exactly ONE adult calico cat, sitting or standing naturally on courtyard paving in the foreground, whole body and all visible paws and the entire tail within the image, no props or clothes. Use the approved identity consistently: frontal image-left face black, image-right face orange, central white forehead blaze, amber eyes and pink nose, white chest/belly/paws, orange shoulder patch and black rear-hip patch, orange-root/black-middle/white-tip tail. Face turned slightly toward the viewer so identity is legible. Preserve natural adult proportions, never baby/chibi, no invented new markings.\nStyle: match input2's polished non-pixel hand-painted game illustration, delicate controlled outline and carefully rendered fur, real architectural details and soft grounded shadows. The cat is visually primary but the glass pyramid and palace must remain readable, especially in a small phone album card.\nComposition: one coherent continuous landscape scene, cat around half the image height in foreground with clear margin around ears/paws/tail; pyramid landmark behind slightly to the right, balanced atmosphere. No crop, no collage or model-sheet panels, no people, no multiple cats, no typography or UI, no border, no watermark."
+    }
+  ],
+  "checks": {
+    "sourceImagesDecoded": true,
+    "manualComposition": "Inspected whole cats, paws/tails, calico/longhair eye and fur identity, landmark readability, absence of text and watermark",
+    "native": "PASS: Android API 35 emulator, 320x640 @ 160dpi; 3 images and details in light/night themes, 8 inspected screenshots. Wait for actual decoded RawImage frames before capture.",
+    "decodedCachePeakBytes": 909984,
+    "coldAlbumReadyMsIncludingPaintWait": 3637,
+    "warmNightAlbumReadyMsIncludingPaintWait": 770,
+    "measurementScope": "Debug emulator visual fixture. Image cache only, not total app memory or physical-phone performance acceptance.",
+    "phone": "pending connection",
+    "remote": "pending project",
+    "accountRecovery": "Default Flutter drive uninstalled the emulator app. Original existing session and SQLite restored and verified. Subsequent attached-driver test preserved 3 original private files; see docs/evidence/m7-album-account-recovery.json and m7-album-safe-preservation.json."
+  }
+}
