@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-08",
+  "browserPrototypeOnly": true,
+  "views": [
+    {
+      "id": "sleep-x",
+      "bodyChangedChannels": 0,
+      "tailChangedChannels": 60223,
+      "size": [
+        1774,
+        887
+      ]
+    },
+    {
+      "id": "sleep-y",
+      "bodyChangedChannels": 0,
+      "tailChangedChannels": 60220,
+      "size": [
+        1774,
+        887
+      ]
+    },
+    {
+      "id": "stand-x",
+      "bodyChangedChannels": 0,
+      "tailChangedChannels": 77109,
+      "size": [
+        1774,
+        887
+      ]
+    },
+    {
+      "id": "stand-y",
+      "bodyChangedChannels": 0,
+      "tailChangedChannels": 77096,
+      "size": [
+        1774,
+        887
+      ]
+    }
+  ],
+  "mirrors": [
+    {
+      "pose": "sleep",
+      "changedChannels": 10
+    },
+    {
+      "pose": "stand",
+      "changedChannels": 38
+    }
+  ],
+  "appearance": "black_short",
+  "pageErrors": [],
+  "staticAnatomy": "Light/night composite manually inspected: sleeping closed eyes with two visible forepaws and hidden hind paws; standing four separate paws. Fixed-room contact registration remains unverified.",
+  "tailAttachment": "Standing root manually declared inside rump; no body translation or automatic ground detection. Four-phase sheet requires manual inspection after each rerun.",
+  "nativeRoomVerified": false,
+  "phoneVerified": false
+}

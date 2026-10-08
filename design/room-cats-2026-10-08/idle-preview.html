@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>三花猫待机动作</title>
+<style>
+  :root{color-scheme:light;--page:#fff;--ink:#293846;--muted:#6e8092;--surface:#f3f6f9;--line:#dce5ed;--accent:#668aab}
+  :root.night{color-scheme:dark;--page:#101820;--ink:#e4edf5;--muted:#99aebe;--surface:#1b2835;--line:#304356;--accent:#a6c3de}
+  *{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif}
+  main{max-width:1100px;margin:auto;padding:36px 32px 24px}header{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  h1{font-size:24px;line-height:1.5;font-weight:600;margin:0}p{color:var(--muted);font-size:14px;line-height:1.7;margin:10px 0}
+  nav{display:flex;gap:10px}button{width:44px;height:44px;border:1px solid var(--line);background:var(--page);color:var(--ink);border-radius:50%;cursor:pointer;display:grid;place-items:center}
+  button:hover{background:var(--surface)}button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}svg{width:19px;height:19px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  section{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:28px}figure{margin:0;min-width:0}canvas{display:block;width:100%;height:auto;background:var(--surface);border-radius:30px}
+  figcaption{display:flex;align-items:center;justify-content:space-between;padding:16px 4px;font-size:17px;font-weight:600}small{font-size:12px;font-weight:400;color:var(--muted)}
+  footer{border-top:1px solid var(--line);padding-top:12px;margin-top:18px;color:var(--muted);font-size:12px;line-height:1.7}
+  @media(max-width:650px){main{padding:24px 16px}h1{font-size:20px}section{grid-template-columns:1fr;gap:12px}canvas{max-height:400px;object-fit:contain}header{align-items:flex-start}}
+</style>
+<main>
+  <header><div><h1>三花猫待机动作</h1><p>身体和爪子固定，尾巴轻轻摆动。</p></div><nav>
+    <button id="pause" aria-label="暂停动画" title="暂停动画"><svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg></button>
+    <button id="theme" aria-label="切换夜晚底色" title="切换夜晚底色"><svg viewBox="0 0 24 24"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10Z"/></svg></button>
+  </nav></header>
+  <section aria-label="睡姿和站姿的两个朝向">
+    <figure><canvas id="sleep-x" width="1000" height="1000" aria-label="闭眼放松趴睡，朝 X 轴"></canvas><figcaption>安睡<small>X 朝向</small></figcaption></figure>
+    <figure><canvas id="sleep-y" width="1000" height="1000" aria-label="闭眼放松趴睡，朝 Y 轴"></canvas><figcaption>安睡<small>Y 朝向</small></figcaption></figure>
+    <figure><canvas id="stand-x" width="1000" height="1000" aria-label="四肢落地站立，朝 X 轴"></canvas><figcaption>站立<small>X 朝向</small></figcaption></figure>
+    <figure><canvas id="stand-y" width="1000" height="1000" aria-label="四肢落地站立，朝 Y 轴"></canvas><figcaption>站立<small>Y 朝向</small></figcaption></figure>
+  </section>
+  <footer>本次仅检查三花猫的姿态和摆尾。另一只猫及走路动作暂不制作；这是素材预览，尚未接入原生房间。</footer>
+</main>
+<script type="module">
+  const poses=[
+    {pose:'sleep',file:'calico-sleeping-idle-v4.png',root:[251,550],sourceRoot:[246,500],bodyRect:[0,0,1024,887],tailRect:[1024,0,750,887],amplitude:1.2,period:4.8,front:true,displayScale:.8},
+    {pose:'stand',file:'calico-standing-idle-v2.png',root:[320,375],sourceRoot:[345,290],bodyRect:[0,0,886,887],tailRect:[888,0,886,887],amplitude:3,period:3.8,front:false,displayScale:1.05},
+  ];
+  const configurations=poses.flatMap(pose=>['x','y'].map(facing=>({...pose,id:`${pose.pose}-${facing}`,facing})));
+  let paused=matchMedia('(prefers-reduced-motion: reduce)').matches,time=0,previous=null;
+  const layers=await Promise.all(configurations.map(async config=>{
+    const image=new Image();image.src=config.file;await image.decode();
+    if(image.width!==1774||image.height!==887)throw Error('Unexpected atlas dimensions');
+    const canvas=document.getElementById(config.id);
+    return {...config,image,context:canvas.getContext('2d')};
+  }));
+  function paint(layer,seconds,part='both'){
+    const {context:c,image,root,sourceRoot}=layer;
+    c.clearRect(0,0,1000,1000);c.save();
+    if(layer.facing==='y'){c.translate(1000,0);c.scale(-1,1);}
+    c.translate(500,790);c.scale(layer.displayScale,layer.displayScale);c.translate(-443.5,-658.3);
+    function body(){const r=layer.bodyRect;c.drawImage(image,...r,0,0,r[2],r[3]);}
+    function tail(){
+      c.save();c.translate(...root);
+      c.rotate(Math.sin(seconds*Math.PI*2/layer.period)*layer.amplitude*Math.PI/180);
+      c.translate(-sourceRoot[0],-sourceRoot[1]);
+      const r=layer.tailRect;c.drawImage(image,...r,0,0,r[2],r[3]);c.restore();
+    }
+    if(part==='body'){body();}else if(part==='tail'){tail();}else if(layer.front){body();tail();}else{tail();body();}c.restore();
+  }
+  function frame(timestamp){
+    if(previous!==null&&!paused)time+=Math.min(.1,(timestamp-previous)/1000);
+    previous=timestamp;for(const layer of layers)paint(layer,time);requestAnimationFrame(frame);
+  }
+  const pause=document.getElementById('pause');
+  function pauseLabel(){const label=paused?'播放动画':'暂停动画';pause.setAttribute('aria-label',label);pause.title=label;pause.innerHTML=paused?'<svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></svg>':'<svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></svg>';}
+  pause.onclick=()=>{paused=!paused;pauseLabel();};pauseLabel();
+  document.getElementById('theme').onclick=()=>{document.documentElement.classList.toggle('night');};
+  document.addEventListener('visibilitychange',()=>{previous=null;});
+  window.idlePreview={configurations,layers,paint,bodyTransform:'fixed uniform scale/translation and whole-pose mirror',tailOnly:true,appearance:'black_short',get elapsed(){return time;}};
+  requestAnimationFrame(frame);
+</script>
+</html>

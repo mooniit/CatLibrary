@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-08",
+  "status": "POSE_REVIEW_PROTOTYPE",
+  "appearance": "black_short",
+  "scope": {
+    "poses": [
+      "relaxed_closed_eye_prone_sleep",
+      "four_paw_standing_idle"
+    ],
+    "facings": [
+      "x",
+      "y"
+    ],
+    "motion": "tail only, no body or paw movement",
+    "otherCatGenerated": false,
+    "locomotionGeneratedThisBatch": false
+  },
+  "standard": "room-standard-v1",
+  "assets": [
+    {
+      "file": "calico-standing-idle-v2.png",
+      "source": "C:/Users/26424/.codex/generated_images/01a11110-592d-7530-8623-a1a68ae2b3ec/exec-3789f5ff-7335-4123-9893-9b803bd1ebff.png",
+      "sha256": "3BF8F786C6B042C59E821F10875A3F246DA6E2495DD8D2F2BBB8E21FED850363",
+      "guide": "standing-idle-v2-guide.png",
+      "contract": "idle-v2-contract.json",
+      "prompt": null,
+      "promptStatus": "Original exact prompt not available in current stored context; source retained. Recover before formal asset acceptance.",
+      "atlas": {
+        "body": [
+          0,
+          0,
+          886,
+          887
+        ],
+        "tail": [
+          888,
+          0,
+          886,
+          887
+        ]
+      },
+      "previewAttachment": {
+        "bodyRoot": [
+          320,
+          375
+        ],
+        "tailRoot": [
+          345,
+          290
+        ],
+        "behindBody": true,
+        "amplitudeDegrees": 3,
+        "periodSeconds": 3.8
+      }
+    },
+    {
+      "file": "calico-sleeping-idle-v4.png",
+      "source": "C:/Users/26424/.codex/generated_images/01a11110-592d-7530-8623-a1a68ae2b3ec/exec-d0d7e8e9-32dd-4068-8c1a-99b7cdd31d8a.png",
+      "sha256": "E106F50A3C517869A7C69D7345A5A15293250783583A7C6617E8254C6450C9ED",
+      "guide": "sleeping-idle-v3-guide.png",
+      "contract": "sleep-idle-v3-contract.json",
+      "prompt": "Use case: precise-object-edit. Correct ONLY the layout and viewing direction of this TWO-LAYER relaxed sleeping calico atlas.\nPreserve its lovely relaxed CLOSED EYES, soft restful face, cheek/head resting on exactly TWO forepaws, natural low lying body, fur detail and adult calico identity. NO tense awake crouch, raised head, third forepaw or visible extra hind paw. This pose is fully asleep, effortless and comfortable.\nMANDATORY TWO equal square tiles on a2:1 transparent canvas1774x887 (or uniformly scaled same aspect): LEFT tile is x0..886 and RIGHT tile x887..1773. The entire LEFT tailless cat body MUST be inside LEFT tile with ample blank margin; source cat incorrectly crossed the center boundary. Reduce whole body UNIFORMLY and place it inside x180..780,y450..775 of the LEFT tile. The head must face toward screen LOWER-RIGHT (+X), resting at the right end, hindquarters at left, like numeric guide input2. Body must not cross x887; no clipping, no tail on body. Make shoulders/back low and loose rather than hunched. RIGHT tile ONLY the single slender detached tail inside x1130..1620,y500..800, orange root at upper-left, uninterrupted black middle then small tapered white tip at lower-right. Tail must naturally wrap round outside body and cannot look like a third paw.\nUse input2 as fixed geometry/view guide; input1 ONLY for the relaxed sleep expression and fur finishing. Clean alpha transparent background, no divider/axes/red marks/text/floor/shadow. Do not copy the first image's wrong head-left direction or oversize body. Ensure only2 separated layers, one body and one tail.\nFixed room-standard-v1 parallel projection U=540+480X-480Y,V=537.4716981132076+239.57666538848247X+239.57666538848247Y-588.2227833080509Z,+X lower-right,+Y lower-left,+Z up. Ground axes+/-26.524611439904deg,slopes+/-0.4991180528926718; no30deg iso/perspective/yaw/tilt/shear/anisotropic stretching. Ground Z=0, localX/Y[-.062,.062]L,Z[0,.056]L. Do not alter the room projection. Actual paw contact positions inherit guide's camera. No extra limbs.",
+      "atlas": {
+        "body": [
+          0,
+          0,
+          1024,
+          887
+        ],
+        "tail": [
+          1024,
+          0,
+          750,
+          887
+        ]
+      },
+      "previewAttachment": {
+        "bodyRoot": [
+          251,
+          550
+        ],
+        "tailRoot": [
+          246,
+          500
+        ],
+        "inFrontOfBody": true,
+        "amplitudeDegrees": 1.2,
+        "periodSeconds": 4.8
+      }
+    }
+  ],
+  "generation": "built-in image_gen; unchanged RGBA source PNGs",
+  "secondFacing": "Whole composed pose horizontal mirror at runtime; no separate Y-facing image generation.",
+  "verification": {
+    "browser": "Installed Edge, isolated local preview, body pixel changes zero for all four views; tail changes observed; light/night and quarter-cycle extrema manually inspected.",
+    "anatomy": "Sleeping: eyes closed, head resting on exactly two visible forepaws, hind paws hidden. Standing: four distinct paws.",
+    "alpha": "Real transparent PNGs; light/night composite no obvious colored halo.",
+    "geometry": "Generated poses do not yet have accepted fixed-room contact registration. Preview attachment coordinates are manual layer rig values, not world-ground registration.",
+    "nativeRoom": false,
+    "phone": false,
+    "userPoseConfirmation": false
+  },
+  "knownLimitations": [
+    "Sleeping output did not honor equal atlas tiles; declared source rectangles preserve whole body without image stretching.",
+    "Standing exact prompt recovery and guide/contact registration remain pending before formal acceptance."
+  ],
+  "superseded": [
+    "Awake curled v2/v3 do not satisfy latest sleeping request.",
+    "Sleeping v3 crossed atlas boundary and had wrong facing.",
+    "Earlier rejected-batch1 sleep had incorrect third forepaw; not accepted or integrated."
+  ]
+}
