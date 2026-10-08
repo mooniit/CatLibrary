@@ -1,0 +1,28 @@
+{
+  "startedAt": "2026-10-08T13:26:29.868Z",
+  "environment": "hosted Supabase HTTPS",
+  "scope": "three independent test identities, public client key; no original device account",
+  "projectRef": "ludwvhsvknjgblfgouor",
+  "checks": [
+    "three distinct anonymous identities",
+    "12 concurrent bootstrap retries grant initial wallet once",
+    "creator approval joins second member; self approval denied",
+    "production catalog and empty initial inventory",
+    "insufficient balance leaves wallet and inventory unchanged",
+    "12 purchase retries debit once, deliver once, recover receipt and retain purchaser",
+    "cross user replay, changed payload and household 1/1 repurchase denied",
+    "outsider family, direct wallet write, inventory read and client price spoof rejected",
+    "second member personal payment supplies shared inventory",
+    "simultaneous editor acquisition admits one; other member retains normal read access",
+    "missing inventory, duplicated instance, free art movement and unbound artwork rejected",
+    "lost receipt recovered; stale version denied; old successful retry cannot overwrite newer save",
+    "one purchase ledger debit and unauthenticated state access denied",
+    "real lease expiry blocks renewal and save without changing version"
+  ],
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false,
+  "fixturePreservedForNativeVerification": true,
+  "createdTestIdentities": 3,
+  "result": "PASS",
+  "finishedAt": "2026-10-08T13:28:55.183Z"
+}

@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-10-08T13:29:40.076Z",
+  "environment": "hosted Supabase HTTPS",
+  "scope": "synthetic zero-duration task and PNG on independent fixture; no original account or reward",
+  "checks": [
+    "missing photo cannot confirm task",
+    "only owner uploads matching task object and reads exact PNG",
+    "household member cannot read unconfirmed task photo",
+    "confirmed task photo readable by second household member",
+    "outsider and public URL cannot download private task photo",
+    "confirmed photo cannot be overwritten",
+    "zero-duration privacy verification leaves wallet unchanged"
+  ],
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false,
+  "result": "PASS",
+  "finishedAt": "2026-10-08T13:29:48.813Z"
+}

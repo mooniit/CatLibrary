@@ -1,0 +1,718 @@
+{
+  "projectRef": "ludwvhsvknjgblfgouor",
+  "projectName": "CarLibrary",
+  "result": "PASS",
+  "scope": "actual hosted deployment and read-only audit immediately before independent HTTP tests",
+  "checkedAt": "2026-10-08T13:17:23.028437+00:00",
+  "cron": [
+    {
+      "active": true,
+      "name": "cat-travel-returns",
+      "schedule": "* * * * *"
+    },
+    {
+      "active": true,
+      "name": "family-daily-settlement",
+      "schedule": "1 * * * *"
+    },
+    {
+      "active": true,
+      "name": "study-midnight",
+      "schedule": "0 16 * * *"
+    }
+  ],
+  "editorPolicy": {
+    "id": "production",
+    "lease_seconds": 120,
+    "renewal_seconds": 30
+  },
+  "inventoryBeforeProbe": 0,
+  "migrationCount": 45,
+  "privateBuckets": [
+    {
+      "file_size_limit": 1048576,
+      "id": "m0-probe-private",
+      "public": false
+    },
+    {
+      "file_size_limit": 5242880,
+      "id": "task-photos",
+      "public": false
+    },
+    {
+      "file_size_limit": 5242880,
+      "id": "weekly-photos",
+      "public": false
+    }
+  ],
+  "productionProducts": 42,
+  "products": [
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 30,
+      "sku": "wood-painting-mona"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 30,
+      "sku": "wood-painting-pearl"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 30,
+      "sku": "wood-painting-scream"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 30,
+      "sku": "wood-painting-starry"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 30,
+      "sku": "wood-painting-sunflowers"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 40,
+      "sku": "wood-chair"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 45,
+      "sku": "lunar-painting-mona"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 45,
+      "sku": "lunar-painting-pearl"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 45,
+      "sku": "lunar-painting-scream"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 45,
+      "sku": "lunar-painting-starry"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 45,
+      "sku": "lunar-painting-sunflowers"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "lunar-chair"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "royal-painting-mona"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "royal-painting-pearl"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "royal-painting-scream"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "royal-painting-starry"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "royal-painting-sunflowers"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "wood-bed"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 60,
+      "sku": "wood-window"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 80,
+      "sku": "royal-chair"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 80,
+      "sku": "wood-rug"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 90,
+      "sku": "lunar-bed"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 90,
+      "sku": "lunar-window"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 100,
+      "sku": "wood-desk"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 100,
+      "sku": "wood-floor"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 100,
+      "sku": "wood-wall"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 120,
+      "sku": "lunar-rug"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 120,
+      "sku": "royal-bed"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 120,
+      "sku": "royal-window"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 120,
+      "sku": "wood-bookshelf"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 140,
+      "sku": "wood-tree"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 150,
+      "sku": "lunar-desk"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 150,
+      "sku": "lunar-floor"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 150,
+      "sku": "lunar-wall"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 160,
+      "sku": "royal-rug"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 180,
+      "sku": "lunar-bookshelf"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 200,
+      "sku": "royal-desk"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 200,
+      "sku": "royal-floor"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 200,
+      "sku": "royal-wall"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 210,
+      "sku": "lunar-tree"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 240,
+      "sku": "royal-bookshelf"
+    },
+    {
+      "currency": "miao",
+      "limit": 1,
+      "price": 280,
+      "sku": "royal-tree"
+    }
+  ],
+  "rls": [
+    {
+      "enabled": true,
+      "table": "billing_activation"
+    },
+    {
+      "enabled": true,
+      "table": "cat_feedings"
+    },
+    {
+      "enabled": true,
+      "table": "cat_travel_visits"
+    },
+    {
+      "enabled": true,
+      "table": "cat_trips"
+    },
+    {
+      "enabled": true,
+      "table": "cats"
+    },
+    {
+      "enabled": true,
+      "table": "daily_cat_charges"
+    },
+    {
+      "enabled": true,
+      "table": "daily_interest_charges"
+    },
+    {
+      "enabled": true,
+      "table": "families"
+    },
+    {
+      "enabled": true,
+      "table": "family_daily_settlements"
+    },
+    {
+      "enabled": true,
+      "table": "family_join_requests"
+    },
+    {
+      "enabled": true,
+      "table": "family_members"
+    },
+    {
+      "enabled": true,
+      "table": "family_settlement_failures"
+    },
+    {
+      "enabled": true,
+      "table": "furniture_inventory"
+    },
+    {
+      "enabled": true,
+      "table": "furniture_products"
+    },
+    {
+      "enabled": true,
+      "table": "furniture_requests"
+    },
+    {
+      "enabled": true,
+      "table": "m0_probe_notes"
+    },
+    {
+      "enabled": true,
+      "table": "proxy_payment_notices"
+    },
+    {
+      "enabled": true,
+      "table": "repair_episodes"
+    },
+    {
+      "enabled": true,
+      "table": "repair_windows"
+    },
+    {
+      "enabled": true,
+      "table": "room_category_limits"
+    },
+    {
+      "enabled": true,
+      "table": "room_layouts"
+    },
+    {
+      "enabled": true,
+      "table": "room_policies"
+    },
+    {
+      "enabled": true,
+      "table": "room_slots"
+    },
+    {
+      "enabled": true,
+      "table": "room_test_families"
+    },
+    {
+      "enabled": true,
+      "table": "study_days"
+    },
+    {
+      "enabled": true,
+      "table": "study_sessions"
+    },
+    {
+      "enabled": true,
+      "table": "task_days"
+    },
+    {
+      "enabled": true,
+      "table": "task_sessions"
+    },
+    {
+      "enabled": true,
+      "table": "travel_destinations"
+    },
+    {
+      "enabled": true,
+      "table": "travel_requests"
+    },
+    {
+      "enabled": true,
+      "table": "travel_return_failures"
+    },
+    {
+      "enabled": true,
+      "table": "travel_return_seen"
+    },
+    {
+      "enabled": true,
+      "table": "wallet_entries"
+    },
+    {
+      "enabled": true,
+      "table": "wallets"
+    },
+    {
+      "enabled": true,
+      "table": "weekly_task_catalog"
+    },
+    {
+      "enabled": true,
+      "table": "weekly_task_completions"
+    },
+    {
+      "enabled": true,
+      "table": "weekly_task_offers"
+    }
+  ],
+  "testFamilies": 0,
+  "testProducts": 0,
+  "usersBeforeProbe": 0,
+  "versions": [
+    "202609170001",
+    "202609220001",
+    "202609220002",
+    "202609220003",
+    "202609260001",
+    "202609260002",
+    "202609260003",
+    "202609260004",
+    "202609260005",
+    "202609260006",
+    "202609260007",
+    "202609270001",
+    "202609270002",
+    "202609270003",
+    "202609270004",
+    "202609270005",
+    "202609270006",
+    "202609270007",
+    "202609270008",
+    "202609270009",
+    "202609270010",
+    "202609270011",
+    "202609270012",
+    "202609270013",
+    "202609270014",
+    "202609270015",
+    "202609270016",
+    "202609270017",
+    "202610060001",
+    "202610060002",
+    "202610060003",
+    "202610060004",
+    "202610060005",
+    "202610060006",
+    "202610060007",
+    "202610060008",
+    "202610070001",
+    "202610070002",
+    "202610070003",
+    "202610070004",
+    "202610070005",
+    "202610070006",
+    "202610070007",
+    "202610070008",
+    "202610070009"
+  ],
+  "migrations": [
+    {
+      "file": "202609170001_m0_probe.sql",
+      "sha256": "39119748a4de6cc3fbe9db78a706e1a629d3e440080752ba8e6f885d66763390"
+    },
+    {
+      "file": "202609220001_identity_wallet.sql",
+      "sha256": "ce4886492533a8e48815e7cbe16cfe7fdfd8ee779e849fcea05b1437a6415ed0"
+    },
+    {
+      "file": "202609220002_family.sql",
+      "sha256": "04d8bb3c962b7b60cc83e31c8726e72d7ca6122f1f45e658db85fb14e77f60f0"
+    },
+    {
+      "file": "202609220003_cats.sql",
+      "sha256": "efe645603ecdda492f13acdd49e38823d88a12fcae9321973ca07375b94b36bb"
+    },
+    {
+      "file": "202609260001_study_rewards.sql",
+      "sha256": "8be2db13c9954c3c70d38686d43d5ff8b42e38d4226f98e48b102c2acc5e6f61"
+    },
+    {
+      "file": "202609260002_task_photos.sql",
+      "sha256": "3b7e94e75b0e023a30c45e0a685cd91ff0288a0191d07145a1106057867d9ebc"
+    },
+    {
+      "file": "202609260003_exchange.sql",
+      "sha256": "8bf14fcf522c499fd73216ba97999e65b8b3de8a1110a229e3a477510f653d1a"
+    },
+    {
+      "file": "202609260004_task_retry.sql",
+      "sha256": "c9e6fe9b08e0af5facdfcce938a8e5d5a90a33518bd650402f560c16ae61939a"
+    },
+    {
+      "file": "202609260005_weekly_core.sql",
+      "sha256": "7c194da4d035a4496ada1d41d7dbeaa50cb5b31a0c5783371dc8461f4c21bdbf"
+    },
+    {
+      "file": "202609260006_weekly_rotation.sql",
+      "sha256": "e2c2a7fdb57ade6fba155de62e770a1e57385721460ec1d48b5973b8a25308d7"
+    },
+    {
+      "file": "202609260007_weekly_offline.sql",
+      "sha256": "75609090ff6a0470e51eeda2a01c961802c17ef3ac4c1bdd05fff8c3dc3f4b53"
+    },
+    {
+      "file": "202609270001_feeding.sql",
+      "sha256": "88a69f0e2e9235a19f9df28a564eb8a0dd7e3122a3f78c48c0912fe59f09525b"
+    },
+    {
+      "file": "202609270002_daily_settlement.sql",
+      "sha256": "946cfcb5044816b2dab323e103c4c546f50b7a940d4428a5d0395bfba545ccd2"
+    },
+    {
+      "file": "202609270003_proxy_payment.sql",
+      "sha256": "8136cf278ba38aca9432f968143081244cdc403b8d1c445418a443b2178ad147"
+    },
+    {
+      "file": "202609270004_repair_window.sql",
+      "sha256": "7352eaf3b2122716c21087b4e6adced3d3a7ee41cf4f5500d56df832ff340f94"
+    },
+    {
+      "file": "202609270005_repair_trigger_fix.sql",
+      "sha256": "cb2babe71f6c1cd65f51f92d137cb10c6818e537e5b0a9d23686d2ae283c6a6c"
+    },
+    {
+      "file": "202609270006_repair_reward_suppression.sql",
+      "sha256": "3850b734d822eeb20637edc4154c4fffdc1b5b88307c84db836d71cd2d8398a7"
+    },
+    {
+      "file": "202609270007_repair_progress.sql",
+      "sha256": "7dd058c2f5730b104faf6514f4fe68845fedcf552131154e1e8aa09414ce23cb"
+    },
+    {
+      "file": "202609270008_repair_late_completion.sql",
+      "sha256": "69aa6f9e92dce9c3407f4d3f91d3df51af9e1c626fc265798f5cbc02344d723b"
+    },
+    {
+      "file": "202609270009_repair_settlement_grace.sql",
+      "sha256": "a25b74181f6e451e07f60af9840bde519cb4b96415f09e1ea58fb667237d5a78"
+    },
+    {
+      "file": "202609270010_repair_care_lock.sql",
+      "sha256": "f0fcea15321adc9b8b1432341b8006574ac37f42242ff098d07aaf7f31f989f9"
+    },
+    {
+      "file": "202609270011_feeding_repair_priority.sql",
+      "sha256": "f0bae691d8d8b7d584fd61ff04a16a975c1b6af281d54825467bb0b12e9c1570"
+    },
+    {
+      "file": "202609270012_daily_settlement_scheduler.sql",
+      "sha256": "a60e6d249211de6cf4fdc9632bea5e86efe06d582c392c403be6cccb7a47ddb6"
+    },
+    {
+      "file": "202609270013_repair_overlap.sql",
+      "sha256": "712ca41c97b873dafd85a1493da21a8b6c4cc3bad80f67de20be52f3e3ae5c21"
+    },
+    {
+      "file": "202609270014_settlement_activation_isolation.sql",
+      "sha256": "6353e0aae4e8e2ba01ccc0d7f95422f323529129a176c7653e07a5a1082180c1"
+    },
+    {
+      "file": "202609270015_activation_guard.sql",
+      "sha256": "8d3234079925cb3dc5f1eb76ef3cdffde6b414e4ff145487cf803e372b90c1c2"
+    },
+    {
+      "file": "202609270016_repair_same_timer.sql",
+      "sha256": "1b373be52498c9b0a41e13105f075b097dfc544bc58f47749095106850cf2e25"
+    },
+    {
+      "file": "202609270017_repair_paused_run.sql",
+      "sha256": "3fbc88b6a8b1f730b17a1f3f89e7082e0555e58edd12aeb9286b07e3597de3ff"
+    },
+    {
+      "file": "202610060001_furniture_purchase.sql",
+      "sha256": "43420515f2efc6ea4e98f6a1c1dd2874710b618d766a6d9c26b15ee11e7a0bb7"
+    },
+    {
+      "file": "202610060002_furniture_catalog.sql",
+      "sha256": "f5619cd2d73819a3a2859d1088d3161e2516211d3d24e7aeb692bcc923e84388"
+    },
+    {
+      "file": "202610060003_room_editor.sql",
+      "sha256": "8c13f4aad6bd84ed8c1ab6384d7e0eff28f733d2c380e03e194202735e9d83d3"
+    },
+    {
+      "file": "202610060004_room_state_rules.sql",
+      "sha256": "c7062b97dfb4ff0b597a2821ae9b330d3d6f030f7b8aa38ebdbb76fb2fc4106d"
+    },
+    {
+      "file": "202610060005_purchase_family_binding.sql",
+      "sha256": "9143720675ddd0b914820969d3e1b6fe990aca00ab9923025a6159061f40b44f"
+    },
+    {
+      "file": "202610060006_approved_furniture_prices.sql",
+      "sha256": "ee82febd34acda863598d1e84e98f97130b7a1948514b7a916dd4b3014eb011f"
+    },
+    {
+      "file": "202610060007_purchase_quantity.sql",
+      "sha256": "475efe2cd1f3e78e2992bbb1325720f0525492cbbf3c637b1f2efe4c8cb1614e"
+    },
+    {
+      "file": "202610060008_approved_editor_lease.sql",
+      "sha256": "9d895ebcd1d39c6381af7a512811ecd6670104d6e828e7034f34697232b643d0"
+    },
+    {
+      "file": "202610070001_exchange_quantity.sql",
+      "sha256": "723ece2cd850f1148462a51d9e5161b86cf1f9ed1167d579296522544c78ca12"
+    },
+    {
+      "file": "202610070002_artwork_binding.sql",
+      "sha256": "feeb9d8689047233fe84ad4d94f27a6b51df1bfc535c2994aae97153da93a736"
+    },
+    {
+      "file": "202610070003_test_grant_provenance.sql",
+      "sha256": "3934a0f5528835013117cb5b83c6fef22650ae19c7a6ba33f822ab61ddb9f810"
+    },
+    {
+      "file": "202610070004_travel_start.sql",
+      "sha256": "c1f25666b0a07bbaf0fe62eeed318f1765e0f4e43c416e52e8b148674c2ad84b"
+    },
+    {
+      "file": "202610070005_souvenir_catalog.sql",
+      "sha256": "91fb21f570cfc87b05cc91c08d296866740391debec3a85ef65cdf62574ebbab"
+    },
+    {
+      "file": "202610070006_travel_return.sql",
+      "sha256": "f42e812ca1bc370868689e7bcf689a4bc01c378856ec6b0b3c4e8918b362d093"
+    },
+    {
+      "file": "202610070007_travel_parameter_binding.sql",
+      "sha256": "b8d1b0fe6e6e1d3425f460b08bbe1ca9dc549ca4ab87d5cd71a6043e85a8fa13"
+    },
+    {
+      "file": "202610070008_travel_settlement.sql",
+      "sha256": "87270b8a3dd8ef1aa98203cb6cf1e867f73a897e5e7aa9900f3755a7209077a2"
+    },
+    {
+      "file": "202610070009_souvenir_refined_sprites.sql",
+      "sha256": "40e403e0b1bd43e083bcea6d9050ba338e9df8d036f34f08b3e5389e0dfc892c"
+    }
+  ],
+  "services": {
+    "origin": "https://ludwvhsvknjgblfgouor.supabase.co",
+    "environment": "remote",
+    "keyType": "publishable",
+    "checks": [
+      {
+        "service": "auth",
+        "passed": true,
+        "httpStatus": 200,
+        "anonymousSignupEnabled": true
+      },
+      {
+        "service": "rest",
+        "passed": true,
+        "httpStatus": 401,
+        "schemaEnumerationRestricted": true,
+        "authenticatedDataAccessVerified": false
+      }
+    ],
+    "readOnlyPreflightPassed": true,
+    "migrationsVerified": false,
+    "originalIdentityMigrated": false,
+    "mobileInternetVerified": false
+  },
+  "anonymousSignupEnabled": true,
+  "authConfigChangedFields": [
+    "auth.enable_anonymous_sign_ins"
+  ],
+  "undeclaredConfigPreserved": true,
+  "seedImported": false,
+  "vaultImported": false,
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false
+}
