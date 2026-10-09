@@ -1,0 +1,26 @@
+{
+  "result": "PASS",
+  "actualHomePage": true,
+  "productionSafeAreaAndNavigationDimensions": true,
+  "sceneLoadedBeforeScreenshot": true,
+  "themes": [
+    "light",
+    "night"
+  ],
+  "states": [
+    "active",
+    "failed-reread",
+    "completed"
+  ],
+  "scope": "one emulator; memory data; no business HTTP or writes",
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false,
+  "screenshots": [
+    "m7-repair-active-light",
+    "m7-repair-offline-light",
+    "m7-repair-complete-light",
+    "m7-repair-active-night",
+    "m7-repair-offline-night",
+    "m7-repair-complete-night"
+  ]
+}

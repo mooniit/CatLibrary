@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "versionName": "0.1.18",
+  "versionCode": 19,
+  "path": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "bytes": 199058258,
+  "sha256": "3f4aed966d90728cfe8055f1f970af40d4aba23ea3a0c25e0627227ef861e58c",
+  "endpoint": "http://127.0.0.1:54321",
+  "environment": "local",
+  "declaredNativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "flutterEngineAbis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "fixtureMarkersAbsent": true,
+  "fixtureRefreshTokensAbsent": true,
+  "fixtureRefreshTokensChecked": 8,
+  "oldOrdinaryPackageRetainedAndHashMatched": true,
+  "installedToPhone": false,
+  "originalIdentityMigrated": false,
+  "remoteInternetVerifiedByThisBuild": false,
+  "firstBuildFailedAtPackageDebug": true,
+  "verboseDiagnosticBuildPassed": true,
+  "existingBuildPhoneScriptRetryPassed": true,
+  "firstPackageDebugFailureRootCause": "Not established; failure did not recur"
+}

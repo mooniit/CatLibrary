@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-09",
+  "scope": "existing emulator account files; no physical phone",
+  "serial": "emulator-5554",
+  "accountAccessedByFixture": false,
+  "originalIdentityMigrated": false,
+  "originalSettlementExecuted": false,
+  "runs": [
+    {
+      "run": 1,
+      "backup": ".tooling/native-ui-backup-ln22sb",
+      "fixturePassed": false,
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "reason": "Retry hit missed after scroll in narrow home column"
+    },
+    {
+      "run": 2,
+      "backup": ".tooling/native-ui-backup-oqbWyQ",
+      "fixturePassed": true,
+      "visualPassed": false,
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "reason": "Initial scene loading frame and fixture missing production safe area"
+    },
+    {
+      "run": 3,
+      "backup": ".tooling/native-ui-backup-nca1a0",
+      "fixturePassed": true,
+      "visualPassed": true,
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "reason": "Six fresh screenshots manually inspected; active retry hit test passed"
+    }
+  ],
+  "restoredPackage": "0.1.17+18",
+  "restoredPackageSha256": "6db7c794715e3dd74d3602c1ec82c70e2155b943e2c9ab52cc0fe25fe33297ae",
+  "physicalPhoneTouched": false
+}
