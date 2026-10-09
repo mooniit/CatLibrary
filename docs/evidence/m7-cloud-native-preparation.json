@@ -1,0 +1,24 @@
+{
+  "startedAt": "2026-10-09T05:15:48.791Z",
+  "result": "PASS",
+  "originalIdentityMigrated": false,
+  "administratorGrants": false,
+  "testProductsUsed": false,
+  "initialWallets": [
+    30,
+    30
+  ],
+  "emptyInitialInventory": true,
+  "ownerHashes": [
+    "c85c953cb134176888a31f14bf6c555c91c6eb32716838ce537f2a4e68240974",
+    "d5427298f0c264d865f2d6a79e51d2c69fb70754347902b944b990cdaf815102"
+  ],
+  "familyHash": "b9d7265c2dd9786488aec26107d93ba23b547af5bad94546323ab0db1d1fff72",
+  "productionCatalogCount": 42,
+  "purchaseSkus": [
+    "wood-painting-mona",
+    "wood-painting-pearl"
+  ],
+  "initialLayoutVersion": 0,
+  "finishedAt": "2026-10-09T05:15:54.607Z"
+}
