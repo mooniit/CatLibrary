@@ -7,6 +7,7 @@ const {DatabaseSync} = require('node:sqlite');
 const p = require('./test-android-probe.cjs');
 const serial = process.argv[2] || 'emulator-5554';
 assert.match(serial, /^emulator-\d+$/, 'This test is emulator-only');
+const prefix = process.argv.includes('--journal') ? 'm7-journal-native' : 'm7-native';
 const pkg = 'com.catlibrary.cat_library_demo', stamp = Date.now();
 const sha = value => createHash('sha256').update(value).digest('hex');
 function snapshot(phase) {
@@ -36,20 +37,22 @@ function screenshot(name) {
 (async () => {
   const before = snapshot('before');
   try {
-    p.run('reverse', '--remove', 'tcp:54321');
+    if (p.run('reverse', '--list').split(/\r?\n/).some(line => /\btcp:54321\s/.test(line))) {
+      p.run('reverse', '--remove', 'tcp:54321');
+    }
     launch(); await p.pause(12000);
     await p.tap('打开功能菜单'); await p.tap('设置');
     await p.tap('重新连接'); await p.pause(13000);
     p.run('shell', 'input', 'swipe', '150', '520', '150', '220', '350');
     await p.pause(600);
-    p.shown('离线保存中'); p.shown('保留上次确认'); screenshot('m7-native-offline');
+    p.shown('离线保存中'); p.shown('保留上次确认'); screenshot(prefix + '-offline');
     p.run('reverse', 'tcp:54321', 'tcp:54321');
     await p.tap('重新连接'); await p.pause(2000);
-    p.shown('已连接'); p.shown('账户与余额已核对'); screenshot('m7-native-recovered');
+    p.shown('已连接'); p.shown('账户与余额已核对'); screenshot(prefix + '-recovered');
   } finally { p.run('reverse', 'tcp:54321', 'tcp:54321'); }
   const after = snapshot('after'); assert.deepEqual(after, before, 'Identity or wallet changed during reconnect');
   launch();
-  fs.writeFileSync('docs/evidence/m7-native-reconnect.json', JSON.stringify({
+  fs.writeFileSync('docs/evidence/' + prefix + '-reconnect.json', JSON.stringify({
     at: new Date().toISOString(), scope: 'Existing emulator account; local ADB reverse fault/recovery only',
     serial, before, after, identityPreserved: true, walletUnchanged: true,
     remoteInternetVerified: false, phoneVerified: false,

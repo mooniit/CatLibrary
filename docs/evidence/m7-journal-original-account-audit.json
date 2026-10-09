@@ -1,0 +1,19 @@
+{
+  "originalCloudMigrated": false,
+  "before": {
+    "members": 1,
+    "readOnly": true,
+    "checkedAt": "2026-10-09T23:52:20.188777+08:00",
+    "stateHash": "a72851c219282a47d6129baa187cfacb61f734aa5c0de80a63bcd0cd3c55759e",
+    "lunarOwned": 14
+  },
+  "after": {
+    "members": 1,
+    "readOnly": true,
+    "checkedAt": "2026-10-09T23:55:02.156268+08:00",
+    "stateHash": "a72851c219282a47d6129baa187cfacb61f734aa5c0de80a63bcd0cd3c55759e",
+    "lunarOwned": 14
+  },
+  "settlementExecuted": false,
+  "originalBusinessStateUnchanged": true
+}

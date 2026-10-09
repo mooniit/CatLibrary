@@ -1,0 +1,21 @@
+{
+  "syntax": "PASS",
+  "guards": [
+    {
+      "result": "PASS",
+      "name": "physical flag required"
+    },
+    {
+      "result": "PASS",
+      "name": "cloud config rejected"
+    },
+    {
+      "result": "PASS",
+      "name": "invalid serial rejected"
+    }
+  ],
+  "at": "2026-10-09T16:02:56.6929524Z",
+  "scope": "Local emulator ADB helper; no application install or financial operations",
+  "repeat": "PASS",
+  "connection": "PASS"
+}
