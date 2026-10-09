@@ -3,6 +3,7 @@ import 'package:cat_library_demo/core/storage/app_database.dart';
 import 'package:cat_library_demo/features/tasks/task_board_page.dart';
 import 'package:cat_library_demo/features/tasks/task_repository.dart';
 import 'package:cat_library_demo/features/tasks/task_session.dart';
+import 'package:cat_library_demo/features/tasks/task_board_visuals.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,14 +32,19 @@ class ReadOnlyTaskCloud extends TaskCloud {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> feed() async => [
-    {
-      'activity': 'language',
-      'owner_id': ownerId,
-      'started_at': '2026-10-09T10:00:00Z',
-      'photo_path': 'visual-only',
-    },
-  ];
+  Future<List<Map<String, dynamic>>> feed() async {
+    if (offline) throw StateError('isolated offline');
+    return [
+      {
+        'id': 'board-read-only',
+        'activity': 'language',
+        'owner_id': ownerId,
+        'started_at': '2026-10-09T10:00:00Z',
+        'recorded_until': '2026-10-09T10:05:00Z',
+        'photo_path': 'visual-only',
+      },
+    ];
+  }
 }
 
 void main() {
@@ -57,7 +63,7 @@ void main() {
               theme: buildAppTheme(brightness),
               debugShowCheckedModeBanner: false,
               home: Scaffold(
-                appBar: AppBar(title: const Text('任务板')),
+                appBar: AppBar(),
                 body: SafeArea(
                   child: TaskBoardPage(
                     key: ValueKey(mode),
@@ -70,10 +76,13 @@ void main() {
               ),
             ),
           );
-          for (var i = 0; i < 50 && find.text('等待同步').evaluate().isEmpty; i++) {
+          for (
+            var i = 0;
+            i < 50 && find.text('今日奖励待核对').evaluate().isEmpty;
+            i++
+          ) {
             await tester.pump(const Duration(milliseconds: 100));
           }
-          expect(find.text('等待同步'), findsOneWidget);
           expect(find.text('今日奖励待核对'), findsNWidgets(2));
           Future<void> capture(String state) async {
             await tester.pump();
@@ -83,53 +92,52 @@ void main() {
           }
 
           await capture('unknown');
-          final scrollable = find.byType(Scrollable).first;
-          await tester.scrollUntilVisible(
-            find.text('完成记录待核对'),
-            150,
-            scrollable: scrollable,
-          );
+          await tester.tap(find.byTooltip('学习记录'));
+          await tester.pump(const Duration(seconds: 1));
+          expect(find.text('记录待核对'), findsOneWidget);
           expect(find.text('暂无已确认任务'), findsNothing);
           await capture('unknown-records');
-          await tester.drag(find.byType(ListView).first, const Offset(0, 1800));
+          await tester.pageBack();
           await tester.pump(const Duration(milliseconds: 300));
           cloud.offline = false;
           await tester.tap(find.byTooltip('核对任务同步'));
           for (
             var i = 0;
-            i < 50 && find.text('已核对任务').evaluate().isEmpty;
+            i < 50 && find.textContaining('今日 3/12').evaluate().isEmpty;
             i++
           ) {
             await tester.pump(const Duration(milliseconds: 100));
           }
-          expect(find.text('已核对任务'), findsOneWidget);
           expect(find.textContaining('今日 3/12'), findsOneWidget);
           expect(
             tester
-                .widgetList<LinearProgressIndicator>(
-                  find.byType(LinearProgressIndicator),
-                )
+                .widgetList<TaskActivityCard>(find.byType(TaskActivityCard))
                 .first
-                .value,
-            0.25,
+                .issued,
+            3,
           );
           await capture('confirmed');
           cloud.offline = true;
           await tester.tap(find.byTooltip('核对任务同步'));
-          for (var i = 0; i < 50 && find.text('等待同步').evaluate().isEmpty; i++) {
+          for (
+            var i = 0;
+            i < 50 && find.textContaining('上次核对 3/12').evaluate().isEmpty;
+            i++
+          ) {
             await tester.pump(const Duration(milliseconds: 100));
           }
           expect(find.textContaining('上次核对 3/12'), findsOneWidget);
           await capture('retained');
-          await tester.scrollUntilVisible(
-            find.text('2026-10-09 · 我'),
-            150,
-            scrollable: scrollable,
-          );
-          expect(find.text('完成记录待核对'), findsNothing);
+          await tester.tap(find.byTooltip('学习记录'));
+          await tester.pump(const Duration(seconds: 1));
+          expect(find.text('记录待核对'), findsNothing);
           expect(tester.takeException(), isNull);
           expect(await db.taskSessions(cloud.ownerId), isEmpty);
           await tester.pumpWidget(const SizedBox());
+          await db.customStatement(
+            'DELETE FROM task_feed_cache WHERE owner_id=?',
+            [cloud.ownerId],
+          );
         }
         binding.reportData!.addAll({
           'result': 'PASS',

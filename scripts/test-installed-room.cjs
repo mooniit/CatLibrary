@@ -22,17 +22,16 @@ async function screenshot(name) {
   assert(!labels().some(s => s.includes('交互预览')), 'Unexpected preview shell');
   await screenshot(prefix + '-home');
   await p.tap('任务板', true);
-  p.shown('常规任务');
-  if (!labels().some(s => s.includes('完成记录'))) {
-    p.run('shell', 'input', 'swipe', '170', '440', '170', '190', '350');
-    await p.pause(500);
-    p.shown('完成记录');
-    p.run('shell', 'input', 'swipe', '170', '190', '170', '440', '350');
-    await p.pause(500);
-  } else p.shown('完成记录');
+  p.shown('今日书签');
   assert(!labels().some(s => s.includes('无真实资产')), 'Preview tasks must not pass');
   await screenshot(prefix + '-tasks');
-  console.log('PASS real TaskBoardPage, existing tasks/records visible');
+  await p.tap('学习记录');
+  p.shown('留下的时间');
+  await screenshot(prefix + '-task-history');
+  p.run('shell', 'input', 'keyevent', '4');
+  await p.pause(500);
+  p.shown('今日书签');
+  console.log('PASS real TaskBoardPage and separate history; no task started or confirmed');
   await p.tap('自习', true);
   p.shown('倒计时'); p.shown('今日自习');
   assert(!labels().some(s => s.includes('计时技术探针')), 'Preview timer must not pass');

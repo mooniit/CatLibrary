@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../core/storage/app_database.dart';
 import '../identity/identity_repository.dart';
 import 'weekly_tasks.dart';
+import 'task_board_visuals.dart';
 
 class WeeklyTasksPanel extends StatefulWidget {
   const WeeklyTasksPanel({
@@ -36,6 +37,7 @@ class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
   List<WeeklyDraft> drafts = [];
   List<Map<String, dynamic>> feed = [];
   bool busy = false;
+  bool feedLoaded = false;
   String? message;
 
   @override
@@ -78,6 +80,7 @@ class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
       }
       tasks = await cloud.refresh();
       feed = await cloud.familyFeed();
+      feedLoaded = true;
       drafts = await repository.drafts();
       message = null;
     } catch (error) {
@@ -86,7 +89,7 @@ class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
           .where((task) => task.isCurrent(DateTime.now()))
           .toList();
       drafts = await repository.drafts();
-      message = '周任务尚未同步；已确认的内容保存在本机，联网后自动重试。';
+      message = '本周任务待核对，已确认内容仍保存在本机。';
     }
     if (mounted) setState(() {});
   }
@@ -227,28 +230,36 @@ class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '每周特别任务',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
-            IconButton(
-              onPressed: sync,
-              icon: const Icon(Icons.refresh),
-              tooltip: '刷新周任务',
-            ),
-          ],
+        TaskSectionTitle(
+          '每周特别任务',
+          icon: Icons.auto_stories_outlined,
+          trailing: IconButton(
+            onPressed: sync,
+            icon: const Icon(Icons.refresh),
+            tooltip: '刷新周任务',
+          ),
         ),
-        const Text('每周一 00:00（北京时间）更新两项；每项完成获得 6 宝石和 6 鹰镑。'),
+        Text(
+          '每周一更新两项 · 每项 6 宝石 + 6 鹰镑',
+          style: TextStyle(
+            fontSize: 12,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
         if (message != null)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(message!),
           ),
-        if (tasks.isEmpty) const ListTile(title: Text('正在获取本周任务')),
+        if (tasks.isEmpty)
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(vertical: 8),
+            leading: Icon(
+              Icons.menu_book_outlined,
+              color: Theme.of(context).colorScheme.outline,
+            ),
+            title: Text(message == null ? '正在获取本周任务' : '本周任务待核对'),
+          ),
         for (final task in tasks) _card(task, draftById[task.offerId]),
         if (pendingOld > 0)
           ListTile(
@@ -261,7 +272,8 @@ class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
           ),
         const SizedBox(height: 12),
         Text('完成记录', style: Theme.of(context).textTheme.titleMedium),
-        if (feed.isEmpty) const ListTile(title: Text('暂无已确认记录')),
+        if (feed.isEmpty)
+          ListTile(title: Text(feedLoaded ? '暂无已确认记录' : '周任务记录待核对')),
         for (final item in feed)
           ListTile(
             title: Text(item['prompt'] as String),
@@ -276,16 +288,42 @@ class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
   }
 
   Widget _card(WeeklyTask task, WeeklyDraft? draft) {
+    final scheme = Theme.of(context).colorScheme;
     final done = task.confirmedAt != null || draft?.state == 'synced';
     final ready = draft?.state == 'ready';
     final editable = !busy && !done && !ready && task.isCurrent(DateTime.now());
-    return Card(
+    return Container(
+      margin: const EdgeInsets.only(top: 12, bottom: 4),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: scheme.outlineVariant),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(task.prompt, style: Theme.of(context).textTheme.titleMedium),
+            Row(
+              children: [
+                Icon(
+                  task.evidenceKind == 'text'
+                      ? Icons.edit_note_rounded
+                      : Icons.photo_library_outlined,
+                  size: 22,
+                  color: scheme.primary,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    task.prompt,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 4),
             Text(
               done

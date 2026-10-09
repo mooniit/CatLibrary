@@ -36,14 +36,19 @@ class BoardCloud extends TaskCloud {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> feed() async => [
-    {
-      'activity': 'language',
-      'owner_id': ownerId,
-      'started_at': '2026-10-09T10:00:00Z',
-      'photo_path': 'fixture-only',
-    },
-  ];
+  Future<List<Map<String, dynamic>>> feed() async {
+    if (offline) throw StateError('isolated offline');
+    return [
+      {
+        'id': 'board-record',
+        'activity': 'language',
+        'owner_id': ownerId,
+        'started_at': '2026-10-09T10:00:00Z',
+        'recorded_until': '2026-10-09T10:05:00Z',
+        'photo_path': 'fixture-only',
+      },
+    ];
+  }
 }
 
 Future<void> flushBoard(WidgetTester tester) async {
@@ -82,11 +87,9 @@ void main() {
       await flushBoard(tester);
       expect(find.text('今日奖励待核对'), findsNWidgets(2));
       expect(find.textContaining('今日 0/12'), findsNothing);
-      await tester.scrollUntilVisible(
-        find.text('完成记录待核对'),
-        150,
-        scrollable: find.byType(Scrollable).first,
-      );
+      await tester.tap(find.byTooltip('学习记录'));
+      await flushBoard(tester);
+      expect(find.text('记录待核对'), findsOneWidget);
       expect(find.text('暂无已确认任务'), findsNothing);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
@@ -113,13 +116,14 @@ void main() {
       ),
     );
     await flushBoard(tester);
-    await tester.tap(find.text('开始').first);
+    await tester.tap(find.byTooltip('开始外语学习'));
     await flushBoard(tester);
     expect(find.textContaining('通知未授权'), findsOneWidget);
     await tester.pump(const Duration(seconds: 15));
     await flushBoard(tester);
     expect(find.textContaining('通知未授权'), findsOneWidget);
     await tester.pumpWidget(const SizedBox());
+    await tester.pump(const Duration(seconds: 1));
     await flushBoard(tester);
     await db.close();
   });
@@ -165,6 +169,11 @@ void main() {
       cloud.wait!.complete();
       await flushBoard(tester);
       expect(find.textContaining('今日 3/12'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('已核对任务'),
+        100,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text('已核对任务'), findsOneWidget);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
