@@ -1,0 +1,27 @@
+{
+  "verifiedAt": "2026-10-09T05:37:51.916815Z",
+  "result": "PASS",
+  "scope": "one emulator; existing independent hosted family; two clients",
+  "naturalThirtySecondPoll": true,
+  "pollObservedAfterRemoteSaveMs": 23812,
+  "manualRefreshRequired": true,
+  "scenePreservedDuringRefresh": true,
+  "offlineConfirmedLayoutRetained": true,
+  "reconnectedByVisibleRetry": true,
+  "newHomeEntryLoadedLatest": true,
+  "newHomeGeometryReadyWhenDataArrived": true,
+  "newHomeGeometryReadyBeforeScreenshot": true,
+  "versionBefore": 4,
+  "versionAfter": 5,
+  "inventoryUnchanged": true,
+  "bothWalletsUnchanged": true,
+  "newIdentitiesCreated": false,
+  "originalIdentityMigrated": false,
+  "physicalPhoneVerified": false,
+  "networkFailureScope": "HTTP adapter rejection; physical network not interrupted",
+  "freshScreenshots": [
+    "m7-home-natural-update",
+    "m7-home-offline-retained",
+    "m7-home-reentered"
+  ]
+}
