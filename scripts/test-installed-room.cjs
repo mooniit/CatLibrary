@@ -1,7 +1,8 @@
 const assert = require('node:assert/strict');
 const p = require('./test-android-probe.cjs');
 const physical = process.argv.includes('--physical');
-const prefix = process.argv.includes('--m6-v2') ? (physical ? 'm6-v2-phone' : 'm6-v2-emulator')
+const prefix = process.argv.includes('--task-journal') ? (physical ? 'm7-task-journal-installed-phone' : 'm7-task-journal-installed-emulator')
+  : process.argv.includes('--m6-v2') ? (physical ? 'm6-v2-phone' : 'm6-v2-emulator')
   : process.argv.includes('--m6') ? (physical ? 'm6-phone' : 'm6-emulator')
   : process.argv.includes('--m5') ? (physical ? 'm5-phone' : 'm5-emulator')
   : physical ? 'lunar-restored-phone' : 'lunar-restored-emulator';

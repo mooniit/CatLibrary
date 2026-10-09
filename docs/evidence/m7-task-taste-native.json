@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "actualTaskBoardPage": true,
+  "themes": [
+    "light",
+    "night"
+  ],
+  "unknownDoesNotClaimZeroRewardsOrEmptyFeed": true,
+  "retryUsesActualButton": true,
+  "failedReadRetainsConfirmedRewardsAndFeed": true,
+  "taskQueueUsesMemoryOnly": true,
+  "nativeTimerChannelIntercepted": true,
+  "actualStartAndStopProducePendingPhoto": true,
+  "scope": "one emulator; isolated memory SQLite and cloud read stub; no business HTTP",
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false,
+  "screenshots": [
+    "m7-task-taste-unknown-light",
+    "m7-task-taste-unknown-records-light",
+    "m7-task-taste-confirmed-light",
+    "m7-task-taste-retained-light",
+    "m7-task-taste-active-light",
+    "m7-task-taste-pending-light",
+    "m7-task-taste-unknown-night",
+    "m7-task-taste-unknown-records-night",
+    "m7-task-taste-confirmed-night",
+    "m7-task-taste-retained-night",
+    "m7-task-taste-active-night",
+    "m7-task-taste-pending-night"
+  ]
+}

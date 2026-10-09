@@ -1,0 +1,58 @@
+{
+  "result": "PASS",
+  "rounds": [
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": false,
+      "physicalPhoneTouched": false,
+      "round": 1,
+      "scope": "isolated emulator fixture; comparison before ordinary app launch"
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "round": 2,
+      "scope": "isolated emulator fixture; comparison before ordinary app launch",
+      "weeklyRouteActuallyVerified": false
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "round": 3,
+      "scope": "isolated emulator fixture; comparison before ordinary app launch",
+      "weeklyRouteActuallyVerified": true
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "round": 4,
+      "scope": "isolated emulator fixture; comparison before ordinary app launch",
+      "weeklyRouteActuallyVerified": true
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "round": 5,
+      "scope": "isolated emulator fixture; comparison before ordinary app launch",
+      "weeklyRouteActuallyVerified": true,
+      "headerTitleRemovedVerified": true
+    }
+  ],
+  "allThreePrivateFilesPreservedEachRound": true,
+  "ordinaryVersionRestored": "0.1.20+21",
+  "physicalPhoneTouched": false
+}

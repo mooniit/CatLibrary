@@ -1,0 +1,31 @@
+{
+  "result": "PASS",
+  "versionName": "0.1.20",
+  "versionCode": 21,
+  "path": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "bytes": 221967893,
+  "sha256": "bfcc0cbcc796f82ec62d96a8141136c21e73ffb2c7afcd0d7f9bbfecf472e975",
+  "environment": "local",
+  "endpoint": "http://127.0.0.1:54321",
+  "declaredNativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "flutterEngineAbis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "fixtureMarkersChecked": 11,
+  "fixtureMarkersAbsent": true,
+  "fixtureRefreshTokensChecked": 8,
+  "fixtureRefreshTokensAbsent": true,
+  "oldOrdinaryPackageRetainedAndHashMatched": true,
+  "installedToPhone": false,
+  "installedToOriginalEmulator": true,
+  "originalIdentityMigrated": false,
+  "remoteInternetVerifiedByThisBuild": false,
+  "installedNavigationVerified": true,
+  "taskStartedOrConfirmedByNavigationProbe": false,
+  "topTaskBoardTitleRemoved": true
+}

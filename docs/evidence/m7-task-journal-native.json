@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "actualTaskBoardPage": true,
+  "actualFullscreenTimer": true,
+  "pauseFreezesClock": true,
+  "resumeAndConfirmEnd": true,
+  "photoFreeQueue": true,
+  "historyAndWeeklyAreSeparateRoutes": true,
+  "retainsUnknownAndOfflineStates": true,
+  "nativeTimerChannelIntercepted": true,
+  "scope": "one emulator, memory SQLite, cloud stub; synthetic history",
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false,
+  "screenshots": [
+    "m7-task-journal-unknown-light",
+    "m7-task-journal-unknown-history-light",
+    "m7-task-journal-confirmed-light",
+    "m7-task-journal-retained-light",
+    "m7-task-journal-active-light",
+    "m7-task-journal-paused-light",
+    "m7-task-journal-history-light",
+    "m7-task-journal-weekly-light",
+    "m7-task-journal-unknown-night",
+    "m7-task-journal-unknown-history-night",
+    "m7-task-journal-confirmed-night",
+    "m7-task-journal-retained-night",
+    "m7-task-journal-active-night",
+    "m7-task-journal-paused-night",
+    "m7-task-journal-history-night",
+    "m7-task-journal-weekly-night"
+  ]
+}
