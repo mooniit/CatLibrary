@@ -1,0 +1,27 @@
+{
+  "scope": "two isolated emulator runs; no business HTTP",
+  "runs": [
+    {
+      "verification": {
+        "serial": "emulator-5554",
+        "originalPrivateFilesUnchanged": true,
+        "fileCount": 3,
+        "fixturePassed": true,
+        "physicalPhoneTouched": false
+      },
+      "backup": "native-ui-backup-5bgAG4",
+      "restoredNormalVersion": "0.1.19+20"
+    },
+    {
+      "verification": {
+        "serial": "emulator-5554",
+        "originalPrivateFilesUnchanged": true,
+        "fileCount": 3,
+        "fixturePassed": true,
+        "physicalPhoneTouched": false
+      },
+      "backup": "native-ui-backup-nhui7B",
+      "restoredNormalVersion": "0.1.19+20"
+    }
+  ]
+}

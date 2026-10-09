@@ -13,10 +13,12 @@ class WeeklyTasksPanel extends StatefulWidget {
     super.key,
     required this.ownerId,
     required this.onWallet,
+    this.database,
   });
 
   final String ownerId;
   final ValueChanged<IdentityWallet> onWallet;
+  final AppDatabase? database;
 
   @override
   State<WeeklyTasksPanel> createState() => _WeeklyTasksPanelState();
@@ -24,12 +26,9 @@ class WeeklyTasksPanel extends StatefulWidget {
 
 class _WeeklyTasksPanelState extends State<WeeklyTasksPanel>
     with WidgetsBindingObserver {
-  late final repository = WeeklyRepository(AppDatabase.shared, widget.ownerId);
-  late final cloud = WeeklyCloud(
-    AppDatabase.shared,
-    widget.ownerId,
-    widget.onWallet,
-  );
+  late final database = widget.database ?? AppDatabase.shared;
+  late final repository = WeeklyRepository(database, widget.ownerId);
+  late final cloud = WeeklyCloud(database, widget.ownerId, widget.onWallet);
   final picker = ImagePicker();
   Timer? timer;
   Future<void>? syncing;

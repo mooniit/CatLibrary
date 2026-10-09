@@ -16,9 +16,13 @@ class TaskBoardPage extends StatefulWidget {
     super.key,
     required this.ownerId,
     required this.onWallet,
+    this.database,
+    this.taskCloud,
   });
   final String ownerId;
   final ValueChanged<IdentityWallet> onWallet;
+  final AppDatabase? database;
+  final TaskCloud? taskCloud;
 
   @override
   State<TaskBoardPage> createState() => _TaskBoardPageState();
@@ -26,16 +30,18 @@ class TaskBoardPage extends StatefulWidget {
 
 class _TaskBoardPageState extends State<TaskBoardPage>
     with WidgetsBindingObserver {
-  final AppDatabase db = AppDatabase.shared;
+  late final AppDatabase db = widget.database ?? AppDatabase.shared;
   late final TaskRepository repository = TaskRepository(
     database: db,
     ownerId: widget.ownerId,
   );
-  late final TaskCloud cloud = TaskCloud(
-    database: db,
-    ownerId: widget.ownerId,
-    onWallet: widget.onWallet,
-  );
+  late final TaskCloud cloud =
+      widget.taskCloud ??
+      TaskCloud(
+        database: db,
+        ownerId: widget.ownerId,
+        onWallet: widget.onWallet,
+      );
   final picker = ImagePicker();
   Timer? timer;
   Future<void>? syncing;
@@ -44,6 +50,8 @@ class _TaskBoardPageState extends State<TaskBoardPage>
   List<Map<String, dynamic>> feed = [];
   bool loading = true, busy = false;
   String? message;
+  String? syncMessage;
+  bool checkingCloud = false, rewardsLoaded = false, feedLoaded = false;
 
   @override
   void initState() {
@@ -192,17 +200,27 @@ class _TaskBoardPageState extends State<TaskBoardPage>
   Future<void> sync() => syncing ??= _sync().whenComplete(() => syncing = null);
   Future<void> _sync() async {
     if (loading || repository.needsRecovery) return;
+    if (mounted) setState(() => checkingCloud = true);
     try {
       for (final record in await repository.records()) {
         if (record.state != TaskSessionState.synced) await cloud.sync(record);
       }
       await cloud.refresh();
-      feed = await cloud.feed();
+      if (!mounted) return;
+      setState(() => rewardsLoaded = true);
+      final nextFeed = await cloud.feed();
+      if (!mounted) return;
+      feed = nextFeed;
+      feedLoaded = true;
       records = await repository.records();
-      if (mounted) setState(() => message = null);
+      if (mounted) setState(() => syncMessage = null);
     } catch (error) {
       if (kDebugMode) debugPrint('Task sync failed: $error');
-      if (mounted) setState(() => message = '尚未同步，记录与照片保存在本机，联网后自动重试。');
+      if (mounted) {
+        setState(() => syncMessage = '本机记录与照片仍保留，联网后自动重试。');
+      }
+    } finally {
+      if (mounted) setState(() => checkingCloud = false);
     }
   }
 
@@ -263,6 +281,40 @@ class _TaskBoardPageState extends State<TaskBoardPage>
             style: TextStyle(color: scheme.onSurfaceVariant),
           ),
           const SizedBox(height: 18),
+          Card(
+            margin: const EdgeInsets.only(bottom: 12),
+            color: scheme.surfaceContainerLow,
+            child: ListTile(
+              leading: Icon(
+                syncMessage != null
+                    ? Icons.cloud_off_outlined
+                    : !rewardsLoaded || !feedLoaded
+                    ? Icons.sync_rounded
+                    : Icons.cloud_done_outlined,
+                color: scheme.onSurfaceVariant,
+              ),
+              title: Text(
+                checkingCloud
+                    ? '正在核对任务'
+                    : syncMessage != null
+                    ? '等待同步'
+                    : rewardsLoaded && feedLoaded
+                    ? '已核对任务'
+                    : '等待核对',
+              ),
+              subtitle: syncMessage == null ? null : Text(syncMessage!),
+              trailing: IconButton(
+                tooltip: '核对任务同步',
+                onPressed: checkingCloud ? null : sync,
+                icon: checkingCloud
+                    ? const SizedBox.square(
+                        dimension: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : const Icon(Icons.sync_rounded),
+              ),
+            ),
+          ),
           if (message != null)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -330,7 +382,9 @@ class _TaskBoardPageState extends State<TaskBoardPage>
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      '今日 ${issued(activity)}/12 ${activity.rewardLabel}',
+                      !rewardsLoaded
+                          ? '今日奖励待核对'
+                          : '${syncMessage == null ? '今日' : '上次核对'} ${issued(activity)}/12 ${activity.rewardLabel}',
                       style: TextStyle(
                         fontSize: 13,
                         color: scheme.onSurfaceVariant,
@@ -420,8 +474,8 @@ class _TaskBoardPageState extends State<TaskBoardPage>
                 Icons.photo_library_outlined,
                 color: scheme.outline,
               ),
-              title: const Text('暂无已确认任务'),
-              subtitle: const Text('完成后的照片会留在这里'),
+              title: Text(feedLoaded ? '暂无已确认任务' : '完成记录待核对'),
+              subtitle: Text(feedLoaded ? '完成后的照片会留在这里' : '联网核对后显示家庭完成记录'),
             ),
           for (final item in feed)
             ListTile(
@@ -457,7 +511,11 @@ class _TaskBoardPageState extends State<TaskBoardPage>
               },
             ),
           const Divider(height: 32),
-          WeeklyTasksPanel(ownerId: widget.ownerId, onWallet: widget.onWallet),
+          WeeklyTasksPanel(
+            ownerId: widget.ownerId,
+            onWallet: widget.onWallet,
+            database: db,
+          ),
         ],
       ),
     );

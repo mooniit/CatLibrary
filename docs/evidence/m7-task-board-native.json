@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "actualTaskBoardPage": true,
+  "themes": [
+    "light",
+    "night"
+  ],
+  "unknownDoesNotClaimZeroRewardsOrEmptyFeed": true,
+  "retryUsesActualButton": true,
+  "failedReadRetainsConfirmedRewardsAndFeed": true,
+  "taskQueueUnchanged": true,
+  "scope": "one emulator; isolated memory SQLite and cloud read stub; no business HTTP",
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false,
+  "screenshots": [
+    "m7-task-board-unknown-light",
+    "m7-task-board-unknown-records-light",
+    "m7-task-board-confirmed-light",
+    "m7-task-board-retained-light",
+    "m7-task-board-unknown-night",
+    "m7-task-board-unknown-records-night",
+    "m7-task-board-confirmed-night",
+    "m7-task-board-retained-night"
+  ]
+}
