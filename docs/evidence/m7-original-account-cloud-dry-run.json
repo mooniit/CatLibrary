@@ -1,0 +1,11 @@
+{
+  "startedAt": "2026-10-09T03:17:14.550Z",
+  "projectRef": "ludwvhsvknjgblfgouor",
+  "ownerHash": "a943f6a8f8bbfb85773c91bd116a8460154293a073efad8b8444ac4eeacc10a3",
+  "result": "FAIL",
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false,
+  "failure": "Scoped migration assertion failed",
+  "failureLocation": "at Object.<anonymous> (D:\\2DoProjects\\CatLibrary\\scripts\\prepare-account-cloud-migration.cjs:62:10)",
+  "finishedAt": "2026-10-09T03:17:15.305Z"
+}
