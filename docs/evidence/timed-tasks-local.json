@@ -1,0 +1,18 @@
+{
+  "environment": "127.0.0.1",
+  "checks": [
+    "6 + 5 effective minutes earn 2; 20 paused minutes excluded; no photo",
+    "concurrent confirmation retry and lost receipt do not issue twice",
+    "foreign owner rejected",
+    "changed activity rejected",
+    "changed run anchor rejected",
+    "confirmed interval rewrite rejected",
+    "overlap rejected",
+    "six hour reset rejected",
+    "daily language reward capped at 12",
+    "UTC+8 midnight settles yesterday, today waits for confirmation",
+    "interrupted past record waits for explicit confirmation",
+    "photo-free confirmed records appear in history"
+  ],
+  "result": "PASS"
+}
