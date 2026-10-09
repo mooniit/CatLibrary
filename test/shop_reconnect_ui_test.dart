@@ -36,8 +36,9 @@ void main() {
         rpc: (method, args) async {
           if (offline) throw TimeoutException('isolated offline');
           if (method == 'furniture_state') return room;
-          if (method == 'furniture_request')
+          if (method == 'furniture_request') {
             return receipt ?? {'status': 'not_found'};
+          }
           charged++;
           receipt = {
             'status': 'purchased',

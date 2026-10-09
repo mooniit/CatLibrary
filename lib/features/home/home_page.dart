@@ -35,6 +35,8 @@ class HomePage extends StatefulWidget {
     this.onThemeChanged,
     this.loadCats,
     this.loadRoom,
+    this.loadProxyNotices,
+    this.acknowledgeProxyNotice,
     this.shopRepository,
     this.onRoomModeChanged,
   });
@@ -44,6 +46,8 @@ class HomePage extends StatefulWidget {
   final Future<void> Function(ThemeMode)? onThemeChanged;
   final Future<Map<String, dynamic>> Function()? loadCats;
   final Future<FurnitureState> Function()? loadRoom;
+  final Future<List<Map<String, dynamic>>> Function()? loadProxyNotices;
+  final Future<void> Function(String day)? acknowledgeProxyNotice;
   final ShopRepository? shopRepository;
   final ValueChanged<bool>? onRoomModeChanged;
   @override
@@ -741,6 +745,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                 ProxyPaymentNotice(
                   key: ValueKey('notice-${wallet.ownerId}'),
                   ownerId: wallet.ownerId,
+                  load: widget.loadProxyNotices,
+                  acknowledge: widget.acknowledgeProxyNotice,
                 ),
               Positioned(
                 top: 12,
@@ -818,6 +824,12 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             RepairPanel(
                               key: ValueKey('repair-${wallet.ownerId}'),
                               ownerId: wallet.ownerId,
+                              load: widget.shopRepository == null
+                                  ? null
+                                  : () => widget.shopRepository!.call(
+                                      'repair_state',
+                                      const {},
+                                    ),
                             ),
                         ],
                       ),
