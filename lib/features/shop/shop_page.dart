@@ -33,6 +33,7 @@ class ShopPageState extends State<ShopPage> {
   ShopPreview? preview;
   Map<String, dynamic>? pending;
   bool busy = false;
+  String? loadError;
   String? message;
   String category = 'all';
   Offset? dragWorld;
@@ -47,6 +48,16 @@ class ShopPageState extends State<ShopPage> {
   Future<void> load() async {
     setState(() => busy = true);
     try {
+      // The local request must remain actionable even when the state RPC fails.
+      final known = state ?? await repo.cached();
+      final localPending = known?.familyId == null
+          ? null
+          : await repo.pending(known!.familyId!, 'purchase');
+      if (!mounted) return;
+      setState(() {
+        state ??= known;
+        pending = localPending;
+      });
       final next = await repo.load();
       final waiting = next.familyId == null
           ? null
@@ -56,6 +67,7 @@ class ShopPageState extends State<ShopPage> {
         state = next;
         pending = waiting;
         preview = null;
+        loadError = null;
       });
       if (next.raw['wallet'] != null) {
         widget.onWallet?.call(
@@ -65,7 +77,14 @@ class ShopPageState extends State<ShopPage> {
         );
       }
     } catch (_) {
-      if (mounted) setState(() => message = '商店暂未连接，请重试；待购买请求仍保留。');
+      if (mounted) {
+        setState(() {
+          loadError = '商店暂未连接，请重试；原库存与记录仍保留。';
+          if (pending != null) {
+            message = '购买结果待核对。请重连后核对原请求，暂不进行另一笔购买。';
+          }
+        });
+      }
     } finally {
       if (mounted) setState(() => busy = false);
     }
@@ -245,6 +264,7 @@ class ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     final room = state;
+    final visibleMessage = message ?? loadError;
     scene.roomState =
         preview != null &&
             ['wall', 'floor'].contains(preview!.product.placement)
@@ -275,11 +295,11 @@ class ShopPageState extends State<ShopPage> {
         if (preview != null) previewControls(preview!),
         if (room?.testScope == true)
           const Text('隔离测试家庭 · 测试商品与余额', style: TextStyle(fontSize: 10)),
-        if (message != null)
+        if (visibleMessage != null)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
-              message!,
+              visibleMessage,
               key: const Key('shop-message'),
               style: const TextStyle(fontSize: 11),
             ),
@@ -292,6 +312,12 @@ class ShopPageState extends State<ShopPage> {
                     () => repo.reconcile(room!.familyId!, 'purchase'),
                   ),
             child: const Text('核对原请求'),
+          ),
+        if (room != null && loadError != null && pending == null)
+          TextButton.icon(
+            onPressed: busy ? null : load,
+            icon: const Icon(Icons.sync_rounded),
+            label: const Text('重试连接'),
           ),
         Expanded(
           child: room == null
