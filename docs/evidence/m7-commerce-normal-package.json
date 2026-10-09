@@ -1,0 +1,16 @@
+{
+  "verifiedAt": "2026-10-09T05:20:58.556782+00:00",
+  "result": "PASS",
+  "version": "0.1.17+18",
+  "environment": "local",
+  "apk": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "bytes": 199055450,
+  "sha256": "6db7c794715e3dd74d3602c1ec82c70e2155b943e2c9ab52cc0fe25fe33297ae",
+  "compiledNativeTestTokensAbsent": true,
+  "nativeTestEntryMarkersAbsent": true,
+  "previousNormalApkBackedUp": true,
+  "physicalPhoneInstalled": false,
+  "originalIdentityMigrated": false,
+  "flutterTestsPassed": 141,
+  "staticAnalysis": "No issues found"
+}
