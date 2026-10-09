@@ -1,0 +1,207 @@
+{
+  "date": "2026-10-09",
+  "standard": "room-standard-v1",
+  "status": "REJECTED_CONTACT_REGISTRATION",
+  "method": "Manual source-resolution paw observations compared with the pre-existing numerical guide. No ground search or fitted translation, shear, stretch, camera change, or PNG editing.",
+  "footprintChanged": false,
+  "nativeRoomVerified": false,
+  "phoneVerified": false,
+  "originalAccountAccessed": false,
+  "results": [
+    {
+      "file": "standing-style-retry.png",
+      "sha256": "1f0c902ba048c9c52f3f972bac18eca330b510c7d3cc947ecade18f3f0d5e70d",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA",
+      "guideScale": 0.8662109375,
+      "requestedToleranceSourcePixels": 6.9296875,
+      "contactsExpected": [
+        [
+          420.2162499999999,
+          590.2524641391959
+        ],
+        [
+          307.12375000000037,
+          646.6989725359598
+        ],
+        [
+          599.8337499999997,
+          679.9028010046458
+        ],
+        [
+          486.74125000000004,
+          736.3493094014096
+        ]
+      ],
+      "contactsManuallyObserved": [
+        [
+          414,
+          624
+        ],
+        [
+          246,
+          687
+        ],
+        [
+          696,
+          711
+        ],
+        [
+          590,
+          779
+        ]
+      ],
+      "observationUncertaintySourcePixels": 8,
+      "contactErrorSourcePixels": [
+        34.315272703837806,
+        73.21397154040933,
+        101.0692011664247,
+        111.72041380204057
+      ],
+      "contactPassEvenWithObservationUncertainty": false,
+      "registrationFitApplied": false,
+      "anatomyObservation": "Four visible paws. Old style reference geometry still dominates.",
+      "alpha": {
+        "transparentPixels": 1295344,
+        "opaquePixels": 203,
+        "partiallyTransparentPixels": 277991,
+        "nonzeroBounds": [
+          178,
+          0,
+          1671,
+          887
+        ],
+        "visibleSaturatedRedOrYellowPixels": 0,
+        "firstVisibleColorSamples": []
+      },
+      "acceptedForNative": false
+    },
+    {
+      "file": "standing-guide-retry.png",
+      "sha256": "a85769e8b4ab6e9219089f9d6a49af8270bd3cb9aac3d3c25a2c953e961a3939",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA",
+      "guideScale": 0.8662109375,
+      "requestedToleranceSourcePixels": 6.9296875,
+      "contactsExpected": [
+        [
+          420.2162499999999,
+          590.2524641391959
+        ],
+        [
+          307.12375000000037,
+          646.6989725359598
+        ],
+        [
+          599.8337499999997,
+          679.9028010046458
+        ],
+        [
+          486.74125000000004,
+          736.3493094014096
+        ]
+      ],
+      "contactsManuallyObserved": [
+        [
+          425,
+          620
+        ],
+        [
+          311,
+          686
+        ],
+        [
+          680,
+          731
+        ],
+        [
+          539,
+          799
+        ]
+      ],
+      "observationUncertaintySourcePixels": 8,
+      "contactErrorSourcePixels": [
+        30.129722100482866,
+        39.49172158556448,
+        95.06603696501386,
+        81.58483918010009
+      ],
+      "contactPassEvenWithObservationUncertainty": false,
+      "registrationFitApplied": false,
+      "anatomyObservation": "Far rear paw partly occluded; four guide contacts are not retained.",
+      "alpha": {
+        "transparentPixels": 1288809,
+        "opaquePixels": 146,
+        "partiallyTransparentPixels": 284583,
+        "nonzeroBounds": [
+          90,
+          0,
+          1738,
+          887
+        ],
+        "visibleSaturatedRedOrYellowPixels": 0,
+        "firstVisibleColorSamples": []
+      },
+      "acceptedForNative": false
+    },
+    {
+      "file": "sleeping-guide-retry.png",
+      "sha256": "e44b6a3747408f7978a07b602f42d06acf90fdac8c15bc567159c93307bfb8db",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA",
+      "guideScale": 0.8662109375,
+      "requestedToleranceSourcePixels": 6.9296875,
+      "contactsExpected": [
+        [
+          636.4225000000002,
+          694.8445238155537
+        ],
+        [
+          536.6350000000003,
+          744.6502665185814
+        ]
+      ],
+      "contactsManuallyObserved": [
+        [
+          801,
+          686
+        ],
+        [
+          649,
+          740
+        ]
+      ],
+      "observationUncertaintySourcePixels": 8,
+      "contactErrorSourcePixels": [
+        164.81498447584738,
+        112.46118532050853
+      ],
+      "contactPassEvenWithObservationUncertainty": false,
+      "registrationFitApplied": false,
+      "anatomyObservation": "Closed eyes, two visible forepaws, but actual contacts depart from guide.",
+      "alpha": {
+        "transparentPixels": 1226343,
+        "opaquePixels": 39,
+        "partiallyTransparentPixels": 347156,
+        "nonzeroBounds": [
+          25,
+          29,
+          1712,
+          863
+        ],
+        "visibleSaturatedRedOrYellowPixels": 0,
+        "firstVisibleColorSamples": []
+      },
+      "acceptedForNative": false
+    }
+  ]
+}
