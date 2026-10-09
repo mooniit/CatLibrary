@@ -30,13 +30,15 @@ insert into public.study_sessions(id,owner_id,started_at,recorded_until,confirme
   select '56000000-0000-0000-0000-000000000012',
     '56000000-0000-0000-0000-000000000001',
     starts_at+interval '1 hour',starts_at+interval '1 hour 30 minutes',true
-  from public.repair_windows where cycle_no=1;
+  from public.repair_windows where cycle_no=1
+    and episode_id='56000000-0000-0000-0000-000000000010';
 insert into public.task_sessions
   (id,owner_id,activity,started_at,recorded_until,confirmed)
   select '56000000-0000-0000-0000-000000000013',
     '56000000-0000-0000-0000-000000000002','exercise',
     starts_at+interval '2 hours',starts_at+interval '2 hours 20 minutes',false
-  from public.repair_windows where cycle_no=1;
+  from public.repair_windows where cycle_no=1
+    and episode_id='56000000-0000-0000-0000-000000000010';
 select is(public.repair_window_progress(
   '56000000-0000-0000-0000-000000000011'),3000000::bigint,
   'two members contribute 30+20 minutes in one window; photo pending still counts');
@@ -59,13 +61,15 @@ insert into public.study_sessions(id,owner_id,started_at,recorded_until,confirme
   select '56000000-0000-0000-0000-000000000014',
     '56000000-0000-0000-0000-000000000001',
     starts_at+interval '1 hour',starts_at+interval '2 hours',true
-  from public.repair_windows where cycle_no=3;
+  from public.repair_windows where cycle_no=3
+    and episode_id='56000000-0000-0000-0000-000000000010';
 insert into public.task_sessions
   (id,owner_id,activity,started_at,recorded_until,confirmed)
   select '56000000-0000-0000-0000-000000000015',
     '56000000-0000-0000-0000-000000000002','language',
     starts_at+interval '2 hours',starts_at+interval '3 hours',false
-  from public.repair_windows where cycle_no=3;
+  from public.repair_windows where cycle_no=3
+    and episode_id='56000000-0000-0000-0000-000000000010';
 set local role authenticated;
 select set_config('request.jwt.claims',
   '{"sub":"56000000-0000-0000-0000-000000000002"}',true);

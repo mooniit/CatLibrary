@@ -22,7 +22,8 @@ select public.settle_family_day(current_setting('test.home')::uuid,'2026-09-01')
 select is((select status from public.repair_episodes
   where family_id=current_setting('test.home')::uuid),'pending',
   'single user reaching -150 triggers pending repair after fee');
-select is((select count(*)::int from public.repair_windows),0,
+select is((select count(*)::int from public.repair_windows w join public.repair_episodes e
+  on e.id=w.episode_id where e.family_id=current_setting('test.home')::uuid),0,
   '72-hour clock has not started before user returns');
 set local role authenticated;
 select set_config('request.jwt.claims',
@@ -38,11 +39,14 @@ select throws_ok($$select public.feed_cat(current_setting('test.cat')::uuid)$$,
 select is((public.repair_state()->>'cycle_no')::int,1,
   'repeated read stays in first window');
 reset role;
-select is((select count(*)::int from public.repair_windows),1,
+select is((select count(*)::int from public.repair_windows w join public.repair_episodes e
+  on e.id=w.episode_id where e.family_id=current_setting('test.home')::uuid),1,
   'repeated read cannot create another window');
-select is((select ends_at-starts_at from public.repair_windows limit 1),
+select is((select w.ends_at-w.starts_at from public.repair_windows w join public.repair_episodes e
+  on e.id=w.episode_id where e.family_id=current_setting('test.home')::uuid),
   interval '72 hours','window has full 72 hours');
-select set_config('test.window',(select id::text from public.repair_windows limit 1),true);
+select set_config('test.window',(select w.id::text from public.repair_windows w join public.repair_episodes e
+  on e.id=w.episode_id where e.family_id=current_setting('test.home')::uuid),true);
 insert into public.family_members(user_id,family_id)
   values('54000000-0000-0000-0000-000000000002',
     current_setting('test.home')::uuid);
