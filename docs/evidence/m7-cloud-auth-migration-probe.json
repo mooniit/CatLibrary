@@ -1,0 +1,31 @@
+{
+  "startedAt": "2026-10-08T14:15:38.038Z",
+  "scope": "new isolated local anonymous identity imported to hosted Auth",
+  "projectRef": "ludwvhsvknjgblfgouor",
+  "checks": [
+    "isolated anonymous source session created without reading device credentials",
+    "source rows scoped and target Auth schema checked before import",
+    "local access JWT cannot authenticate to hosted project",
+    "original refresh token issues hosted tokens for the exact same user ID",
+    "lost first refresh receipt can be retried without creating another identity",
+    "hosted authenticated business RPC uses preserved identity",
+    "source session remains recoverable after independent hosted refresh",
+    "old source refresh token remains recoverable after hosted reuse interval"
+  ],
+  "originalIdentityMigrated": false,
+  "mobileInternetVerified": false,
+  "ownerHash": "d67f9ff23ff3fc11c6d9b54ca709138acc4e22490dc10c18e4ad43824f4032dc",
+  "fixtureCreated": true,
+  "authRows": {
+    "users": 1,
+    "sessions": 1,
+    "refreshTokens": 1,
+    "generatedColumnsExcluded": true,
+    "refreshSerialIdsReallocated": true
+  },
+  "isolatedAuthImported": true,
+  "result": "PASS",
+  "finishedAt": "2026-10-08T14:16:07.512Z",
+  "lateRefreshOutsideReuseInterval": true,
+  "lateRefreshVerifiedAt": "2026-10-08T14:21:42.752Z"
+}
