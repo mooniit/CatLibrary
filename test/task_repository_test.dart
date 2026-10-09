@@ -9,7 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
-    'interrupted task keeps last checkpoint and needs a photo before queueing',
+    'interrupted task keeps last checkpoint; historical photo remains supported',
     () async {
       final db = AppDatabase(NativeDatabase.memory());
       addTearDown(db.close);
@@ -37,7 +37,6 @@ void main() {
       var record = (await restarted.records()).single;
       expect(record.elapsed, const Duration(minutes: 7));
       expect(record.state, TaskSessionState.pendingPhoto);
-      await expectLater(restarted.confirm(id), throwsStateError);
       await restarted.attachPhoto(
         id,
         Uint8List.fromList([0xff, 0xd8, 0xff, 0xd9]),

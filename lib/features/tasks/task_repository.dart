@@ -38,22 +38,37 @@ class TaskRepository {
     needsRecovery = false;
   });
 
-  Future<void> start(TaskActivity activity) => _serial(() async {
-    if (needsRecovery || active != null) {
-      throw StateError('Task timer is not ready');
-    }
-    final instant = now().toUtc();
-    final record = TaskSession(
-      id: _newId(),
-      ownerId: ownerId,
-      activity: activity,
-      startedAt: instant,
-      recordedUntil: instant,
-      state: TaskSessionState.running,
-    );
-    await database.startTask(record);
-    active = record;
-  });
+  Future<void> start(TaskActivity activity, {String? runId}) => _serial(
+    () async {
+      if (needsRecovery || active != null) {
+        throw StateError('Task timer is not ready');
+      }
+      final instant = now().toUtc();
+      final segments = runId == null
+          ? <TaskSession>[]
+          : (await records()).where((r) => r.runId == runId).toList();
+      if (runId != null &&
+          (segments.isEmpty ||
+              segments.any((r) => r.activity != activity) ||
+              !instant.isBefore(
+                segments.first.runStartedAt.add(const Duration(hours: 6)),
+              ))) {
+        throw StateError('Task run cannot resume');
+      }
+      final record = TaskSession(
+        id: _newId(),
+        ownerId: ownerId,
+        activity: activity,
+        startedAt: instant,
+        recordedUntil: instant,
+        state: TaskSessionState.running,
+        runId: runId,
+        runStartedAt: segments.isEmpty ? instant : segments.first.runStartedAt,
+      );
+      await database.startTask(record);
+      active = record;
+    },
+  );
 
   Future<void> checkpoint({bool stop = false, DateTime? at}) => _serial(
     () async {
@@ -62,8 +77,42 @@ class TaskRepository {
       if (previous == null) return;
       final next = previous.checkpoint(at ?? now(), stop: stop);
       try {
-        await database.checkpointTask(next);
-        active = next.state == TaskSessionState.running ? next : null;
+        final current = await database.transaction<TaskSession?>(() async {
+          var segment = previous;
+          while (true) {
+            final local = segment.startedAt.add(const Duration(hours: 8));
+            final midnight = DateTime.utc(
+              local.year,
+              local.month,
+              local.day + 1,
+            ).subtract(const Duration(hours: 8));
+            if (midnight.isAfter(next.recordedUntil)) break;
+            final closed = segment.checkpoint(midnight, stop: true);
+            await database.checkpointTask(closed);
+            await database.queueTask(ownerId, segment.id);
+            if (midnight == next.recordedUntil &&
+                (stop ||
+                    midnight ==
+                        previous.runStartedAt.add(const Duration(hours: 6)))) {
+              return null;
+            }
+            segment = TaskSession(
+              id: _newId(),
+              ownerId: ownerId,
+              activity: segment.activity,
+              startedAt: midnight,
+              recordedUntil: midnight,
+              state: TaskSessionState.running,
+              runId: previous.runId,
+              runStartedAt: previous.runStartedAt,
+            );
+            await database.startTask(segment);
+          }
+          segment = segment.checkpoint(next.recordedUntil, stop: stop);
+          await database.checkpointTask(segment);
+          return segment;
+        });
+        active = current?.state == TaskSessionState.running ? current : null;
       } catch (_) {
         active = null;
         needsRecovery = true;
@@ -77,6 +126,20 @@ class TaskRepository {
 
   Future<void> confirm(String id) =>
       _serial(() => database.queueTask(ownerId, id));
+
+  Future<void> finishRun(String runId) => _serial(() async {
+    if (needsRecovery) throw StateError('Recover task timer before writing');
+    final current = active;
+    if (current != null && current.runId != runId) {
+      throw StateError('Different task run');
+    }
+    await database.finishTaskRun(
+      ownerId,
+      runId,
+      current?.checkpoint(now(), stop: true),
+    );
+    active = null;
+  });
 
   static String _newId() {
     final random = Random.secure();
@@ -108,10 +171,36 @@ class TaskCloud {
   }
 
   Future<void> sync(TaskSession session) async {
-    if (session.ownerId != ownerId || session.state == TaskSessionState.synced) {
+    if (session.ownerId != ownerId ||
+        session.state == TaskSessionState.synced) {
       return;
     }
     final client = await _client();
+    if (session.photoBytes == null && session.photoMime == null) {
+      final raw = await client
+          .rpc(
+            'sync_timed_task_session',
+            params: {
+              'session_id': session.id,
+              'task_activity': session.activity.name,
+              'start_at': session.startedAt.toIso8601String(),
+              'checkpoint_at': session.recordedUntil.toIso8601String(),
+              'is_confirmed': session.state == TaskSessionState.ready,
+              'is_running': session.state == TaskSessionState.running,
+              'timer_run_id': session.runId,
+              'run_start_at': session.runStartedAt.toIso8601String(),
+            },
+          )
+          .timeout(const Duration(seconds: 10));
+      if (client.auth.currentUser?.id != ownerId) {
+        throw StateError('Identity changed');
+      }
+      await _accept(Map<String, dynamic>.from(raw as Map));
+      if (session.state == TaskSessionState.ready) {
+        await database.acknowledgeTask(ownerId, session.id);
+      }
+      return;
+    }
     final params = {
       'session_id': session.id,
       'task_activity': session.activity.name,

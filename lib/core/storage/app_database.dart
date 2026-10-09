@@ -33,7 +33,7 @@ class AppDatabase extends GeneratedDatabase {
     : super(executor ?? driftDatabase(name: 'cat_library'));
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
   @override
   Iterable<TableInfo<Table, Object?>> get allTables => const [];
   @override
@@ -58,6 +58,18 @@ class AppDatabase extends GeneratedDatabase {
           'ALTER TABLE pending_exchanges ADD COLUMN quantity INTEGER NOT NULL DEFAULT 1',
         );
       }
+      if (from >= 4 && from < 9) {
+        await customStatement(
+          'ALTER TABLE task_sessions ADD COLUMN run_id TEXT',
+        );
+        await customStatement(
+          'ALTER TABLE task_sessions ADD COLUMN run_started_ms INTEGER',
+        );
+        await customStatement(
+          'UPDATE task_sessions SET run_id=id, run_started_ms=started_ms',
+        );
+      }
+      if (from < 9) await _createTaskFeed();
     },
     onCreate: (_) async {
       await _createCache();
@@ -77,6 +89,7 @@ class AppDatabase extends GeneratedDatabase {
     )''');
       await _createPresets();
       await _createTasks();
+      await _createTaskFeed();
       await _createExchanges();
       await _createWeekly();
       await _createFurniture();
@@ -144,6 +157,7 @@ class AppDatabase extends GeneratedDatabase {
       started_ms INTEGER NOT NULL, recorded_ms INTEGER NOT NULL,
       state TEXT NOT NULL CHECK(state IN ('running','pendingPhoto','ready','synced')),
       photo_bytes BLOB, photo_mime TEXT,
+      run_id TEXT, run_started_ms INTEGER,
       CHECK(recorded_ms >= started_ms AND recorded_ms - started_ms <= 21600000)
     )''');
     await customStatement(
@@ -157,6 +171,29 @@ class AppDatabase extends GeneratedDatabase {
     currency TEXT NOT NULL CHECK(currency IN ('eagle','gem')),
     quantity INTEGER NOT NULL DEFAULT 1 CHECK(quantity > 0)
   )''');
+
+  Future<void> _createTaskFeed() => customStatement(
+    'CREATE TABLE task_feed_cache (owner_id TEXT PRIMARY KEY, payload TEXT NOT NULL)',
+  );
+  Future<List<Map<String, dynamic>>> cachedTaskFeed(String ownerId) async {
+    final row = await customSelect(
+      'SELECT payload FROM task_feed_cache WHERE owner_id=?',
+      variables: [Variable(ownerId)],
+    ).getSingleOrNull();
+    if (row == null) return [];
+    return [
+      for (final item in jsonDecode(row.read<String>('payload')) as List)
+        Map<String, dynamic>.from(item as Map),
+    ];
+  }
+
+  Future<void> cacheTaskFeed(
+    String ownerId,
+    List<Map<String, dynamic>> feed,
+  ) => customStatement(
+    'INSERT INTO task_feed_cache VALUES (?,?) ON CONFLICT(owner_id) DO UPDATE SET payload=excluded.payload',
+    [ownerId, jsonEncode(feed)],
+  );
 
   Future<void> _createWeekly() async {
     await customStatement('''CREATE TABLE weekly_offer_cache (
@@ -533,6 +570,14 @@ class AppDatabase extends GeneratedDatabase {
               activity: TaskActivity.values.byName(
                 row.read<String>('activity'),
               ),
+              runId: row.readNullable<String>('run_id'),
+              runStartedAt: switch (row.readNullable<int>('run_started_ms')) {
+                final int value => DateTime.fromMillisecondsSinceEpoch(
+                  value,
+                  isUtc: true,
+                ),
+                null => null,
+              },
               startedAt: DateTime.fromMillisecondsSinceEpoch(
                 row.read<int>('started_ms'),
                 isUtc: true,
@@ -573,8 +618,8 @@ class AppDatabase extends GeneratedDatabase {
       throw StateError('Another timer is already running');
     }
     await customStatement(
-      '''INSERT INTO task_sessions(id,owner_id,activity,started_ms,recorded_ms,state)
-      VALUES (?,?,?,?,?,?)''',
+      '''INSERT INTO task_sessions(id,owner_id,activity,started_ms,recorded_ms,state,run_id,run_started_ms)
+      VALUES (?,?,?,?,?,?,?,?)''',
       [
         task.id,
         task.ownerId,
@@ -582,6 +627,8 @@ class AppDatabase extends GeneratedDatabase {
         task.startedAt.millisecondsSinceEpoch,
         task.recordedUntil.millisecondsSinceEpoch,
         task.state.name,
+        task.runId,
+        task.runStartedAt.millisecondsSinceEpoch,
       ],
     );
   });
@@ -665,12 +712,25 @@ class AppDatabase extends GeneratedDatabase {
   Future<void> queueTask(String ownerId, String id) async {
     final count = await customUpdate(
       '''UPDATE task_sessions SET state='ready' WHERE id=? AND owner_id=?
-      AND state='pendingPhoto' AND photo_bytes IS NOT NULL''',
+      AND state='pendingPhoto' ''',
       variables: [Variable(id), Variable(ownerId)],
       updates: {},
     );
-    if (count != 1) throw StateError('Select a photo before confirming');
+    if (count != 1) throw StateError('Task is not awaiting confirmation');
   }
+
+  /// Finish and queue together: a crash cannot leave half a run confirmed.
+  Future<void> finishTaskRun(
+    String ownerId,
+    String runId,
+    TaskSession? last,
+  ) => transaction(() async {
+    if (last != null) await checkpointTask(last);
+    await customStatement(
+      "UPDATE task_sessions SET state='ready' WHERE owner_id=? AND coalesce(run_id,id)=? AND state='pendingPhoto'",
+      [ownerId, runId],
+    );
+  });
 
   Future<void> acknowledgeTask(String ownerId, String id) => customStatement(
     "UPDATE task_sessions SET state='synced', photo_bytes=NULL WHERE id=? AND owner_id=? AND state='ready'",
