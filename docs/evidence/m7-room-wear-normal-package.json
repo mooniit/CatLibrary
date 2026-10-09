@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "versionName": "0.1.19",
+  "versionCode": 20,
+  "path": "build/app/outputs/flutter-apk/catlibrary-lunar-native-debug.apk",
+  "bytes": 199059802,
+  "sha256": "ef5fac3947da948d9fe15b39984d263b5888e47689f2e88d39ad74598eeac77c",
+  "environment": "local",
+  "endpoint": "http://127.0.0.1:54321",
+  "declaredNativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "flutterEngineAbis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "fixtureMarkersChecked": 7,
+  "fixtureMarkersAbsent": true,
+  "fixtureRefreshTokensChecked": 8,
+  "fixtureRefreshTokensAbsent": true,
+  "oldOrdinaryPackageRetainedAndHashMatched": true,
+  "installedToPhone": false,
+  "installedToOriginalEmulator": false,
+  "originalIdentityMigrated": false,
+  "remoteInternetVerifiedByThisBuild": false
+}
