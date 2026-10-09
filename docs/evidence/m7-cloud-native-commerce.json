@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-10-09T05:18:04.716898Z",
+  "result": "PASS",
+  "scope": "one emulator, two independent hosted clients and in-memory SQLite stores",
+  "productionCatalog": true,
+  "extraFundsOrAssetsGranted": false,
+  "previewDragAndFreePan": true,
+  "insufficientBalanceDenied": true,
+  "purchaseReceiptRetriedWithoutSecondPurchase": true,
+  "bothMemberWallets": [
+    0,
+    0
+  ],
+  "householdInventoryCount": 2,
+  "ownedLimitDisabled": true,
+  "existingHomeScenePreserved": true,
+  "ownedOnlyEditor": true,
+  "fixedArtworkSlotAndFrame": true,
+  "draftBeforeManualSave": true,
+  "editorConflictDenied": true,
+  "lostSaveReceiptReconciled": true,
+  "bothMembersNotifiedAndManuallyRefreshed": true,
+  "finalLayoutVersion": 2,
+  "oldReceiptCannotReplaceNewLayout": true,
+  "staleDraftRetainedAndPaused": true,
+  "originalIdentityMigrated": false,
+  "physicalPhoneVerified": false,
+  "freshScreenshots": [
+    "m7-cloud-native-shop",
+    "m7-cloud-native-update",
+    "m7-cloud-native-refreshed"
+  ]
+}
