@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../storage/app_database.dart';
 import 'cloud_connection.dart';
 import 'identity_guard.dart';
+import 'legacy_session_recovery.dart';
 
 class CloudClient {
   static const url = String.fromEnvironment('SUPABASE_URL');
@@ -42,6 +43,24 @@ class CloudClient {
                 .get())
             .map((row) => row.read<String>('owner_id'))
             .toList();
+    if (client.auth.currentSession == null) {
+      final transport = ConnectionHttpClient(http.Client(), connection);
+      try {
+        await LegacySessionRecovery.recover(
+          targetUrl: url,
+          publicKey: key,
+          preferences: preferences,
+          transport: transport,
+          rememberedOwner: preferences.getString('identity_original_owner'),
+          cachedOwners: cachedOwners,
+          restoreSession: (value) async {
+            await client.auth.recoverSession(value);
+          },
+        );
+      } finally {
+        transport.close();
+      }
+    }
     IdentityGuard.check(
       client.auth.currentUser?.id,
       rememberedOwner: preferences.getString('identity_original_owner'),
