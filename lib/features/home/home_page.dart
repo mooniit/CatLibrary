@@ -770,16 +770,34 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   onSettings: openSettings,
                 ),
               ),
-              if (!_roomToolsShown &&
-                  (scene.pan.distance > 1 ||
-                      scene.zoom != RoomScene.defaultZoom))
+              if (!_roomToolsShown)
                 Positioned(
                   bottom: 16,
+                  left: 16,
                   right: 16,
-                  child: RoomActionButton(
-                    label: '回到初始视角',
-                    icon: Icons.center_focus_strong_outlined,
-                    onPressed: () => setState(scene.resetView),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (scene.pan.distance > 1 ||
+                          scene.zoom != RoomScene.defaultZoom)
+                        RoomActionButton(
+                          label: '回到初始视角',
+                          icon: Icons.center_focus_strong_outlined,
+                          onPressed: () => setState(scene.resetView),
+                        ),
+                      if (wallet != null)
+                        RepairPanel(
+                          key: ValueKey('repair-${wallet.ownerId}'),
+                          ownerId: wallet.ownerId,
+                          load: widget.shopRepository == null
+                              ? null
+                              : () => widget.shopRepository!.call(
+                                  'repair_state',
+                                  const {},
+                                ),
+                        ),
+                    ],
                   ),
                 ),
               if (!_roomToolsShown)
@@ -820,17 +838,6 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                           if (wallet != null &&
                               scene.roomState?.configured == false)
                             status('陈设预览 · 暂未取得家庭布局', null),
-                          if (wallet != null)
-                            RepairPanel(
-                              key: ValueKey('repair-${wallet.ownerId}'),
-                              ownerId: wallet.ownerId,
-                              load: widget.shopRepository == null
-                                  ? null
-                                  : () => widget.shopRepository!.call(
-                                      'repair_state',
-                                      const {},
-                                    ),
-                            ),
                         ],
                       ),
                     ),
