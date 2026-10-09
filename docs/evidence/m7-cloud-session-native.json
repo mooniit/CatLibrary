@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-10-09T03:38:04.328975Z",
+  "result": "PASS",
+  "isolatedFixtureOnly": true,
+  "sameOwnerVerified": true,
+  "lostRefreshReceiptRetried": true,
+  "originalLocalSessionRetained": true,
+  "cloudSessionReopened": true,
+  "realHostedAuthAndBusinessRpc": true,
+  "observedOfflineThenOnline": true,
+  "originalIdentityMigrated": false,
+  "physicalPhoneVerified": false
+}

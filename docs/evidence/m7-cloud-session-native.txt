@@ -1,0 +1,21 @@
+Running Gradle task 'assembleDebug'...                            168.7s
+√ Built build\app\outputs\flutter-apk\app-debug.apk
+Performing Streamed Install
+Success
+Starting: Intent { cmp=com.catlibrary.cat_library_demo/.MainActivity }
+I/Choreographer( 1901): Skipped 111 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 1901): Sending viewport metrics to the engine.
+D/ProfileInstaller( 1901): Installing profile for com.catlibrary.cat_library_demo
+I/flutter ( 1901): 00:07 +1: (tearDownAll)
+I/flutter ( 1901): 00:07 +2: All tests passed!
+All tests passed.
+Leaving the application running.
+VMServiceFlutterDriver: Connecting to Flutter application at [VM address hidden]
+VMServiceFlutterDriver: Isolate found with number: 937665035852731
+VMServiceFlutterDriver: Isolate 937665035852731 is runnable.
+VMServiceFlutterDriver: Isolate is not paused. Assuming application is ready.
+VMServiceFlutterDriver: Connected to Flutter application.
+Performing Streamed Install
+Success
+Starting: Intent { cmp=com.catlibrary.cat_library_demo/.MainActivity }
+PASS: fixture and 3 existing private files preserved; original APK restored

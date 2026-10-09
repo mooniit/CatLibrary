@@ -14,6 +14,9 @@ function validate(options) {
     }
   }
   if (typeof options.apkPath !== 'string' || !options.apkPath.endsWith('.apk')) throw new Error('APK path required');
+  if (options.definesFile !== undefined && !/^\.tooling\/[a-zA-Z0-9_-]+\.json$/.test(options.definesFile)) {
+    throw new Error('Isolated project-local defines file required');
+  }
 }
 
 function redactOutput(value) {
@@ -27,18 +30,19 @@ function buildPlan(options) {
     throw new Error('Loopback VM service address required');
   }
   const adb = (...args) => ({tool: 'adb', args: ['-s', options.serial, ...args]});
+  const defines = options.definesFile ? ['--dart-define-from-file', options.definesFile] : [];
   return {commands: [
-    {tool: 'flutter', args: ['build', 'apk', '--debug', '--no-pub', '--target', options.target]},
+    {tool: 'flutter', args: ['build', 'apk', '--debug', '--no-pub', '--target', options.target, ...defines]},
     adb('install', '-r', '-t', options.apkPath),
     adb('shell', 'am', 'start', '-n', `${pkg}/.MainActivity`),
     {tool: 'flutter', args: ['drive', '--no-pub', '-d', options.serial, '--target', options.target,
-      '--driver', options.driver, '--use-existing-app', options.vmServiceUrl, '--keep-app-running']},
+      '--driver', options.driver, '--use-existing-app', options.vmServiceUrl, '--keep-app-running', ...defines]},
   ]};
 }
 
 async function main(argv) {
   const options = {apkPath: 'build/app/outputs/flutter-apk/app-debug.apk'};
-  const names = {'--serial': 'serial', '--target': 'target', '--driver': 'driver', '--restore-apk': 'restoreApk'};
+  const names = {'--serial': 'serial', '--target': 'target', '--driver': 'driver', '--restore-apk': 'restoreApk', '--defines-file': 'definesFile'};
   for (let i = 0; i < argv.length; i += 2) {
     if (!names[argv[i]] || !argv[i + 1]) throw new Error('Usage: --serial emulator-N --target integration_test/...dart --driver test_driver/...dart --restore-apk original.apk');
     options[names[argv[i]]] = argv[i + 1];
@@ -55,6 +59,7 @@ async function main(argv) {
     throw new Error('A separate original APK is required before testing');
   }
   for (const key of ['target', 'driver']) if (!fs.existsSync(within(options[key]))) throw new Error(`Missing ${key}`);
+  if (options.definesFile && !fs.existsSync(within(options.definesFile))) throw new Error('Missing isolated defines file');
   const env = {...process.env, ANDROID_HOME: path.join(root, '.tooling/android-sdk'),
     GRADLE_USER_HOME: path.join(root, '.tooling/gradle-cache'), PUB_CACHE: path.join(root, '.tooling/pub-cache')};
   const adb = path.join(env.ANDROID_HOME, 'platform-tools/adb.exe');

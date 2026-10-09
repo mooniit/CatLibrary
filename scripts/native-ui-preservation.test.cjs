@@ -48,6 +48,22 @@ test('the test APK is built for the requested target without using flutter to in
   assert.ok(!plan.commands.some(item => item.tool === 'flutter' && item.args.includes('install')));
 });
 
+test('isolated defines are passed to the fixture build and attached driver only', () => {
+  const definesFile = '.tooling/native-cloud-session-defines-123.json';
+  const plan = buildPlan({...options, definesFile});
+  for (const verb of ['build', 'drive']) {
+    assert.equal(option(command(plan, 'flutter', verb).args, '--dart-define-from-file'), definesFile);
+  }
+  assert.ok(!buildPlan(options).commands.some(c => c.args.some(a => a.startsWith('--dart-define'))));
+});
+
+test('fixture defines must use an isolated project-local tooling path', () => {
+  for (const definesFile of ['../private.json', '.tooling/../private.json', 'C:/private.json',
+    'lib/private.json', '.tooling/private.txt', '.tooling/file.json extra']) {
+    assert.throws(() => buildPlan({...options, definesFile}), /defines/i);
+  }
+});
+
 test('ADB installs the test APK as a replacement and permits its test manifest', () => {
   const install = command(buildPlan(options), 'adb', 'install');
   assert.ok(install.args.includes('-r'), 'Replacement install must retain existing app data');

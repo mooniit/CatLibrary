@@ -1,0 +1,22 @@
+{
+  "verifiedAt": "2026-10-09T03:43:08.6475905Z",
+  "flutterTestsPassed": 138,
+  "staticAnalysis": "No issues found",
+  "nodeTestsPassed": 22,
+  "nativePreservation": {
+    "serial": "emulator-5554",
+    "originalPrivateFilesUnchanged": true,
+    "fileCount": 3,
+    "fixturePassed": true,
+    "physicalPhoneTouched": false
+  },
+  "version": "0.1.16+17",
+  "packageBytes": 199052906,
+  "packageSha256": "4a399528b330cabb26759f6273168c23aecfc20e754def6668d14cbcab7da0cd",
+  "backend": "local",
+  "normalPackageContainsPrivateFixture": false,
+  "originalAccountMigrated": false,
+  "manualCatchUpExecuted": false,
+  "userDecision": "暂不补结算，保留本地账户",
+  "physicalPhoneInstalled": false
+}

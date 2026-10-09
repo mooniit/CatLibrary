@@ -1,0 +1,30 @@
+✔ Auth scope accepts the expected anonymous owner and rejects foreign users, sessions and tokens (4.3752ms)
+✔ Privileged, linked, deleted and MFA/OAuth identities cannot use the anonymous migration path (0.9675ms)
+✔ Import preserves session keys, drops generated values and reallocates refresh serial IDs (2.1616ms)
+✔ Schema mismatch cannot silently discard data or invent required values (0.9136ms)
+✔ JSON SQL encoding preserves quotes, backslashes and dollar delimiters without executable interpolation (1.0584ms)
+✔ Family snapshot scope rejects foreign family and owners before generating SQL (9.5923ms)
+✔ Inventory and saved room cannot refer to missing cats, trips or instances (1.5474ms)
+✔ Transfer preserves economic values and UUID instances; only serial ledger IDs and edit leases change (1.0976ms)
+✔ Export contains all business dependencies but no global policies, catalog, test grants or sample data (9.9229ms)
+✔ Unexpected or disabled target event triggers block import; no blanket trigger or constraint disabling (3.4369ms)
+✔ only an explicitly selected Android emulator can receive the native UI test (2.9ms)
+✔ physical devices, network devices and missing serials are refused before creating a plan (1.3188ms)
+✔ the test APK is built for the requested target without using flutter to install it (0.4174ms)
+✔ isolated defines are passed to the fixture build and attached driver only (0.3992ms)
+✔ fixture defines must use an isolated project-local tooling path (0.5294ms)
+✔ ADB installs the test APK as a replacement and permits its test manifest (0.2301ms)
+✔ the app starts only after replacement installation and before attaching the driver (0.4572ms)
+✔ Flutter drive attaches to the running app and explicitly bypasses destructive cleanup (0.2587ms)
+✔ the native test plan contains no uninstall, private-data deletion or emulator reset (0.3926ms)
+✔ an absent or invalid VM service address cannot fall back to normal flutter drive (0.4914ms)
+✔ command logging removes the VM service address and session token (0.3701ms)
+✔ success and failure output remove HTTP and WebSocket VM session addresses (0.355ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.6362
