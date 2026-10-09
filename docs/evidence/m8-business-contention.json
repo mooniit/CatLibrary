@@ -1,0 +1,62 @@
+{
+  "startedAt": "2026-10-09T05:47:06.637Z",
+  "result": "PASS",
+  "environment": "local Docker PostgreSQL",
+  "syntheticClocksAndWallets": true,
+  "remoteVerified": false,
+  "originalSettlementExecuted": false,
+  "checks": [
+    {
+      "name": "reward-first",
+      "blockedConnectionsVerified": 2,
+      "finalBalance": -20,
+      "reward": 10,
+      "interest": 0,
+      "catFee": 20,
+      "duplicateSettlementUnchanged": true
+    },
+    {
+      "name": "settlement-first",
+      "blockedConnectionsVerified": 2,
+      "finalBalance": -20,
+      "reward": 10,
+      "interest": 0,
+      "catFee": 20,
+      "duplicateSettlementUnchanged": true
+    },
+    {
+      "name": "two members complete repair",
+      "blockedConnectionsVerified": 2,
+      "completedOnce": true,
+      "sharedProgressMs": 7200000,
+      "repairTimerRewards": 0
+    },
+    {
+      "name": "purchase-first",
+      "blockedConnectionsVerified": 2,
+      "finalBalance": -20,
+      "inventory": 1,
+      "purchaseStatus": "purchased",
+      "retryUnchanged": true
+    },
+    {
+      "name": "fee-first",
+      "blockedConnectionsVerified": 2,
+      "finalBalance": 10,
+      "inventory": 0,
+      "purchaseStatus": "rejected",
+      "retryUnchanged": true
+    }
+  ],
+  "originalAccountSnapshotUnchanged": true,
+  "fixtureFamiliesPreserved": 5,
+  "fixtureUsersCreated": 6,
+  "fixtureFamilyHashes": [
+    "1452849afac6a752ca00ea7a6d7d4f7b3e4f1c8013a0c7174cb0561d97c992fd",
+    "274cdc9d61969907a8d903665e7059611b5125f43ce2fd1dd322c2c1bc3d8b94",
+    "aecdd5d1719786004cd5ff483dd6da85a040c500c6319132b86aef39b0a64f9b",
+    "63eee3a970a91ac0fe15c13d41e4a8af6d02a660b468e3a9015e25a98ed56ea6",
+    "6cc0263f9827b847074a59a62696dc8e2e87110effe0f2d0f54d632466e743f9"
+  ],
+  "finishedAt": "2026-10-09T05:47:24.027Z"
+}
