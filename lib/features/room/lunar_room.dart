@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'room_furniture.dart';
 import 'layout_draft.dart';
 import 'basic_room_surfaces.dart';
+import 'room_wear.dart';
 import 'souvenir_sculpture.dart';
 import 'room_depth.dart';
 
@@ -236,6 +237,7 @@ class LunarRoom {
     bool night,
     Map<ArtworkStyle, ui.Image> artworks, {
     String? selected,
+    bool worn = false,
   }) {
     final byId = {for (final i in inventory) i.id: i};
     FurnitureProduct? product(PlacedItem i) =>
@@ -253,6 +255,7 @@ class LunarRoom {
     } else {
       skin(mounted('floor')).drawLayer(canvas, 'floor');
     }
+    if (worn) RoomWear.floor(canvas, project);
     final rug = mounted('rug');
     if (rug != null) skin(rug).drawLayer(canvas, 'rug');
     final walls = skin(mounted('wall'));
@@ -268,6 +271,14 @@ class LunarRoom {
         );
       } else {
         walls.drawLayer(canvas, 'wall-$side${window == null ? '-closed' : ''}');
+      }
+      if (worn) {
+        RoomWear.wall(
+          canvas,
+          project,
+          (camera['wallHeight'] as num).toDouble(),
+          side,
+        );
       }
       if (window != null) {
         final renderer = skin(window);
@@ -464,13 +475,23 @@ class LunarRoom {
     ui.Canvas canvas,
     RoomFurnishings room,
     bool night,
-    Map<ArtworkStyle, ui.Image> artworks,
-  ) {
+    Map<ArtworkStyle, ui.Image> artworks, {
+    bool worn = false,
+  }) {
     drawLayer(canvas, 'floor');
+    if (worn) RoomWear.floor(canvas, project);
     if (room.isVisible('rug')) drawLayer(canvas, 'rug');
     for (final side in ['left', 'right']) {
       final visible = windowVisible(room, side);
       drawLayer(canvas, 'wall-$side${visible ? '' : '-closed'}');
+      if (worn) {
+        RoomWear.wall(
+          canvas,
+          project,
+          (camera['wallHeight'] as num).toDouble(),
+          side,
+        );
+      }
       final slot =
           (catalog['slots'] as List).firstWhere(
                 (s) => s['id'] == 'window-$side',

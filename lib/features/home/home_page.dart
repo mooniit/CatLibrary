@@ -60,6 +60,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool loadingCats = false;
   bool hasFamily = false;
   int _request = 0;
+  int _repairRequest = 0;
   double _startZoom = 1;
   Offset? _roomPointerDown;
   int _furnitureRequest = 0;
@@ -114,7 +115,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (oldWidget.wallet != widget.wallet) _latestWallet = widget.wallet;
     if (oldWidget.wallet?.ownerId != widget.wallet?.ownerId) {
       scene.cats = [];
-      scene.repairing = true;
+      scene.confirmedRepairing = null;
       hasFamily = false;
       scene.furnishings = const RoomFurnishings();
       scene.roomState = null;
@@ -245,6 +246,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   Future<void> refreshCats() async {
     final request = ++_request;
+    final repairRequest = ++_repairRequest;
     if (widget.wallet == null) {
       scene.cats = [
         (id: 'preview-calico', name: '三花猫', appearance: 'black_short'),
@@ -278,7 +280,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       ];
       setState(() {
         scene.cats = cats;
-        scene.repairing = result['repairing'] != false;
+        if (repairRequest == _repairRequest) {
+          scene.confirmedRepairing = result['repairing'] is bool
+              ? result['repairing'] as bool
+              : null;
+        }
         hasFamily = result['family_id'] != null;
       });
     } catch (_) {
@@ -288,6 +294,34 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     } finally {
       if (mounted && request == _request) setState(() => loadingCats = false);
     }
+  }
+
+  Future<Map<String, dynamic>> _loadRepairState() async {
+    final owner = widget.wallet!.ownerId;
+    final request = ++_repairRequest;
+    final repository = widget.shopRepository;
+    final value =
+        await (repository?.call('repair_state', const {}) ??
+                _readRepairState(owner))
+            .timeout(const Duration(seconds: 8));
+    if (!{'none', 'active', 'completed'}.contains(value['status'])) {
+      throw StateError('Unknown repair state');
+    }
+    if (!mounted ||
+        owner != widget.wallet?.ownerId ||
+        request != _repairRequest) {
+      throw StateError('Repair snapshot superseded');
+    }
+    setState(() => scene.confirmedRepairing = value['status'] == 'active');
+    return value;
+  }
+
+  Future<Map<String, dynamic>> _readRepairState(String owner) async {
+    final client = await CloudClient.connect();
+    if (client.auth.currentUser?.id != owner) {
+      throw StateError('Identity changed');
+    }
+    return Map<String, dynamic>.from(await client.rpc('repair_state') as Map);
   }
 
   void info(String title, String text) => showModalBottomSheet<void>(
@@ -790,12 +824,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                         RepairPanel(
                           key: ValueKey('repair-${wallet.ownerId}'),
                           ownerId: wallet.ownerId,
-                          load: widget.shopRepository == null
-                              ? null
-                              : () => widget.shopRepository!.call(
-                                  'repair_state',
-                                  const {},
-                                ),
+                          load: _loadRepairState,
                         ),
                     ],
                   ),

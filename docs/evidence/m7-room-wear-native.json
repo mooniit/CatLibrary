@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "actualHomePage": true,
+  "productionSafeAreaAndNavigationDimensions": true,
+  "sceneLoadedBeforeScreenshot": true,
+  "themes": [
+    "light",
+    "night"
+  ],
+  "states": [
+    "active",
+    "failed-reread",
+    "completed"
+  ],
+  "cosmeticWearOnly": true,
+  "layoutAndInventoryUnchanged": true,
+  "floorViewUsesExistingHomePanLimit": true,
+  "repairDetailsCollapsedByActualTapForFloorView": true,
+  "scope": "one emulator; memory data; no business HTTP or writes",
+  "remoteInternetVerified": false,
+  "physicalPhoneVerified": false,
+  "screenshots": [
+    "m7-room-wear-active-light",
+    "m7-room-wear-floor-light",
+    "m7-room-wear-offline-light",
+    "m7-room-wear-complete-light",
+    "m7-room-wear-active-night",
+    "m7-room-wear-floor-night",
+    "m7-room-wear-offline-night",
+    "m7-room-wear-complete-night"
+  ]
+}

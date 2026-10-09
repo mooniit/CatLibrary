@@ -1,0 +1,56 @@
+{
+  "result": "PASS",
+  "runs": [
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "attempt": 1,
+      "backup": "native-ui-backup-kFIPZY",
+      "automaticOrdinaryRestoreSucceeded": false,
+      "manualOrdinary19RestoreSucceeded": true,
+      "privateFilesCheckedAfterManualRestore": true
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": false,
+      "physicalPhoneTouched": false,
+      "attempt": 2,
+      "backup": "native-ui-backup-PHYknm",
+      "automaticOrdinaryRestoreSucceeded": true,
+      "limitation": "Home pan capped at 64px; test incorrectly required more than 100px"
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "attempt": 3,
+      "backup": "native-ui-backup-XDl5BR",
+      "automaticOrdinaryRestoreSucceeded": true,
+      "limitation": "Floor still hidden behind expanded repair card; floor visual not accepted"
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false,
+      "attempt": 4,
+      "backup": "native-ui-backup-Sfcpxq",
+      "automaticOrdinaryRestoreSucceeded": true,
+      "eightScreenshotsReviewed": true
+    }
+  ],
+  "allOriginalPrivateFilesUnchanged": true,
+  "finalOrdinaryVersionCode": 19,
+  "finalOrdinarySha256": "3f4aed966d90728cfe8055f1f970af40d4aba23ea3a0c25e0627227ef861e58c",
+  "originalIdentityMigrated": false,
+  "manualOriginalSettlementRun": false,
+  "physicalPhoneTouched": false
+}

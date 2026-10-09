@@ -30,7 +30,9 @@ class RoomScene extends FlameGame {
   }
 
   // Unknown live state never implies that care during repair is allowed.
-  bool repairing = true;
+  bool? confirmedRepairing;
+  bool get repairing => confirmedRepairing != false;
+  set repairing(bool value) => confirmedRepairing = value;
   RoomFurnishings furnishings = const RoomFurnishings();
   double zoom = defaultZoom;
   Offset pan = Offset.zero;
@@ -240,9 +242,16 @@ class RoomScene extends FlameGame {
         night,
         _artworks,
         selected: selectedInstance,
+        worn: confirmedRepairing == true,
       );
     } else {
-      _lunar!.render(canvas, furnishings, night, _artworks);
+      _lunar!.render(
+        canvas,
+        furnishings,
+        night,
+        _artworks,
+        worn: confirmedRepairing == true,
+      );
     }
     if (selectedInstance == null &&
         ghostItem != null &&

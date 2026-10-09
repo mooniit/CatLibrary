@@ -5,6 +5,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  testWidgets(
+    'repair details collapse without hiding state, retry, or stale notice',
+    (tester) async {
+      var offline = false;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: RepairPanel(
+              ownerId: 'A',
+              load: () async {
+                if (offline) throw StateError('offline');
+                return {
+                  'status': 'active',
+                  'cycle_no': 1,
+                  'progress_ms': 3600000,
+                  'target_ms': 7200000,
+                  'ends_at': DateTime.now()
+                      .add(const Duration(hours: 72))
+                      .toIso8601String(),
+                };
+              },
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      final expandedHeight = tester
+          .getSize(find.byKey(const Key('repair-panel')))
+          .height;
+      await tester.tap(find.byTooltip('收起修缮详情'));
+      await tester.pump();
+      expect(
+        tester.getSize(find.byKey(const Key('repair-panel'))).height,
+        lessThan(expandedHeight),
+      );
+      expect(find.text('小屋修缮中'), findsOneWidget);
+      expect(find.text('共同计时 60 / 120 分钟'), findsNothing);
+      offline = true;
+      await tester.tap(find.byTooltip('重新核对修缮状态'));
+      await tester.pump();
+      await tester.pump();
+      expect(find.text('暂未同步，保留上次确认的进度'), findsOneWidget);
+      await tester.tap(find.byTooltip('展开修缮详情'));
+      await tester.pump();
+      expect(find.text('共同计时 60 / 120 分钟'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+    },
+  );
   testWidgets('failed first read shows an actionable retry, then clears', (
     tester,
   ) async {

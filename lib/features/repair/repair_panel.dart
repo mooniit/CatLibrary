@@ -20,6 +20,7 @@ class _RepairPanelState extends State<RepairPanel> with WidgetsBindingObserver {
   DateTime now = DateTime.now();
   bool loading = false;
   bool failed = false;
+  bool detailsExpanded = true;
   int request = 0;
   int ticks = 0;
 
@@ -70,6 +71,7 @@ class _RepairPanelState extends State<RepairPanel> with WidgetsBindingObserver {
       state = null;
       failed = false;
       loading = false;
+      detailsExpanded = true;
       unawaited(refresh());
     }
   }
@@ -156,6 +158,7 @@ class _RepairPanelState extends State<RepairPanel> with WidgetsBindingObserver {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -175,6 +178,17 @@ class _RepairPanelState extends State<RepairPanel> with WidgetsBindingObserver {
                   ),
                 ),
                 retryButton(),
+                IconButton(
+                  tooltip: detailsExpanded ? '收起修缮详情' : '展开修缮详情',
+                  onPressed: () =>
+                      setState(() => detailsExpanded = !detailsExpanded),
+                  icon: Icon(
+                    detailsExpanded
+                        ? Icons.expand_more_rounded
+                        : Icons.expand_less_rounded,
+                    size: 20,
+                  ),
+                ),
               ],
             ),
             if (failed)
@@ -187,25 +201,27 @@ class _RepairPanelState extends State<RepairPanel> with WidgetsBindingObserver {
                   ),
                 ),
               ),
-            const SizedBox(height: 8),
-            if (!complete) ...[
-              Text(
-                '第 ${value['cycle_no']} 轮 · 剩余 $clock',
-                key: const Key('repair-countdown'),
-              ),
+            if (detailsExpanded) ...[
               const SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: LinearProgressIndicator(
-                  minHeight: 6,
-                  value: (progress / target).clamp(0, 1),
+              if (!complete) ...[
+                Text(
+                  '第 ${value['cycle_no']} 轮 · 剩余 $clock',
+                  key: const Key('repair-countdown'),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text('共同计时 ${(progress ~/ 60000).clamp(0, 120)} / 120 分钟'),
-              const Text('自习或任务计时均可推进；修缮时间不产生货币。'),
-            ] else
-              Text('正常养猫已恢复；免缴至 ${value['grace_through']}（北京时间）。'),
+                const SizedBox(height: 8),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: LinearProgressIndicator(
+                    minHeight: 6,
+                    value: (progress / target).clamp(0, 1),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text('共同计时 ${(progress ~/ 60000).clamp(0, 120)} / 120 分钟'),
+                const Text('自习或任务计时均可推进；修缮时间不产生货币。'),
+              ] else
+                Text('正常养猫已恢复；免缴至 ${value['grace_through']}（北京时间）。'),
+            ],
           ],
         ),
       ),
