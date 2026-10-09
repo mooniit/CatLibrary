@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-09T16:19:02.284Z",
+  "result": "PASS",
+  "scope": "One new anonymous hosted identity; no wallet initialization or family creation",
+  "originalIdentityTouched": false,
+  "phoneVerified": false,
+  "checks": [
+    "zero-argument reminder API works without initializing any assets",
+    "authenticated client cannot inject the reminder clock",
+    "acknowledgment cannot manufacture an absent reminder",
+    "unsupported channel is rejected",
+    "direct reminder insertion is forbidden",
+    "anonymous public role cannot call the reminder API",
+    "fixture still has no reminder rows"
+  ],
+  "fixtureOwnerHash": "ea50de7ff5487efd4eef3b738449de5b6e5439ed0a102b8713de427993f2c284"
+}
