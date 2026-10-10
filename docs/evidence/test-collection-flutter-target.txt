@@ -1,0 +1,8 @@
+00:00 +0: loading D:/2DoProjects/CatLibrary/test/album_test.dart
+00:00 +0: D:/2DoProjects/CatLibrary/test/personal_inventory_test.dart: personal inventory includes own grants and cat souvenirs, never guesses null ownership
+00:00 +1: D:/2DoProjects/CatLibrary/test/album_test.dart: test unlock detail never claims a real return date or travel arranger
+00:01 +2: D:/2DoProjects/CatLibrary/test/album_test.dart: delivered illustration keeps each cat collection and provenance distinct
+00:01 +3: D:/2DoProjects/CatLibrary/test/album_test.dart: only delivered appearance and destination pairs use art
+00:02 +4: D:/2DoProjects/CatLibrary/test/album_test.dart: shared album metadata visible and no fake photo used
+00:02 +5: D:/2DoProjects/CatLibrary/test/album_test.dart: offline travel disables new expense and retains reconcile control
+00:02 +6: All tests passed!

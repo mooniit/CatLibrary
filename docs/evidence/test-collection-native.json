@@ -1,0 +1,20 @@
+{
+  "result": "PASS",
+  "themes": 2,
+  "personalSouvenirStyles": 6,
+  "unlockedPhotos": 12,
+  "personalFilterExcludesOtherOwner": true,
+  "familyInventoryRetained": true,
+  "rotationVerified": true,
+  "draftNotAutomaticallySaved": true,
+  "businessWrites": 0,
+  "physicalPhoneTouched": false,
+  "captureHandshakeRun": "1791602103928000",
+  "captureMethod": "ADB Android screen with fresh per-stage acknowledgment",
+  "screenshots": [
+    "test-collection-inventory-light",
+    "test-collection-album-light",
+    "test-collection-inventory-night",
+    "test-collection-album-night"
+  ]
+}

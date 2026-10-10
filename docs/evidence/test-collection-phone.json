@@ -1,0 +1,14 @@
+{
+  "result": "PENDING",
+  "model": "PJE110",
+  "targetVersion": "0.1.22+23",
+  "lastVerifiedVersion": "0.1.9+10",
+  "originalIdentityReadOnlyVerified": true,
+  "privateBackupRetained": true,
+  "installAttemptsTimedOut": 2,
+  "separateUncompressedTransfer": "query timeout; client stopped",
+  "uninstallUsed": false,
+  "dataCleared": false,
+  "businessGrantRepeated": false,
+  "localBackendOnly": true
+}
