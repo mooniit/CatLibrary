@@ -8,6 +8,36 @@ import 'package:cat_library_demo/features/travel/travel_sheet.dart';
 
 void main() {
   testWidgets(
+    'test unlock detail never claims a real return date or travel arranger',
+    (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: PhotoDetail(
+            photo: {
+              'id': 'unlock',
+              'source': 'test_grant',
+              'appearance': 'black_short',
+              'destination': 'palace',
+              'destination_label': '故宫',
+              'cat_name': '三花猫',
+              'taken_at': '2026-10-10T01:00:00Z',
+              'arranger_label': '测试解锁',
+              'souvenir_label': '故宫宫殿',
+            },
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.drag(find.byType(ListView), const Offset(0, -500));
+      await tester.pumpAndSettle();
+      expect(find.text('北京时间 · 解锁日期'), findsOneWidget);
+      expect(find.text('测试解锁'), findsOneWidget);
+      expect(find.text('安排人：测试解锁'), findsNothing);
+      expect(find.text('已收入个人仓库，可回小屋布置。'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
     'delivered illustration keeps each cat collection and provenance distinct',
     (tester) async {
       tester.view.physicalSize = const Size(320, 640);

@@ -37,6 +37,12 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
   Offset? dragWorld;
   PlacedItem? dragItem;
   String category = 'all';
+  bool personalInventory = false;
+  List<InventoryInstance> get visibleInventory =>
+      state?.inventory
+          .where((i) => !personalInventory || i.belongsTo(repo.ownerId))
+          .toList() ??
+      [];
   @override
   void initState() {
     super.initState();
@@ -310,7 +316,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
 
   Future<void> selectOwned(FurnitureProduct product) async {
     if (!editable) return;
-    final options = state!.inventory
+    final options = visibleInventory
         .where((i) => i.sku == product.sku)
         .toList();
     InventoryInstance? chosen;
@@ -328,7 +334,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                 ListTile(
                   title: Text(product.label),
                   subtitle: Text(
-                    '${i.sourceCatName == null ? '' : '${i.sourceCatName} · ${i.sourceDestination}\n'}${draft!.layout.items.any((p) => p.instanceId == i.id) ? '已摆放 · ${i.id.substring(0, 8)}' : '库存 · ${i.id.substring(0, 8)}'}',
+                    '${i.source == 'test_grant' ? '测试发放 · ${i.belongsTo(repo.ownerId) ? '个人仓库' : '家庭仓库'}\n' : ''}${i.sourceCatName == null ? '' : '${i.sourceCatName} · ${i.sourceDestination}\n'}${draft!.layout.items.any((p) => p.instanceId == i.id) ? '已摆放 · ${i.id.substring(0, 8)}' : '库存 · ${i.id.substring(0, 8)}'}',
                   ),
                   onTap: () => Navigator.pop(c, i),
                 ),
@@ -352,7 +358,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
       (i) => i.id == original.instanceId,
     );
     final oldProduct = state!.products[oldInstance.sku]!;
-    final options = state!.inventory
+    final options = visibleInventory
         .where(
           (i) =>
               i.id != original.instanceId &&
@@ -710,10 +716,10 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                         .where(
                           (p) =>
                               matchesFurnitureCategory(category, p.kind) &&
-                              room.inventory.any((i) => i.sku == p.sku),
+                              visibleInventory.any((i) => i.sku == p.sku),
                         )
                         .toList(),
-                    inventory: room.inventory,
+                    inventory: visibleInventory,
                     layout: draft!.layout,
                     onTap: selectOwned,
                   ),
@@ -723,6 +729,27 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Text(
+                  personalInventory ? '个人仓库' : '家庭仓库',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                IconButton(
+                  key: const Key('personal-inventory'),
+                  tooltip: '个人仓库',
+                  isSelected: personalInventory,
+                  icon: const Icon(Icons.person_outline),
+                  selectedIcon: const Icon(Icons.person),
+                  onPressed: () => setState(() => personalInventory = true),
+                ),
+                IconButton(
+                  key: const Key('family-inventory'),
+                  tooltip: '家庭仓库',
+                  isSelected: !personalInventory,
+                  icon: const Icon(Icons.cottage_outlined),
+                  selectedIcon: const Icon(Icons.cottage),
+                  onPressed: () => setState(() => personalInventory = false),
+                ),
+                const Spacer(),
                 if (room != null)
                   Tooltip(
                     message:

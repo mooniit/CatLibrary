@@ -43,6 +43,7 @@ class InventoryInstance {
     this.purchasedBy,
     this.source, {
     this.sourceCatId,
+    this.sourceCatOwner,
     this.sourceCatName,
     this.sourceTripId,
     this.sourceDestination,
@@ -54,6 +55,7 @@ class InventoryInstance {
     value['purchased_by'],
     value['source'],
     sourceCatId: value['source_cat_id'],
+    sourceCatOwner: value['source_cat_owner'],
     sourceCatName: value['source_cat_name'],
     sourceTripId: value['source_trip_id'],
     sourceDestination: value['source_destination'],
@@ -61,7 +63,10 @@ class InventoryInstance {
   );
   final String id, sku, source;
   final String? purchasedBy;
+  bool belongsTo(String owner) =>
+      purchasedBy == owner || sourceCatOwner == owner;
   final String? sourceCatId,
+      sourceCatOwner,
       sourceCatName,
       sourceTripId,
       sourceDestination,

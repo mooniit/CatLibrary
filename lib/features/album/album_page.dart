@@ -51,6 +51,7 @@ class _AlbumPageState extends State<AlbumPage> {
   @override
   Widget build(BuildContext context) {
     final photos = data?['photos'] as List? ?? [];
+    final hasUnlocks = photos.any((p) => p['source'] == 'test_grant');
     return Scaffold(
       appBar: AppBar(
         title: const Text('小屋相册'),
@@ -77,7 +78,7 @@ class _AlbumPageState extends State<AlbumPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '${photos.length} 条旅行回忆${offline ? ' · 离线记录' : ''}',
+                    '${photos.length} ${hasUnlocks ? '张照片' : '条旅行回忆'}${offline ? ' · 离线记录' : ''}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   if (error != null)
@@ -292,18 +293,28 @@ class PhotoDetail extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.calendar_today_outlined),
             title: Text('${date.year} 年 ${date.month} 月 ${date.day} 日'),
-            subtitle: const Text('北京时间 · 返程日期'),
+            subtitle: Text(
+              photo['source'] == 'test_grant' ? '北京时间 · 解锁日期' : '北京时间 · 返程日期',
+            ),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.person_outline),
-            title: Text('安排人：${photo['arranger_label']}'),
+            title: Text(
+              photo['source'] == 'test_grant'
+                  ? '测试解锁'
+                  : '安排人：${photo['arranger_label']}',
+            ),
           ),
           ListTile(
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.inventory_2_outlined),
             title: Text(photo['souvenir_label']),
-            subtitle: const Text('已收入家庭库存，可回小屋布置。'),
+            subtitle: Text(
+              photo['source'] == 'test_grant'
+                  ? '已收入个人仓库，可回小屋布置。'
+                  : '已收入家庭库存，可回小屋布置。',
+            ),
           ),
         ],
       ),
