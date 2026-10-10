@@ -2,12 +2,23 @@ import 'package:flutter/material.dart';
 
 import '../../core/sync/connection_panel.dart';
 import '../family/family_page.dart';
+import '../reminders/feeding_reminders.dart';
+import '../reminders/reminder_widgets.dart';
+import '../../core/notifications/feeding_notifications.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key, this.onThemeChanged, this.ownerId});
+  const SettingsPage({
+    super.key,
+    this.onThemeChanged,
+    this.ownerId,
+    this.reminderStore,
+    this.feedingNotifications,
+  });
 
   final Future<void> Function(ThemeMode)? onThemeChanged;
   final String? ownerId;
+  final ReminderStore? reminderStore;
+  final FeedingNotifications? feedingNotifications;
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -83,6 +94,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   builder: (_) => FamilyPage(ownerId: widget.ownerId!),
                 ),
               ),
+            ),
+          const SizedBox(height: 16),
+          if (widget.ownerId != null)
+            FeedingReminderSettings(
+              ownerId: widget.ownerId!,
+              store: widget.reminderStore,
+              notifications: widget.feedingNotifications,
             ),
           const SizedBox(height: 16),
           Text('联网与同步', style: Theme.of(context).textTheme.titleMedium),

@@ -195,6 +195,7 @@ class _PrototypeShellState extends State<PrototypeShell>
         index: index,
         children: [
           HomePage(
+            visible: index == 0,
             onStudy: () => select(3),
             onThemeChanged: widget.onThemeChanged,
             onRoomModeChanged: (value) {

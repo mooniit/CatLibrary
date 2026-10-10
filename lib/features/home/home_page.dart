@@ -25,6 +25,8 @@ import '../album/album_page.dart';
 import '../travel/travel_repository.dart';
 import '../../core/sync/cloud_client.dart';
 import '../../core/sync/cloud_connection.dart';
+import '../reminders/feeding_reminders.dart';
+import '../reminders/reminder_widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -39,6 +41,8 @@ class HomePage extends StatefulWidget {
     this.acknowledgeProxyNotice,
     this.shopRepository,
     this.onRoomModeChanged,
+    this.visible = true,
+    this.reminderController,
   });
   final IdentityWallet? wallet;
   final VoidCallback onStudy;
@@ -50,6 +54,8 @@ class HomePage extends StatefulWidget {
   final Future<void> Function(String day)? acknowledgeProxyNotice;
   final ShopRepository? shopRepository;
   final ValueChanged<bool>? onRoomModeChanged;
+  final bool visible;
+  final FeedingReminderController? reminderController;
   @override
   State<HomePage> createState() => HomePageState();
 }
@@ -82,12 +88,34 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool _checkingRoom = false;
   bool _roomUpdate = false;
   CloudPhase? _previousConnection;
+  FeedingReminderController? _reminders;
+  bool _ownsReminders = false;
+  bool _foreground = true;
+
+  void configureReminders() {
+    _reminders?.pause();
+    if (_ownsReminders) _reminders?.dispose();
+    final owner = widget.wallet?.ownerId;
+    _ownsReminders = widget.reminderController == null;
+    _reminders = owner == null
+        ? null
+        : widget.reminderController ??
+              FeedingReminderController(
+                ownerId: owner,
+                rpc: widget.shopRepository?.call,
+              );
+    if (_reminders?.ownerId != owner) {
+      _reminders = null;
+    }
+    _reminders?.resume();
+  }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     CloudClient.connection.addListener(connectionChanged);
+    configureReminders();
     unawaited(refreshCats());
     unawaited(loadFurniture());
     _roomPoll = Timer.periodic(
@@ -102,6 +130,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         phase == CloudPhase.online && _previousConnection != CloudPhase.online;
     _previousConnection = phase;
     if (mounted && recovered && widget.wallet != null && !_roomToolsShown) {
+      unawaited(_reminders?.refresh());
       if (!loadingCats) unawaited(refreshCats());
       if (!loadingFurniture && furnitureError != null) {
         unawaited(loadFurniture());
@@ -113,6 +142,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void didUpdateWidget(HomePage oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.wallet != widget.wallet) _latestWallet = widget.wallet;
+    if (oldWidget.wallet?.ownerId != widget.wallet?.ownerId ||
+        oldWidget.reminderController != widget.reminderController) {
+      configureReminders();
+    }
     if (oldWidget.wallet?.ownerId != widget.wallet?.ownerId) {
       scene.cats = [];
       scene.confirmedRepairing = null;
@@ -230,9 +263,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (mounted) {
+      setState(() => _foreground = state == AppLifecycleState.resumed);
+    }
     if (state == AppLifecycleState.resumed) {
+      _reminders?.resume();
       unawaited(refreshCats());
       if (!_roomToolsShown) unawaited(loadFurniture());
+    } else {
+      _reminders?.pause();
     }
   }
 
@@ -241,6 +280,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     _roomPoll?.cancel();
     CloudClient.connection.removeListener(connectionChanged);
+    _reminders?.pause();
+    if (_ownsReminders) _reminders?.dispose();
     super.dispose();
   }
 
@@ -539,7 +580,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
             CatsPage(ownerId: wallet.ownerId, onWallet: acceptWallet),
       ),
     );
-    if (mounted) await refreshCats();
+    if (mounted) {
+      await refreshCats();
+      await _reminders?.refresh();
+    }
   }
 
   Future<void> openAlbum() async {
@@ -573,10 +617,15 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
         builder: (_) => SettingsPage(
           onThemeChanged: widget.onThemeChanged,
           ownerId: widget.wallet?.ownerId,
+          reminderStore: _reminders?.store,
+          feedingNotifications: _reminders?.notifications,
         ),
       ),
     );
-    if (mounted) await refreshCats();
+    if (mounted) {
+      await refreshCats();
+      await _reminders?.refresh();
+    }
   }
 
   @override
@@ -813,6 +862,16 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
+                      if (wallet != null && _reminders != null)
+                        FeedingReminderBanner(
+                          key: ValueKey('feeding-${wallet.ownerId}'),
+                          controller: _reminders!,
+                          onOpen: openCats,
+                          visible:
+                              widget.visible &&
+                              _foreground &&
+                              (ModalRoute.of(context)?.isCurrent ?? true),
+                        ),
                       if (scene.pan.distance > 1 ||
                           scene.zoom != RoomScene.defaultZoom)
                         RoomActionButton(
