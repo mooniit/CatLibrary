@@ -19,6 +19,35 @@ void main() {
     'inventory': <dynamic>[],
     'layout': const RoomLayout([]).toJson(),
   });
+  testWidgets('artwork browsing shows only the painting, without a frame', (
+    tester,
+  ) async {
+    for (final sku in [
+      'painting-starry',
+      'painting-mona',
+      'painting-sunflowers',
+      'photo-black_short-palace',
+    ]) {
+      final p = base().products[sku]!;
+      await tester.pumpWidget(
+        MaterialApp(home: FurnitureThumbnail(product: p)),
+      );
+      await tester.pumpAndSettle();
+      final image = tester.widget<Image>(find.byType(Image));
+      final provider = (image.image as ResizeImage).imageProvider as AssetImage;
+      expect(provider.assetName, isNot(contains('frame-')));
+      expect(
+        provider.assetName,
+        contains(
+          p.kind == 'photo'
+              ? 'travel/calico-palace'
+              : 'room/painting-${p.artwork}',
+        ),
+      );
+      expect(image.fit, BoxFit.contain);
+      expect(tester.takeException(), isNull);
+    }
+  });
   test(
     'every catalog product belongs to exactly one of five aggregate categories',
     () {
@@ -106,7 +135,7 @@ void main() {
   test(
     'paintings bind their frame and artwork; fixed slots cycle without moving anchors',
     () {
-      expect(base().products.values.where((p) => p.active), hasLength(42));
+      expect(base().products.values.where((p) => p.active), hasLength(32));
       for (final product in base().products.values.where(
         (p) => p.kind == 'painting',
       )) {

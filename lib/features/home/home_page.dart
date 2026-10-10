@@ -76,6 +76,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
   bool _storeOpen = false;
   bool _roomToolsShown = false;
   bool _arranging = false;
+  String? _albumInstance;
   final _shopKey = GlobalKey<ShopPageState>();
   final _editorKey = GlobalKey<EditorPageState>();
   IdentityWallet? _latestWallet;
@@ -507,13 +508,19 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     unawaited(checkRoomUpdate());
   }
 
-  Future<void> openArrange() async {
+  Future<void> openArrange({String? initialInstanceId}) async {
     if (widget.wallet == null || scene.roomState?.familyId == null) {
-      info('布置', '请先创建或加入小屋。布置只显示家庭已拥有的家具。');
+      info('仓库', '请先创建或加入小屋。');
       return;
     }
     if (_roomToolsShown) {
-      if (_arranging || _shopKey.currentState?.busy == true) return;
+      if (_arranging) {
+        if (initialInstanceId != null) {
+          await _editorKey.currentState?.openPhotoInstance(initialInstanceId);
+        }
+        return;
+      }
+      if (_shopKey.currentState?.busy == true) return;
       closeRoomTools(_shopKey.currentState?.state);
     }
     _homePan = scene.pan;
@@ -527,6 +534,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       _storeOpen = true;
       _roomToolsShown = true;
       _arranging = true;
+      _albumInstance = initialInstanceId;
       scene.fitViewport = true;
       scene.zoom = 1;
       scene.forceLayout = true;
@@ -592,9 +600,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
       info('相册', '连接小屋后可以查看家庭旅行回忆。');
       return;
     }
-    await Navigator.push(
+    final instance = await Navigator.push<String>(
       context,
-      MaterialPageRoute<void>(
+      MaterialPageRoute<String>(
         builder: (_) => AlbumPage(
           onWallet: acceptWallet,
           repository: TravelRepository(
@@ -608,6 +616,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
     if (mounted) {
       await refreshCats();
       await loadFurniture();
+      if (mounted && instance != null) {
+        await openArrange(initialInstanceId: instance);
+      }
     }
   }
 
@@ -667,10 +678,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                     key: const Key('room-viewport'),
                     behavior: HitTestBehavior.opaque,
                     dragStartBehavior: DragStartBehavior.down,
-                    onTapUp: _roomToolsShown && !_arranging
-                        ? (event) => _shopKey.currentState?.tapPreview(
-                            event.localPosition,
-                          )
+                    onTapUp: _roomToolsShown
+                        ? (event) {
+                            if (_arranging) {
+                              _editorKey.currentState?.tapPlaced(
+                                event.localPosition,
+                              );
+                            } else {
+                              _shopKey.currentState?.tapPreview(
+                                event.localPosition,
+                              );
+                            }
+                          }
                         : null,
                     onDoubleTap: _roomToolsShown
                         ? null
@@ -768,6 +787,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                             key: _editorKey,
                             repository: _toolsRepository!,
                             scene: scene,
+                            initialInstanceId: _albumInstance,
                             onExit: () =>
                                 closeRoomTools(_editorKey.currentState?.state),
                           )
@@ -789,6 +809,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   bottom: constraints.maxHeight * 0.30,
                   child: ShopPreviewOverlay(
                     scene: scene,
+                    canEdit: () =>
+                        !_arranging ||
+                        (_editorKey.currentState?.editable ?? false),
+                    canConfirm: () =>
+                        _editorKey.currentState?.canConfirm ?? false,
+                    onConfirm: _arranging
+                        ? () => _editorKey.currentState?.confirmPreview()
+                        : null,
+                    onStow: _arranging
+                        ? () => _editorKey.currentState?.stowPreview()
+                        : null,
                     onRotate: () {
                       if (_arranging) {
                         _editorKey.currentState?.rotatePreview();
@@ -818,7 +849,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        _arranging ? '布置' : '商店',
+                        _arranging ? '仓库' : '商店',
                         key: const Key('room-mode-label'),
                       ),
                     ],
@@ -848,7 +879,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver {
                   key: const Key('persistent-home-menu'),
                   onCats: openCats,
                   onStore: openStore,
-                  onArrange: openArrange,
+                  onArrange: () => unawaited(openArrange()),
                   onAlbum: openAlbum,
                   onSettings: openSettings,
                 ),

@@ -28,7 +28,7 @@ String furnitureCategory(String kind) => switch (kind) {
   'bookshelf' || 'desk' || 'chair' => 'furniture',
   'tree' || 'bed' => 'cats',
   'rug' || 'souvenir' => 'decoration',
-  'window' || 'frame' || 'painting' => 'windows',
+  'window' || 'frame' || 'painting' || 'photo' => 'windows',
   'wall' || 'floor' => 'renovation',
   _ => throw ArgumentError.value(kind, 'kind', 'Unregistered furniture kind'),
 };
@@ -109,61 +109,11 @@ class _SurfaceIcon extends CustomPainter {
       old.color != color || old.category != category;
 }
 
-/// Artwork cards use the exact mounted frame and uncropped painting renderer.
+/// Browsing shows the uncropped artwork; its bound wood frame is room-only.
 class FurnitureThumbnail extends StatelessWidget {
   const FurnitureThumbnail({super.key, required this.product});
   final FurnitureProduct product;
   static final _thumbnails = <String, Future<ui.Image>>{};
-  static final _images = <String, Future<ui.Image>>{};
-  static Future<ui.Image> _image(String path) =>
-      _images.putIfAbsent(path, () async {
-        final bytes = await rootBundle.load(path);
-        final codec = await ui.instantiateImageCodec(
-          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
-        );
-        final frame = await codec.getNextFrame();
-        codec.dispose();
-        return frame.image;
-      });
-  static Future<ui.Image> _painting(FurnitureProduct p) async {
-    final catalog =
-        jsonDecode(await rootBundle.loadString('${p.assetRoot}catalog.json'))
-            as Map<String, dynamic>;
-    final frame = p.sprite;
-    final art = ArtworkStyle.values.byName(p.artwork!);
-    final renderer = LunarRoom(catalog, {
-      frame: await _image('${p.assetRoot}$frame.png'),
-    });
-    final item = PlacedItem(
-      'thumbnail',
-      slot: 'art-left-back',
-      artwork: p.artwork!,
-    );
-    final bounds = renderer.placedSpriteBounds(item, p, {p.theme: renderer});
-    final recorder = ui.PictureRecorder();
-    final canvas = Canvas(recorder);
-    final scale = (300 / bounds.width).clamp(0.0, 210 / bounds.height);
-    canvas.translate(
-      (320 - bounds.width * scale) / 2,
-      (230 - bounds.height * scale) / 2,
-    );
-    canvas.scale(scale);
-    canvas.translate(-bounds.left, -bounds.top);
-    renderer.renderGhost(
-      canvas,
-      item,
-      p,
-      {p.theme: renderer},
-      false,
-      {art: await _image('assets/images/${art.asset}')},
-      opacity: 1,
-    );
-    final picture = recorder.endRecording();
-    final result = await picture.toImage(320, 230);
-    picture.dispose();
-    return result;
-  }
-
   static Future<ui.Image> _souvenir(FurnitureProduct p) async {
     final catalog =
         jsonDecode(
@@ -207,14 +157,10 @@ class FurnitureThumbnail extends StatelessWidget {
           '${product.assetRoot}${product.sprite}.png',
           fit: BoxFit.contain,
         )
-      : FutureBuilder<ui.Image>(
-          future: _thumbnails.putIfAbsent(
-            '${product.theme}-${product.artwork}',
-            () => _painting(product),
-          ),
-          builder: (_, snapshot) => snapshot.hasData
-              ? RawImage(image: snapshot.data, fit: BoxFit.contain)
-              : const SizedBox.shrink(),
+      : Image.asset(
+          'assets/images/${ArtworkStyle.values.byName(product.artwork!).asset}',
+          fit: BoxFit.contain,
+          cacheWidth: 640,
         );
 }
 
@@ -331,7 +277,11 @@ class FurnitureGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (products.isEmpty) {
-      return Center(child: Text(ownedOnly ? '这里还没有已拥有的家具' : '此分类暂无商品'));
+      return Center(
+        child: ownedOnly
+            ? const Icon(Icons.inventory_2_outlined)
+            : const Text('此分类暂无商品'),
+      );
     }
     final colors = Theme.of(context).colorScheme;
     return LayoutBuilder(
@@ -383,13 +333,14 @@ class FurnitureGrid extends StatelessWidget {
                       children: [
                         Expanded(child: FurnitureThumbnail(product: p)),
                         const SizedBox(height: 4),
-                        Text(
-                          count,
-                          style: TextStyle(
-                            color: colors.onSurfaceVariant,
-                            fontSize: 10,
+                        if (!ownedOnly)
+                          Text(
+                            count,
+                            style: TextStyle(
+                              color: colors.onSurfaceVariant,
+                              fontSize: 10,
+                            ),
                           ),
-                        ),
                         SizedBox(
                           height: 19,
                           child: Row(
@@ -406,7 +357,7 @@ class FurnitureGrid extends StatelessWidget {
                                 size: 12,
                                 color: colors.primary,
                               ),
-                              if (ownedOnly ||
+                              if (!ownedOnly &&
                                   own < (p.purchaseLimit ?? 1)) ...[
                                 const SizedBox(width: 3),
                                 Text(
@@ -474,12 +425,12 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
       backgroundColor: scheme.surface,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 440),
+        constraints: const BoxConstraints(maxWidth: 320),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(14),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -501,9 +452,9 @@ class _FurnitureDetailsState extends State<FurnitureDetails> {
                 ),
                 const SizedBox(height: 12),
                 Container(
-                  height: (MediaQuery.sizeOf(context).height * .28).clamp(
+                  height: (MediaQuery.sizeOf(context).height * .19).clamp(
+                    110,
                     160,
-                    240,
                   ),
                   decoration: BoxDecoration(
                     color: scheme.surfaceContainerLow,

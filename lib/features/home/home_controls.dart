@@ -281,7 +281,7 @@ class _HomeMenuState extends State<HomeMenu>
       ('猫咪管理', Icons.pets_outlined, widget.onCats),
       ('商店', Icons.storefront_outlined, widget.onStore),
       if (widget.onArrange != null)
-        ('布置', Icons.edit_outlined, widget.onArrange!),
+        ('仓库', Icons.edit_outlined, widget.onArrange!),
       ('相册', Icons.photo_library_outlined, widget.onAlbum),
       ('设置', Icons.settings_outlined, widget.onSettings),
     ];

@@ -13,10 +13,12 @@ class EditorPage extends StatefulWidget {
     required this.repository,
     required this.scene,
     this.onExit,
+    this.initialInstanceId,
   });
   final ShopRepository repository;
   final RoomScene scene;
   final VoidCallback? onExit;
+  final String? initialInstanceId;
   @override
   State<EditorPage> createState() => EditorPageState();
 }
@@ -37,6 +39,8 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
   Offset? dragWorld;
   PlacedItem? dragItem;
   String category = 'all';
+  bool _initialSelectionHandled = false;
+  String? _requestedInstanceId;
   bool personalInventory = false;
   List<InventoryInstance> get visibleInventory =>
       state?.inventory
@@ -47,6 +51,7 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _requestedInstanceId = widget.initialInstanceId;
     unawaited(connect());
   }
 
@@ -208,7 +213,62 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
     } finally {
       if (mounted) setState(() => busy = false);
     }
+    if (mounted && editable) await selectInitialPhoto();
   }
+
+  Future<void> openPhotoInstance(String instanceId) async {
+    _requestedInstanceId = instanceId;
+    _initialSelectionHandled = false;
+    await persist();
+    await connect();
+  }
+
+  Future<void> selectInitialPhoto() async {
+    if (_initialSelectionHandled || _requestedInstanceId == null) return;
+    final instance = state!.inventory
+        .where((i) => i.id == _requestedInstanceId)
+        .firstOrNull;
+    if (instance == null) {
+      setState(() => message = "照片库存尚未核对，请重新打开相册。");
+      return;
+    }
+    _initialSelectionHandled = true;
+    if (draft!.preview != null) {
+      final replace = await showDialog<bool>(
+        context: context,
+        builder: (c) => AlertDialog(
+          title: const Text("已有单品预览"),
+          content: const Text("改为预览这张照片？当前布置草稿会保留。"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(c, false),
+              child: const Text("保留预览"),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(c, true),
+              child: const Text("预览照片"),
+            ),
+          ],
+        ),
+      );
+      if (!mounted || replace != true || !editable) return;
+    }
+    setState(() {
+      personalInventory = instance.belongsTo(repo.ownerId);
+      category = "windows";
+    });
+    select(
+      instance,
+      placed: draft!.layout.items
+          .where((i) => i.instanceId == instance.id)
+          .firstOrNull,
+    );
+  }
+
+  String? photoReplacement(PlacedItem item) => draft!.layout.items
+      .where((i) => i.slot == item.slot && i.instanceId != item.instanceId)
+      .firstOrNull
+      ?.instanceId;
 
   void setLease(Map<String, dynamic> raw) {
     leaseRemaining = DateTime.parse(
@@ -293,6 +353,12 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
     String? replace,
   }) {
     final p = state!.products[instance.sku]!;
+    final target =
+        placed ?? state!.rules.firstAvailable(draft!.layout, instance);
+    if (target == null && p.placement == 'art') {
+      setState(() => message = '已无空余挂画位置');
+      return;
+    }
     unawaited(
       change(() {
         replacing = replace;
@@ -301,14 +367,13 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
             .map((e) => e.key)
             .toList();
         draft!.preview =
-            placed ??
+            target ??
             PlacedItem(
               instance.id,
               slot: p.placement == 'ground' ? null : slots.first,
               artwork: p.artwork ?? 'starry',
             );
-        message =
-            '选中${p.label}${instance.sourceCatName == null ? '' : ' · 来自${instance.sourceCatName}的${instance.sourceDestination}旅行'}，预览尚未确认到草稿';
+        message = '';
         scene.setFurnitureFocus(draft!.preview, p, refocus: true);
       }),
     );
@@ -320,23 +385,48 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
         .where((i) => i.sku == product.sku)
         .toList();
     InventoryInstance? chosen;
-    if (options.length == 1 && product.kind != 'souvenir') {
+    if (options.length == 1) {
       chosen = options.single;
     } else {
       chosen = await showModalBottomSheet<InventoryInstance>(
         context: context,
         showDragHandle: true,
         builder: (c) => SafeArea(
-          child: ListView(
+          child: GridView.count(
             shrinkWrap: true,
+            crossAxisCount: 4,
+            padding: const EdgeInsets.all(16),
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
             children: [
               for (final i in options)
-                ListTile(
-                  title: Text(product.label),
-                  subtitle: Text(
-                    '${i.source == 'test_grant' ? '测试发放 · ${i.belongsTo(repo.ownerId) ? '个人仓库' : '家庭仓库'}\n' : ''}${i.sourceCatName == null ? '' : '${i.sourceCatName} · ${i.sourceDestination}\n'}${draft!.layout.items.any((p) => p.instanceId == i.id) ? '已摆放 · ${i.id.substring(0, 8)}' : '库存 · ${i.id.substring(0, 8)}'}',
+                Tooltip(
+                  message:
+                      '${product.label} · ${i.sourceCatName ?? ''} · ${i.id.substring(0, 8)}',
+                  child: InkWell(
+                    onTap: () => Navigator.pop(c, i),
+                    borderRadius: BorderRadius.circular(12),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: FurnitureThumbnail(product: product),
+                        ),
+                        if (draft!.layout.items.any(
+                          (p) => p.instanceId == i.id,
+                        ))
+                          const Positioned(
+                            right: 2,
+                            bottom: 2,
+                            child: Icon(
+                              Icons.check_circle_outline_rounded,
+                              size: 16,
+                            ),
+                          ),
+                      ],
+                    ),
                   ),
-                  onTap: () => Navigator.pop(c, i),
                 ),
             ],
           ),
@@ -349,49 +439,6 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
         placed: draft!.layout.items
             .where((p) => p.instanceId == chosen!.id)
             .firstOrNull,
-      );
-    }
-  }
-
-  Future<void> chooseReplacement(PlacedItem original) async {
-    final oldInstance = state!.inventory.firstWhere(
-      (i) => i.id == original.instanceId,
-    );
-    final oldProduct = state!.products[oldInstance.sku]!;
-    final options = visibleInventory
-        .where(
-          (i) =>
-              i.id != original.instanceId &&
-              state!.products[i.sku]?.kind == oldProduct.kind &&
-              !draft!.layout.items.any((p) => p.instanceId == i.id),
-        )
-        .toList();
-    final chosen = await showModalBottomSheet<InventoryInstance>(
-      context: context,
-      showDragHandle: true,
-      builder: (c) => SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            const ListTile(title: Text('选择库存中的另一款')),
-            if (options.isEmpty) const ListTile(title: Text('暂无可用于换款的库存')),
-            for (final i in options)
-              ListTile(
-                title: Text(state!.products[i.sku]!.label),
-                onTap: () => Navigator.pop(c, i),
-              ),
-          ],
-        ),
-      ),
-    );
-    if (chosen != null && mounted) {
-      select(
-        chosen,
-        placed: original.copy(
-          instanceId: chosen.id,
-          artwork: state!.products[chosen.sku]!.artwork,
-        ),
-        replace: original.instanceId,
       );
     }
   }
@@ -444,11 +491,23 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
             .firstWhere((i) => i.id == item.instanceId)
             .sku]!;
     unawaited(
-      change(
-        () => draft!.preview = p.placement == 'ground'
-            ? item.copy(facing: item.facing == 'x' ? 'y' : 'x')
-            : item.copy(slot: nextMount(state!.rules, p, item.slot)),
-      ),
+      change(() {
+        if (p.placement == 'ground') {
+          draft!.preview = item.copy(facing: item.facing == 'x' ? 'y' : 'x');
+        } else {
+          var next = item.slot;
+          for (var n = 0; n < state!.rules.slots.length; n++) {
+            next = nextMount(state!.rules, p, next);
+            if (!draft!.layout.items.any(
+              (i) => i.slot == next && i.instanceId != item.instanceId,
+            )) {
+              draft!.preview = item.copy(slot: next);
+              break;
+            }
+          }
+        }
+        message = '';
+      }),
     );
   }
 
@@ -458,6 +517,43 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
       change(() {
         draft!.cancelPreview();
         replacing = null;
+      }),
+    );
+  }
+
+  void tapPlaced(Offset point) {
+    if (!editable || !scene.geometryReady) return;
+    final item = scene.hitPlaced(point, draft!.layout);
+    if (item != null) {
+      final instance = state!.inventory.firstWhere(
+        (i) => i.id == item.instanceId,
+      );
+      select(instance, placed: item);
+    }
+  }
+
+  bool get canConfirm =>
+      editable &&
+      draft?.preview != null &&
+      state!.rules.validate(draft!.candidate(replacing: replacing)).isEmpty;
+  void confirmPreview() {
+    if (!canConfirm) return;
+    unawaited(
+      change(() {
+        draft!.confirm(state!.rules, replacing: replacing);
+        replacing = null;
+        message = '';
+      }),
+    );
+  }
+
+  void stowPreview() {
+    if (!editable || draft?.preview == null) return;
+    unawaited(
+      change(() {
+        draft!.stow(draft!.preview!.instanceId);
+        replacing = null;
+        message = '';
       }),
     );
   }
@@ -622,7 +718,13 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                     selected: category,
                     onChanged: (v) => setState(() => category = v),
                   ),
-                  if (message != '正在编辑 · 单品确认只加入草稿')
+                  if (!busy &&
+                      message.isNotEmpty &&
+                      (paused ||
+                          message == '已无空余挂画位置' ||
+                          message.contains('未能') ||
+                          message.contains('未写入') ||
+                          message.contains('请重试')))
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -662,45 +764,6 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
                           color: Theme.of(context).colorScheme.error,
                         ),
                       ),
-                    Wrap(
-                      alignment: WrapAlignment.center,
-                      children: [
-                        FurnitureTool(
-                          label: '收起',
-                          icon: Icons.inventory_2_outlined,
-                          onPressed: editable
-                              ? () => change(() {
-                                  draft!.stow(replacing ?? current.instanceId);
-                                  replacing = null;
-                                })
-                              : null,
-                        ),
-                        if (draft!.layout.items.any(
-                          (i) => i.instanceId == current.instanceId,
-                        ))
-                          FurnitureTool(
-                            label: '换款',
-                            icon: Icons.swap_horiz_rounded,
-                            onPressed: editable
-                                ? () => chooseReplacement(current)
-                                : null,
-                          ),
-                        FurnitureTool(
-                          label: '确认',
-                          icon: Icons.check_rounded,
-                          onPressed: editable && errors.isEmpty
-                              ? () => change(() {
-                                  draft!.confirm(
-                                    room!.rules,
-                                    replacing: replacing,
-                                  );
-                                  replacing = null;
-                                  message = '已确认到草稿，尚未保存到家庭';
-                                })
-                              : null,
-                        ),
-                      ],
-                    ),
                   ],
                 ],
               ),
@@ -729,10 +792,6 @@ class EditorPageState extends State<EditorPage> with WidgetsBindingObserver {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  personalInventory ? '个人仓库' : '家庭仓库',
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
                 IconButton(
                   key: const Key('personal-inventory'),
                   tooltip: '个人仓库',

@@ -147,4 +147,49 @@ void main() {
       expect(inventory.length, 4);
     },
   );
+
+  test(
+    'new ground instance starts in a free cell without duplicating stock',
+    () {
+      final rules = PlacementRules(products, inventory);
+      final target = rules.firstAvailable(
+        const RoomLayout([PlacedItem('c1')]),
+        inventory[1],
+      );
+      expect(target!.gx, 1);
+      expect(
+        rules.validate(RoomLayout([const PlacedItem('c1'), target])),
+        isEmpty,
+      );
+    },
+  );
+  test('art chooses four free mounts in order and refuses a full wall', () {
+    final art = FurnitureProduct.fromJson({
+      'sku': 'art',
+      'label': '画',
+      'theme': 'wood',
+      'kind': 'painting',
+      'placement': 'art',
+      'geometry': {'artwork': 'starry'},
+    });
+    final stock = List.generate(
+      5,
+      (i) => InventoryInstance('a$i', 'art', 'A', 'purchase'),
+    );
+    final rules = PlacementRules({'art': art}, stock);
+    var layout = const RoomLayout([]);
+    const expected = [
+      'art-left-back',
+      'art-left-front',
+      'art-right-back',
+      'art-right-front',
+    ];
+    for (var i = 0; i < 4; i++) {
+      final item = rules.firstAvailable(layout, stock[i])!;
+      expect(item.slot, expected[i]);
+      layout = RoomLayout([...layout.items, item]);
+    }
+    expect(rules.firstAvailable(layout, stock[4]), isNull);
+    expect(rules.firstAvailable(layout, stock[0])!.slot, expected[0]);
+  });
 }

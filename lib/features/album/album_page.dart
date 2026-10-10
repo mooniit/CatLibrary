@@ -125,12 +125,14 @@ class _AlbumPageState extends State<AlbumPage> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     key: ValueKey('photo-${photo['id']}'),
-                    onTap: () => Navigator.push(
-                      c,
-                      MaterialPageRoute<void>(
-                        builder: (_) => PhotoDetail(photo: photo),
-                      ),
-                    ),
+                    onTap: () async {
+                      await Navigator.push<void>(
+                        c,
+                        MaterialPageRoute(
+                          builder: (_) => PhotoDetail(photo: photo),
+                        ),
+                      );
+                    },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -312,8 +314,8 @@ class PhotoDetail extends StatelessWidget {
             title: Text(photo['souvenir_label']),
             subtitle: Text(
               photo['source'] == 'test_grant'
-                  ? '已收入个人仓库，可回小屋布置。'
-                  : '已收入家庭库存，可回小屋布置。',
+                  ? '已收入个人仓库，可回小屋仓库查看。'
+                  : '已收入家庭库存，可回小屋仓库查看。',
             ),
           ),
         ],

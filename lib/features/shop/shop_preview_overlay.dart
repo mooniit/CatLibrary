@@ -9,10 +9,16 @@ class ShopPreviewOverlay extends StatelessWidget {
     required this.onRotate,
     required this.onCancel,
     this.enabled = true,
+    this.onConfirm,
+    this.onStow,
+    this.canEdit,
+    this.canConfirm,
   });
   final RoomScene scene;
   final VoidCallback onRotate, onCancel;
   final bool enabled;
+  final VoidCallback? onConfirm, onStow;
+  final bool Function()? canEdit, canConfirm;
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<int>(
@@ -34,7 +40,12 @@ class ShopPreviewOverlay extends StatelessWidget {
           top: top.clamp(56, (box.maxHeight - 48).clamp(56, double.infinity)),
           child: IconButton(
             tooltip: label,
-            onPressed: enabled ? action : null,
+            onPressed:
+                enabled &&
+                    (canEdit?.call() ?? true) &&
+                    (label != '确认摆放' || (canConfirm?.call() ?? true))
+                ? action
+                : null,
             icon: SizedBox(
               width: 48,
               height: 48,
@@ -87,6 +98,24 @@ class ShopPreviewOverlay extends StatelessWidget {
               Alignment.bottomLeft,
               onCancel,
             ),
+            if (onConfirm != null)
+              handle(
+                '确认摆放',
+                Icons.check_rounded,
+                bounds.right - 8,
+                bounds.bottom - 8,
+                Alignment.topLeft,
+                onConfirm!,
+              ),
+            if (onStow != null)
+              handle(
+                '收入仓库',
+                Icons.inventory_2_outlined,
+                bounds.left - 40,
+                bounds.top - 40,
+                Alignment.bottomRight,
+                onStow!,
+              ),
           ],
         );
       },

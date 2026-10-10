@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'room_furniture.dart';
 
 class FurnitureProduct {
   FurnitureProduct.fromJson(Map<String, dynamic> value)
@@ -154,6 +155,37 @@ class PlacementRules {
   final List<InventoryInstance> inventory;
   final Map<String, int> categoryLimits;
   final Map<String, String> slots;
+  PlacedItem? firstAvailable(RoomLayout layout, InventoryInstance instance) {
+    final product = products[instance.sku]!;
+    final existing = layout.items
+        .where((i) => i.instanceId == instance.id)
+        .firstOrNull;
+    if (existing != null) return existing;
+    if (product.placement == 'ground') {
+      for (var y = 0; y < 8; y++) {
+        for (var x = 0; x < 8; x++) {
+          final item = PlacedItem(instance.id, gx: x, gy: y);
+          if (validate(RoomLayout([...layout.items, item])).isEmpty) {
+            return item;
+          }
+        }
+      }
+      return null;
+    }
+    for (final slot in slots.entries.where(
+      (s) => s.value == product.placement,
+    )) {
+      if (!layout.items.any((i) => i.slot == slot.key)) {
+        return PlacedItem(
+          instance.id,
+          slot: slot.key,
+          artwork: product.artwork ?? 'starry',
+        );
+      }
+    }
+    return null;
+  }
+
   List<String> validate(RoomLayout layout) {
     final errors = <String>[],
         ids = <String>{},
@@ -198,13 +230,7 @@ class PlacementRules {
         }
         if (product.placement == 'art' &&
             ((product.artwork != null && item.artwork != product.artwork) ||
-                ![
-                  'starry',
-                  'mona',
-                  'scream',
-                  'pearl',
-                  'sunflowers',
-                ].contains(item.artwork))) {
+                !ArtworkStyle.values.any((a) => a.name == item.artwork))) {
           errors.add('画作无效');
         }
         if (item.gx != 0 || item.gy != 0 || item.facing != 'x') {

@@ -103,7 +103,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
     expect(find.byTooltip('关闭功能菜单'), findsOneWidget);
-    final labels = ['猫咪管理', '商店', '布置', '相册', '设置'];
+    final labels = ['猫咪管理', '商店', '仓库', '相册', '设置'];
     for (var i = 0; i < labels.length; i++) {
       expect(find.text(labels[i]), findsOneWidget);
       if (i > 0) {

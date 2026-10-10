@@ -129,6 +129,32 @@ class RoomScene extends FlameGame {
         : ghostBounds!.contains(point);
   }
 
+  PlacedItem? hitPlaced(Offset point, RoomLayout layout) {
+    if (!geometryReady || roomState == null) return null;
+    final state = roomState!;
+    final byId = {for (final i in state.inventory) i.id: i};
+    FurnitureProduct? product(PlacedItem item) =>
+        state.products[byId[item.instanceId]?.sku];
+    final ground = _lunar!.sortPlaced(
+      layout.items.where((i) => product(i)?.placement == 'ground').toList(),
+      state.products,
+      state.inventory,
+    );
+    for (final item in ground.reversed) {
+      if (hitsGround(point, item, product(item)!)) return item;
+    }
+    for (final kind in ['art', 'window', 'rug']) {
+      for (final item in layout.items.reversed.where(
+        (i) => product(i)?.placement == kind,
+      )) {
+        if (placedViewportBounds(item, product(item)!).contains(point)) {
+          return item;
+        }
+      }
+    }
+    return null;
+  }
+
   bool showGrid = false;
   bool _geometryReady = false;
   bool get geometryReady => _geometryReady;
@@ -140,7 +166,17 @@ class RoomScene extends FlameGame {
   @override
   Future<void> onLoad() async {
     for (final style in ArtworkStyle.values) {
-      _artworks[style] = await images.load(style.asset);
+      if (style.travelAsset == null) {
+        _artworks[style] = await images.load(style.asset);
+      } else {
+        final bytes = await rootBundle.load('assets/images/${style.asset}');
+        final codec = await ui.instantiateImageCodec(
+          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
+          targetWidth: 640,
+        );
+        _artworks[style] = (await codec.getNextFrame()).image;
+        codec.dispose();
+      }
     }
     _lunar = await LunarRoom.load(images.load);
     for (final value
@@ -243,6 +279,7 @@ class RoomScene extends FlameGame {
         _artworks,
         selected: selectedInstance,
         worn: confirmedRepairing == true,
+        beforeGround: showGrid ? _drawPlacementGrid : null,
       );
     } else {
       _lunar!.render(
@@ -266,53 +303,53 @@ class RoomScene extends FlameGame {
         _artworks,
       );
     }
-    if (showGrid) {
-      final line = Paint()
-        ..color = const Color(0x906080a0)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2;
-      for (var i = 0; i <= 8; i++) {
-        canvas.drawLine(
-          _lunar!.project(i / 8, 0),
-          _lunar!.project(i / 8, 1),
-          line,
+    canvas.restore();
+  }
+
+  void _drawPlacementGrid(Canvas canvas) {
+    final state = roomState;
+    final line = Paint()
+      ..color = const Color(0x906080a0)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    for (var i = 0; i <= 8; i++) {
+      canvas.drawLine(
+        _lunar!.project(i / 8, 0),
+        _lunar!.project(i / 8, 1),
+        line,
+      );
+      canvas.drawLine(
+        _lunar!.project(0, i / 8),
+        _lunar!.project(1, i / 8),
+        line,
+      );
+    }
+    final layout = draftLayout ?? state?.layout;
+    final item = layout?.items
+        .where((i) => i.instanceId == selectedInstance)
+        .firstOrNull;
+    final inventory = state?.inventory
+        .where((i) => i.id == selectedInstance)
+        .firstOrNull;
+    final product = state?.products[inventory?.sku];
+    if (item != null && product?.placement == 'ground') {
+      final valid = state!.rules.validate(layout!).isEmpty;
+      for (final cell in product!.cells(item.facing)) {
+        final x = (cell.$1 + item.gx) / 8, y = (cell.$2 + item.gy) / 8;
+        final path = Path()
+          ..addPolygon([
+            _lunar!.project(x, y),
+            _lunar!.project(x + .125, y),
+            _lunar!.project(x + .125, y + .125),
+            _lunar!.project(x, y + .125),
+          ], true);
+        canvas.drawPath(
+          path,
+          Paint()
+            ..color = valid ? const Color(0x90698eaf) : const Color(0x90bc5960),
         );
-        canvas.drawLine(
-          _lunar!.project(0, i / 8),
-          _lunar!.project(1, i / 8),
-          line,
-        );
-      }
-      final layout = draftLayout ?? state?.layout;
-      final item = layout?.items
-          .where((i) => i.instanceId == selectedInstance)
-          .firstOrNull;
-      final inventory = state?.inventory
-          .where((i) => i.id == selectedInstance)
-          .firstOrNull;
-      final product = state?.products[inventory?.sku];
-      if (item != null && product?.placement == 'ground') {
-        final valid = state!.rules.validate(layout!).isEmpty;
-        for (final cell in product!.cells(item.facing)) {
-          final x = (cell.$1 + item.gx) / 8, y = (cell.$2 + item.gy) / 8;
-          final path = Path()
-            ..addPolygon([
-              _lunar!.project(x, y),
-              _lunar!.project(x + .125, y),
-              _lunar!.project(x + .125, y + .125),
-              _lunar!.project(x, y + .125),
-            ], true);
-          canvas.drawPath(
-            path,
-            Paint()
-              ..color = valid
-                  ? const Color(0x90698eaf)
-                  : const Color(0x90bc5960),
-          );
-          canvas.drawPath(path, line);
-        }
+        canvas.drawPath(path, line);
       }
     }
-    canvas.restore();
   }
 }

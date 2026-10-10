@@ -238,6 +238,7 @@ class LunarRoom {
     Map<ArtworkStyle, ui.Image> artworks, {
     String? selected,
     bool worn = false,
+    void Function(ui.Canvas)? beforeGround,
   }) {
     final byId = {for (final i in inventory) i.id: i};
     FurnitureProduct? product(PlacedItem i) =>
@@ -313,11 +314,16 @@ class LunarRoom {
         pairedDefaults: false,
       );
     }
+    beforeGround?.call(canvas);
     final floor = layout.items
         .where((i) => product(i)?.placement == 'ground')
         .toList();
     for (final item in sortPlaced(floor, products, inventory)) {
       final p = product(item)!;
+      if (selected == item.instanceId) {
+        renderGhost(canvas, item, p, themes, night, artworks);
+        continue;
+      }
       if (p.kind == 'souvenir') {
         if (selected != null && selected != item.instanceId) {
           canvas.saveLayer(

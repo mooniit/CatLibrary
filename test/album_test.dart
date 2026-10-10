@@ -7,6 +7,31 @@ import 'package:cat_library_demo/features/travel/travel_repository.dart';
 import 'package:cat_library_demo/features/travel/travel_sheet.dart';
 
 void main() {
+  testWidgets('photo detail has no placement or purchase controls', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: PhotoDetail(
+          photo: {
+            'id': 'photo',
+            'source': 'test_grant',
+            'appearance': 'black_short',
+            'destination': 'palace',
+            'destination_label': '故宫',
+            'cat_name': '三花猫',
+            'taken_at': '2026-10-10T01:00:00Z',
+            'arranger_label': '测试解锁',
+            'souvenir_label': '宫殿',
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('place-album-photo')), findsNothing);
+    expect(find.text('摆放'), findsNothing);
+    expect(find.byType(PhotoDetail), findsOneWidget);
+  });
   testWidgets(
     'test unlock detail never claims a real return date or travel arranger',
     (tester) async {
@@ -33,7 +58,7 @@ void main() {
       expect(find.text('北京时间 · 解锁日期'), findsOneWidget);
       expect(find.text('测试解锁'), findsOneWidget);
       expect(find.text('安排人：测试解锁'), findsNothing);
-      expect(find.text('已收入个人仓库，可回小屋布置。'), findsOneWidget);
+      expect(find.text('已收入个人仓库，可回小屋仓库查看。'), findsOneWidget);
     },
   );
 
