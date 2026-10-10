@@ -100,11 +100,14 @@ void main() {
       expect(find.text('今日还可获得 98 喵喵币'), findsOneWidget);
       await tester.tap(find.byKey(const Key('study-more')));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('查看自习记录'));
-      await tester.pumpAndSettle();
-      expect(find.text('暂无满10分钟的自习记录'), findsOneWidget);
-      expect(find.text('+10 喵喵币'), findsNothing);
-      expect(find.text('+12 喵喵币'), findsNothing);
+      expect(find.text('查看自习记录'), findsNothing);
+      expect(find.text('编辑常用计时器'), findsOneWidget);
+      final savedRecords = await tester.runAsync(() => db.sessions('a'));
+      expect(savedRecords!.length, 2);
+      expect(
+        savedRecords.every((r) => r.state == StudySessionState.synced),
+        isTrue,
+      );
       await tester.pumpWidget(const SizedBox());
       await settle();
     },

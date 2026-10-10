@@ -138,7 +138,7 @@ class _StudyPageState extends State<StudyPage> with WidgetsBindingObserver {
       await repository.recover(durableNative: durable);
       records = await repository.records();
       presets = await db.presets(widget.ownerId);
-      if (interrupted) notice = '上次计时已恢复到最后可靠的位置，请在自习记录中核对。';
+      if (interrupted) notice = '上次计时已恢复到最后可靠的位置，请在任务的学习记录中核对。';
       final cached = await db.accountSnapshot(widget.ownerId);
       if (cached != null) snapshot = StudySnapshot.fromJson(cached);
       error = null;
@@ -411,25 +411,6 @@ class _StudyPageState extends State<StudyPage> with WidgetsBindingObserver {
     if (mounted) setState(() {});
   }
 
-  Future<void> openHistory() async {
-    records = await repository.records();
-    if (!mounted) return;
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (_) => StudyHistoryPage(
-          records: records,
-          onConfirmRecovered: (record) async {
-            await repository.confirm(record.id);
-            await sync();
-            records = await repository.records();
-          },
-        ),
-      ),
-    );
-    records = await repository.records();
-    if (mounted) setState(() {});
-  }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (loading) return;
@@ -499,11 +480,9 @@ class _StudyPageState extends State<StudyPage> with WidgetsBindingObserver {
                 icon: const Icon(Icons.more_horiz),
                 onSelected: (value) {
                   if (value == 'edit') unawaited(openEdit());
-                  if (value == 'history') unawaited(openHistory());
                 },
                 itemBuilder: (_) => const [
                   PopupMenuItem(value: 'edit', child: Text('编辑常用计时器')),
-                  PopupMenuItem(value: 'history', child: Text('查看自习记录')),
                 ],
               ),
             ],

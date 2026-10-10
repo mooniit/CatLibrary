@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'task_repository.dart';
 import 'task_session.dart';
+import '../study/study_session.dart';
+import '../study/study_cloud.dart';
+import '../identity/identity_repository.dart';
 
 String taskDay(DateTime utc) => utc
     .toUtc()
@@ -13,8 +16,10 @@ String taskDay(DateTime utc) => utc
 Map<String, Duration> taskHeatmap(
   String ownerId,
   List<TaskSession> local,
-  List<Map<String, dynamic>> feed,
-) {
+  List<Map<String, dynamic>> feed, {
+  List<StudySession> studyLocal = const [],
+  List<Map<String, dynamic>> studyFeed = const [],
+}) {
   final intervals = <String, (DateTime, DateTime)>{};
   for (final row in local) {
     if (row.ownerId == ownerId && row.state == TaskSessionState.synced) {
@@ -33,6 +38,26 @@ Map<String, Duration> taskHeatmap(
     }
   }
   final days = <String, Duration>{};
+  for (final row in studyLocal) {
+    if (row.ownerId == ownerId &&
+        [
+          StudySessionState.queued,
+          StudySessionState.synced,
+        ].contains(row.state)) {
+      intervals['study/${row.id}'] = (row.startedAt, row.recordedUntil);
+    }
+  }
+  for (final row in studyFeed) {
+    if (row['owner_id'] != ownerId || row['confirmed'] != true) continue;
+    final a = DateTime.tryParse(row['started_at'] as String? ?? ''),
+        b = DateTime.tryParse(row['recorded_until'] as String? ?? '');
+    if (a != null &&
+        b != null &&
+        !b.isBefore(a) &&
+        b.difference(a) <= const Duration(hours: 6)) {
+      intervals['study/${row['id']}'] = (a.toUtc(), b.toUtc());
+    }
+  }
   for (final (a, b) in intervals.values) {
     var cursor = a;
     while (cursor.isBefore(b)) {
@@ -57,10 +82,16 @@ class TaskHistoryPage extends StatefulWidget {
     required this.repository,
     required this.cloud,
     required this.onSync,
+    this.onWallet,
+    this.loadStudyFeed,
+    this.studyCloud,
   });
   final TaskRepository repository;
   final TaskCloud cloud;
   final Future<void> Function() onSync;
+  final ValueChanged<IdentityWallet>? onWallet;
+  final Future<List<Map<String, dynamic>>> Function()? loadStudyFeed;
+  final StudyCloud? studyCloud;
   @override
   State<TaskHistoryPage> createState() => _TaskHistoryPageState();
 }
@@ -68,6 +99,15 @@ class TaskHistoryPage extends StatefulWidget {
 class _TaskHistoryPageState extends State<TaskHistoryPage> {
   List<TaskSession> records = [];
   List<Map<String, dynamic>> feed = [];
+  List<StudySession> studyRecords = [];
+  List<Map<String, dynamic>> studyFeed = [];
+  late final studyCloud =
+      widget.studyCloud ??
+      StudyCloud(
+        database: widget.repository.database,
+        ownerId: widget.repository.ownerId,
+        onSnapshot: (s) => widget.onWallet?.call(s.wallet),
+      );
   String selected = taskDay(DateTime.now());
   bool loading = true, busy = false, verified = false;
   String? notice;
@@ -80,6 +120,12 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
   Future<void> load() async {
     try {
       records = await widget.repository.records();
+      studyRecords = await widget.repository.database.sessions(
+        widget.repository.ownerId,
+      );
+      studyFeed = await widget.repository.database.cachedStudyFeed(
+        widget.repository.ownerId,
+      );
       feed = await widget.repository.database.cachedTaskFeed(
         widget.repository.ownerId,
       );
@@ -109,6 +155,21 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
       );
       records = await widget.repository.records();
       feed = next;
+      for (final row in await widget.repository.database.sessions(
+        widget.repository.ownerId,
+      )) {
+        if (row.state == StudySessionState.queued) {
+          await studyCloud.submit(row);
+          await widget.repository.database.acknowledge(
+            widget.repository.ownerId,
+            row.id,
+          );
+        }
+      }
+      studyFeed = await (widget.loadStudyFeed?.call() ?? studyCloud.history());
+      studyRecords = await widget.repository.database.sessions(
+        widget.repository.ownerId,
+      );
       verified = true;
       notice = null;
     } catch (_) {
@@ -149,10 +210,52 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
     }
   }
 
+  Future<void> confirmStudy(StudySession row) async {
+    if (busy) return;
+    final yes = await showDialog<bool>(
+      context: context,
+      builder: (c) => AlertDialog(
+        title: const Text('确认中断前的自习计时？'),
+        content: Text('${row.elapsed.inMinutes} 分钟，仅保存的时长参与奖励核对。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(c, false),
+            child: const Text('暂不确认'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(c, true),
+            child: const Text('确认记录'),
+          ),
+        ],
+      ),
+    );
+    if (yes != true || !mounted) return;
+    try {
+      await widget.repository.database.confirm(
+        widget.repository.ownerId,
+        row.id,
+        DateTime.now(),
+      );
+      studyRecords = await widget.repository.database.sessions(
+        widget.repository.ownerId,
+      );
+      if (mounted) setState(() {});
+      await refresh();
+    } catch (_) {
+      if (mounted) setState(() => notice = '确认尚未保存，请重试。');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final days = taskHeatmap(widget.repository.ownerId, records, feed);
+    final days = taskHeatmap(
+      widget.repository.ownerId,
+      records,
+      feed,
+      studyLocal: studyRecords,
+      studyFeed: studyFeed,
+    );
     final pending = records
         .where(
           (r) =>
@@ -160,7 +263,24 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
               r.state == TaskSessionState.ready,
         )
         .toList();
-    final ownFeed = feed
+    final confirmedStudy = <String, Map<String, dynamic>>{
+      for (final s in studyRecords.where(
+        (s) => [
+          StudySessionState.queued,
+          StudySessionState.synced,
+        ].contains(s.state),
+      ))
+        s.id: {
+          'id': s.id,
+          'owner_id': s.ownerId,
+          'activity': 'study',
+          'started_at': s.startedAt.toIso8601String(),
+          'recorded_until': s.recordedUntil.toIso8601String(),
+        },
+      for (final s in studyFeed.where((s) => s['confirmed'] == true))
+        s['id'] as String: s,
+    };
+    final ownFeed = [...feed, ...confirmedStudy.values]
         .where(
           (r) =>
               r['owner_id'] == widget.repository.ownerId &&
@@ -202,7 +322,19 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                       color: scheme.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 20),
+                  for (final row in studyRecords.where(
+                    (s) => s.state == StudySessionState.pendingConfirmation,
+                  ))
+                    ListTile(
+                      leading: const Icon(Icons.menu_book_outlined),
+                      title: Text('自习 · ${row.elapsed.inMinutes} 分钟'),
+                      trailing: IconButton(
+                        tooltip: '核对记录',
+                        icon: const Icon(Icons.check_rounded),
+                        onPressed: busy ? null : () => confirmStudy(row),
+                      ),
+                    ),
                   LayoutBuilder(
                     builder: (context, box) {
                       const columns = 14;
@@ -407,10 +539,16 @@ class _TaskHistoryPageState extends State<TaskHistoryPage> {
                       leading: Icon(
                         row['activity'] == 'language'
                             ? Icons.translate_rounded
+                            : row['activity'] == 'study'
+                            ? Icons.menu_book_outlined
                             : Icons.directions_run_rounded,
                       ),
                       title: Text(
-                        row['activity'] == 'language' ? '外语学习' : '锻炼',
+                        row['activity'] == 'language'
+                            ? '外语学习'
+                            : row['activity'] == 'study'
+                            ? '自习'
+                            : '锻炼',
                       ),
                       subtitle: Text(
                         '${DateTime.parse(row['recorded_until'] as String).difference(DateTime.parse(row['started_at'] as String)).inMinutes} 分钟',

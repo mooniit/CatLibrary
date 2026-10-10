@@ -33,7 +33,7 @@ class AppDatabase extends GeneratedDatabase {
     : super(executor ?? driftDatabase(name: 'cat_library'));
 
   @override
-  int get schemaVersion => 9;
+  int get schemaVersion => 10;
   @override
   Iterable<TableInfo<Table, Object?>> get allTables => const [];
   @override
@@ -70,6 +70,7 @@ class AppDatabase extends GeneratedDatabase {
         );
       }
       if (from < 9) await _createTaskFeed();
+      if (from < 10) await _createStudyFeed();
     },
     onCreate: (_) async {
       await _createCache();
@@ -90,6 +91,7 @@ class AppDatabase extends GeneratedDatabase {
       await _createPresets();
       await _createTasks();
       await _createTaskFeed();
+      await _createStudyFeed();
       await _createExchanges();
       await _createWeekly();
       await _createFurniture();
@@ -98,6 +100,28 @@ class AppDatabase extends GeneratedDatabase {
 
   Future<void> _createCache() => customStatement(
     'CREATE TABLE account_cache (owner_id TEXT PRIMARY KEY, payload TEXT NOT NULL)',
+  );
+
+  Future<void> _createStudyFeed() => customStatement(
+    'CREATE TABLE study_feed_cache (owner_id TEXT PRIMARY KEY, payload TEXT NOT NULL)',
+  );
+  Future<List<Map<String, dynamic>>> cachedStudyFeed(String ownerId) async {
+    final rows = await customSelect(
+      'SELECT payload FROM study_feed_cache WHERE owner_id=?',
+      variables: [Variable(ownerId)],
+    ).get();
+    if (rows.isEmpty) return [];
+    return (jsonDecode(rows.single.read<String>('payload')) as List)
+        .map((r) => Map<String, dynamic>.from(r))
+        .toList();
+  }
+
+  Future<void> cacheStudyFeed(
+    String ownerId,
+    List<Map<String, dynamic>> rows,
+  ) => customStatement(
+    'INSERT INTO study_feed_cache VALUES (?,?) ON CONFLICT(owner_id) DO UPDATE SET payload=excluded.payload',
+    [ownerId, jsonEncode(rows)],
   );
 
   Future<void> _createFurniture() =>

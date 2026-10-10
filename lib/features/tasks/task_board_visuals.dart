@@ -9,7 +9,7 @@ class TaskBoardHeading extends StatelessWidget {
     final now = DateTime.now().toUtc().add(const Duration(hours: 8));
     const weekdays = ['一', '二', '三', '四', '五', '六', '日'];
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 28),
+      padding: const EdgeInsets.only(top: 4, bottom: 12),
       child: Row(
         children: [
           Expanded(
@@ -74,21 +74,12 @@ class TaskActivityCard extends StatelessWidget {
       child: CustomPaint(
         painter: _BookmarkPainter(paper, scheme.primary.withValues(alpha: .45)),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 22, 22, 32),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text(
-                    language ? '01' : '02',
-                    style: TextStyle(
-                      fontSize: 11,
-                      letterSpacing: 2,
-                      color: scheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
                   Icon(
                     language
                         ? Icons.translate_rounded
@@ -104,7 +95,7 @@ class TaskActivityCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -143,7 +134,7 @@ class TaskActivityCard extends StatelessWidget {
                 ],
               ),
               if (issued != null) ...[
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
                 Row(
                   children: [
                     for (var i = 0; i < 12; i++)

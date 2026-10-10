@@ -13,6 +13,8 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.PowerManager
+import android.os.SystemClock
+import android.widget.RemoteViews
 
 /** User-visible stopwatch with durable native checkpoints; never awards currency. */
 class StudyTimerService : Service() {
@@ -68,16 +70,21 @@ class StudyTimerService : Service() {
         val displayWhen = if (countdown) System.currentTimeMillis() + remaining
             else startedAt - offset
         builder.setSmallIcon(R.drawable.ic_study_timer)
-            .setContentTitle(intent?.getStringExtra("title") ?: if (countdown) "自习倒计时中" else "自习计时中")
-            .setContentText("点击返回应用")
             .setCategory(Notification.CATEGORY_PROGRESS)
             .setVisibility(Notification.VISIBILITY_PUBLIC)
             .setWhen(displayWhen)
-            .setShowWhen(true)
-            .setUsesChronometer(true)
+            .setShowWhen(false)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(open)
+        val content = RemoteViews(packageName, R.layout.timer_notification)
+        content.setChronometer(R.id.timer_time,
+            SystemClock.elapsedRealtime() + displayWhen - System.currentTimeMillis(), null, true)
+        if (Build.VERSION.SDK_INT >= 24) content.setChronometerCountDown(R.id.timer_time, countdown)
+        content.setOnClickPendingIntent(R.id.timer_notification, open)
+        builder.setCustomContentView(content).setCustomBigContentView(content)
+        // Builder reuses its Notification: the public version must be independent.
+        builder.setPublicVersion(builder.build().clone())
         if (Build.VERSION.SDK_INT >= 26) builder.setTimeoutAfter(remaining)
         if (countdown && Build.VERSION.SDK_INT >= 24) builder.setChronometerCountDown(true)
         if (Build.VERSION.SDK_INT >= 31) builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)

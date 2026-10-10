@@ -38,6 +38,27 @@ class StudyCloud {
 
   Future<void> refresh() => _call('study_state', {});
 
+  Future<List<Map<String, dynamic>>> history() async {
+    final client = await CloudClient.connect();
+    if (client.auth.currentUser?.id != ownerId) {
+      throw StateError('Identity changed');
+    }
+    final raw = await client
+        .rpc('study_history')
+        .timeout(const Duration(seconds: 8));
+    if (client.auth.currentUser?.id != ownerId) {
+      throw StateError('Identity changed');
+    }
+    final rows = (raw as List)
+        .map((r) => Map<String, dynamic>.from(r))
+        .toList();
+    if (rows.any((r) => r['owner_id'] != ownerId)) {
+      throw StateError('History identity mismatch');
+    }
+    await database.cacheStudyFeed(ownerId, rows);
+    return rows;
+  }
+
   Future<void> _call(String method, Map<String, dynamic> params) async {
     final client = await CloudClient.connect();
     if (client.auth.currentUser?.id != ownerId) {

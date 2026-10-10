@@ -145,8 +145,12 @@ class _TaskBoardPageState extends State<TaskBoardPage>
   Future<void> history() async {
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) =>
-            TaskHistoryPage(repository: repository, cloud: cloud, onSync: sync),
+        builder: (_) => TaskHistoryPage(
+          repository: repository,
+          cloud: cloud,
+          onSync: sync,
+          onWallet: widget.onWallet,
+        ),
       ),
     );
     records = await repository.records();
