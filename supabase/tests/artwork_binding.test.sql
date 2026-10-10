@@ -1,6 +1,6 @@
 begin;
 select no_plan();
-select is((select count(*)::integer from public.furniture_products where kind='painting' and active and not is_test),15,'five bound works in each theme');
+select is((select count(*)::integer from public.furniture_products where kind='painting' and active and not is_test),5,'five bound works in one plain wood frame catalog');
 select is((select count(*)::integer from public.furniture_products where kind='frame' and active and not is_test),0,'empty frames are retired');
 select is((select count(distinct geometry->>'artwork')::integer from public.furniture_products where kind='painting'),5,'five distinct paintings');
 insert into auth.users(id) values('78000000-0000-0000-0000-000000000001');

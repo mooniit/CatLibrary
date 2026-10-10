@@ -206,15 +206,15 @@ class _FurnitureStoreState extends State<FurnitureStore> {
                 ? null
                 : (visible) => change(room.withVisibility('painting', visible)),
           ),
-          for (var i = 0; i < ArtworkStyle.values.length; i += 2) ...[
+          for (var i = 0; i < ArtworkStyle.paintings.length; i += 2) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(child: _artworkChoice(ArtworkStyle.values[i])),
+                Expanded(child: _artworkChoice(ArtworkStyle.paintings[i])),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: i + 1 < ArtworkStyle.values.length
-                      ? _artworkChoice(ArtworkStyle.values[i + 1])
+                  child: i + 1 < ArtworkStyle.paintings.length
+                      ? _artworkChoice(ArtworkStyle.paintings[i + 1])
                       : const SizedBox(),
                 ),
               ],

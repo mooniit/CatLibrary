@@ -136,7 +136,7 @@ void main() {
         await tester.pump(const Duration(milliseconds: 100));
         expect(key.currentState!.scene.furnishings.isVisible(kind), isFalse);
       }
-      for (final artwork in ArtworkStyle.values) {
+      for (final artwork in ArtworkStyle.paintings) {
         final choice = find.byKey(Key('painting-${artwork.name}'));
         await tester.ensureVisible(choice);
         await tester.pump();
@@ -196,7 +196,7 @@ void main() {
       var room = await RoomFurnishings.load('owner-a');
       expect(room.artwork, ArtworkStyle.starry);
       expect(room.isVisible('painting'), isTrue);
-      for (final artwork in ArtworkStyle.values) {
+      for (final artwork in ArtworkStyle.paintings) {
         room = room.withArtwork(artwork).withVisibility('painting', false);
         await room.save('owner-a');
         room = await RoomFurnishings.load('owner-a');

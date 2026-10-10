@@ -25,7 +25,7 @@ update public.cat_trips set destination='palace',started_at=now()-interval '25 h
 select is(public.return_family_trips(current_setting('test.home')::uuid),1,'offline expiry processed');
 select is(public.return_family_trips(current_setting('test.home')::uuid),0,'retry grants nothing');
 select is((select count(*)::int from public.cat_travel_visits where cat_id=current_setting('test.cat')::uuid),1,'one collection');
-select is((select count(*)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid),1,'one inventory instance');
+select is((select count(*)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid and source='souvenir'),1,'one inventory instance');
 select is(jsonb_array_length(public.family_album()->'photos'),1,'arranger sees album');
 select is(public.family_album()->'photos'->0->>'arranger_label','我','arranger metadata');
 select is(public.family_album()->'photos'->0->>'appearance','black_short','cat appearance metadata');
@@ -48,7 +48,7 @@ select public.start_cat_travel('81100000-0000-0000-0000-000000000002',current_se
 update public.cat_trips set destination='palace',started_at=now()-interval '25 hours',ends_at=now()-interval '1 hour' where id='81100000-0000-0000-0000-000000000002';
 select public.return_family_trips(current_setting('test.home')::uuid);
 select is((select count(*)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid and sku='souvenir-palace'),2,'same appearance independent cats receive independent souvenirs');
-select is((select count(distinct source_cat_id)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid),2,'source cat preserved');
+select is((select count(distinct source_cat_id)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid and source='souvenir'),2,'source cat preserved');
 do $$ declare n integer; rid uuid; begin
   for n in 2..6 loop
     rid:=gen_random_uuid();
@@ -64,7 +64,7 @@ select is(public.start_cat_travel('81100000-0000-0000-0000-000000000008',current
 update public.cat_trips set started_at=now()-interval '25 hours',ends_at=now()-interval '1 hour' where id='81100000-0000-0000-0000-000000000007';
 select is(public.return_family_trips(current_setting('test.home')::uuid),1,'existing trip returns during repair');
 select is((select count(*)::int from public.cat_travel_visits where cat_id=current_setting('test.cat')::uuid),6,'seventh trip no new photo');
-select is((select count(*)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid),7,'seventh trip no extra souvenir');
+select is((select count(*)::int from public.furniture_inventory where family_id=current_setting('test.home')::uuid and source='souvenir'),7,'seventh trip no extra souvenir');
 select is(public.return_due_cat_trips(),0,'scheduler retry no duplication');
 select ok(exists(select 1 from cron.job where jobname='cat-travel-returns' and schedule='* * * * *' and active),'return scheduler installed');
 select * from finish();

@@ -3,7 +3,7 @@ import {approvedEconomy} from './furniture-economy.mjs';
 const file='assets/data/furniture-products.json';
 const products=JSON.parse(readFileSync(file,'utf8'));
 const active=products.filter(p=>p.active);
-if(active.length!==42||active.some(p=>p.is_test||p.kind==='frame'))throw Error('Expected 42 official styles with bound paintings');
+if(active.length!==32||active.some(p=>p.is_test||p.kind==='frame'||p.kind==='photo'||(p.kind==='painting'&&p.sku!==`painting-${p.geometry.artwork}`)))throw Error('Expected 32 official styles with unified wood paintings');
 for(const p of active)Object.assign(p,approvedEconomy(p.theme,p.kind));
 writeFileSync(file,JSON.stringify(products,null,2)+'\n');
 const q=s=>"'"+s.replaceAll("'","''")+"'";
@@ -16,4 +16,4 @@ if(target){
   'update public.furniture_products p set price=v.price,currency=\'miao\',purchase_limit=1,active=true\nfrom (values\n'+
   rows.join(',\n')+'\n) v(sku,price) where p.sku=v.sku and not p.is_test;\n');
 }
-console.log('Configured 42 approved products: miao, unique per household; historical migrations preserved');
+console.log('Configured 32 approved products: miao, unique per household; historical migrations preserved');

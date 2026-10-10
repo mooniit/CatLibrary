@@ -31,7 +31,7 @@ select ok(not has_function_privilege('anon','public.grant_test_collection(uuid,u
 set local role authenticated;
 select is(jsonb_array_length(public.family_album()->'photos'),12,'recipient album shows all pictures');
 select ok((select bool_and(x->>'source'='test_grant') from jsonb_array_elements(public.family_album()->'photos') x),'photos disclose test unlock provenance');
-select is(jsonb_array_length(public.furniture_state()->'inventory'),6,'existing editor state exposes inventory');
+select is(jsonb_array_length(public.furniture_state()->'inventory'),18,'editor exposes six souvenirs and twelve automatically unlocked photos');
 select throws_ok($$select * from public.test_photo_unlocks$$,'42501',null,'member cannot enumerate or write unlock table');
 select set_config('request.jwt.claims','{"sub":"9f100000-0000-0000-0000-000000000002"}',true);
 select is(jsonb_array_length(public.family_album()->'photos'),0,'outsider sees no personal unlocks');

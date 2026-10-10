@@ -1,0 +1,58 @@
+begin;
+select no_plan();
+select is((select count(*)::int from public.furniture_products where kind='painting' and active and not is_test),5,'one catalog entry per artwork');
+select has_function('public','prepare_photo_placement',array['uuid','text'],'unlocked photos can become fixed-mount inventory');
+insert into auth.users(id) values ('9f300000-0000-0000-0000-000000000001'),('9f300000-0000-0000-0000-000000000002');
+set local role authenticated;
+select set_config('request.jwt.claims','{"sub":"9f300000-0000-0000-0000-000000000001"}',true);
+select public.bootstrap_identity(); select public.create_family();
+reset role;
+select public.grant_test_collection('9f310000-0000-0000-0000-000000000001','9f300000-0000-0000-0000-000000000001');
+select is((select count(*)::int from public.photo_wall_inventory where unlock_id in(select id from public.test_photo_unlocks where owner_id='9f300000-0000-0000-0000-000000000001')),12,'all unlocks already in warehouse before opening album or placement RPC');
+select set_config('test.photo',(select id::text from public.test_photo_unlocks where owner_id='9f300000-0000-0000-0000-000000000001' and appearance='black_short' and destination='palace'),true);
+set local role authenticated;
+select set_config('test.placement',public.prepare_photo_placement(current_setting('test.photo')::uuid,'test_grant')::text,true);
+select is(public.prepare_photo_placement(current_setting('test.photo')::uuid,'test_grant'),current_setting('test.placement')::jsonb,'lost receipt retry returns same photo instance');
+select is(public.furniture_state()->'wallet'->>'miao_coins','2030','photo framing never charges money');
+select is(public.furniture_state()->>'version','0','photo framing never saves layout');
+select is(jsonb_array_length(public.furniture_state()->'inventory'),18,'twelve automatically unlocked photos beside six souvenirs');
+reset role;
+select is(public.validate_room_layout((current_setting('test.placement')::jsonb->>'family_id')::uuid,
+ jsonb_build_object('standard','room-standard-v1','items',jsonb_build_array(jsonb_build_object('instance_id',current_setting('test.placement')::jsonb->>'inventory_id','gx',0,'gy',0,'facing','x','slot',s,'artwork','calicoPalace')))),null,'photo fits fixed mount '||s)
+ from unnest(array['art-left-back','art-left-front','art-right-back','art-right-front']) s;
+select is(public.validate_room_layout((current_setting('test.placement')::jsonb->>'family_id')::uuid,
+ jsonb_build_object('standard','room-standard-v1','items',jsonb_build_array(jsonb_build_object('instance_id',current_setting('test.placement')::jsonb->>'inventory_id','gx',0,'gy',0,'facing','x','slot','art-left-back','artwork','longhairPalace')))),'artwork_mismatch','photo cannot substitute another cat artwork');
+select is(public.validate_room_layout((current_setting('test.placement')::jsonb->>'family_id')::uuid,
+ jsonb_build_object('standard','room-standard-v1','items',jsonb_build_array(jsonb_build_object('instance_id',current_setting('test.placement')::jsonb->>'inventory_id','gx',1,'gy',0,'facing','x','slot','art-left-back','artwork','calicoPalace')))),'fixed_position','photo cannot move freely');
+set local role authenticated;
+select is(public.purchase_furniture('9f330000-0000-0000-0000-000000000001','photo-black_short-palace')->>'status','rejected','photo cannot be purchased without album entitlement');
+select throws_ok($$select public.prepare_photo_placement('9f320000-0000-0000-0000-000000000001','test_grant')$$,'42501','Photo is not available in your album','unknown photo denied');
+select throws_ok($$select public.prepare_photo_placement(current_setting('test.photo')::uuid,'travel')$$,'42501','Photo is not available in your album','source cannot be forged');
+select set_config('request.jwt.claims','{"sub":"9f300000-0000-0000-0000-000000000002"}',true);
+select throws_ok($$select public.prepare_photo_placement(current_setting('test.photo')::uuid,'test_grant')$$,'42501','Photo is not available in your album','outsider denied');
+reset role;
+insert into public.family_members(user_id,family_id) values('9f300000-0000-0000-0000-000000000002',(current_setting('test.placement')::jsonb->>'family_id')::uuid);
+set local role authenticated;
+select throws_ok($$select public.prepare_photo_placement(current_setting('test.photo')::uuid,'test_grant')$$,'42501','Photo is not available in your album','second family member cannot mint another owner personal unlock');
+reset role;
+select ok(not has_function_privilege('anon','public.prepare_photo_placement(uuid,text)','execute'),'anonymous role cannot frame photos');
+select set_config('request.jwt.claims','{"sub":"9f300000-0000-0000-0000-000000000001"}',true);
+select public.adopt_cat('black_short','照片挂墙测试猫');
+select set_config('test.cat',(select id::text from public.cats where owner_id=auth.uid()),true);
+update public.wallets set gems=1000 where owner_id=auth.uid();
+select public.start_cat_travel('9f340000-0000-0000-0000-000000000001',current_setting('test.cat')::uuid,(current_setting('test.placement')::jsonb->>'family_id')::uuid);
+update public.cat_trips set destination='palace',started_at=now()-interval '25 hours',ends_at=now()-interval '1 hour' where id='9f340000-0000-0000-0000-000000000001';
+select public.return_family_trips((current_setting('test.placement')::jsonb->>'family_id')::uuid);
+select is((select count(*)::int from public.photo_wall_inventory where visit_id in(select id from public.cat_travel_visits where cat_id=current_setting('test.cat')::uuid)),1,'travel return atomically adds wall photo without client interaction');
+select set_config('test.visit',(select id::text from public.cat_travel_visits where cat_id=current_setting('test.cat')::uuid),true);
+set local role authenticated;
+select set_config('request.jwt.claims','{"sub":"9f300000-0000-0000-0000-000000000002"}',true);
+select set_config('test.travel_placement',public.prepare_photo_placement(current_setting('test.visit')::uuid,'travel')::text,true);
+select is(public.prepare_photo_placement(current_setting('test.visit')::uuid,'travel'),current_setting('test.travel_placement')::jsonb,'shared real photo has one instance across member retries');
+reset role;
+select is((select purchased_by from public.furniture_inventory where id=(current_setting('test.travel_placement')::jsonb->>'inventory_id')::uuid),'9f300000-0000-0000-0000-000000000001'::uuid,'shared photo preserves actual cat owner');
+select is((select source_cat_id from public.furniture_inventory where id=(current_setting('test.travel_placement')::jsonb->>'inventory_id')::uuid),current_setting('test.cat')::uuid,'real photo preserves source cat');
+select isnt(current_setting('test.placement')::jsonb->>'inventory_id',current_setting('test.travel_placement')::jsonb->>'inventory_id','test unlock and real trip stay distinct');
+select is((select count(*)::int from public.furniture_inventory where source_trip_id='9f340000-0000-0000-0000-000000000001'),1,'photo framing never duplicates or consumes the travel souvenir');
+select * from finish();
+rollback;

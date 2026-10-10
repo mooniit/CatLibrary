@@ -28,11 +28,26 @@ enum ArtworkStyle {
   mona('猫娜丽莎'),
   scream('喵的呐喊'),
   pearl('戴珍珠耳环的猫'),
-  sunflowers('向日葵');
+  sunflowers('向日葵'),
+  calicoPalace('三花猫 · 故宫', 'travel/calico-palace-v1.png'),
+  calicoLouvre('三花猫 · 卢浮宫', 'travel/calico-louvre-v1.png'),
+  calicoFuji('三花猫 · 富士山', 'travel/calico-fuji-v1.png'),
+  calicoPyramid('三花猫 · 金字塔', 'travel/calico-pyramid-v1.png'),
+  calicoEiffel('三花猫 · 埃菲尔铁塔', 'travel/calico-eiffel-v1.png'),
+  calicoLiberty('三花猫 · 自由女神像', 'travel/calico-liberty-v1.png'),
+  longhairPalace('长毛猫 · 故宫', 'travel/longhair-palace-v1.png'),
+  longhairLouvre('长毛猫 · 卢浮宫', 'travel/longhair-louvre-v1.png'),
+  longhairFuji('长毛猫 · 富士山', 'travel/longhair-fuji-v1.png'),
+  longhairPyramid('长毛猫 · 金字塔', 'travel/longhair-pyramid-v1.png'),
+  longhairEiffel('长毛猫 · 埃菲尔铁塔', 'travel/longhair-eiffel-v1.png'),
+  longhairLiberty('长毛猫 · 自由女神像', 'travel/longhair-liberty-v1.png');
 
-  const ArtworkStyle(this.label);
+  const ArtworkStyle(this.label, [this.travelAsset]);
   final String label;
-  String get asset => 'room/painting-$name.png';
+  final String? travelAsset;
+  String get asset => travelAsset ?? 'room/painting-$name.png';
+  static List<ArtworkStyle> get paintings =>
+      values.where((a) => a.travelAsset == null).toList();
 }
 
 const furnitureNames = {

@@ -1,5 +1,6 @@
 // Incremental catalog change; never rewrites an already applied migration.
 import {readFileSync, writeFileSync, existsSync} from 'node:fs';
+if(existsSync('supabase/migrations/202610100003_unified_wood_artwork.sql'))throw Error('Historical artwork builder retired. Use export-furniture-catalog.mjs; do not restore themed painting sales.');
 const file='assets/data/furniture-products.json';
 const products=JSON.parse(readFileSync(file,'utf8'));
 const works={starry:['爪印星夜','landscape'],mona:['猫娜丽莎','portrait'],scream:['喵的呐喊','portrait'],pearl:['戴珍珠耳环的猫','portrait'],sunflowers:['向日葵','square']};

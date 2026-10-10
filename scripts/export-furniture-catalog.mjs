@@ -2,6 +2,7 @@
 import {readFileSync,writeFileSync,mkdirSync,copyFileSync} from 'node:fs';
 import {roomStandard,fixtures,orient,slots,project,camera} from '../design/room-structure-2026-10-05/geometry.mjs';
 import {approvedEconomy} from './furniture-economy.mjs';
+import {unifyWallArt} from './wall-art-catalog.mjs';
 const read=p=>JSON.parse(readFileSync(p,'utf8'));
 const verification=read('design/room-themes-2026-10-06/verification.json');
 if(verification.consoleErrors.length||verification.failedRequests.length)throw Error('Theme verification failed');
@@ -53,6 +54,7 @@ for(const theme of ['lunar','wood','royal']){
 mkdirSync('assets/data',{recursive:true});
 for(const p of products)Object.assign(p,approvedEconomy(p.theme,p.kind));
 products.push(...retired);
-writeFileSync('assets/data/furniture-products.json',JSON.stringify(products,null,2)+'\n');
+const catalogProducts=unifyWallArt(products);
+writeFileSync('assets/data/furniture-products.json',JSON.stringify(catalogProducts,null,2)+'\n');
 // The original migration is historical. Apply catalog changes incrementally.
-console.log('Exported '+products.length+' approved products; two verified theme catalogs; footprints unchanged.');
+console.log('Exported '+catalogProducts.filter(p=>p.active).length+' approved products; fixed wood frames; footprints unchanged.');
