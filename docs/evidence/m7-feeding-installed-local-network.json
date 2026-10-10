@@ -1,0 +1,8 @@
+{
+  "version": "0.1.21+22",
+  "scope": "Original emulator ordinary app; local endpoint only",
+  "networkLabels": [
+    "已连接"
+  ],
+  "physicalPhone": false
+}

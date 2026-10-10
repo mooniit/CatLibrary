@@ -1,0 +1,39 @@
+{
+  "result": "PASS",
+  "scope": "Isolated native test restoration; no account identifiers, business hashes or asset details included",
+  "attempts": [
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": false,
+      "physicalPhoneTouched": false
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": false,
+      "physicalPhoneTouched": false
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": false,
+      "physicalPhoneTouched": false
+    },
+    {
+      "serial": "emulator-5554",
+      "originalPrivateFilesUnchanged": true,
+      "fileCount": 3,
+      "fixturePassed": true,
+      "physicalPhoneTouched": false
+    }
+  ],
+  "ordinaryPackageRestored": "0.1.21+22",
+  "physicalPhoneTouched": false,
+  "identityMigrated": false,
+  "manualSettlementPerformed": false,
+  "privateAuditRetainedLocally": true
+}

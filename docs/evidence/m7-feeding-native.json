@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "themes": 2,
+  "inAppAcknowledgments": 2,
+  "hiddenHomeDoesNotAcknowledge": true,
+  "permissionDenialUsesMemoryFixture": true,
+  "nativeInvalidPostRejected": true,
+  "nativeChannelRegistrationVerifiedDirectly": true,
+  "nativePermissionInitiallyAllowed": false,
+  "actualSystemNotificationDeliveryTested": false,
+  "backgroundScheduleTested": false,
+  "captureHandshakeRun": "1791599339961357",
+  "captureMethod": "ADB Android screen with fresh per-stage acknowledgment",
+  "businessWrites": 0,
+  "physicalPhoneTouched": false,
+  "screenshots": [
+    "m7-feeding-home-light",
+    "m7-feeding-settings-light",
+    "m7-feeding-home-night",
+    "m7-feeding-settings-night"
+  ]
+}
