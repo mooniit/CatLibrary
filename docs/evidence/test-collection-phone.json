@@ -1,14 +1,22 @@
 {
-  "result": "PENDING",
+  "result": "PASS",
   "model": "PJE110",
   "targetVersion": "0.1.22+23",
-  "lastVerifiedVersion": "0.1.9+10",
+  "lastVerifiedVersion": "0.1.22+23",
   "originalIdentityReadOnlyVerified": true,
   "privateBackupRetained": true,
   "installAttemptsTimedOut": 2,
-  "separateUncompressedTransfer": "query timeout; client stopped",
+  "separateUncompressedTransfer": "first transfer stalled; after user reconnect 222027081 bytes completed, SHA256 verified",
   "uninstallUsed": false,
   "dataCleared": false,
   "businessGrantRepeated": false,
-  "localBackendOnly": true
+  "localBackendOnly": true,
+  "installedVersion": "0.1.22+23",
+  "installMethod": "verified separate uncompressed transfer; pm install -r",
+  "installPreservedPrivateFiles": 5,
+  "identityVerifiedAfterLaunch": true,
+  "homeWalletMatchesGrantReceipt": true,
+  "personalSouvenirStylesInPhoneCache": 6,
+  "unlockedPhotosInPhoneCache": 12,
+  "scope": "ordinary package upgrade, home balance and original-owner synced cache; no purchase or save interaction test"
 }
