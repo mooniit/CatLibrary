@@ -1,0 +1,32 @@
+{
+  "result": "PASS",
+  "captureHandshakeRun": "1791647310371000",
+  "themes": 2,
+  "sameHomeScene": true,
+  "existingDraftAndLeasePreserved": true,
+  "fixedPhotoMounts": 4,
+  "skipOccupiedMounts": true,
+  "placedItemReactivated": true,
+  "souvenirPlacementAndRotation": true,
+  "iconOnlyWarehouse": true,
+  "minimalTimerNotificationAndLockScreen": true,
+  "cancelPreservesDraft": true,
+  "inventoryPreserved": true,
+  "noAutomaticSaveOrPurchase": true,
+  "physicalPhoneTouched": false,
+  "screenshots": [
+    "warehouse-shop-light",
+    "warehouse-detail-light",
+    "warehouse-room-light",
+    "warehouse-tasks-light",
+    "warehouse-timer-light",
+    "warehouse-lock-light",
+    "warehouse-shop-night",
+    "warehouse-detail-night",
+    "warehouse-room-night",
+    "warehouse-tasks-night",
+    "warehouse-timer-night",
+    "warehouse-lock-night"
+  ],
+  "systemNotificationScreensVerified": 4
+}

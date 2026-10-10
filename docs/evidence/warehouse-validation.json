@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "scope": "requested warehouse, notification and learning history changes",
+  "flutterTests": 190,
+  "databaseTests": 519,
+  "databaseFiles": 37,
+  "nodeTests": 41,
+  "analyzer": "No issues found",
+  "hostedWorkflowCheckGroups": 17,
+  "nativeThemes": 2,
+  "nativeScreenshots": 12,
+  "systemNotificationScreensVerified": 4,
+  "ordinaryCloudVersion": "0.1.24+25",
+  "originalCloudWalletAndLayoutUnchanged": true,
+  "physicalPhoneInstalled": false,
+  "physicalPhoneTestDeferredByUser": true
+}

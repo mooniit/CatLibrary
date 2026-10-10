@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "at": "2026-10-10T15:23:50.365Z",
+  "environment": "hosted Supabase",
+  "migrationCount": 52,
+  "walletsUnchanged": true,
+  "savedLayoutAndLeaseUnchanged": true,
+  "existingInventoryUnchanged": 21,
+  "inventoryAfter": 32,
+  "photoInventory": 12,
+  "newPhotoInstances": 11,
+  "noRepeatedTestGrant": true,
+  "noOldManualSettlement": true
+}

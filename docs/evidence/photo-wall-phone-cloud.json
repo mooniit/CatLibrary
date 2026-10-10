@@ -1,0 +1,21 @@
+{
+  "result": "PASS",
+  "at": "2026-10-10T04:41:57.888Z",
+  "model": "PJE110",
+  "version": "0.1.23+24",
+  "endpoint": "hosted HTTPS",
+  "originalIdentityPreserved": true,
+  "hostedSDKSessionVerified": true,
+  "liveConnectionLabelVerified": true,
+  "localTunnelRemoved": true,
+  "walletMatchesMigratedSnapshot": true,
+  "inventoryInstancesPreserved": 20,
+  "personalSouvenirStyles": 6,
+  "unlockedPhotos": 12,
+  "activeProducts": 32,
+  "woodPaintings": 5,
+  "localDraftUnchanged": true,
+  "installPreservedPrivateFiles": 5,
+  "physicalUSBDisconnected": false,
+  "physicalLayoutSaveClicked": false
+}

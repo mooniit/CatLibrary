@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "versionName": "0.1.24",
+  "versionCode": 25,
+  "configuration": "ordinary hosted Supabase",
+  "origin": "https://ludwvhsvknjgblfgouor.supabase.co",
+  "bytes": 239219042,
+  "sha256": "1a20255570a7008520810b5514777648ac875cc90719b9c28a98b032833b38a9",
+  "abis": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "fixtureMarkersChecked": 8,
+  "privateSessionTokensExcluded": 27,
+  "physicalPhoneInstalled": false,
+  "physicalPhoneTestDeferredByUser": true,
+  "package": ".tooling/catlibrary-0.1.24+25-cloud.apk"
+}

@@ -1,0 +1,20 @@
+{
+  "result": "PASS",
+  "captureHandshakeRun": "1791606879075000",
+  "themes": 2,
+  "sameHomeScene": true,
+  "existingDraftAndLeasePreserved": true,
+  "fixedPhotoMounts": 4,
+  "cancelPreservesDraft": true,
+  "replacementKeepsInventory": true,
+  "noAutomaticSaveOrPurchase": true,
+  "physicalPhoneTouched": false,
+  "screenshots": [
+    "photo-wall-shop-light",
+    "photo-wall-detail-light",
+    "photo-wall-room-light",
+    "photo-wall-shop-night",
+    "photo-wall-detail-night",
+    "photo-wall-room-night"
+  ]
+}
