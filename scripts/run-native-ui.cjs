@@ -13,6 +13,7 @@ function validate(options) {
       throw new Error(`Invalid ${key}`);
     }
   }
+  if (options.lockScreenCapture !== undefined && options.lockScreenCapture !== 'true') throw new Error('Emulator lock capture flag must be true');
   if (typeof options.apkPath !== 'string' || !options.apkPath.endsWith('.apk')) throw new Error('APK path required');
   if (options.definesFile !== undefined && !/^\.tooling\/[a-zA-Z0-9_-]+\.json$/.test(options.definesFile)) {
     throw new Error('Isolated project-local defines file required');
@@ -42,7 +43,7 @@ function buildPlan(options) {
 
 async function main(argv) {
   const options = {apkPath: 'build/app/outputs/flutter-apk/app-debug.apk'};
-  const names = {'--serial': 'serial', '--target': 'target', '--driver': 'driver', '--restore-apk': 'restoreApk', '--defines-file': 'definesFile'};
+  const names = {'--serial': 'serial', '--target': 'target', '--driver': 'driver', '--restore-apk': 'restoreApk', '--defines-file': 'definesFile', '--lock-screen-capture': 'lockScreenCapture'};
   for (let i = 0; i < argv.length; i += 2) {
     if (!names[argv[i]] || !argv[i + 1]) throw new Error('Usage: --serial emulator-N --target integration_test/...dart --driver test_driver/...dart --restore-apk original.apk');
     options[names[argv[i]]] = argv[i + 1];
@@ -86,9 +87,12 @@ async function main(argv) {
     fs.writeFileSync(path.join(backup, file), bytes, {flag: 'wx'});
     return {file, sha256: createHash('sha256').update(bytes).digest('hex')};
   });
+  const originalLockDisabled = options.lockScreenCapture ? run('adb', ['shell','locksettings','get-disabled'],true).toString().trim() : null;
+  if (originalLockDisabled !== null && !['true','false'].includes(originalLockDisabled)) throw new Error('Unknown emulator lock state');
   let forwarded;
   let failure;
   try {
+    if (originalLockDisabled !== null) run('adb',['shell','locksettings','set-disabled','false'],true);
     const plan = buildPlan({...options, vmServiceUrl: 'http://127.0.0.1:1/pending/'});
     for (const command of plan.commands.slice(0, 3)) run(command.tool, command.args.slice(command.tool === 'adb' ? 2 : 0));
     let service;
@@ -117,11 +121,15 @@ async function main(argv) {
     failure = error;
   } finally {
     run('adb', ['shell', 'am', 'force-stop', pkg]);
+    if (originalLockDisabled !== null) {
+      run('adb',['shell','wm','dismiss-keyguard'],true);
+      run('adb',['shell','locksettings','set-disabled',originalLockDisabled],true);
+    }
     if (forwarded) run('adb', ['forward', '--remove', `tcp:${forwarded}`], true);
     const mismatches = files.filter(item => createHash('sha256').update(run('adb', ['exec-out', 'run-as', pkg, 'cat', item.file], true)).digest('hex') !== item.sha256);
     fs.writeFileSync(path.join(backup, 'verification.json'), JSON.stringify({serial: options.serial,
       originalPrivateFilesUnchanged: mismatches.length === 0, fileCount: files.length,
-      fixturePassed: !failure, physicalPhoneTouched: false}, null, 2) + '\n');
+      fixturePassed: !failure, physicalPhoneTouched: false, emulatorLockSettingRestored: originalLockDisabled === null || run('adb',['shell','locksettings','get-disabled'],true).toString().trim() === originalLockDisabled}, null, 2) + '\n');
     if (mismatches.length) throw new Error('Private data changed. Backup retained; stop for explicit recovery before restoring normal app.');
     // Only ADB replacement install; a failed installation must never remove data.
     run('adb', ['install', '-r', '-t', original]);

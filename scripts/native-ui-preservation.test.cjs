@@ -99,6 +99,12 @@ test('the native test plan contains no uninstall, private-data deletion or emula
   }
 });
 
+test('lock screen capture remains emulator-only and rejects malformed flags', () => {
+  assert.doesNotThrow(() => buildPlan({...options, lockScreenCapture: 'true'}));
+  assert.throws(() => buildPlan({...options, lockScreenCapture: 'true', serial: 'physical-phone'}));
+  assert.throws(() => buildPlan({...options, lockScreenCapture: 'false'}));
+});
+
 test('an absent or invalid VM service address cannot fall back to normal flutter drive', () => {
   for (const vmServiceUrl of [undefined, '', 'not-a-url']) {
     assert.throws(() => buildPlan({...options, vmServiceUrl}));
