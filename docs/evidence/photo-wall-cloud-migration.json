@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-10T04:26:29.224Z",
+  "result": "PASS",
+  "businessTables": 33,
+  "originalIdentityMigrated": true,
+  "sourceUnchangedSinceDryRun": true,
+  "allRowsVerifiedInTransaction": true,
+  "foreignKeysEnabled": true,
+  "editorLeasesReleased": true,
+  "oldManualSettlementRun": false,
+  "localBackupRetained": true
+}

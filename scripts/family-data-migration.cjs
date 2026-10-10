@@ -2,16 +2,16 @@ const assert = require('node:assert/strict');
 const {jsonExpression} = require('./auth-migration.cjs');
 // Dependency order keeps every foreign key enabled during the restore.
 const tables = ['wallets', 'families', 'family_members', 'family_join_requests', 'cats',
-  'repair_episodes', 'repair_windows', 'study_sessions', 'study_days', 'task_sessions', 'task_days',
+  'repair_episodes', 'repair_windows', 'study_sessions', 'study_days', 'task_timer_runs', 'task_sessions', 'task_days',
   'weekly_task_offers', 'weekly_task_completions', 'daily_interest_charges', 'cat_feedings',
   'daily_cat_charges', 'proxy_payment_notices', 'family_daily_settlements', 'family_settlement_failures',
   'cat_trips', 'furniture_inventory', 'cat_travel_visits', 'travel_requests', 'travel_return_failures',
-  'travel_return_seen', 'room_layouts', 'furniture_requests', 'wallet_entries'];
-const ownerColumns = {wallets: 'owner_id', study_sessions: 'owner_id', study_days: 'owner_id',
+  'travel_return_seen', 'room_layouts', 'furniture_requests', 'wallet_entries', 'feeding_reminders', 'test_account_grants', 'test_photo_unlocks', 'photo_wall_inventory'];
+const ownerColumns = {task_timer_runs:'owner_id', feeding_reminders:'owner_id', test_account_grants:'owner_id', test_photo_unlocks:'owner_id', wallets: 'owner_id', study_sessions: 'owner_id', study_days: 'owner_id',
   task_sessions: 'owner_id', task_days: 'owner_id', weekly_task_offers: 'owner_id', weekly_task_completions: 'owner_id',
   daily_interest_charges: 'owner_id', proxy_payment_notices: 'payer_id', travel_return_seen: 'user_id', wallet_entries: 'owner_id'};
 const familyTables = new Set(['families', 'family_members', 'family_join_requests', 'cats', 'repair_episodes',
-  'family_daily_settlements', 'family_settlement_failures', 'cat_trips', 'furniture_inventory', 'travel_return_failures', 'room_layouts']);
+  'family_daily_settlements', 'family_settlement_failures', 'cat_trips', 'furniture_inventory', 'travel_return_failures', 'room_layouts', 'photo_wall_inventory']);
 function selector(table, {family, owners}) {
   const owned = column => column + ' in (' + owners.map(o => "'" + o + "'").join(',') + ')';
   if (ownerColumns[table]) return owned(ownerColumns[table]);
@@ -34,13 +34,18 @@ function validateFamilyScope(data) {
   const ownerSet = new Set(owners), cats = new Set(rows.cats.map(c => c.id)), trips = new Set(rows.cat_trips.map(t => t.id));
   const episodes = new Set(rows.repair_episodes.map(e => e.id)), inventory = new Set(rows.furniture_inventory.map(i => i.id));
   const offers = new Set(rows.weekly_task_offers.map(o => o.id));
-  const referenceSets = {cat_id: cats, source_cat_id: cats, trip_id: trips, source_trip_id: trips,
+  const runs=new Set(rows.task_timer_runs.map(r=>r.id)), grants=new Set(rows.test_account_grants.map(g=>g.request_id)), unlocks=new Set(rows.test_photo_unlocks.map(u=>u.id)), visits=new Set(rows.cat_travel_visits.map(v=>v.id));
+  const referenceSets = {run_id:runs, grant_id:grants, unlock_id:unlocks, visit_id:visits, cat_id: cats, source_cat_id: cats, trip_id: trips, source_trip_id: trips,
     episode_id: episodes, inventory_id: inventory, offer_id: offers};
   const ownerFields = ['owner_id', 'user_id', 'creator_id', 'payer_id', 'arranged_by', 'purchased_by', 'edited_by', 'lock_user', 'applicant_id'];
   for (const table of tables) for (const row of rows[table]) {
     if (row.family_id != null) assert.equal(row.family_id, family, 'Foreign family row');
     for (const field of ownerFields) if (row[field] != null) assert(ownerSet.has(row[field]), 'Foreign owner reference');
-    for (const [field, set] of Object.entries(referenceSets)) if (row[field] != null) assert(set.has(row[field]), 'Foreign dependency reference');
+    for (const [field, set] of Object.entries(referenceSets)) {
+      // Study run_id groups paused segments; only task run_id is a table FK.
+      if (field === 'run_id' && table !== 'task_sessions') continue;
+      if (row[field] != null) assert(set.has(row[field]), 'Foreign dependency reference');
+    }
   }
   for (const room of rows.room_layouts) {
     assert.equal(room.layout.standard, 'room-standard-v1'); assert(Array.isArray(room.layout.items));

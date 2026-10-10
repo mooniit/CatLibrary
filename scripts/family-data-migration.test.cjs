@@ -25,7 +25,7 @@ test('Transfer preserves economic values and UUID instances; only serial ledger 
   assert.deepEqual(normalizeRows('room_layouts', [room])[0], {...room, lock_user: null, lock_token: null, lock_until: null});
   assert.equal(ledger.id, 99); assert.equal(room.lock_user, owner);
 });
-test('Export contains all business dependencies but no global policies, catalog, test grants or sample data', () => {
+test('Export contains scoped business dependencies but no global policies, catalog or sample accounts', () => {
   const sql = exportSql(family, [owner]);
   for (const t of tables) assert(sql.includes('public.' + t + ' '));
   for (const t of ['room_test_families', 'billing_activation', 'furniture_products', 'm0_probe_notes']) assert(!sql.includes('public.' + t + ' '));
@@ -44,4 +44,18 @@ test('Unexpected or disabled target event triggers block import; no blanket trig
   assert.throws(() => buildFamilyImport(fixture(), triggers.slice(1)));
   assert.throws(() => buildFamilyImport(fixture(), [triggers[1], ...triggers.slice(1)]));
   assert.throws(() => buildFamilyImport(fixture(), triggers.map((t, i) => i ? t : {...t, table: 'cats'})));
+});
+
+test('Updated migration preserves photo unlocks, explicit grants and timer dependencies',()=>{
+  const data=fixture();
+  data.rows.test_account_grants.push({request_id:owner,owner_id:owner,family_id:family});
+  data.rows.test_photo_unlocks.push({id:family,owner_id:owner,grant_id:owner});
+  validateFamilyScope(data);
+  for(const field of ['owner_id','grant_id']) {const bad=structuredClone(data);bad.rows.test_photo_unlocks[0][field]='30000000-0000-0000-0000-000000000001';assert.throws(()=>validateFamilyScope(bad));}
+  const bad=structuredClone(data);bad.rows.task_sessions.push({owner_id:owner,run_id:family});assert.throws(()=>validateFamilyScope(bad));
+  assert(tables.indexOf('test_account_grants') < tables.indexOf('test_photo_unlocks'));
+  assert(tables.indexOf('test_photo_unlocks') < tables.indexOf('photo_wall_inventory'));
+  assert(tables.indexOf('task_timer_runs') < tables.indexOf('task_sessions'));
+  data.rows.study_sessions.push({owner_id:owner,run_id:family});
+  validateFamilyScope(data); // Study pause grouping is not a task run foreign key.
 });

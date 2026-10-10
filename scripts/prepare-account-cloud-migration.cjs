@@ -61,8 +61,9 @@ try {
   assert.equal(data.testFamily, 0); assert.equal(data.testInventory, 0);
   assert.equal(data.missingPastSettlements, 0, 'Historical settlement coverage incomplete');
   console.log('PASS scoped read-only backup, no missing historical settlements or photo files');
-  const targetMeta = remoteSql("begin read only; select jsonb_build_object('migrationCount',(select count(*) from supabase_migrations.schema_migrations),'triggers',(select jsonb_agg(jsonb_build_object('name',t.tgname,'table',c.relname,'enabled',t.tgenabled::text) order by c.relname,t.tgname) from pg_trigger t join pg_class c on c.oid=t.tgrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and not t.tgisinternal)) as metadata; commit;", 'target-metadata')[0].metadata;
-  assert.equal(targetMeta.migrationCount, 45);
+  const targetMeta = remoteSql("begin read only; select jsonb_build_object('versions',(select jsonb_agg(version order by version) from supabase_migrations.schema_migrations),'triggers',(select jsonb_agg(jsonb_build_object('name',t.tgname,'table',c.relname,'enabled',t.tgenabled::text) order by c.relname,t.tgname) from pg_trigger t join pg_class c on c.oid=t.tgrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and not t.tgisinternal)) as metadata; commit;", 'target-metadata')[0].metadata;
+  const versions = fs.readdirSync(path.join(root, 'supabase/migrations')).filter(f => /^\d+_.*\.sql$/.test(f)).map(f => f.split('_')[0]).sort();
+  assert.deepEqual(targetMeta.versions, versions, 'Hosted schema must match every checked-in migration');
   const schema = remoteSql(authSchemaSql, 'target-auth-schema');
   const auth = buildAuthImport(data.auth, owners, schema);
   const business = buildFamilyImport(data, targetMeta.triggers);
@@ -86,12 +87,15 @@ try {
     comparedBusinessTables: tables.length, rows: business.summary, authRows: auth.summary,
     foreignKeysEnabled: true, triggersRestored: true, pastSettlementsComplete: true,
     photoObjects: 0, ledgerSerialIdsReallocated: true, editorLeasesReleased: true});
-  console.log('PASS all 28 business tables and Auth restore verified inside a rolled-back cloud transaction');
+  console.log(`PASS all ${tables.length} business tables and Auth restore verified inside a rolled-back cloud transaction`);
 } catch (error) {
   report.failure = error instanceof assert.AssertionError ? 'Scoped migration assertion failed' : 'Migration preparation failed';
   report.failureLocation = error.stack?.split('\n').find(line => line.includes('prepare-account-cloud-migration.cjs:'))?.trim();
   console.error(report.failure); process.exitCode = 1;
 } finally {
   report.finishedAt = new Date().toISOString();
-  fs.writeFileSync(path.join(root, 'docs/evidence/m7-original-account-cloud-dry-run.json'), JSON.stringify(report, null, 2) + '\n');
+  fs.writeFileSync(path.join(directory, 'report-private.json'), JSON.stringify(report, null, 2) + '\n');
+  const publicReport = {...report};
+  for (const key of ['ownerHash', 'backupSha256', 'failureLocation']) delete publicReport[key];
+  fs.writeFileSync(path.join(root, 'docs/evidence/photo-wall-cloud-dry-run.json'), JSON.stringify(publicReport, null, 2) + '\n');
 }
